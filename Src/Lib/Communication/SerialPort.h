@@ -1,7 +1,5 @@
 #pragma once
 #include <string>
-#include "rpc.h"
-#include "rpcndr.h"
 #include "Port.h"
 
 enum Parity {
@@ -29,6 +27,8 @@ enum Handshake
     Handshake_RequestToSendXonXoff
 };
 
+
+/*
 class SerialPort : public Port
 {
 public:
@@ -56,4 +56,4 @@ private:
     OVERLAPPED writeOverlapped;
     OVERLAPPED readOverlapped;
 };
-
+*/

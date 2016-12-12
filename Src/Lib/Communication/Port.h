@@ -1,6 +1,5 @@
 #ifndef PORT_H
 #define PORT_H
-#include <Windows.h>
 
 class Port
 {
