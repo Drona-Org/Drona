@@ -1,0 +1,6 @@
+[submodule "Submodules"]
+	path = Submodules
+	url = https://github.com/mavlink/mavlink.git
+[submodule "Submodule/mavlink"]
+	path = Submodule/mavlink
+	url = https://github.com/mavlink/mavlink.git
