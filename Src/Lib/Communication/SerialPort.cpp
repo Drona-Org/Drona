@@ -1,11 +1,8 @@
 #include "SerialPort.h"
 
-#include <comdef.h>
-#include <Wbemidl.h>
 #include <string>
 
-#pragma comment(lib, "wbemuuid.lib")
-
+/*
 
 SerialPort::SerialPort()
 {
@@ -392,3 +389,5 @@ SerialPort::SetAttributes(int baudRate, Parity parity, int dataBits, StopBits bi
     }
     return S_OK;
 }
+
+*/
