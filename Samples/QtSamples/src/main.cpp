@@ -8,7 +8,7 @@ int main()
 
 
 
-  std::cout << "Hello meo meo Ankush!" << std::endl;
+  std::cout << "Hello Ankush!" << std::endl;
 
   Foo *f = new Foo();
   f->print();
