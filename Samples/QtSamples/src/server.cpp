@@ -1,6 +1,5 @@
 //UDP Server
 
-
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <stdio.h>
@@ -13,21 +12,23 @@
 #define PORT 9930
 
 
-// Function for error handling
+// Error handling
 void err(char *str)
 {
     perror(str);
     exit(1);
 }
 
-// Main function
+// Main server
 int main(void)
 {
     struct sockaddr_in my_addr, cli_addr;
-    int sockfd, i; 
+    int sockfd;
     socklen_t slen=sizeof(cli_addr);
     char buf[BUFLEN];
 
+    // socket() creates a socket
+    // args: protocol family, type of socket (datagram), protocol
     if ((sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP))==-1)
       err("socket");
     else 
@@ -38,6 +39,8 @@ int main(void)
     my_addr.sin_port = htons(PORT);
     my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
     
+    // bind() assigns address to socket
+    // args: socket descriptor, pointer to protocol address, size of address structure
     if (bind(sockfd, (struct sockaddr* ) &my_addr, sizeof(my_addr))==-1)
       err("bind");
     else
@@ -45,6 +48,8 @@ int main(void)
 
     while(1)
     {
+        // recvfrom() receives data
+        // args: socket descriptor, pointer to buffer, bufflen, flag (regular rec), socket where data are from, size of socket address
         if (recvfrom(sockfd, buf, BUFLEN, 0, (struct sockaddr*)&cli_addr, &slen)==-1)
             err("recvfrom()");
         printf("Received packet from %s:%d\nData: %s\n\n",
