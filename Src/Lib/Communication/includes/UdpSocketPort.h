@@ -1,32 +1,24 @@
 #ifndef SOCKETPORT_H
 #define SOCKETPORT_H
 
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN
-#endif
-
-
 #include "Port.h"
 
-// Need to link with Ws2_32.lib
-#pragma comment (lib, "Ws2_32.lib")
+#define SOCKET int
+#define INVALID_SOCKET -1
 
 class UdpSocketPort : public Port
 {
 	SOCKET sock = INVALID_SOCKET;
 	sockaddr_in serveraddr;
 	sockaddr_in other;
-	int addrlen = sizeof(sockaddr_in);
+    socklen_t addrlen = sizeof(sockaddr_in);
 	char buffer[255]; // datagram max size
 	int size = 0;
 	int pos = 0;
-	int serverport = -1;
+    int serverport = 12345;
 	SOCKET sendSocket = INVALID_SOCKET;
 
 public:
-
-	static HRESULT Initialize();
-
     // Bind the udp socket to the given local port, and set it up so we only listen
     // to UDP packets from the given serverIp address (and optional port).
 	HRESULT Connect(const char* serverIp, int localPort, int serverport = -1);
@@ -36,6 +28,9 @@ public:
 
 	// read a given number of bytes from the port.
 	HRESULT Read(BYTE* buffer, int bytesToRead, int* bytesRead);
+
+    // Create a udp socket
+    SOCKET Create(int portAddress);
 
 	// close the port.
 	void Close();

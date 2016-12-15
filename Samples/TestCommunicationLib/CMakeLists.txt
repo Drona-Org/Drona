@@ -1,15 +1,21 @@
 cmake_minimum_required(VERSION 3.0)
-project(communication)
+project(CommunicationTest)
 
 # Search .cpp in ./src
 file(GLOB_RECURSE sources src/*.cpp)
-file(GLOB_RECURSE includes includes/*.h)
+FILE(GLOB_RECURSE includes include/*.h /home/ankush/Workspace/DronaForPX4/Src/Lib/Communication/*.h)
 
 # Include path
-INCLUDE_DIRECTORIES(includes)
+INCLUDE_DIRECTORIES(include)
+INCLUDE_DIRECTORIES(/home/ankush/Workspace/DronaForPX4/Src/Lib/Communication/includes)
+
 
 # Build exectuable
-add_library(communication ${sources} ${includes})
+add_executable(client src/client.cpp ${includes})
+add_executable(server src/server.cpp ${includes})
+
+TARGET_LINK_LIBRARIES(client /home/ankush/Workspace/DronaForPX4/Src/Lib/Communication-build/libcommunication.a)
+TARGET_LINK_LIBRARIES(server /home/ankush/Workspace/DronaForPX4/Src/Lib/Communication-build/libcommunication.a)
 
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
