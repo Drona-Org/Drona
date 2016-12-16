@@ -1,42 +1,48 @@
-#ifndef SOCKETPORT_H
-#define SOCKETPORT_H
+#ifndef UDPSOCKETPORT_H
+#define UDPSOCKETPORT_H
 
-#include "Port.h"
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
 
+using namespace std;
+
+#define HRESULT long
+#define BYTE unsigned char
+#define SUCCESS 0
+#define FAILURE -1
 #define SOCKET int
 #define INVALID_SOCKET -1
 
-class UdpSocketPort : public Port
+class UdpCommunicationSocket
 {
-	SOCKET sock = INVALID_SOCKET;
-	sockaddr_in serveraddr;
-	sockaddr_in other;
-    socklen_t addrlen = sizeof(sockaddr_in);
-	char buffer[255]; // datagram max size
-	int size = 0;
-	int pos = 0;
-    int serverport = 12345;
-	SOCKET sendSocket = INVALID_SOCKET;
+    struct sockaddr_in writeAddr;
+    struct sockaddr_in readAddr;
+    SOCKET readSock = INVALID_SOCKET;
+    SOCKET writeSock = INVALID_SOCKET;
 
 public:
-    // Bind the udp socket to the given local port, and set it up so we only listen
-    // to UDP packets from the given serverIp address (and optional port).
-	HRESULT Connect(const char* serverIp, int localPort, int serverport = -1);
+    //write to port
+    HRESULT Write(const BYTE* ptr, int count);
 
-	// write to the socket
-	HRESULT Write(const BYTE* ptr, int count);
+    //read from port
+    HRESULT Read(BYTE* buffer, int bytesToRead, int* bytesRead);
 
-	// read a given number of bytes from the port.
-	HRESULT Read(BYTE* buffer, int bytesToRead, int* bytesRead);
+    //Connect to Sender
+    HRESULT ReadFrom(int portAddr);
 
-    // Create a udp socket
-    SOCKET Create(int portAddress);
+    //Connect to receiver
+    HRESULT WriteTo(const char* ipAddr, int portAddr);
 
 	// close the port.
 	void Close();
 
-	// Get the local IPV4 address of this machine
-	static HRESULT GetLocalAddress(char* buffer, int bufferSize);
 };
 
 
