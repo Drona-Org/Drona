@@ -55,12 +55,23 @@ HRESULT UdpCommunicationSocket::Write(const BYTE* ptr, int count)
 HRESULT UdpCommunicationSocket::Read(BYTE* buffer, int bytesToRead, int* bytesRead)
 {
     socklen_t alen = (sizeof(readAddr));
-    if (recvfrom(readSock, buffer, bytesToRead, 0, (struct sockaddr*)&readAddr, &alen)==-1)
-            perror("recvfrom()");
-    printf("Received packet from %s:%d\nData: %s\n\n",
-                   inet_ntoa(readAddr.sin_addr), ntohs(readAddr.sin_port), buffer);
+    *bytesRead = bytesToRead;
+    return recvfrom(readSock, buffer, bytesToRead, 0, (struct sockaddr*)&readAddr, &alen);
     /*
+    if (recvfrom(readSock, buffer, bytesToRead, 0, (struct sockaddr*)&readAddr, &alen)==-1)
+    {
+        return FAILURE;
+    }
+    else
+    {
+        return SUCCESS;
+    }
+
+    /*
+    //printf("Received packet from %s:%d\nData: %s\n\n", inet_ntoa(readAddr.sin_addr), ntohs(readAddr.sin_port), buffer);
+
 	// Receive until the peer closes the connection
+    int rc;
 	if (pos == size)
 	{
 		while (true)
@@ -68,22 +79,8 @@ HRESULT UdpCommunicationSocket::Read(BYTE* buffer, int bytesToRead, int* bytesRe
 			pos = 0;
 			size = 0;
 			*bytesRead = 0;
-            int rc = recvfrom(sock, (char*)&this->buffer, 255, 0, (struct sockaddr*)&other, &addrlen);
-			if (other.sin_addr.s_addr != serveraddr.sin_addr.s_addr)
-			{
-				// this is from a different PX4 then, one that we are not interested in.
-				continue;
-			}
-			else if (serverport == -1)
-			{
-				// we now have it.
-				serverport = ntohs(other.sin_port);
-			}
-			if (serverport != ntohs(other.sin_port))
-			{
-				// this is from a different mavlink node then, one that we are not interested in.
-				continue;
-			}
+            rc = recvfrom(readSock, (char*)&this->buffer, 255, 0, (struct sockaddr*)&readAddr, &alen);
+
 			if (rc == 0)
 			{
 				printf("Connection closed\n");
@@ -110,7 +107,8 @@ HRESULT UdpCommunicationSocket::Read(BYTE* buffer, int bytesToRead, int* bytesRe
 	pos += len;
 
 	*bytesRead = len;
-    return 0;*/
+    return rc;
+    */
 }
 
 // close the port.

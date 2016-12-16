@@ -8,7 +8,8 @@ FILE(GLOB_RECURSE includes include/*.h /home/ankush/Workspace/DronaForPX4/Src/Li
 # Include path
 INCLUDE_DIRECTORIES(include)
 INCLUDE_DIRECTORIES(/home/ankush/Workspace/DronaForPX4/Src/Lib/Communication/includes)
-
+INCLUDE_DIRECTORIES(/home/ankush/Workspace/DronaForPX4/Src/include/mavlink/common)
+INCLUDE_DIRECTORIES(/home/ankush/Workspace/DronaForPX4/Src/include/mavlink)
 
 # Build exectuable
 add_executable(client src/client.cpp ${includes})

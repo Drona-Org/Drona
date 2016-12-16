@@ -1,6 +1,7 @@
 #ifndef UDPSOCKETPORT_H
 #define UDPSOCKETPORT_H
 
+#define WIN32_LEAN_AND_MEAN
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <stdio.h>
@@ -24,6 +25,9 @@ class UdpCommunicationSocket
 {
     struct sockaddr_in writeAddr;
     struct sockaddr_in readAddr;
+    char buffer[255]; // datagram max size
+    int size = 0;
+    int pos = 0;
     SOCKET readSock = INVALID_SOCKET;
     SOCKET writeSock = INVALID_SOCKET;
 
