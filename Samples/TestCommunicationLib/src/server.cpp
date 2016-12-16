@@ -4,11 +4,12 @@ using namespace std;
 
 int main()
 {
-    const unsigned char buff[10] = "I Got It";
-    UdpSocketPort *server = new UdpSocketPort();
-    SOCKET sServer = server->Create(12345);
 
-    //while(1) {
-        server->Write(buff, 10);
-    //}
+    BYTE buff[64] = "";
+    int *read;
+    UdpCommunicationSocket *server = new UdpCommunicationSocket();
+    server->ReadFrom(12345);
+    server->Read(buff,64,read);
+
 }
+
