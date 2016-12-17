@@ -3,21 +3,21 @@ project(CommunicationTest)
 
 # Search .cpp in ./src
 file(GLOB_RECURSE sources src/*.cpp)
-FILE(GLOB_RECURSE includes include/*.h /home/ankush/Workspace/DronaForPX4/Src/Lib/Communication/*.h)
+FILE(GLOB_RECURSE includes include/*.h ${drona_SOURCE_DIR}/Src/Lib/Communication/*.h)
 
 # Include path
 INCLUDE_DIRECTORIES(include)
-INCLUDE_DIRECTORIES(${dronaSrc_SOURCE_DIR}/Lib/Communication/includes)
-INCLUDE_DIRECTORIES(${dronaSrc_SOURCE_DIR}/include/mavlink/common)
-INCLUDE_DIRECTORIES(${dronaSrc_SOURCE_DIR}/include/mavlink)
+INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Communication/includes)
+INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/include/mavlink/common)
+INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/include/mavlink)
 
 # Build exectuable
 add_executable(client src/client.cpp ${includes})
 add_executable(server src/server.cpp ${includes})
 
 # Target Communication Libraries
-TARGET_LINK_LIBRARIES(client ${drona_SOURCE_DIR}/Src/Lib/Communication-build/libcommunication.a)
-TARGET_LINK_LIBRARIES(server ${drona_SOURCE_DIR}/Src/Lib/Communication-build/libcommunication.a)
+TARGET_LINK_LIBRARIES(client communication)
+TARGET_LINK_LIBRARIES(server communication)
 
 
 include(CheckCXXCompilerFlag)

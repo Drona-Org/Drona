@@ -9,7 +9,7 @@ file(GLOB_RECURSE includes includes/*.h)
 INCLUDE_DIRECTORIES(includes)
 
 # Build exectuable
-add_library(communication ${sources} ${includes})
+add_library(communication STATIC ${sources} ${includes})
 
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
