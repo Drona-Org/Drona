@@ -20,7 +20,8 @@ int main()
     mavlink_system.compid = 1;
 
     int readSuccess = 0;
-    while(readSuccess == 0)
+    //while(readSuccess == 0)
+    for(int i=0; i<100; i++)
     {
         int readBytes = 0;
         uint8_t dataread = 0;
@@ -82,5 +83,11 @@ int main()
               }
         }
     }
+
+    char IPaddr[64] = "127.0.0.1";
+    server->WriteTo(IPaddr,SIMULATOR_PORT);
+    BYTE buff[64] = "";
+    server->Write(buff,20);
+
 }
 

@@ -1,6 +1,11 @@
 #define WIN32_LEAN_AND_MEAN
 #include "UdpSocketPort.h"
 
+#include "mavlink.h"
+#include "mavlink_helpers.h"
+#include "mavlink_types.h"
+#include <mavlink.h>
+
 HRESULT UdpCommunicationSocket::WriteTo(const char* ipAddr, int PortAddr)
 {
 
@@ -45,10 +50,22 @@ HRESULT UdpCommunicationSocket::ReadFrom(int portAddress)
 // write to the serial port
 HRESULT UdpCommunicationSocket::Write(const BYTE* ptr, int count)
 {
-    if (sendto(writeSock, ptr, count, 0, (struct sockaddr*)&writeAddr, sizeof(writeAddr))==-1)
-    {
-        perror("sendto()");
-    }
+
+    mavlink_message_t msg;
+    uint16_t len;
+    int bytes_sent;
+    uint8_t buf[2041];
+
+    /*Send Heartbeat */
+    mavlink_msg_heartbeat_pack(1, 200, &msg, MAV_TYPE_HELICOPTER, MAV_AUTOPILOT_GENERIC, MAV_MODE_GUIDED_ARMED, 0, MAV_STATE_ACTIVE);
+    len = mavlink_msg_to_send_buffer(buf, &msg);
+    bytes_sent = sendto(writeSock, buf, len, 0, (struct sockaddr*)&writeAddr, sizeof(struct sockaddr_in));
+
+
+    //if (sendto(writeSock, ptr, count, 0, (struct sockaddr*)&writeAddr, sizeof(writeAddr))==-1)
+    //{
+    //    perror("sendto()");
+    //}
 }
 
 // read a given number of bytes from the port.
