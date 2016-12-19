@@ -1,3 +1,8 @@
+
+void mavlink_start_send(int channel, int length);
+void mavlink_end_send(int channel, int length);
+#define MAVLINK_START_UART_SEND(chan, length) mavlink_start_send(chan, length)
+#define MAVLINK_END_UART_SEND(chan, length) mavlink_end_send(chan, length);
 #include <iostream>
 #include "UdpSocketPort.h"
 #include "mavlink.h"
@@ -8,12 +13,45 @@ using namespace std;
 
 #define SIMULATOR_PORT 14550
 
-static mavlink_system_t mavlink_system;
+static const uint8_t mavlink_message_crcs[256] = MAVLINK_MESSAGE_CRCS;
+static const uint8_t mavlink_message_lengths[256] = MAVLINK_MESSAGE_LENGTHS;
 
+UdpCommunicationSocket *server = new UdpCommunicationSocket();
+
+/*
+Set up the mavlink communication using buffering
+*/
+char datagram[255];
+int datagrampos = 0;
+
+void mavlink_start_send(int channel, int length)
+{
+    datagrampos = 0;
+}
+
+void mavlink_end_send(int channel, int length)
+{
+    server->Write((BYTE*)datagram, length);
+}
+
+static inline void _mavlink_send_uart(mavlink_channel_t chan, const char *buf, uint16_t len)
+{
+    if (len + datagrampos > 255)
+    {
+        printf("### Message is too big\n");
+        exit(1);
+    }
+    ::memcpy(datagram + datagrampos, buf, len);
+    datagrampos += len;
+}
 
 int main()
 {
-    UdpCommunicationSocket *server = new UdpCommunicationSocket();
+
+    mavlink_system_t mavlink_system;
+    mavlink_system.sysid = 100; // System ID, 1-255
+    mavlink_system.compid = 50; // Component/Subsystem ID, 1-25
+
     server->ReadFrom(SIMULATOR_PORT);
 
     mavlink_system.sysid = 255;

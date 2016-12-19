@@ -1,10 +1,14 @@
 #define WIN32_LEAN_AND_MEAN
-#include "UdpSocketPort.h"
+#define MAVLINK_SEND_UART_BYTES
+#define MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-#include "mavlink.h"
-#include "mavlink_helpers.h"
+#include "UdpSocketPort.h"
 #include "mavlink_types.h"
+mavlink_system_t mavlink_system;
+
 #include <mavlink.h>
+#include "mavlink_helpers.h"
+
 
 HRESULT UdpCommunicationSocket::WriteTo(const char* ipAddr, int PortAddr)
 {
@@ -57,9 +61,11 @@ HRESULT UdpCommunicationSocket::Write(const BYTE* ptr, int count)
     uint8_t buf[2041];
 
     /*Send Heartbeat */
-    mavlink_msg_heartbeat_pack(1, 200, &msg, MAV_TYPE_HELICOPTER, MAV_AUTOPILOT_GENERIC, MAV_MODE_GUIDED_ARMED, 0, MAV_STATE_ACTIVE);
+    /*mavlink_msg_heartbeat_pack(1, 200, &msg, MAV_TYPE_HELICOPTER, MAV_AUTOPILOT_GENERIC, MAV_MODE_GUIDED_ARMED, 0, MAV_STATE_ACTIVE);
     len = mavlink_msg_to_send_buffer(buf, &msg);
-    bytes_sent = sendto(writeSock, buf, len, 0, (struct sockaddr*)&writeAddr, sizeof(struct sockaddr_in));
+    bytes_sent = sendto(writeSock, buf, len, 0, (struct sockaddr*)&writeAddr, sizeof(struct sockaddr_in));*/
+
+    mavlink_msg_command_long_send(MAVLINK_COMM_0,1,1,MAV_CMD_NAV_TAKEOFF,1,0,0,0,0,0,0,5);
 
 
     //if (sendto(writeSock, ptr, count, 0, (struct sockaddr*)&writeAddr, sizeof(writeAddr))==-1)
