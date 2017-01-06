@@ -1,5 +1,6 @@
 #include <iostream>
 #include "UdpSocketPort.h"
+#include "PX4Communicator.h"
 #include "mavlink.h"
 #include "mavlink_helpers.h"
 #include "mavlink_types.h"
@@ -9,18 +10,12 @@ using namespace std;
 #define SIMULATOR_PORT 14550
 
 
-UdpCommunicationSocket *server = new UdpCommunicationSocket();
-
-
-
 int main()
 {
 
     mavlink_system_t mavlink_system;
     mavlink_system.sysid = 100; // System ID, 1-255
     mavlink_system.compid = 50; // Component/Subsystem ID, 1-25
-
-    server->ReadFrom(SIMULATOR_PORT);
 
     mavlink_system.sysid = 255;
     mavlink_system.compid = 1;
@@ -38,11 +33,11 @@ int main()
             mavlink_status_t status;
 
             //printf("Bytes Received: %d\nDatagram: ", (int)recsize);
-            for (int i = 0; i < recsize; ++i)
+            for (int j = 0; j < recsize; ++j)
               {
-                temp = buf[i];
+                temp = buf[j];
                 //printf("%02x ", (unsigned char)temp);
-                if (mavlink_parse_char(MAVLINK_COMM_0, buf[i], &msg, &status))
+                if (mavlink_parse_char(MAVLINK_COMM_0, buf[j], &msg, &status))
                   {
                     // Packet received
                     switch ((BYTE)msg.msgid) {
@@ -62,32 +57,20 @@ int main()
     }
 
     //let me try to write now
-    /*Send Heartbeat */
     mavlink_message_t msg;
     BYTE buf[255];
     int len;
     mavlink_msg_heartbeat_pack(255, 1, &msg, MAV_TYPE_HELICOPTER, MAV_AUTOPILOT_GENERIC, MAV_MODE_GUIDED_ARMED, 0, MAV_STATE_ACTIVE);
     len = mavlink_msg_to_send_buffer(buf, &msg);
+
+
+
     server->Write(buf, len);
 
-    /*Send Arm */
-    mavlink_command_long_t cmd;
-    cmd.command = MAV_CMD_COMPONENT_ARM_DISARM;
-    cmd.confirmation = 1;
-    cmd.param1 = 1;
-    cmd.target_system = 1;
-    cmd.target_component = 1;
-    cmd.param2 = 0;
-    cmd.param3 = 0;
-    cmd.param4 = 0;
-    cmd.param5 = 0;
-    cmd.param6 = 0;
-    cmd.param7 = 0;
 
+    PX4Communicator *PX4 = new PX4Communicator(SIMULATOR_PORT);
 
-
-    mavlink_msg_command_long_encode(255, 1, &msg, &cmd);
-    len = mavlink_msg_to_send_buffer(buf, &msg);
-    server->Write(buf, len);
+    PX4->Arm();
+    PX4->TakeoffLocal(5);
 }
 
