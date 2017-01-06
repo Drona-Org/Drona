@@ -54,84 +54,29 @@ HRESULT UdpCommunicationSocket::ReadFrom(int portAddress)
 // write to the serial port
 HRESULT UdpCommunicationSocket::Write(const BYTE* ptr, int count)
 {
-
-    mavlink_message_t msg;
-    uint16_t len;
-    int bytes_sent;
-    uint8_t buf[2041];
-
-    /*Send Heartbeat */
-    /*mavlink_msg_heartbeat_pack(1, 200, &msg, MAV_TYPE_HELICOPTER, MAV_AUTOPILOT_GENERIC, MAV_MODE_GUIDED_ARMED, 0, MAV_STATE_ACTIVE);
-    len = mavlink_msg_to_send_buffer(buf, &msg);
-    bytes_sent = sendto(writeSock, buf, len, 0, (struct sockaddr*)&writeAddr, sizeof(struct sockaddr_in));*/
-
-    mavlink_msg_command_long_send(MAVLINK_COMM_0,1,1,MAV_CMD_NAV_TAKEOFF,1,0,0,0,0,0,0,5);
-
-
-    //if (sendto(writeSock, ptr, count, 0, (struct sockaddr*)&writeAddr, sizeof(writeAddr))==-1)
-    //{
-    //    perror("sendto()");
-    //}
-}
-
-// read a given number of bytes from the port.
-HRESULT UdpCommunicationSocket::Read(BYTE* buffer, int bytesToRead, int* bytesRead)
-{
-    socklen_t alen = (sizeof(readAddr));
-    *bytesRead = bytesToRead;
-    return recvfrom(readSock, buffer, bytesToRead, 0, (struct sockaddr*)&readAddr, &alen);
-    /*
-    if (recvfrom(readSock, buffer, bytesToRead, 0, (struct sockaddr*)&readAddr, &alen)==-1)
+    if(writeSock != INVALID_SOCKET)
     {
-        return FAILURE;
+        if (sendto(writeSock, ptr, count, 0, (struct sockaddr*)&writeAddr, sizeof(writeAddr))==-1)
+        {
+            perror("sendto()");
+        }
     }
     else
     {
-        return SUCCESS;
+        perror("writeSocket has not been initialized yet, waiting to receive a message");
     }
 
-    /*
-    //printf("Received packet from %s:%d\nData: %s\n\n", inet_ntoa(readAddr.sin_addr), ntohs(readAddr.sin_port), buffer);
+}
 
-	// Receive until the peer closes the connection
-    int rc;
-	if (pos == size)
-	{
-		while (true)
-		{
-			pos = 0;
-			size = 0;
-			*bytesRead = 0;
-            rc = recvfrom(readSock, (char*)&this->buffer, 255, 0, (struct sockaddr*)&readAddr, &alen);
-
-			if (rc == 0)
-			{
-				printf("Connection closed\n");
-			}
-			else if (rc < 0)
-			{
-                printf("#### recv failed with error: %d\n", rc);
-                return rc;
-			}
-			else
-			{
-				size = rc;
-				break;
-			}
-		}
-	}
-
-	int len = size - pos;
-	if (len > bytesToRead)
-	{
-		len = bytesToRead;
-	}
-	::memcpy(buffer, this->buffer + pos, len);
-	pos += len;
-
-	*bytesRead = len;
-    return rc;
-    */
+// read a given number of bytes from the port.
+HRESULT UdpCommunicationSocket::Read(BYTE* buffer, int bytesToRead)
+{
+    socklen_t alen = (sizeof(readAddr));
+    int readBytes = recvfrom(readSock, buffer, bytesToRead, 0, (struct sockaddr*)&writeAddr, &alen);
+    //read a message, now initialize the socket
+    if (writeSock == INVALID_SOCKET && ((writeSock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP))==-1))
+        perror("socket initialization error");
+    return readBytes;
 }
 
 // close the port.

@@ -36,7 +36,7 @@ public:
     HRESULT Write(const BYTE* ptr, int count);
 
     //read from port
-    HRESULT Read(BYTE* buffer, int bytesToRead, int* bytesRead);
+    HRESULT Read(BYTE* buffer, int bytesToRead);
 
     //Connect to Sender
     HRESULT ReadFrom(int portAddr);
