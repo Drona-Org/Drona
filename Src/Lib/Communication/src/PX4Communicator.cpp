@@ -4,8 +4,56 @@
 PX4Communicator::PX4Communicator(int simulatorPort){
 
     this->server = new UdpCommunicationSocket();
-    server->ReadFrom(simulatorPort);
+    server-> ReadFrom(simulatorPort);
 
+    //start the Dispatch function.
+    pthread_t dispatchThread;
+    int result = pthread_create(&dispatchThread, NULL, PX4Communicator::DispatchMavLinkMessages, server);
+    if(result != 0)
+    {
+        perror("Failed to create the dispatch thread");
+    }
+    while(server->writeSock == INVALID_SOCKET);
+
+}
+
+void *PX4Communicator::DispatchMavLinkMessages(void *ptr) {
+    UdpCommunicationSocket *server = (UdpCommunicationSocket*)ptr;
+    while(true)
+    {
+        int BUFFER_LENGTH = 255;
+        BYTE buf[BUFFER_LENGTH];
+        char temp;
+        memset(buf, 0, BUFFER_LENGTH);
+        int recsize = server->Read(buf,BUFFER_LENGTH);
+        if (recsize > 0) {
+            // Something received - print out all bytes and parse packet
+            mavlink_message_t msg;
+            mavlink_status_t status;
+
+            //printf("Bytes Received: %d\nDatagram: ", (int)recsize);
+            for (int j = 0; j < recsize; ++j)
+              {
+                temp = buf[j];
+                //printf("%02x ", (unsigned char)temp);
+                if (mavlink_parse_char(MAVLINK_COMM_0, buf[j], &msg, &status))
+                  {
+                    // Packet received
+                    switch ((BYTE)msg.msgid) {
+                    case MAVLINK_MSG_ID_HEARTBEAT:
+                        cout << "heart is pumping !!" << endl;
+                        break;
+                    case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
+                        cout << "GPS" << endl;
+                        break;
+                    default:
+                        //cout << msg.msgid << endl;
+                        break;
+                    }
+                  }
+              }
+        }
+    }
 }
 
 // Arm

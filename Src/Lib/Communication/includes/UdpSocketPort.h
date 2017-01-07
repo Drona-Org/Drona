@@ -29,9 +29,10 @@ class UdpCommunicationSocket
     int size = 0;
     int pos = 0;
     SOCKET readSock = INVALID_SOCKET;
-    SOCKET writeSock = INVALID_SOCKET;
+
 
 public:
+    SOCKET writeSock = INVALID_SOCKET;
     //write to port
     HRESULT Write(const BYTE* ptr, int count);
 
