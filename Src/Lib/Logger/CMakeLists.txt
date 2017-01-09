@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(dronaSrcLibCommunication)
+project(dronaSrcLibLogger)
 
 # Search .cpp in ./src
 file(GLOB_RECURSE sources src/*.cpp)
@@ -7,15 +7,10 @@ file(GLOB_RECURSE includes includes/*.h)
 
 # Include path
 INCLUDE_DIRECTORIES(includes)
-INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Logger/includes)
-INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/include/mavlink/common)
-INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/include/mavlink)
+
 
 # Build exectuable
-add_library(communication STATIC ${sources} ${includes})
-
-TARGET_LINK_LIBRARIES(communication pthread)
-TARGET_LINK_LIBRARIES(communication logger)
+add_library(logger STATIC ${sources} ${includes})
 
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)

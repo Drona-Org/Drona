@@ -10,11 +10,9 @@ INCLUDE_DIRECTORIES(include)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Communication/includes)
 
 # Build exectuable
-add_executable(client src/client.cpp ${includes})
 add_executable(server src/server.cpp ${includes})
 
 # Target Communication Libraries
-TARGET_LINK_LIBRARIES(client communication)
 TARGET_LINK_LIBRARIES(server communication)
 
 
