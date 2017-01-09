@@ -51,7 +51,7 @@ void *PX4Communicator::DispatchMavLinkMessages(void *ptr) {
                     // Packet received
                     switch ((BYTE)msg.msgid) {
                     case MAVLINK_MSG_ID_HEARTBEAT:
-                        cout << "heart is pumping !!" << endl;
+                        cout << "heart is pumping !!" << endl << std::flush;;
                         cout << "sending heart beat" <<endl;
                         HeartBeat(server);
                         break;
