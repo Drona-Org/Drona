@@ -89,7 +89,7 @@ int PX4Communicator::TakeoffLocal(float altitude){
     cmd.param4 = NAN;
     cmd.param5 = NAN;
     cmd.param6 = NAN;
-    cmd.param7 = -altitude;
+    cmd.param7 = altitude;
 
     this->SendCommand(cmd);
 }
