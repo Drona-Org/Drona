@@ -24,6 +24,7 @@ public:
     PX4Communicator(int simulatorPort);
     int Arm();
     int TakeoffLocal(float altitude);
+    static void HeartBeat(UdpCommunicationSocket* server);
 
 };
 #endif // !PX4COMMUNICATOR_H

@@ -17,6 +17,16 @@ PX4Communicator::PX4Communicator(int simulatorPort){
 
 }
 
+void PX4Communicator::HeartBeat(UdpCommunicationSocket* server){
+
+    mavlink_message_t msg;
+    BYTE buf[255];
+    mavlink_msg_heartbeat_pack(255, 1, &msg, MAV_TYPE_GCS, MAV_AUTOPILOT_INVALID, MAV_MODE_MANUAL_ARMED, 0, MAV_STATE_ACTIVE);
+    int len = mavlink_msg_to_send_buffer(buf, &msg);
+
+    server->Write(buf,len);
+}
+
 void *PX4Communicator::DispatchMavLinkMessages(void *ptr) {
     UdpCommunicationSocket *server = (UdpCommunicationSocket*)ptr;
     while(true)
@@ -42,6 +52,8 @@ void *PX4Communicator::DispatchMavLinkMessages(void *ptr) {
                     switch ((BYTE)msg.msgid) {
                     case MAVLINK_MSG_ID_HEARTBEAT:
                         cout << "heart is pumping !!" << endl;
+                        cout << "sending heart beat" <<endl;
+                        HeartBeat(server);
                         break;
                     case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
                         cout << "GPS" << endl;
