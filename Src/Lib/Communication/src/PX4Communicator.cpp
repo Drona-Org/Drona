@@ -21,7 +21,7 @@ void PX4Communicator::HeartBeat(UdpCommunicationSocket* server){
 
     mavlink_message_t msg;
     BYTE buf[255];
-    mavlink_msg_heartbeat_pack(255, 1, &msg, MAV_TYPE_GCS, MAV_AUTOPILOT_INVALID, MAV_MODE_MANUAL_ARMED, 0, MAV_STATE_ACTIVE);
+    mavlink_msg_heartbeat_pack(255, 1, &msg, MAV_TYPE_GCS,MAV_AUTOPILOT_GENERIC_WAYPOINTS_AND_SIMPLE_NAVIGATION_ONLY, MAV_MODE_AUTO_ARMED, 0, MAV_STATE_ACTIVE);
     int len = mavlink_msg_to_send_buffer(buf, &msg);
     server->Write(buf,len);
 }
@@ -113,35 +113,45 @@ void PX4Communicator::ReturnToLaunch(){
     this->SendCommand(cmd);
 }
 
+void PX4Communicator::StartOffBoard()
+{
+    mavlink_command_long_t cmd = this->InitMavLinkCommandLongT();
+    cmd.param1 = 1;
+    cmd.command = MAV_CMD_NAV_GUIDED_ENABLE;
+    this->SendCommand(cmd);
+}
+
+void PX4Communicator::StopOffBoard()
+{
+    mavlink_command_long_t cmd = this->InitMavLinkCommandLongT();
+    cmd.param1 = 0;
+    cmd.command = MAV_CMD_NAV_GUIDED_ENABLE;
+    this->SendCommand(cmd);
+}
+
 //Goto (Navigate to Waypoint)
 void PX4Communicator::GoTo(float lat, float lon, float alt){
 
-    //mavlink_command_long_t cmd
 
-    mavlink_set_position_target_local_ned_t sp;
-   sp.type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION;
+    mavlink_set_position_target_local_ned_t msg;
+    msg.time_boot_ms = 0;
+    msg.type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION & MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_ANGLE;
+    msg.target_system = 1;
+    msg.target_component = 1;
+    msg.coordinate_frame = MAV_FRAME_LOCAL_NED;
+    msg.x = lat;
+    msg.y = lon;
+    msg.z = alt;
+    msg.yaw = 0;
 
-   sp.coordinate_frame = MAV_FRAME_LOCAL_NED;
-   sp.vx       = 0.0;
-   sp.vy       = 0.0;
-   sp.vz       = 0.0;
-   sp.yaw_rate = 0.0;
-
-   sp.x = lat;
-   sp.y = lon;
-   sp.z = alt;
-
-    sp.target_system    = 1;
-    sp.target_component = 1;
-
-    mavlink_message_t message;
-    mavlink_msg_set_position_target_local_ned_encode(255, 1, &message, &sp);
-
+    mavlink_message_t m;
+    mavlink_msg_set_position_target_local_ned_encode(255, 1, &m, &msg);
 
     BYTE buf[1000];
-    int len = mavlink_msg_to_send_buffer(buf, &message);
-    this->server->Write(buf,len);
 
+    int len = mavlink_msg_to_send_buffer(buf, &m);
+
+    this->server->Write(buf,len);
 }
 
 
