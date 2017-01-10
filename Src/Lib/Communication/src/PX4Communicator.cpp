@@ -48,11 +48,11 @@ void *PX4Communicator::DispatchMavLinkMessages(void *ptr) {
                     // Packet received
                     switch ((BYTE)msg.msgid) {
                     case MAVLINK_MSG_ID_HEARTBEAT:
-                        DEBUG_LOG("heart is pumping !!");
+                        ERROR("heart is pumping !!");
                         HeartBeat(server);
                         break;
                     case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
-                        DEBUG_LOG("GPS Position Received");
+                        ERROR("GPS Position Received");
                         break;
                     default:
                         //DEBUG(".");
@@ -86,7 +86,7 @@ void PX4Communicator::Takeoff(float alt){
 
     this->SendCommand(cmd);
     char buff[100];
-    sprintf(buff,"Command: Take off (Altitude %f)", altitude);
+    sprintf(buff,"Command: Take off (Altitude %f)", alt);
     LOG(buff);
 }
 

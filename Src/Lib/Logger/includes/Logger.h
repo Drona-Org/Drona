@@ -10,7 +10,7 @@ using namespace std;
 
 #define LOG(msg) GlobalLogger->LogMessage(msg)
 #define ERROR(msg) GlobalLogger->LogError(msg)
-#define DEBUG(msg) GlobalLogger->DebugLog(msg)
+#define DEBUG_LOG(msg) GlobalLogger->DebugLog(msg)
 
 class Logger
 {

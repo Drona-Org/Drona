@@ -15,9 +15,11 @@ int main()
 
     PX4Communicator *PX4 = new PX4Communicator(SIMULATOR_PORT);
     PX4->Arm();
-    PX4->TakeoffLocal(492.11);
+    PX4->Takeoff(492.11);
+    sleep(5);
+    PX4->ReturnToLaunch();
     while(true){
-        cout<< "..";
+
     }
 }
 

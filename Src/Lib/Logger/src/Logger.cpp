@@ -28,4 +28,5 @@ void Logger::DebugLog(const char* msg)
     fprintf(stdout, "%s", msg);
     fprintf(stdout, "\n");
     pthread_mutex_unlock(&lock);
+    fflush(stdout);
 }
