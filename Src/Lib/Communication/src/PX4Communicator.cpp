@@ -69,7 +69,7 @@ void *PX4Communicator::DispatchMavLinkMessages(void *ptr) {
 }
 
 // Arm
-int PX4Communicator::Arm(){
+void PX4Communicator::Arm(){
 
     mavlink_command_long_t cmd = this->InitMavLinkCommandLongT();
 
@@ -80,8 +80,8 @@ int PX4Communicator::Arm(){
 
 }
 
-//Takeoff local
-int PX4Communicator::TakeoffLocal(float altitude){
+//Takeoff
+void PX4Communicator::Takeoff(float alt){
 
     mavlink_command_long_t cmd = this->InitMavLinkCommandLongT();
 
@@ -89,9 +89,63 @@ int PX4Communicator::TakeoffLocal(float altitude){
     cmd.param4 = NAN;
     cmd.param5 = NAN;
     cmd.param6 = NAN;
-    cmd.param7 = altitude;
+    cmd.param7 = alt;
 
     this->SendCommand(cmd);
+}
+
+//Land
+void PX4Communicator::Land(float lat, float lon){
+
+    mavlink_command_long_t cmd = this->InitMavLinkCommandLongT();
+
+    cmd.command = MAV_CMD_NAV_LAND;
+    cmd.param1 = 500;
+    cmd.param5 = lat;
+    cmd.param6 = lon;
+
+    this->SendCommand(cmd);
+}
+
+//Return to launch
+void PX4Communicator::ReturnToLaunch(){
+
+    mavlink_command_long_t cmd = this->InitMavLinkCommandLongT();
+
+    cmd.command = MAV_CMD_NAV_RETURN_TO_LAUNCH;
+
+    this->SendCommand(cmd);
+}
+
+//Goto (Navigate to Waypoint)
+void PX4Communicator::GoTo(float lat, float lon, float alt){
+
+    //mavlink_command_long_t cmd
+
+    mavlink_set_position_target_local_ned_t sp;
+   sp.type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION;
+
+   sp.coordinate_frame = MAV_FRAME_LOCAL_NED;
+   sp.vx       = 0.0;
+   sp.vy       = 0.0;
+   sp.vz       = 0.0;
+   sp.yaw_rate = 0.0;
+
+   sp.x = lat;
+   sp.y = lon;
+   sp.z = alt;
+
+    sp.target_system    = 1;
+    sp.target_component = 1;
+
+    mavlink_message_t message;
+    mavlink_msg_set_position_target_local_ned_encode(255, 1, &message, &sp);
+
+
+    BYTE buf[1000];
+    int len = mavlink_msg_to_send_buffer(buf, &message);
+    this->server->Write(buf,len);
+
 }
 
 
