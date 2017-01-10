@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(dronaSrcLibCommunication)
+project(dronaSrcLibLogger)
 
 # Search .cpp in ./src
 file(GLOB_RECURSE sources src/*.cpp)
@@ -8,11 +8,9 @@ file(GLOB_RECURSE includes includes/*.h)
 # Include path
 INCLUDE_DIRECTORIES(includes)
 
-# Build exectuable
-add_library(communication STATIC ${sources} ${includes})
 
-TARGET_LINK_LIBRARIES(communication pthread)
-TARGET_LINK_LIBRARIES(communication logger)
+# Build exectuable
+add_library(logger STATIC ${sources} ${includes})
 
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
