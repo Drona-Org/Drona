@@ -48,14 +48,14 @@ void *PX4Communicator::DispatchMavLinkMessages(void *ptr) {
                     // Packet received
                     switch ((BYTE)msg.msgid) {
                     case MAVLINK_MSG_ID_HEARTBEAT:
-                        DEBUG("heart is pumping !!");
+                        DEBUG_LOG("heart is pumping !!");
                         HeartBeat(server);
                         break;
                     case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
-                        DEBUG("GPS Position Received");
+                        DEBUG_LOG("GPS Position Received");
                         break;
                     default:
-                        DEBUG(".");
+                        //DEBUG(".");
                         break;
                     }
                   }

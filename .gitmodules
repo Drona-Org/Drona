@@ -4,3 +4,6 @@
 [submodule "Submodule/mavlink"]
 	path = Submodule/mavlink
 	url = https://github.com/mavlink/mavlink.git
+[submodule "P"]
+	path = P
+	url = https://github.com/p-org/P.git
