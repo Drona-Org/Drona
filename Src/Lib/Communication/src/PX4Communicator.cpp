@@ -11,7 +11,7 @@ PX4Communicator::PX4Communicator(int simulatorPort){
     int result = pthread_create(&dispatchThread, NULL, PX4Communicator::DispatchMavLinkMessages, server);
     if(result != 0)
     {
-        perror("Failed to create the dispatch thread");
+        ERROR("Failed to create the dispatch thread");
     }
     while(server->writeSock == INVALID_SOCKET);
 
@@ -23,7 +23,6 @@ void PX4Communicator::HeartBeat(UdpCommunicationSocket* server){
     BYTE buf[255];
     mavlink_msg_heartbeat_pack(255, 1, &msg, MAV_TYPE_GCS, MAV_AUTOPILOT_INVALID, MAV_MODE_MANUAL_ARMED, 0, MAV_STATE_ACTIVE);
     int len = mavlink_msg_to_send_buffer(buf, &msg);
-
     server->Write(buf,len);
 }
 
@@ -41,25 +40,22 @@ void *PX4Communicator::DispatchMavLinkMessages(void *ptr) {
             mavlink_message_t msg;
             mavlink_status_t status;
 
-            //printf("Bytes Received: %d\nDatagram: ", (int)recsize);
             for (int j = 0; j < recsize; ++j)
               {
                 temp = buf[j];
-                //printf("%02x ", (unsigned char)temp);
                 if (mavlink_parse_char(MAVLINK_COMM_0, buf[j], &msg, &status))
                   {
                     // Packet received
                     switch ((BYTE)msg.msgid) {
                     case MAVLINK_MSG_ID_HEARTBEAT:
-                        cout << "heart is pumping !!" << endl << std::flush;;
-                        cout << "sending heart beat" <<endl;
+                        DEBUG("heart is pumping !!");
                         HeartBeat(server);
                         break;
                     case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
-                        cout << "GPS" << endl;
+                        DEBUG("GPS Position Received");
                         break;
                     default:
-                        //cout << msg.msgid << endl;
+                        DEBUG(".");
                         break;
                     }
                   }
@@ -72,26 +68,25 @@ void *PX4Communicator::DispatchMavLinkMessages(void *ptr) {
 int PX4Communicator::Arm(){
 
     mavlink_command_long_t cmd = this->InitMavLinkCommandLongT();
-
     cmd.command = MAV_CMD_COMPONENT_ARM_DISARM;
     cmd.param1 = 1;
-
     this->SendCommand(cmd);
-
+    LOG("Command: Arm !");
 }
 
 //Takeoff local
 int PX4Communicator::TakeoffLocal(float altitude){
 
     mavlink_command_long_t cmd = this->InitMavLinkCommandLongT();
-
     cmd.command = MAV_CMD_NAV_TAKEOFF;
     cmd.param4 = NAN;
     cmd.param5 = NAN;
     cmd.param6 = NAN;
     cmd.param7 = altitude;
-
     this->SendCommand(cmd);
+    char buff[100];
+    sprintf(buff,"Command: Take off (Altitude %f)", altitude);
+    LOG(buff);
 }
 
 

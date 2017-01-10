@@ -7,9 +7,6 @@ file(GLOB_RECURSE includes includes/*.h)
 
 # Include path
 INCLUDE_DIRECTORIES(includes)
-INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Logger/includes)
-INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/include/mavlink/common)
-INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/include/mavlink)
 
 # Build exectuable
 add_library(communication STATIC ${sources} ${includes})

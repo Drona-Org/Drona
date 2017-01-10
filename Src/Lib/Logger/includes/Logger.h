@@ -3,16 +3,30 @@
 
 #include<pthread.h>
 #include<stdio.h>
-#include<string.h>
+#include<string>
+using namespace std;
+
+
+
+#define LOG(msg) GlobalLogger->LogMessage(msg)
+#define ERROR(msg) GlobalLogger->LogError(msg)
+#define DEBUG(msg) GlobalLogger->DebugLog(msg)
 
 class Logger
 {
-    static pthread_mutex_t lock;
 
+    pthread_mutex_t lock;
 public:
+    Logger()
+    {
+        pthread_mutex_init(&lock, NULL);
+    }
     //print error message
-    static void LogError(char* msg);
-    static void LogMessage(char* msg);
+    void LogError(const char* msg);
+    void LogMessage(const char* msg);
+    void DebugLog(const char* msg);
 
 };
+extern Logger* GlobalLogger;
+
 #endif
