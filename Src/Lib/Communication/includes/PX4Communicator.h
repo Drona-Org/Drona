@@ -27,19 +27,23 @@ private:
     void SendCommand(mavlink_command_long_t cmd);
     static void *DispatchMavLinkMessages(void* ptr);
 
+    void OffBoard(bool on);
+
 public:
     PX4Communicator(int simulatorPort);
+
+    static void HeartBeat(UdpCommunicationSocket* server);
 
     void Arm();
     void Takeoff(float alt);
     void Land(float lat, float lon);
     void ReturnToLaunch();
-    void GoTo(float lat, float lon, float alt);
-    void StartOffBoard();
-    void StopOffBoard();
 
+    void SetPosition(float lat, float lon, float alt, float yaw);
+    void SetAttitude(float quat[], float rates[]);
 
-    static void HeartBeat(UdpCommunicationSocket* server);
+    void StartOffBoard(){ this->OffBoard(true); };
+    void StopOffBoard(){ this->OffBoard(false); };
 
 };
 #endif // !PX4COMMUNICATOR_H
