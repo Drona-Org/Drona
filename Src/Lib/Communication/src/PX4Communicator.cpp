@@ -1,10 +1,24 @@
 #include "PX4Communicator.h"
 
+// ----------------------------------------------------------------------------------
+//   Time
+// ------------------- ---------------------------------------------------------------
+uint64_t get_time_usec()
+{
+    static struct timeval _time_stamp;
+    gettimeofday(&_time_stamp, NULL);
+    return _time_stamp.tv_sec*1000000 + _time_stamp.tv_usec;
+}
+
 // Constructor
 PX4Communicator::PX4Communicator(int simulatorPort){
 
     this->server = new UdpCommunicationSocket();
     server-> ReadFrom(simulatorPort);
+
+    //255 = 255;
+    //this->autopilotId = 1;
+    //1 = 1;
 
     //start the Dispatch function.
     pthread_t dispatchThread;
@@ -67,10 +81,18 @@ void *PX4Communicator::DispatchMavLinkMessages(void *ptr) {
 // Arm
 void PX4Communicator::Arm(){
 
-    mavlink_command_long_t cmd = this->InitMavLinkCommandLongT();
+    mavlink_command_long_t cmd = {0};
+    cmd.confirmation = 1;
+    cmd.target_system = 1;
+    cmd.target_component = this->autopilotId;
+
     cmd.command = MAV_CMD_COMPONENT_ARM_DISARM;
     cmd.param1 = 1;
-    this->SendCommand(cmd);
+
+    mavlink_message_t msg;
+    mavlink_msg_command_long_encode(255, 1, &msg, &cmd);
+
+    this->WriteMessage(msg);
 
     // Print log
     LOG("Command: Arm");
@@ -79,14 +101,21 @@ void PX4Communicator::Arm(){
 //Takeoff
 void PX4Communicator::Takeoff(float alt){
 
-    mavlink_command_long_t cmd = this->InitMavLinkCommandLongT();
+    mavlink_command_long_t cmd = {0};
+    cmd.confirmation = 1;
+    cmd.target_system = 1;
+    cmd.target_component = this->autopilotId;
+
     cmd.command = MAV_CMD_NAV_TAKEOFF;
     cmd.param4 = NAN;
     cmd.param5 = NAN;
     cmd.param6 = NAN;
     cmd.param7 = alt;
 
-    this->SendCommand(cmd);
+    mavlink_message_t msg;
+    mavlink_msg_command_long_encode(255, 1, &msg, &cmd);
+
+    this->WriteMessage(msg);
 
     // Print log
     char buff[100];
@@ -94,27 +123,20 @@ void PX4Communicator::Takeoff(float alt){
     LOG(buff);
 }
 
-//Land
-void PX4Communicator::Land(float lat, float lon){
-
-    mavlink_command_long_t cmd = this->InitMavLinkCommandLongT();
-
-    cmd.command = MAV_CMD_NAV_LAND;
-    cmd.param1 = 500;
-    cmd.param5 = lat;
-    cmd.param6 = lon;
-
-    this->SendCommand(cmd);
-}
-
 //Return to launch
 void PX4Communicator::ReturnToLaunch(){
 
-    mavlink_command_long_t cmd = this->InitMavLinkCommandLongT();
+    mavlink_command_long_t cmd = {0};
+    cmd.confirmation = 1;
+    cmd.target_system = 1;
+    cmd.target_component = this->autopilotId;
 
     cmd.command = MAV_CMD_NAV_RETURN_TO_LAUNCH;
 
-    this->SendCommand(cmd);
+    mavlink_message_t msg;
+    mavlink_msg_command_long_encode(255, 1, &msg, &cmd);
+
+    this->WriteMessage(msg);
 
     // Print log
     LOG("Command: Return to launch");
@@ -123,10 +145,18 @@ void PX4Communicator::ReturnToLaunch(){
 // Start/Stop offboard control
 void PX4Communicator::OffBoard(bool on)
 {
-    mavlink_command_long_t cmd = this->InitMavLinkCommandLongT();
+    mavlink_command_long_t cmd = {0};
+    cmd.confirmation = 1;
+    cmd.target_system = 1;
+    cmd.target_component = this->autopilotId;
+
     cmd.param1 = (float) on;
     cmd.command = MAV_CMD_NAV_GUIDED_ENABLE;
-    this->SendCommand(cmd);
+
+    mavlink_message_t msg;
+    mavlink_msg_command_long_encode(255, 1, &msg, &cmd);
+
+    this->WriteMessage(msg);
 
     // Print log
     char buff[100];
@@ -140,101 +170,112 @@ void PX4Communicator::OffBoard(bool on)
     LOG(buff);
 }
 
-//Goto (Navigate to Waypoint)
-void PX4Communicator::SetPosition(float lat, float lon, float alt, float yaw){
+void PX4Communicator::StartOffBoard(){
+    this->WriteSetpoint();
+    this->OffBoard(true);
+}
 
-    mavlink_set_position_target_local_ned_t cmd;
-    cmd.time_boot_ms = 0;
-    cmd.type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION & MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_ANGLE;
-    cmd.target_system = 1;
-    cmd.target_component = 1;
-    cmd.coordinate_frame = MAV_FRAME_LOCAL_NED;
-    cmd.x = lat;
-    cmd.y = lon;
-    cmd.z = alt;
-    cmd.yaw = yaw;
+//Set target position
+void PX4Communicator::SetPosition(float x, float y, float z, mavlink_set_position_target_local_ned_t &sp){
 
-    mavlink_message_t msg;
-    mavlink_msg_set_position_target_local_ned_encode(255, 1, &msg, &cmd);
-
-    BYTE buf[1000];
-
-    int len = mavlink_msg_to_send_buffer(buf, &msg);
-
-    this->server->Write(buf,len);
+    sp.time_boot_ms = 0;
+    sp.type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION & MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_ANGLE;
+    sp.coordinate_frame = MAV_FRAME_LOCAL_NED;
+    sp.x = x;
+    sp.y = y;
+    sp.z = z;
+    sp.yaw = 0;
 
     // Print log
     char buff[100];
-    sprintf(buff,"Command: Go to (lat %f, lon %f, alt %f, yaw %f)", lat, lon, alt, yaw);
+    sprintf(buff,"Command: Set position (x %f, y %f, z %f)", sp.x, sp.y, sp.z);
     LOG(buff);
 }
 
+//Set target velocities
+void PX4Communicator::SetVelocity(float vx, float vy, float vz, mavlink_set_position_target_local_ned_t &sp){
 
-// Set attitute
-void PX4Communicator::SetAttitude(float quat[], float rates[]){
-
-    mavlink_set_attitude_target_t cmd;
-    cmd.time_boot_ms = 0;
-    cmd.target_system = 1;
-    cmd.target_component = 1;
-
-    // Set quaternions
-    cmd.q[0] = quat[0];
-    cmd.q[1] = quat[1];
-    cmd.q[2] = quat[2];
-    cmd.q[3] = quat[3];
-
-    // Set body rates
-    cmd.body_roll_rate = rates[0];
-    cmd.body_pitch_rate = rates[1];
-    cmd.body_yaw_rate = rates[2];
-    cmd.thrust = rates[3];
-
-    mavlink_message_t msg;
-    mavlink_msg_set_attitude_target_encode(255,1,&msg,&cmd);
-
-    BYTE buf[1000];
-    int len = mavlink_msg_to_send_buffer(buf, &msg);
-
-    this->server->Write(buf,len);
+    sp.type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_VELOCITY;
+    sp.coordinate_frame = MAV_FRAME_LOCAL_NED;
+    sp.vx = vx;
+    sp.vy = vy;
+    sp.vz = vz;
 
     // Print log
     char buff[100];
-    sprintf(buff,"Command: Set attitude (quat: %f,%f,%f,%f; rates: %f,%f,%f,%f)", quat[0],quat[1],quat[2],quat[3],rates[0],rates[1],rates[2],rates[3]);
+    sprintf(buff,"Command: Set velocity (vx %f, vy %f, vz %f)", sp.vx, sp.vy, sp.vz);
     LOG(buff);
+}
+
+// Set yaw
+void PX4Communicator::SetYaw(float yaw, mavlink_set_position_target_local_ned_t &sp){
+
+    sp.type_mask &= MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_ANGLE;
+    sp.yaw  = yaw;
+
+    // Print log
+    char buff[100];
+    sprintf(buff,"Command: Set yaw (yaw %f)", sp.yaw);
+    LOG(buff);
+}
+
+// Set yaw rate
+void PX4Communicator::SetYawRate(float yawRate, mavlink_set_position_target_local_ned_t &sp){
+
+    sp.type_mask &= MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_RATE;
+    sp.yaw_rate  = yawRate;
+
+    // Print log
+    char buff[100];
+    sprintf(buff,"Command: Set yaw rate (yaw rate %f)", sp.yaw_rate);
+    LOG(buff);
+}
+
+// Update setpoint
+void PX4Communicator::UpdateSetpoint(mavlink_set_position_target_local_ned_t sp){
+
+    this->targetSetpoint = sp;
 
 }
 
+// Write setpoint
+void PX4Communicator::WriteSetpoint(){
 
+    // Get current target setpoint
+    mavlink_set_position_target_local_ned_t sp = this->targetSetpoint;
 
-// Initialize a mavlink_command_long_t
-// confirmation, target_system, target_component = 1, the rest = 0
-mavlink_command_long_t PX4Communicator::InitMavLinkCommandLongT(){
+    // double check some system parameters
+    //if ( not sp.time_boot_ms ){
+    //    sp.time_boot_ms = (uint32_t) (get_time_usec()/1000);
+    //}
+    sp.target_system    = 1;
+    sp.target_component = 1;
 
-    mavlink_command_long_t cmd;
-    cmd.command = 0;
-    cmd.confirmation = 1;
-    cmd.target_system = 1;
-    cmd.target_component = 1;
-    cmd.param1 = 0;
-    cmd.param2 = 0;
-    cmd.param3 = 0;
-    cmd.param4 = 0;
-    cmd.param5 = 0;
-    cmd.param6 = 0;
-    cmd.param7 = 0;
+    // Encode message
+    mavlink_message_t msg;
+    mavlink_msg_set_position_target_local_ned_encode(255, 1, &msg, &sp);
 
-    return cmd;
+    // Write message
+    int len = this->WriteMessage(msg);
+
+    if ( len <= 0 ){
+        LOG("WARNING Command: Could not send target set point");
+    }else{
+        LOG("Command: Write setpoint");
+    }
+
+    return;
 }
 
 // Send command to server
-void PX4Communicator::SendCommand(mavlink_command_long_t cmd){
+int PX4Communicator::WriteMessage(mavlink_message_t msg){
 
-    mavlink_message_t msg;
-    BYTE buf[1000];
 
-    mavlink_msg_command_long_encode(255, 1, &msg, &cmd);
+    BYTE buf[300];
     int len = mavlink_msg_to_send_buffer(buf, &msg);
 
     this->server->Write(buf,len);
+
+    // TODO it's a fake len
+    return len;
 }
