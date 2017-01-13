@@ -58,12 +58,11 @@ public:
     void Land(float lat, float lon);
     void ReturnToLaunch();
 
-    void SetPosition(float x, float y, float z,  mavlink_set_position_target_local_ned_t &sp);
-    void SetVelocity(float vx, float vy, float vz, mavlink_set_position_target_local_ned_t &sp);
-    void SetYaw(float yaw, mavlink_set_position_target_local_ned_t &sp);
-    void SetYawRate(float yawRate, mavlink_set_position_target_local_ned_t &sp);
+    void SetPosition(float x, float y, float z);
+    void SetVelocity(float vx, float vy, float vz);
+    void SetYaw(float yaw);
+    void SetYawRate(float yawRate);
 
-    void UpdateSetpoint(mavlink_set_position_target_local_ned_t sp);
     void WriteSetpoint();
     void WriteThread(void);
 

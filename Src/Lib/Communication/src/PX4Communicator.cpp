@@ -1,8 +1,6 @@
 #include "PX4Communicator.h"
 
-// ----------------------------------------------------------------------------------
 //   Time
-// ------------------- ---------------------------------------------------------------
 uint64_t get_time_usec()
 {
     static struct timeval _time_stamp;
@@ -178,7 +176,9 @@ void PX4Communicator::StartOffBoard(){
 }
 
 //Set target position
-void PX4Communicator::SetPosition(float x, float y, float z, mavlink_set_position_target_local_ned_t &sp){
+void PX4Communicator::SetPosition(float x, float y, float z){
+
+    mavlink_set_position_target_local_ned_t sp;
 
     sp.time_boot_ms = 0;
     sp.type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION & MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_ANGLE;
@@ -188,6 +188,8 @@ void PX4Communicator::SetPosition(float x, float y, float z, mavlink_set_positio
     sp.z = z;
     sp.yaw = 0;
 
+    this->targetSetpoint = sp;
+
     // Print log
     char buff[100];
     sprintf(buff,"Command: Set position (x %f, y %f, z %f)", sp.x, sp.y, sp.z);
@@ -195,13 +197,17 @@ void PX4Communicator::SetPosition(float x, float y, float z, mavlink_set_positio
 }
 
 //Set target velocities
-void PX4Communicator::SetVelocity(float vx, float vy, float vz, mavlink_set_position_target_local_ned_t &sp){
+void PX4Communicator::SetVelocity(float vx, float vy, float vz){
+
+    mavlink_set_position_target_local_ned_t sp;
 
     sp.type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_VELOCITY;
     sp.coordinate_frame = MAV_FRAME_LOCAL_NED;
     sp.vx = vx;
     sp.vy = vy;
     sp.vz = vz;
+
+    this->targetSetpoint = sp;
 
     // Print log
     char buff[100];
@@ -210,10 +216,14 @@ void PX4Communicator::SetVelocity(float vx, float vy, float vz, mavlink_set_posi
 }
 
 // Set yaw
-void PX4Communicator::SetYaw(float yaw, mavlink_set_position_target_local_ned_t &sp){
+void PX4Communicator::SetYaw(float yaw){
+
+    mavlink_set_position_target_local_ned_t sp;
 
     sp.type_mask &= MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_ANGLE;
     sp.yaw  = yaw;
+
+    this->targetSetpoint = sp;
 
     // Print log
     char buff[100];
@@ -222,10 +232,14 @@ void PX4Communicator::SetYaw(float yaw, mavlink_set_position_target_local_ned_t 
 }
 
 // Set yaw rate
-void PX4Communicator::SetYawRate(float yawRate, mavlink_set_position_target_local_ned_t &sp){
+void PX4Communicator::SetYawRate(float yawRate){
+
+    mavlink_set_position_target_local_ned_t sp;
 
     sp.type_mask &= MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_RATE;
     sp.yaw_rate  = yawRate;
+
+    this->targetSetpoint = sp;
 
     // Print log
     char buff[100];
@@ -233,12 +247,6 @@ void PX4Communicator::SetYawRate(float yawRate, mavlink_set_position_target_loca
     LOG(buff);
 }
 
-// Update setpoint
-void PX4Communicator::UpdateSetpoint(mavlink_set_position_target_local_ned_t sp){
-
-    this->targetSetpoint = sp;
-
-}
 
 // Write setpoint
 void PX4Communicator::WriteSetpoint(){
@@ -247,9 +255,9 @@ void PX4Communicator::WriteSetpoint(){
     mavlink_set_position_target_local_ned_t sp = this->targetSetpoint;
 
     // double check some system parameters
-    //if ( not sp.time_boot_ms ){
-    //    sp.time_boot_ms = (uint32_t) (get_time_usec()/1000);
-    //}
+    if ( not sp.time_boot_ms ){
+        sp.time_boot_ms = (uint32_t) (get_time_usec()/1000);
+    }
     sp.target_system    = 1;
     sp.target_component = 1;
 
@@ -285,9 +293,6 @@ int PX4Communicator::WriteMessage(mavlink_message_t msg){
 void PX4Communicator::StartAutopilot(){
 
     // Get current target setpoint
-    mavlink_set_position_target_local_ned_t sp = this->targetSetpoint;
-
-    this->UpdateSetpoint(sp);
     this->StartOffBoard();
 
     pthread_t writeThread;
