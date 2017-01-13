@@ -24,12 +24,12 @@ using namespace std;
 
 
 void* StartWriteSetPointThread(void *args);
+void* StartReadThread(void *args);
 
 class PX4Communicator
 {
 private:
 
-    UdpCommunicationSocket *server;
     static bool isInitialized;
 
     // Ids for Mav messages
@@ -50,6 +50,7 @@ private:
 
     void WriteSetpoint();
     int WriteMessage(mavlink_message_t msg);
+    void Read(UdpCommunicationSocket *server);
 
     static void *DispatchMavLinkMessages(void* ptr);
 
@@ -57,6 +58,8 @@ private:
 public:
 
     PX4Communicator(int simulatorPort);
+
+    UdpCommunicationSocket *server;
 
     static void HeartBeat(UdpCommunicationSocket* server);
 
@@ -75,6 +78,7 @@ public:
     void StopAutopilot();
 
     void WriteSetPointThread(void);
+    void ReadThread(UdpCommunicationSocket *server);
 
 };
 #endif // !PX4COMMUNICATOR_H

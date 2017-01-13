@@ -20,16 +20,15 @@ PX4Communicator::PX4Communicator(int simulatorPort){
     this->autopilotId = 1;
     this->companionId = 1;
 
-    //start the Dispatch function.
-    pthread_t dispatchThread;
-    int result = pthread_create(&dispatchThread, NULL, PX4Communicator::DispatchMavLinkMessages, server);
+    pthread_t readThread;
+    int result = pthread_create(&readThread, NULL, StartReadThread, this);
     if(result != 0)
     {
         ERROR("Failed to create the dispatch thread");
     }
     while(server->writeSock == INVALID_SOCKET);
-
 }
+
 
 void PX4Communicator::HeartBeat(UdpCommunicationSocket* server){
 
@@ -38,6 +37,50 @@ void PX4Communicator::HeartBeat(UdpCommunicationSocket* server){
     mavlink_msg_heartbeat_pack(255, 1, &msg, MAV_TYPE_GCS,MAV_AUTOPILOT_GENERIC_WAYPOINTS_AND_SIMPLE_NAVIGATION_ONLY, MAV_MODE_AUTO_ARMED, 0, MAV_STATE_ACTIVE);
     int len = mavlink_msg_to_send_buffer(buf, &msg);
     server->Write(buf,len);
+}
+
+void PX4Communicator::Read(UdpCommunicationSocket *server) {
+
+    int BUFFER_LENGTH = 255;
+    BYTE buf[BUFFER_LENGTH];
+    char temp;
+    memset(buf, 0, BUFFER_LENGTH);
+    int recsize = server->Read(buf,BUFFER_LENGTH);
+
+    if (recsize > 0) {
+
+        mavlink_message_t msg;
+        mavlink_status_t status;
+
+        for (int j = 0; j < recsize; ++j){
+
+            temp = buf[j];
+
+             if (mavlink_parse_char(MAVLINK_COMM_0, buf[j], &msg, &status)){
+                 switch (msg.msgid) {
+                    case MAVLINK_MSG_ID_HEARTBEAT:{
+                        LOG("Heart beat received");
+                        HeartBeat(server);
+                        break;
+                    }
+                    case MAVLINK_MSG_ID_LOCAL_POSITION_NED:{
+                        LOG("Local position received");
+                    }
+                    case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:{
+                        LOG("GPS position received");
+                        break;
+                    }
+                    case MAVLINK_MSG_ID_BATTERY_STATUS:{
+                        LOG("Battery status received");
+                        break;
+                    }
+                    default:{
+                        break;
+                    }
+                 }
+             }
+        }
+    }
 }
 
 void *PX4Communicator::DispatchMavLinkMessages(void *ptr) {
@@ -300,7 +343,7 @@ void PX4Communicator::StartAutopilot(){
     this->StartOffBoard();
 
     pthread_t writeThread;
-    int rc = pthread_create(&writeThread, NULL, StartWriteSetPointThread, this);
+    int wt = pthread_create(&writeThread, NULL, StartWriteSetPointThread, this);
 
     LOG("Command: Start autopilot");
 
@@ -317,8 +360,17 @@ void PX4Communicator::StopAutopilot(){
 void PX4Communicator::WriteSetPointThread(void){
 
     while(!this->stopWriteReadThreads){
-        usleep(250000);   // Stream at 4Hz
+        usleep(175000);   // Read at 2Hz
         this->WriteSetpoint();
+    }
+}
+
+void PX4Communicator::ReadThread(UdpCommunicationSocket *server){
+
+    // TODO (tom) fix this exit condition
+    while(!this->stopWriteReadThreads){
+        usleep(250000);   // Stream at 4Hz
+        this->Read(server);
     }
 }
 
@@ -327,6 +379,14 @@ void* StartWriteSetPointThread(void *args){
 
     PX4Communicator *px4 = (PX4Communicator *)args;
     px4->WriteSetPointThread();
+    pthread_exit(NULL);
+
+}
+
+void* StartReadThread(void *args){
+
+    PX4Communicator *px4 = (PX4Communicator *)args;
+    px4->ReadThread(px4->server);
     pthread_exit(NULL);
 
 }
