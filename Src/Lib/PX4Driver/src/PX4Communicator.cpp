@@ -369,7 +369,7 @@ void PX4Communicator::ReadThread(UdpCommunicationSocket *server){
 
     // TODO (tom) fix this exit condition
     while(!this->stopWriteReadThreads){
-        usleep(250000);   // Stream at 4Hz
+        usleep(175000);   // Stream at 2Hz
         this->Read(server);
     }
 }

@@ -1,20 +1,20 @@
 cmake_minimum_required(VERSION 3.0)
-project(CommunicationTest)
+project(PX4Driver)
 
 # Search .cpp in ./src
 file(GLOB_RECURSE sources src/*.cpp)
-FILE(GLOB_RECURSE includes include/*.h ${drona_SOURCE_DIR}/Src/Lib/Communication/*.h)
+file(GLOB_RECURSE includes includes/*.h)
 
 # Include path
-INCLUDE_DIRECTORIES(include)
+INCLUDE_DIRECTORIES(includes)
 
 
 # Build exectuable
-add_executable(server src/server.cpp ${includes})
+add_library(px4driver STATIC ${sources} ${includes})
 
-# Target Communication Libraries
-TARGET_LINK_LIBRARIES(server px4driver)
-
+TARGET_LINK_LIBRARIES(px4driver communication)
+TARGET_LINK_LIBRARIES(px4driver pthread)
+TARGET_LINK_LIBRARIES(px4driver logger)
 
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
