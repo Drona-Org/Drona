@@ -22,6 +22,9 @@
 
 using namespace std;
 
+
+void* StartWriteThread(void *args);
+
 class PX4Communicator
 {
 private:
@@ -32,6 +35,8 @@ private:
     int systemId;
     int autopilotId;
     int companionId;
+
+    bool stopWriteReadThreads;
 
     mavlink_command_long_t InitMavLinkCommandLongT();
     void SendCommand(mavlink_command_long_t cmd);
@@ -60,11 +65,15 @@ public:
 
     void UpdateSetpoint(mavlink_set_position_target_local_ned_t sp);
     void WriteSetpoint();
+    void WriteThread(void);
 
     int WriteMessage(mavlink_message_t msg);
 
     void StartOffBoard();
     void StopOffBoard(){ this->OffBoard(false); };
+
+    void StartAutopilot();
+    void StopAutopilot();
 
 };
 #endif // !PX4COMMUNICATOR_H

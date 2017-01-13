@@ -16,6 +16,8 @@ PX4Communicator::PX4Communicator(int simulatorPort){
     this->server = new UdpCommunicationSocket();
     server-> ReadFrom(simulatorPort);
 
+    this->stopWriteReadThreads = false;
+
     //255 = 255;
     //this->autopilotId = 1;
     //1 = 1;
@@ -278,4 +280,44 @@ int PX4Communicator::WriteMessage(mavlink_message_t msg){
 
     // TODO it's a fake len
     return len;
+}
+
+void PX4Communicator::StartAutopilot(){
+
+    // Get current target setpoint
+    mavlink_set_position_target_local_ned_t sp = this->targetSetpoint;
+
+    this->UpdateSetpoint(sp);
+    this->StartOffBoard();
+
+    pthread_t writeThread;
+    int rc = pthread_create(&writeThread, NULL, StartWriteThread, this);
+
+    LOG("Command: Start autopilot");
+
+}
+
+void PX4Communicator::StopAutopilot(){
+
+    this->stopWriteReadThreads = true;
+    this->StopOffBoard();
+
+    LOG("Command: Stop autopilot");
+}
+
+void PX4Communicator::WriteThread(void){
+
+    while(!this->stopWriteReadThreads){
+        usleep(250000);   // Stream at 4Hz
+        this->WriteSetpoint();
+    }
+}
+
+
+void* StartWriteThread(void *args){
+
+    PX4Communicator *px4 = (PX4Communicator *)args;
+    px4->WriteThread();
+    pthread_exit(NULL);
+
 }

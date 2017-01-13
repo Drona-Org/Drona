@@ -1,7 +1,6 @@
 #include <iostream>
 #include "UdpSocketPort.h"
 #include "PX4Communicator.h"
-#include "PX4API.h"
 #include "mavlink.h"
 #include "mavlink_helpers.h"
 #include "mavlink_types.h"
@@ -28,16 +27,9 @@ int main()
     PX4->UpdateSetpoint(sp);
     usleep(250000);
 
-    // Turn on offboard control
-    PX4->StartOffBoard();
-
-    for(int i=1; i<25; i++){
-        PX4->WriteSetpoint();
-        usleep(250000);
-    }
-
-    // Turn on offboard control
-    PX4->StopOffBoard();
+    PX4->StartAutopilot();
+    usleep(10000000);
+    PX4->StopAutopilot();
 
     while(true){}
 
