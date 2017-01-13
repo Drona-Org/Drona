@@ -16,9 +16,9 @@ PX4Communicator::PX4Communicator(int simulatorPort){
 
     this->stopWriteReadThreads = false;
 
-    //255 = 255;
-    //this->autopilotId = 1;
-    //1 = 1;
+    this->systemId = 255;
+    this->autopilotId = 1;
+    this->companionId = 1;
 
     //start the Dispatch function.
     pthread_t dispatchThread;
@@ -83,14 +83,14 @@ void PX4Communicator::Arm(){
 
     mavlink_command_long_t cmd = {0};
     cmd.confirmation = 1;
-    cmd.target_system = 1;
+    cmd.target_system = this->companionId;
     cmd.target_component = this->autopilotId;
 
     cmd.command = MAV_CMD_COMPONENT_ARM_DISARM;
     cmd.param1 = 1;
 
     mavlink_message_t msg;
-    mavlink_msg_command_long_encode(255, 1, &msg, &cmd);
+    mavlink_msg_command_long_encode(this->systemId, this->autopilotId, &msg, &cmd);
 
     this->WriteMessage(msg);
 
@@ -103,7 +103,7 @@ void PX4Communicator::Takeoff(float alt){
 
     mavlink_command_long_t cmd = {0};
     cmd.confirmation = 1;
-    cmd.target_system = 1;
+    cmd.target_system = this->companionId;
     cmd.target_component = this->autopilotId;
 
     cmd.command = MAV_CMD_NAV_TAKEOFF;
@@ -113,7 +113,7 @@ void PX4Communicator::Takeoff(float alt){
     cmd.param7 = alt;
 
     mavlink_message_t msg;
-    mavlink_msg_command_long_encode(255, 1, &msg, &cmd);
+    mavlink_msg_command_long_encode(this->systemId, this->autopilotId, &msg, &cmd);
 
     this->WriteMessage(msg);
 
@@ -128,13 +128,13 @@ void PX4Communicator::ReturnToLaunch(){
 
     mavlink_command_long_t cmd = {0};
     cmd.confirmation = 1;
-    cmd.target_system = 1;
+    cmd.target_system = this->companionId;
     cmd.target_component = this->autopilotId;
 
     cmd.command = MAV_CMD_NAV_RETURN_TO_LAUNCH;
 
     mavlink_message_t msg;
-    mavlink_msg_command_long_encode(255, 1, &msg, &cmd);
+    mavlink_msg_command_long_encode(this->systemId, this->autopilotId, &msg, &cmd);
 
     this->WriteMessage(msg);
 
@@ -142,19 +142,20 @@ void PX4Communicator::ReturnToLaunch(){
     LOG("Command: Return to launch");
 }
 
+
 // Start/Stop offboard control
 void PX4Communicator::OffBoard(bool on)
 {
     mavlink_command_long_t cmd = {0};
     cmd.confirmation = 1;
-    cmd.target_system = 1;
+    cmd.target_system = this->companionId;
     cmd.target_component = this->autopilotId;
 
     cmd.param1 = (float) on;
     cmd.command = MAV_CMD_NAV_GUIDED_ENABLE;
 
     mavlink_message_t msg;
-    mavlink_msg_command_long_encode(255, 1, &msg, &cmd);
+    mavlink_msg_command_long_encode(this->systemId, this->autopilotId, &msg, &cmd);
 
     this->WriteMessage(msg);
 
@@ -170,7 +171,10 @@ void PX4Communicator::OffBoard(bool on)
     LOG(buff);
 }
 
+// Start offboard controller
 void PX4Communicator::StartOffBoard(){
+
+    // Must write a setpoint before starting offborad controller
     this->WriteSetpoint();
     this->OffBoard(true);
 }
@@ -258,12 +262,12 @@ void PX4Communicator::WriteSetpoint(){
     if ( not sp.time_boot_ms ){
         sp.time_boot_ms = (uint32_t) (get_time_usec()/1000);
     }
-    sp.target_system    = 1;
-    sp.target_component = 1;
+    sp.target_system    = this->companionId;
+    sp.target_component = this->autopilotId;
 
     // Encode message
     mavlink_message_t msg;
-    mavlink_msg_set_position_target_local_ned_encode(255, 1, &msg, &sp);
+    mavlink_msg_set_position_target_local_ned_encode(this->systemId, this->autopilotId, &msg, &sp);
 
     // Write message
     int len = this->WriteMessage(msg);
@@ -296,7 +300,7 @@ void PX4Communicator::StartAutopilot(){
     this->StartOffBoard();
 
     pthread_t writeThread;
-    int rc = pthread_create(&writeThread, NULL, StartWriteThread, this);
+    int rc = pthread_create(&writeThread, NULL, StartWriteSetPointThread, this);
 
     LOG("Command: Start autopilot");
 
@@ -310,7 +314,7 @@ void PX4Communicator::StopAutopilot(){
     LOG("Command: Stop autopilot");
 }
 
-void PX4Communicator::WriteThread(void){
+void PX4Communicator::WriteSetPointThread(void){
 
     while(!this->stopWriteReadThreads){
         usleep(250000);   // Stream at 4Hz
@@ -319,10 +323,10 @@ void PX4Communicator::WriteThread(void){
 }
 
 
-void* StartWriteThread(void *args){
+void* StartWriteSetPointThread(void *args){
 
     PX4Communicator *px4 = (PX4Communicator *)args;
-    px4->WriteThread();
+    px4->WriteSetPointThread();
     pthread_exit(NULL);
 
 }

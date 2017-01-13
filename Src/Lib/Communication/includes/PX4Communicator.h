@@ -23,7 +23,7 @@
 using namespace std;
 
 
-void* StartWriteThread(void *args);
+void* StartWriteSetPointThread(void *args);
 
 class PX4Communicator
 {
@@ -32,23 +32,30 @@ private:
     UdpCommunicationSocket *server;
     static bool isInitialized;
 
+    // Ids for Mav messages
     int systemId;
     int autopilotId;
     int companionId;
 
+    // Current target setpoint
+    mavlink_set_position_target_local_ned_t targetSetpoint;
+
+    // Offboard control routines
+    void OffBoard(bool on);
+    void StartOffBoard();
+    void StopOffBoard(){ this->OffBoard(false); };
+
+    // Write/Read routines
     bool stopWriteReadThreads;
 
-    mavlink_command_long_t InitMavLinkCommandLongT();
-    void SendCommand(mavlink_command_long_t cmd);
+    void WriteSetpoint();
+    int WriteMessage(mavlink_message_t msg);
+
     static void *DispatchMavLinkMessages(void* ptr);
 
 
-    mavlink_set_position_target_local_ned_t targetSetpoint;
-
-
-    void OffBoard(bool on);
-
 public:
+
     PX4Communicator(int simulatorPort);
 
     static void HeartBeat(UdpCommunicationSocket* server);
@@ -58,21 +65,16 @@ public:
     void Land(float lat, float lon);
     void ReturnToLaunch();
 
+    // Setpoint routines
     void SetPosition(float x, float y, float z);
     void SetVelocity(float vx, float vy, float vz);
     void SetYaw(float yaw);
     void SetYawRate(float yawRate);
 
-    void WriteSetpoint();
-    void WriteThread(void);
-
-    int WriteMessage(mavlink_message_t msg);
-
-    void StartOffBoard();
-    void StopOffBoard(){ this->OffBoard(false); };
-
     void StartAutopilot();
     void StopAutopilot();
+
+    void WriteSetPointThread(void);
 
 };
 #endif // !PX4COMMUNICATOR_H
