@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="CommunicationTest" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="/home/ankush/Workspace/DronaForPX4/Samples/Test-Build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="/home/ankush/Workspace/DronaForPX4/Samples/Test-Build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="server">
+         <Option output="/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/server" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/ankush/Workspace/DronaForPX4/Samples/Test-Build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Samples/TestCommunicationLib/include" />
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Src/Lib/Communication/includes" />
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Src/include/mavlink" />
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Src/include/mavlink/common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 server" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="server/fast">
+         <Option output="/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/server" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/ankush/Workspace/DronaForPX4/Samples/Test-Build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Samples/TestCommunicationLib/include" />
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Src/Lib/Communication/includes" />
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Src/include/mavlink" />
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Src/include/mavlink/common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 server/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="edit_cache">
+         <Option working_dir="/home/ankush/Workspace/DronaForPX4/Samples/Test-Build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 edit_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="client">
+         <Option output="/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/client" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/ankush/Workspace/DronaForPX4/Samples/Test-Build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Samples/TestCommunicationLib/include" />
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Src/Lib/Communication/includes" />
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Src/include/mavlink" />
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Src/include/mavlink/common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 client" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="client/fast">
+         <Option output="/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/client" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/ankush/Workspace/DronaForPX4/Samples/Test-Build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Samples/TestCommunicationLib/include" />
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Src/Lib/Communication/includes" />
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Src/include/mavlink" />
+            <Add directory="/home/ankush/Workspace/DronaForPX4/Src/include/mavlink/common" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 client/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="/home/ankush/Workspace/DronaForPX4/Samples/TestCommunicationLib/src/client.cpp">
+         <Option target="client"/>
+      </Unit>
+      <Unit filename="/home/ankush/Workspace/DronaForPX4/Samples/TestCommunicationLib/src/server.cpp">
+         <Option target="server"/>
+      </Unit>
+      <Unit filename="/home/ankush/Workspace/DronaForPX4/Src/Lib/Communication/includes/Port.h">
+         <Option target="server"/>
+         <Option target="client"/>
+      </Unit>
+      <Unit filename="/home/ankush/Workspace/DronaForPX4/Src/Lib/Communication/includes/UdpSocketPort.h">
+         <Option target="server"/>
+         <Option target="client"/>
+      </Unit>
+      <Unit filename="/home/ankush/Workspace/DronaForPX4/Samples/TestCommunicationLib/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>
