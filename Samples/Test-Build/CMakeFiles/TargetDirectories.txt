@@ -1,4 +1,0 @@
-/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/CMakeFiles/rebuild_cache.dir
-/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/CMakeFiles/server.dir
-/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/CMakeFiles/edit_cache.dir
-/home/ankush/Workspace/DronaForPX4/Samples/Test-Build/CMakeFiles/client.dir

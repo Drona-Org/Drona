@@ -1,1 +1,0 @@
-/usr/bin/c++    -std=c++11 -g   CMakeFiles/client.dir/src/client.cpp.o  -o client -rdynamic /home/ankush/Workspace/DronaForPX4/Src/Lib/Communication-build/libcommunication.a 
