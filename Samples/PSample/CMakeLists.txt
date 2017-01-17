@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.0)
+project(psample)
+
+
+set(pingpong_psource_dir PSrc)
+set(pingpong_csource_dir Src)
+p_compile(PingPong ${pingpong_psource_dir}/PingPong.p)
+
+## Declare a C++ executable
+add_executable(PingPong
+  ${PingPong_GENERATED_SRCS}
+  ${pingpong_csource_dir}/tester.c
+)
+set_property(TARGET PingPong PROPERTY C_STANDARD 99)
+target_include_directories(PingPong PRIVATE
+  ${PingPong_INCLUDE_DIRS}
+)
+
+target_link_libraries(PingPong
+  ${PingPong_LINK_LIBS}
+  pthread
+)
