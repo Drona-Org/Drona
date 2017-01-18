@@ -45,7 +45,7 @@ function (p_compile pproject p_src)
         set(p_compile_cmd mono ${P_COMPILER_PATH})
         get_filename_component(p_src_basename ${p_src} NAME_WE)
         set(generated_c_src ${p_src_basename}.c)
-        set(output_dir ${CMAKE_CURRENT_SOURCE_DIR})
+        set(output_dir ${CMAKE_CURRENT_SOURCE_DIR}/Generated)
         set(output_c_srcs ${output_dir}/${generated_c_src} ${output_dir}/linker.c)
         add_custom_command(
                 OUTPUT ${output_c_srcs}
@@ -55,7 +55,7 @@ function (p_compile pproject p_src)
                 DEPENDS ${p_src}
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                 COMMENT "Linking P ${p_src}..."
-                COMMAND ${p_compile_cmd} /link ${p_src_basename}.4ml
+                COMMAND ${p_compile_cmd} /link Generated/${p_src_basename}.4ml -outputDir:${output_dir}
         )
 
         set(${pproject}_GENERATED_SRCS ${output_c_srcs} PARENT_SCOPE)
