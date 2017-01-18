@@ -11,7 +11,7 @@ INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Logger/Includes)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PX4Driver/Includes)
 
 subdirs(Samples/TestCommunicationLib)
-subdirs(Samples/PSample)
+#subdirs(Samples/PSample)
 subdirs(Src/Lib/Logger)
 subdirs(Src/Lib/Communication)
 subdirs(Src/Lib/PX4Driver)
