@@ -2,6 +2,7 @@ event Ping assert 1 : machine;
 event Pong assert 1;
 event Success;
 
+
 machine Main {
     var pongId: machine;
 

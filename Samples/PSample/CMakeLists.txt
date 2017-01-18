@@ -4,7 +4,8 @@ project(psample)
 
 set(pingpong_psource_dir PSrc)
 set(pingpong_csource_dir Src)
-p_compile(PingPong ${pingpong_psource_dir}/PingPong.p)
+p_compile(PingPong PingPong.p)
+p_link(PingPong PingPong.4ml)
 
 ## Declare a C++ executable
 add_executable(PingPong

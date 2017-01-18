@@ -46,25 +46,43 @@ function (p_compile pproject p_src)
         get_filename_component(p_src_basename ${p_src} NAME_WE)
         set(generated_c_src ${p_src_basename}.c)
         set(output_dir ${CMAKE_CURRENT_SOURCE_DIR}/Generated)
-        set(output_c_srcs ${output_dir}/${generated_c_src} ${output_dir}/linker.c)
-        add_custom_command(
-                OUTPUT ${output_c_srcs}
+        set(output_c_srcs ${output_dir}/${generated_c_src})
+        ADD_CUSTOM_TARGET(compiler ALL
+                WORKING_DIRECTORY ${output_dir}
                 COMMAND ${CMAKE_COMMAND} -E make_directory ${output_dir}
                 COMMENT "Compiling P ${p_src}..."
-                COMMAND ${p_compile_cmd} -outputDir:${output_dir} /generate:C ${p_src}
-                DEPENDS ${p_src}
-                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                COMMENT "Linking P ${p_src}..."
-                COMMAND ${p_compile_cmd} /link Generated/${p_src_basename}.4ml -outputDir:${output_dir}
+                COMMAND ${p_compile_cmd} /generate:C ../PSrc/${p_src}
+                DEPENDS PSrc/${p_src}
+
         )
 
-        set(${pproject}_GENERATED_SRCS ${output_c_srcs} PARENT_SCOPE)
+        set(${pproject}_GENERATED_SRCS ${${pproject}_GENERATED_SRCS} ${output_c_srcs} PARENT_SCOPE)
         set(${pproject}_INCLUDE_DIRS ${output_dir} ${P_LIB_INCLUDE_PATH} PARENT_SCOPE)
         set(${pproject}_LINK_LIBS Prt PARENT_SCOPE)
 
-endfunction()
+endfunction(p_compile)
 
+function (p_link pproject formula_srcs)
 
+    set(p_link_cmd mono ${P_COMPILER_PATH} /link)
+    set(generated_c_src linker.c)
+    set(output_dir ${CMAKE_CURRENT_SOURCE_DIR}/Generated)
+    set(output_c_srcs ${output_dir}/${generated_c_src})
+
+    list(REMOVE_AT ARGV 0)
+    FOREACH(infileName ${ARGV})
+        SET(allfiles ${allfiles} "${infileName}")
+    ENDFOREACH(infileName)
+
+    ADD_CUSTOM_TARGET(
+            linker ALL
+            COMMAND ${CMAKE_COMMAND} -E make_directory ${output_dir}
+            COMMENT "Linking P ${p_src}..."
+            COMMAND ${p_link_cmd} /outputDir:${output_dir} ${allfiles}
+            WORKING_DIRECTORY ${output_dir}
+    )
+    set(${pproject}_GENERATED_SRCS ${${pproject}_GENERATED_SRCS} ${output_c_srcs} PARENT_SCOPE)
+endfunction(p_link)
 ##########################################################################
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
