@@ -30,6 +30,7 @@ class PX4Communicator
 {
 private:
 
+    static PX4Communicator px4;
     static bool isInitialized;
 
     // Ids for Mav messages
@@ -39,10 +40,14 @@ private:
 
     // Current target setpoint
     mavlink_set_position_target_local_ned_t targetSetpoint;
+    mavlink_set_position_target_local_ned_t currentPose;
 
     // Offboard control routines
     void OffBoard(bool on);
     void StartOffBoard();
+
+    void decodeMavlinkMessage(PX4Communicator px4, mavlink_message_t msg);
+    void UpdateCurrentPosition(float x, float y, float z);
 
     void WriteSetpoint();
     int WriteMessage(mavlink_message_t msg);

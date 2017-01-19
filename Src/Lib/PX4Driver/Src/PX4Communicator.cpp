@@ -46,7 +46,7 @@ PX4Communicator::PX4Communicator(int simulatorPort){
     this->companionId = 1;
 
     pthread_t readThread;
-    int result = pthread_create(&readThread, NULL, DispatchMavLinkMessages, this->server);
+    int result = pthread_create(&readThread, NULL, DispatchMavLinkMessages, this);
     if(result != 0)
     {
         ERROR("Failed to create the dispatch thread");
@@ -66,15 +66,15 @@ void PX4Communicator::HeartBeat(UdpCommunicationSocket* server){
 
 void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
 
-    UdpCommunicationSocket *server = (UdpCommunicationSocket *) ptr;
+    PX4Communicator *px4 = (PX4Communicator *) ptr;
     int BUFFER_LENGTH = 255;
     BYTE buf[BUFFER_LENGTH];
     BYTE temp;
     while(true) {
         memset(buf, 0, BUFFER_LENGTH);
-        int recsize = server->Read(buf,BUFFER_LENGTH);
+        int recsize = px4->server->Read(buf,BUFFER_LENGTH);
 
-        HeartBeat(server);
+        HeartBeat(px4->server);
 
         if (recsize > 0) {
 
@@ -88,27 +88,29 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
                 {
                      switch (msg.msgid) {
                         case MAVLINK_MSG_ID_HEARTBEAT:{
-                            LOG("Heart beat received");
-                            HeartBeat(server);
+                            //LOG("Heart beat received");
+                            HeartBeat(px4->server);
                             break;
                         }
                         case MAVLINK_MSG_ID_LOCAL_POSITION_NED:{
                             LOG("Local position received");
-                            //HeartBeat(server);
+                            mavlink_local_position_ned_t currentPosition;
+                            mavlink_msg_local_position_ned_decode(&msg, &currentPosition);
+                            px4->UpdateCurrentPosition(currentPosition.x,currentPosition.y,currentPosition.z);
                             break;
                         }
                         case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:{
-                            LOG("GPS position received");
+                            //LOG("GPS position received");
                             break;
                         }
                         case MAVLINK_MSG_ID_BATTERY_STATUS:{
-                            LOG("Battery status received");
+                            //LOG("Battery status received");
                             break;
                         }
                         default:{
                             char bb[100];
-                            sprintf(bb, "Message Id: %d", msg.msgid);
-                            LOG(bb);
+                            //sprintf(bb, "Message Id: %d", msg.msgid);
+                            //LOG(bb);
                             break;
                         }
                      }
@@ -290,6 +292,16 @@ void PX4Communicator::SetYawRate(float yawRate){
     sprintf(buff,"Command: Set yaw rate (yaw rate %f)", sp.yaw_rate);
     LOG(buff);
 }
+
+
+// Update current position
+void PX4Communicator::UpdateCurrentPosition(float x, float y, float z){
+    this->currentPose.x = x;
+    this->currentPose.y = y;
+    this->currentPose.z = z;
+    //printf("x:%f,y:%f,z:%f\n",this->currentPose.x,this->currentPose.y,this->currentPose.z);
+}
+
 
 
 // Write setpoint
