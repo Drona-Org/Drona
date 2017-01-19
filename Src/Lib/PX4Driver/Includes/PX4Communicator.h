@@ -45,9 +45,6 @@ private:
     void StartOffBoard();
     void StopOffBoard(){ this->OffBoard(false); };
 
-    // Write/Read routines
-    bool stopWriteReadThreads;
-
     void WriteSetpoint();
     int WriteMessage(mavlink_message_t msg);
     void Read(UdpCommunicationSocket *server);

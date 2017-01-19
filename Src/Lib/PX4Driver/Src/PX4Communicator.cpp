@@ -12,9 +12,34 @@ uint64_t get_time_usec()
 PX4Communicator::PX4Communicator(int simulatorPort){
 
     this->server = new UdpCommunicationSocket();
+
+    struct addrinfo hints;
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_DGRAM;
+    hints.ai_protocol = IPPROTO_UDP;
+
+    struct addrinfo *result_ = NULL;
+    int rc = getaddrinfo("127.0.0.1", "0", &hints, &result_);
+    if (rc != 0) {
+        printf("getaddrinfo failed with error: %d\n", rc);
+    }
+    for (struct addrinfo *ptr = result_; ptr != NULL; ptr = ptr->ai_next)
+    {
+        if (ptr->ai_family == AF_INET && ptr->ai_socktype == SOCK_DGRAM && ptr->ai_protocol == IPPROTO_UDP)
+        {
+            // found it!
+            sockaddr_in* sptr = (sockaddr_in*)ptr->ai_addr;
+            server->writeAddr.sin_family = sptr->sin_family;
+            server->writeAddr.sin_addr.s_addr = sptr->sin_addr.s_addr;
+            server->writeAddr.sin_port = 0; // don't know yet.
+            break;
+        }
+    }
+
+    freeaddrinfo(result_);
+
     server-> ReadFrom(simulatorPort);
 
-    this->stopWriteReadThreads = false;
 
     this->systemId = 255;
     this->autopilotId = 1;
@@ -34,7 +59,7 @@ void PX4Communicator::HeartBeat(UdpCommunicationSocket* server){
 
     mavlink_message_t msg;
     BYTE buf[255];
-    mavlink_msg_heartbeat_pack(255, 1, &msg, MAV_TYPE_GCS,MAV_AUTOPILOT_GENERIC_WAYPOINTS_AND_SIMPLE_NAVIGATION_ONLY, MAV_MODE_AUTO_ARMED, 0, MAV_STATE_ACTIVE);
+    mavlink_msg_heartbeat_pack(255, 1, &msg, MAV_TYPE_GCS,MAV_AUTOPILOT_INVALID, MAV_MODE_MANUAL_ARMED, 0, MAV_STATE_ACTIVE);
     int len = mavlink_msg_to_send_buffer(buf, &msg);
     server->Write(buf,len);
 }
@@ -47,6 +72,9 @@ void PX4Communicator::Read(UdpCommunicationSocket *server) {
     memset(buf, 0, BUFFER_LENGTH);
     int recsize = server->Read(buf,BUFFER_LENGTH);
 
+    printf("--");
+    HeartBeat(server);
+
     if (recsize > 0) {
 
         mavlink_message_t msg;
@@ -56,7 +84,7 @@ void PX4Communicator::Read(UdpCommunicationSocket *server) {
 
             temp = buf[j];
 
-             if (mavlink_parse_char(MAVLINK_COMM_0, buf[j], &msg, &status)){
+             if (mavlink_frame_char(MAVLINK_COMM_0, buf[j], &msg, &status) != MAVLINK_FRAMING_INCOMPLETE){
                  switch (msg.msgid) {
                     case MAVLINK_MSG_ID_HEARTBEAT:{
                         LOG("Heart beat received");
@@ -65,6 +93,8 @@ void PX4Communicator::Read(UdpCommunicationSocket *server) {
                     }
                     case MAVLINK_MSG_ID_LOCAL_POSITION_NED:{
                         LOG("Local position received");
+                        HeartBeat(server);
+                        break;
                     }
                     case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:{
                         LOG("GPS position received");
@@ -75,6 +105,9 @@ void PX4Communicator::Read(UdpCommunicationSocket *server) {
                         break;
                     }
                     default:{
+                        char bb[100];
+                        sprintf(bb, "Message Id: %d", msg.msgid);
+                        LOG(bb);
                         break;
                     }
                  }
@@ -351,7 +384,6 @@ void PX4Communicator::StartAutopilot(){
 
 void PX4Communicator::StopAutopilot(){
 
-    this->stopWriteReadThreads = true;
     this->StopOffBoard();
 
     LOG("Command: Stop autopilot");
@@ -359,17 +391,18 @@ void PX4Communicator::StopAutopilot(){
 
 void PX4Communicator::WriteSetPointThread(void){
 
-    while(!this->stopWriteReadThreads){
+    while(true){
         usleep(175000);   // Read at 2Hz
         this->WriteSetpoint();
+        HeartBeat(server);
     }
 }
 
 void PX4Communicator::ReadThread(UdpCommunicationSocket *server){
 
     // TODO (tom) fix this exit condition
-    while(!this->stopWriteReadThreads){
-        usleep(175000);   // Stream at 2Hz
+    while(true){
+        usleep(1750);   // Stream at 2Hz
         this->Read(server);
     }
 }

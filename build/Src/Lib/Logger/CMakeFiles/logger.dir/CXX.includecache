@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../Src/Lib/Logger/Includes/Logger.h
+pthread.h
+-
+stdio.h
+-
+string
+-
+
+/home/drona/Workspace/DronaForPX4/Src/Lib/Logger/Src/Logger.cpp
+Logger.h
+/home/drona/Workspace/DronaForPX4/Src/Lib/Logger/Src/Logger.h
+

@@ -24,6 +24,7 @@ using namespace std;
 
 class UdpCommunicationSocket
 {
+public:
     struct sockaddr_in writeAddr;
     struct sockaddr_in readAddr;
     char buffer[255]; // datagram max size
@@ -32,7 +33,7 @@ class UdpCommunicationSocket
     SOCKET readSock = INVALID_SOCKET;
 
 
-public:
+
     SOCKET writeSock = INVALID_SOCKET;
     //write to port
     HRESULT Write(const BYTE* ptr, int count);

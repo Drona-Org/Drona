@@ -1,0 +1,2 @@
+/usr/bin/ar cq libpx4driver.a  CMakeFiles/px4driver.dir/Src/PX4Communicator.cpp.o
+/usr/bin/ranlib libpx4driver.a

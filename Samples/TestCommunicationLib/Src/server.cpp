@@ -26,9 +26,11 @@ int main()
     PX4->SetPosition(-5,5,-10);
     usleep(10000000);
 
-    PX4->StopAutopilot();
+    //PX4->StopAutopilot();
 
-    while(true){}
+    while(true){
+       usleep(5000);
+    }
 
 }
 

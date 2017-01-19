@@ -1,0 +1,33 @@
+//// Program PingPong_p_LinkModel.4ml
+model PingPong_p_LinkModel of PLink at "/home/drona/Workspace/DronaForPX4/Submodule/P/Bld/Drops/Debug/x86/Binaries/PLink.4ml"
+{
+  EventDecl("Success", NIL, NIL),
+  MachineCreatesM("PONG", "Main"),
+  MachineCreatesM("Main", "Main"),
+  MachineCreatesM("PONG", "PONG"),
+  MachineCreatesM("Main", "PONG"),
+  EventDecl("Pong", AssertMaxInstances(1), NIL),
+  MachineReceives("Main", "Pong"),
+  MachineReceives("Main", "Ping"),
+  MachineReceives("PONG", "Success"),
+  MachineReceives("PONG", "Pong"),
+  MachineReceives("PONG", "Ping"),
+  MachineSends("Main", "Success"),
+  MachineSends("Main", "Pong"),
+  MachineSends("Main", "Ping"),
+  MachineSends("PONG", "Success"),
+  MachineSends("PONG", "Pong"),
+  MachineSends("PONG", "Ping"),
+  MachineReceives("Main", "Success"),
+  PermEmbeddedInEvent("Ping", "Ping"),
+  PermEmbeddedInEvent("Ping", "Pong"),
+  PermEmbeddedInEvent("Ping", "Success"),
+  EventDecl("Ping", AssertMaxInstances(1), BaseType(MACHINE)),
+  EventSet("P_GEND_EVENTSET", NIL),
+  EventSet("P_GEND_EVENTSET_Success", EventNameList("Success", NIL)),
+  EventSet("P_GEND_EVENTSET_Ping", EventNameList("Ping", NIL)),
+  EventSet("P_GEND_EVENTSET_Pong", EventNameList("Pong", NIL)),
+  MachineDecl("PONG", BaseType(NULL), IdList(54, IdList("file:///home/drona/Workspace/DronaForPX4/Samples/PSample/PSrc/PingPong.p", NIL))),
+  MachineDecl("Main", BaseType(NULL), IdList(35, IdList("file:///home/drona/Workspace/DronaForPX4/Samples/PSample/PSrc/PingPong.p", NIL))).
+}
+

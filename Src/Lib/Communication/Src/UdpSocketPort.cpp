@@ -35,7 +35,7 @@ HRESULT UdpCommunicationSocket::ReadFrom(int portAddress)
 {
     // socket() creates a socket
     // args: protocol family, type of socket (datagram), protocol
-    if ((readSock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP))==-1)
+    if ((readSock = socket(AF_INET, SOCK_DGRAM, 0))==-1)
       ERROR("Read socket could not be initialized");
     else
       LOG("Read socket connected");
@@ -58,7 +58,7 @@ HRESULT UdpCommunicationSocket::Write(const BYTE* ptr, int count)
 {
     if(writeSock != INVALID_SOCKET)
     {
-        if (sendto(writeSock, ptr, count, 0, (struct sockaddr*)&writeAddr, sizeof(writeAddr))==-1)
+        if (sendto(readSock, ptr, count, 0, (struct sockaddr*)&writeAddr, sizeof(writeAddr))==-1)
         {
             ERROR("Write Failed");
         }
@@ -73,11 +73,18 @@ HRESULT UdpCommunicationSocket::Write(const BYTE* ptr, int count)
 // read a given number of bytes from the port.
 HRESULT UdpCommunicationSocket::Read(BYTE* buffer, int bytesToRead)
 {
-    socklen_t alen = (sizeof(readAddr));
-    int readBytes = recvfrom(readSock, buffer, bytesToRead, 0, (struct sockaddr*)&writeAddr, &alen);
+    socklen_t alen = (sizeof(writeAddr));
+    sockaddr_in temp;
+    int readBytes = recvfrom(readSock, buffer, 255, 0, (struct sockaddr*)&temp, &alen);
     //read a message, now initialize the socket
     if (writeSock == INVALID_SOCKET && ((writeSock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP))==-1))
+    {
         ERROR("socket initialization error");
+    }
+    else
+    {
+        writeAddr.sin_port = temp.sin_port;
+    }
     return readBytes;
 }
 

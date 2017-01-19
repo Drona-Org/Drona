@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11 -g   CMakeFiles/server.dir/src/server.cpp.o  -o server -rdynamic ../../Src/Lib/Communication/libcommunication.a -lpthread ../../Src/Lib/Logger/liblogger.a 
