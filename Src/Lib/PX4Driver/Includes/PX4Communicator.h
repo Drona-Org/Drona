@@ -10,6 +10,7 @@
 #include <iostream>
 
 #include <vector>
+#include <math.h>
 
 #include <signal.h>
 #include <time.h>
@@ -78,7 +79,12 @@ public:
 
     void StartAutopilot();
     void StopAutopilot();
-    void FollowTrajectory(vector< vector< float > > traj);
+
+    void FollowTrajectory(vector< vector< float > > traj, float eps);
+    void FollowTrajectory(vector< vector< float > > traj, int rounds, float eps);
+
+    void Loiter(vector< float > center, float radius, int rounds, float eps, float loitStep);
+    void Square(vector< float > corner, float edge, int rounds, float eps);
 
     void WriteSetPointThread(void);
 
