@@ -46,7 +46,7 @@ PX4Communicator::PX4Communicator(int simulatorPort){
     this->companionId = 1;
 
     pthread_t readThread;
-    int result = pthread_create(&readThread, NULL, StartReadThread, this);
+    int result = pthread_create(&readThread, NULL, DispatchMavLinkMessages, this->server);
     if(result != 0)
     {
         ERROR("Failed to create the dispatch thread");
@@ -64,92 +64,56 @@ void PX4Communicator::HeartBeat(UdpCommunicationSocket* server){
     server->Write(buf,len);
 }
 
-void PX4Communicator::Read(UdpCommunicationSocket *server) {
+void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
 
+    UdpCommunicationSocket *server = (UdpCommunicationSocket *) ptr;
     int BUFFER_LENGTH = 255;
     BYTE buf[BUFFER_LENGTH];
-    char temp;
-    memset(buf, 0, BUFFER_LENGTH);
-    int recsize = server->Read(buf,BUFFER_LENGTH);
-
-    printf("--");
-    HeartBeat(server);
-
-    if (recsize > 0) {
-
-        mavlink_message_t msg;
-        mavlink_status_t status;
-
-        for (int j = 0; j < recsize; ++j){
-
-            temp = buf[j];
-
-             if (mavlink_frame_char(MAVLINK_COMM_0, buf[j], &msg, &status) != MAVLINK_FRAMING_INCOMPLETE){
-                 switch (msg.msgid) {
-                    case MAVLINK_MSG_ID_HEARTBEAT:{
-                        LOG("Heart beat received");
-                        HeartBeat(server);
-                        break;
-                    }
-                    case MAVLINK_MSG_ID_LOCAL_POSITION_NED:{
-                        LOG("Local position received");
-                        HeartBeat(server);
-                        break;
-                    }
-                    case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:{
-                        LOG("GPS position received");
-                        break;
-                    }
-                    case MAVLINK_MSG_ID_BATTERY_STATUS:{
-                        LOG("Battery status received");
-                        break;
-                    }
-                    default:{
-                        char bb[100];
-                        sprintf(bb, "Message Id: %d", msg.msgid);
-                        LOG(bb);
-                        break;
-                    }
-                 }
-             }
-        }
-    }
-}
-
-void *PX4Communicator::DispatchMavLinkMessages(void *ptr) {
-    UdpCommunicationSocket *server = (UdpCommunicationSocket*)ptr;
-    while(true)
-    {
-        int BUFFER_LENGTH = 255;
-        BYTE buf[BUFFER_LENGTH];
-        char temp;
+    BYTE temp;
+    while(true) {
         memset(buf, 0, BUFFER_LENGTH);
         int recsize = server->Read(buf,BUFFER_LENGTH);
+
+        HeartBeat(server);
+
         if (recsize > 0) {
-            // Something received - print out all bytes and parse packet
+
             mavlink_message_t msg;
             mavlink_status_t status;
 
             for (int j = 0; j < recsize; ++j)
-              {
+            {
                 temp = buf[j];
-                if (mavlink_parse_char(MAVLINK_COMM_0, buf[j], &msg, &status))
-                  {
-                    // Packet received
-                    switch ((BYTE)msg.msgid) {
-                    case MAVLINK_MSG_ID_HEARTBEAT:
-                        ERROR("heart is pumping !!");
-                        HeartBeat(server);
-                        break;
-                    case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
-                        ERROR("GPS Position Received");
-                        break;
-                    default:
-                        //DEBUG(".");
-                        break;
-                    }
-                  }
-              }
+                if (mavlink_frame_char(MAVLINK_COMM_0, buf[j], &msg, &status) != MAVLINK_FRAMING_INCOMPLETE)
+                {
+                     switch (msg.msgid) {
+                        case MAVLINK_MSG_ID_HEARTBEAT:{
+                            LOG("Heart beat received");
+                            HeartBeat(server);
+                            break;
+                        }
+                        case MAVLINK_MSG_ID_LOCAL_POSITION_NED:{
+                            LOG("Local position received");
+                            //HeartBeat(server);
+                            break;
+                        }
+                        case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:{
+                            LOG("GPS position received");
+                            break;
+                        }
+                        case MAVLINK_MSG_ID_BATTERY_STATUS:{
+                            LOG("Battery status received");
+                            break;
+                        }
+                        default:{
+                            char bb[100];
+                            sprintf(bb, "Message Id: %d", msg.msgid);
+                            LOG(bb);
+                            break;
+                        }
+                     }
+                 }
+            }
         }
     }
 }
@@ -382,12 +346,6 @@ void PX4Communicator::StartAutopilot(){
 
 }
 
-void PX4Communicator::StopAutopilot(){
-
-    this->StopOffBoard();
-
-    LOG("Command: Stop autopilot");
-}
 
 void PX4Communicator::WriteSetPointThread(void){
 
@@ -395,15 +353,6 @@ void PX4Communicator::WriteSetPointThread(void){
         usleep(175000);   // Read at 2Hz
         this->WriteSetpoint();
         HeartBeat(server);
-    }
-}
-
-void PX4Communicator::ReadThread(UdpCommunicationSocket *server){
-
-    // TODO (tom) fix this exit condition
-    while(true){
-        usleep(1750);   // Stream at 2Hz
-        this->Read(server);
     }
 }
 
@@ -416,10 +365,3 @@ void* StartWriteSetPointThread(void *args){
 
 }
 
-void* StartReadThread(void *args){
-
-    PX4Communicator *px4 = (PX4Communicator *)args;
-    px4->ReadThread(px4->server);
-    pthread_exit(NULL);
-
-}

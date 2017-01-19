@@ -43,11 +43,9 @@ private:
     // Offboard control routines
     void OffBoard(bool on);
     void StartOffBoard();
-    void StopOffBoard(){ this->OffBoard(false); };
 
     void WriteSetpoint();
     int WriteMessage(mavlink_message_t msg);
-    void Read(UdpCommunicationSocket *server);
 
     static void *DispatchMavLinkMessages(void* ptr);
 
@@ -75,7 +73,6 @@ public:
     void StopAutopilot();
 
     void WriteSetPointThread(void);
-    void ReadThread(UdpCommunicationSocket *server);
 
 };
 #endif // !PX4COMMUNICATOR_H
