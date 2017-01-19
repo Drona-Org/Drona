@@ -21,3 +21,8 @@ target_link_libraries(PingPong
   ${PingPong_LINK_LIBS}
   pthread
 )
+
+SET_TARGET_PROPERTIES (
+    PingPong
+    PROPERTIES LINKER_LANGUAGE CXX
+)

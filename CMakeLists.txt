@@ -11,7 +11,7 @@ INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Logger/Includes)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PX4Driver/Includes)
 
 subdirs(Samples/TestCommunicationLib)
-#subdirs(Samples/PSample)
+subdirs(Samples/PSample)
 subdirs(Src/Lib/Logger)
 subdirs(Src/Lib/Communication)
 subdirs(Src/Lib/PX4Driver)
@@ -53,7 +53,6 @@ function (p_compile pproject p_src)
                 COMMENT "Compiling P ${p_src}..."
                 COMMAND ${p_compile_cmd} /generate:C ../PSrc/${p_src}
                 DEPENDS PSrc/${p_src}
-
         )
 
         set(${pproject}_GENERATED_SRCS ${${pproject}_GENERATED_SRCS} ${output_c_srcs} PARENT_SCOPE)
