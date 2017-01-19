@@ -377,3 +377,39 @@ void* StartWriteSetPointThread(void *args){
 
 }
 
+// Check if drone is eps-close to (x,y,x)
+bool PX4Communicator::CloseTo(float x, float y, float z, float eps){
+
+    float dx = x - this->currentPose.x;
+    float dy = y - this->currentPose.y;
+    float dz = z - this->currentPose.z;
+    float dist = sqrt( pow(dx,2) + pow(dy,2) + pow(dz,2) );
+
+    return (dist < eps);
+}
+
+void PX4Communicator::FollowTrajectory(vector< vector< float > > traj){
+
+    if( traj.size() <= 0 ){
+        ERROR("FollowTrajectory: provide at least one way point");
+        if( traj[0].size() != 3 ){
+            ERROR("FollowTrajectory: waypoints must be 3d arrays");
+        }
+    }
+
+
+    int currentTarget = 0;
+    this->SetPosition(traj[currentTarget][0],traj[currentTarget][1],traj[currentTarget][2]);
+
+    while(true){
+        if( this->CloseTo(traj[currentTarget][0],traj[currentTarget][1],traj[currentTarget][2],0.5) ){
+            currentTarget = currentTarget + 1;
+            if(currentTarget >=  traj.size()){
+                return;
+            }
+            this->SetPosition(traj[currentTarget][0],traj[currentTarget][1],traj[currentTarget][2]);
+        }
+    }
+}
+
+

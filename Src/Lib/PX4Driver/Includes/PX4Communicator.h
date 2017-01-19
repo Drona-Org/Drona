@@ -9,6 +9,8 @@
 #include <pthread.h>
 #include <iostream>
 
+#include <vector>
+
 #include <signal.h>
 #include <time.h>
 #include <sys/time.h>
@@ -46,14 +48,14 @@ private:
     void OffBoard(bool on);
     void StartOffBoard();
 
-    void decodeMavlinkMessage(PX4Communicator px4, mavlink_message_t msg);
-    void UpdateCurrentPosition(float x, float y, float z);
-
     void WriteSetpoint();
     int WriteMessage(mavlink_message_t msg);
 
     static void *DispatchMavLinkMessages(void* ptr);
 
+
+    void UpdateCurrentPosition(float x, float y, float z);
+    bool CloseTo(float x, float y, float z, float eps);
 
 public:
 
@@ -76,6 +78,7 @@ public:
 
     void StartAutopilot();
     void StopAutopilot();
+    void FollowTrajectory(vector< vector< float > > traj);
 
     void WriteSetPointThread(void);
 
