@@ -94,17 +94,23 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
                         }
                         case MAVLINK_MSG_ID_LOCAL_POSITION_NED:{
                             LOG("Local position received");
-                            mavlink_local_position_ned_t currentPosition;
-                            mavlink_msg_local_position_ned_decode(&msg, &currentPosition);
-                            px4->UpdateCurrentPosition(currentPosition.x,currentPosition.y,currentPosition.z);
+                            mavlink_local_position_ned_t curLocPos;
+                            mavlink_msg_local_position_ned_decode(&msg, &curLocPos);
+                            px4->UpdateCurrentLocalPosition(curLocPos);
                             break;
                         }
                         case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:{
-                            //LOG("GPS position received");
+                            LOG("GPS position received");
+                            mavlink_global_position_int_t curGlobPos;
+                            mavlink_msg_global_position_int_decode(&msg, &curGlobPos);
+                            px4->UpdateCurrentGlobalPosition(curGlobPos);
                             break;
                         }
                         case MAVLINK_MSG_ID_BATTERY_STATUS:{
-                            //LOG("Battery status received");
+                            LOG("Battery status received");
+                            mavlink_battery_status_t batteryStatus;
+                            mavlink_msg_battery_status_decode(&msg, &batteryStatus);
+                            px4->UpdateBatteryStatus(batteryStatus);
                             break;
                         }
                         default:{
@@ -294,14 +300,20 @@ void PX4Communicator::SetYawRate(float yawRate){
 }
 
 
-// Update current position
-void PX4Communicator::UpdateCurrentPosition(float x, float y, float z){
-    this->currentPose.x = x;
-    this->currentPose.y = y;
-    this->currentPose.z = z;
-    //printf("x:%f,y:%f,z:%f\n",this->currentPose.x,this->currentPose.y,this->currentPose.z);
+void PX4Communicator::UpdateCurrentLocalPosition(mavlink_local_position_ned_t curLocPos){
+    this->currentLocalPosition = curLocPos;
+    //printf("x:%f,y:%f,z:%f\n",this->currentLocalPosition.x,this->currentLocalPosition.y,this->currentLocalPosition.z);
 }
 
+void PX4Communicator::UpdateCurrentGlobalPosition(mavlink_global_position_int_t curGlobPos){
+    this->currentGlobalPosition = curGlobPos;
+    //printf("x:%f,y:%f,z:%f\n",this->currentGlobalPosition.lat,this->currentGlobalPosition.lon,this->currentGlobalPosition.alt);
+}
+
+void PX4Communicator::UpdateBatteryStatus(mavlink_battery_status_t batteryStatus){
+    this->batteryStatus = batteryStatus;
+    //printf("x:%f,y:%f,z:%f\n",this->currentGlobalPosition.lat,this->currentGlobalPosition.lon,this->currentGlobalPosition.alt);
+}
 
 
 // Write setpoint
@@ -380,9 +392,9 @@ void* StartWriteSetPointThread(void *args){
 // Check if drone is eps-close to (x,y,x)
 bool PX4Communicator::CloseTo(float x, float y, float z, float eps){
 
-    float dx = x - this->currentPose.x;
-    float dy = y - this->currentPose.y;
-    float dz = z - this->currentPose.z;
+    float dx = x - this->currentLocalPosition.x;
+    float dy = y - this->currentLocalPosition.y;
+    float dz = z - this->currentLocalPosition.z;
     float dist = sqrt( pow(dx,2) + pow(dy,2) + pow(dz,2) );
 
     return (dist < eps);

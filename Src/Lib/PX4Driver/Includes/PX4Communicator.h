@@ -41,9 +41,11 @@ private:
     int autopilotId;
     int companionId;
 
-    // Current target setpoint
+    // Current poses
+    mavlink_local_position_ned_t currentLocalPosition;
+    mavlink_global_position_int_t currentGlobalPosition;
     mavlink_set_position_target_local_ned_t targetSetpoint;
-    mavlink_set_position_target_local_ned_t currentPose;
+    mavlink_battery_status_t batteryStatus;
 
     // Offboard control routines
     void OffBoard(bool on);
@@ -54,9 +56,9 @@ private:
 
     static void *DispatchMavLinkMessages(void* ptr);
 
-
-    void UpdateCurrentPosition(float x, float y, float z);
-    bool CloseTo(float x, float y, float z, float eps);
+    void UpdateCurrentLocalPosition(mavlink_local_position_ned_t curLocPos);
+    void UpdateCurrentGlobalPosition(mavlink_global_position_int_t curGlobPos);
+    void UpdateBatteryStatus(mavlink_battery_status_t batteryStatus);
 
 public:
 
@@ -80,6 +82,7 @@ public:
     void StartAutopilot();
     void StopAutopilot();
 
+    bool CloseTo(float x, float y, float z, float eps);
     void FollowTrajectory(vector< vector< float > > traj, float eps);
     void FollowTrajectory(vector< vector< float > > traj, int rounds, float eps);
 
