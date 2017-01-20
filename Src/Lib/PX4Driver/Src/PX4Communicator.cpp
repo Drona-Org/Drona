@@ -40,7 +40,6 @@ PX4Communicator::PX4Communicator(int simulatorPort){
 
     server-> ReadFrom(simulatorPort);
 
-
     this->systemId = 255;
     this->autopilotId = 1;
     this->companionId = 1;
@@ -93,38 +92,158 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
                             break;
                         }
                         case MAVLINK_MSG_ID_LOCAL_POSITION_NED:{
-                            LOG("Local position received");
+                            //LOG("Local position received");
                             mavlink_local_position_ned_t curLocPos;
                             mavlink_msg_local_position_ned_decode(&msg, &curLocPos);
                             px4->UpdateCurrentLocalPosition(curLocPos);
                             break;
                         }
                         case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:{
-                            LOG("GPS position received");
+                            //LOG("GPS position received");
                             mavlink_global_position_int_t curGlobPos;
                             mavlink_msg_global_position_int_decode(&msg, &curGlobPos);
                             px4->UpdateCurrentGlobalPosition(curGlobPos);
                             break;
                         }
-                        case MAVLINK_MSG_ID_BATTERY_STATUS:{
-                            LOG("Battery status received");
-                            mavlink_battery_status_t batteryStatus;
-                            mavlink_msg_battery_status_decode(&msg, &batteryStatus);
-                            px4->UpdateBatteryStatus(batteryStatus);
+                        case MAVLINK_MSG_ID_RADIO_STATUS:{
+                            //LOG("Radio status received");
+                            mavlink_radio_status_t radioStatus;
+                            mavlink_msg_radio_status_decode(&msg, &radioStatus);
+                            px4->UpdateRadioStatus(radioStatus);
                             break;
                         }
                         default:{
-                            char bb[100];
+                            //char bb[100];
                             //sprintf(bb, "Message Id: %d", msg.msgid);
                             //LOG(bb);
                             break;
                         }
                      }
+                     //px4->PrintStatus();
                  }
             }
         }
     }
 }
+
+// Start/Stop offboard control
+void PX4Communicator::OffBoard(bool on)
+{
+    mavlink_command_long_t cmd = {0};
+    cmd.confirmation = 1;
+    cmd.target_system = this->companionId;
+    cmd.target_component = this->autopilotId;
+
+    cmd.param1 = (float) on;
+    cmd.command = MAV_CMD_NAV_GUIDED_ENABLE;
+
+    mavlink_message_t msg;
+    mavlink_msg_command_long_encode(this->systemId, this->autopilotId, &msg, &cmd);
+
+    this->WriteMessage(msg);
+
+    // Print log
+    char buff[100];
+    strcpy(buff,"Command: ");
+    if(on){
+        strcat(buff,"Start ");
+    }else{
+        strcat(buff,"Stop ");
+    }
+    strcat(buff,"offboard control");
+    LOG(buff);
+}
+
+// Start offboard controller
+void PX4Communicator::StartOffBoard(){
+
+    // Must write a setpoint before starting offborad controller
+    this->WriteSetpoint();
+    this->OffBoard(true);
+}
+
+void PX4Communicator::StartAutopilot(){
+
+    // Get current target setpoint
+    this->StartOffBoard();
+
+    pthread_t writeThread;
+    int wt = pthread_create(&writeThread, NULL, StartWriteSetPointThread, this);
+
+    LOG("Command: Start autopilot");
+}
+
+//Set target position
+void PX4Communicator::SetPosition(float x, float y, float z){
+
+    mavlink_set_position_target_local_ned_t sp;
+
+    sp.time_boot_ms = 0;
+    sp.type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION & MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_ANGLE;
+    sp.coordinate_frame = MAV_FRAME_LOCAL_NED;
+    sp.x = x;
+    sp.y = y;
+    sp.z = z;
+    sp.yaw = 0;
+
+    this->targetSetpoint = sp;
+
+    char buff[100];
+    sprintf(buff,"Command: Set position (x %f, y %f, z %f)", sp.x, sp.y, sp.z);
+    LOG(buff);
+}
+
+//Set target velocities
+void PX4Communicator::SetVelocity(float vx, float vy, float vz){
+
+    mavlink_set_position_target_local_ned_t sp;
+
+    sp.type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_VELOCITY;
+    sp.coordinate_frame = MAV_FRAME_LOCAL_NED;
+    sp.vx = vx;
+    sp.vy = vy;
+    sp.vz = vz;
+
+    this->targetSetpoint = sp;
+
+    char buff[100];
+    sprintf(buff,"Command: Set velocity (vx %f, vy %f, vz %f)", sp.vx, sp.vy, sp.vz);
+    LOG(buff);
+}
+
+// Set yaw
+void PX4Communicator::SetYaw(float yaw){
+
+    mavlink_set_position_target_local_ned_t sp;
+
+    sp.type_mask &= MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_ANGLE;
+    sp.yaw  = yaw;
+
+    this->targetSetpoint = sp;
+
+    char buff[100];
+    sprintf(buff,"Command: Set yaw (yaw %f)", sp.yaw);
+    LOG(buff);
+}
+
+// Set yaw rate
+void PX4Communicator::SetYawRate(float yawRate){
+
+    mavlink_set_position_target_local_ned_t sp;
+
+    sp.type_mask &= MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_RATE;
+    sp.yaw_rate  = yawRate;
+
+    this->targetSetpoint = sp;
+
+    // Print log
+    char buff[100];
+    sprintf(buff,"Command: Set yaw rate (yaw rate %f)", sp.yaw_rate);
+    LOG(buff);
+}
+
+
+// Maneuvers
 
 // Arm
 void PX4Communicator::Arm(){
@@ -190,129 +309,121 @@ void PX4Communicator::ReturnToLaunch(){
     LOG("Command: Return to launch");
 }
 
+void PX4Communicator::FollowTrajectory(vector< vector< float > > traj, int rounds, float eps){
 
-// Start/Stop offboard control
-void PX4Communicator::OffBoard(bool on)
-{
-    mavlink_command_long_t cmd = {0};
-    cmd.confirmation = 1;
-    cmd.target_system = this->companionId;
-    cmd.target_component = this->autopilotId;
-
-    cmd.param1 = (float) on;
-    cmd.command = MAV_CMD_NAV_GUIDED_ENABLE;
-
-    mavlink_message_t msg;
-    mavlink_msg_command_long_encode(this->systemId, this->autopilotId, &msg, &cmd);
-
-    this->WriteMessage(msg);
-
-    // Print log
-    char buff[100];
-    strcpy(buff,"Command: ");
-    if(on){
-        strcat(buff,"Start ");
-    }else{
-        strcat(buff,"Stop ");
+    if( rounds <= 0 ){
+        ERROR("FollowTrajectory: rounds must be nonnegative");
     }
-    strcat(buff,"offboard control");
-    LOG(buff);
+
+    if( traj.size() <= 0 ){
+        ERROR("FollowTrajectory: provide at least one way point");
+        if( traj[0].size() != 3 ){
+            ERROR("FollowTrajectory: waypoints must be 3d arrays");
+        }
+    }
+
+    LOG("Command: Follow trajectory");
+
+    int currentTarget = 0;
+    int currentRound = 0;
+
+    this->SetPosition(traj[currentTarget][0],traj[currentTarget][1],traj[currentTarget][2]);
+
+    while(true){
+        if( this->CloseTo(traj[currentTarget][0],traj[currentTarget][1],traj[currentTarget][2],eps) ){
+            currentTarget = currentTarget + 1;
+            if(currentTarget >=  traj.size()){
+                currentTarget = 0;
+                currentRound = currentRound + 1;
+                LOG("Round complete");
+                if(currentRound >=  rounds){
+                    return;
+                }
+            }
+            this->SetPosition(traj[currentTarget][0],traj[currentTarget][1],traj[currentTarget][2]);
+        }
+    }
 }
 
-// Start offboard controller
-void PX4Communicator::StartOffBoard(){
+void PX4Communicator::Loiter(vector< float > center, float radius, int rounds, float eps, float loitStep){
 
-    // Must write a setpoint before starting offborad controller
-    this->WriteSetpoint();
-    this->OffBoard(true);
+    if( center.size() != 3 ){
+        ERROR("Loiter: center must be 3d array");
+    }
+
+    char buf[100];
+    sprintf(buf, "Loiter: center %f,%f,%f, radius %f", center[0],center[1],center[2],radius);
+    LOG(buf);
+
+    vector< vector<float> > waypoints;
+
+    for(double angle=0; angle <= 2*M_PI; angle += loitStep){
+
+        vector<float> waypoint;
+        waypoint.push_back(center[0] + radius*cos(angle));
+        waypoint.push_back(center[1] + radius*sin(angle));
+        waypoint.push_back(center[2]);
+
+        waypoints.push_back(waypoint);
+    }
+
+    this->FollowTrajectory(waypoints, rounds, eps);
 }
 
-//Set target position
-void PX4Communicator::SetPosition(float x, float y, float z){
+void PX4Communicator::Square(vector< float > corner, float edge, int rounds, float eps){
 
-    mavlink_set_position_target_local_ned_t sp;
+    if( corner.size() != 3 ){
+        ERROR("Square: corner must be 3d array");
+    }
 
-    sp.time_boot_ms = 0;
-    sp.type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION & MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_ANGLE;
-    sp.coordinate_frame = MAV_FRAME_LOCAL_NED;
-    sp.x = x;
-    sp.y = y;
-    sp.z = z;
-    sp.yaw = 0;
+    char buf[100];
+    sprintf(buf, "Square: start %f,%f,%f, edge %f", corner[0],corner[1],corner[2],edge);
+    LOG(buf);
 
-    this->targetSetpoint = sp;
+    vector<float> loRight = corner;
+    loRight[0] = corner[0] + edge;
+    vector<float> upRight = loRight;
+    upRight[1] = loRight[1] + edge;
+    vector<float> upLeft = corner;
+    upLeft[1] = corner[1] + edge;
 
-    // Print log
-    char buff[100];
-    sprintf(buff,"Command: Set position (x %f, y %f, z %f)", sp.x, sp.y, sp.z);
-    LOG(buff);
+    vector< vector<float> > waypoints;
+    waypoints.push_back(corner);
+    waypoints.push_back(loRight);
+    waypoints.push_back(upRight);
+    waypoints.push_back(upLeft);
+    waypoints.push_back(corner);
+
+    this->FollowTrajectory(waypoints,rounds,eps);
+
 }
 
-//Set target velocities
-void PX4Communicator::SetVelocity(float vx, float vy, float vz){
+// Check if drone is eps-close to (x,y,x)
+bool PX4Communicator::CloseTo(float x, float y, float z, float eps){
 
-    mavlink_set_position_target_local_ned_t sp;
+    float dx = x - this->currentLocalPosition.x;
+    float dy = y - this->currentLocalPosition.y;
+    float dz = z - this->currentLocalPosition.z;
+    float dist = sqrt( pow(dx,2) + pow(dy,2) + pow(dz,2) );
 
-    sp.type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_VELOCITY;
-    sp.coordinate_frame = MAV_FRAME_LOCAL_NED;
-    sp.vx = vx;
-    sp.vy = vy;
-    sp.vz = vz;
-
-    this->targetSetpoint = sp;
-
-    // Print log
-    char buff[100];
-    sprintf(buff,"Command: Set velocity (vx %f, vy %f, vz %f)", sp.vx, sp.vy, sp.vz);
-    LOG(buff);
-}
-
-// Set yaw
-void PX4Communicator::SetYaw(float yaw){
-
-    mavlink_set_position_target_local_ned_t sp;
-
-    sp.type_mask &= MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_ANGLE;
-    sp.yaw  = yaw;
-
-    this->targetSetpoint = sp;
-
-    // Print log
-    char buff[100];
-    sprintf(buff,"Command: Set yaw (yaw %f)", sp.yaw);
-    LOG(buff);
-}
-
-// Set yaw rate
-void PX4Communicator::SetYawRate(float yawRate){
-
-    mavlink_set_position_target_local_ned_t sp;
-
-    sp.type_mask &= MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_RATE;
-    sp.yaw_rate  = yawRate;
-
-    this->targetSetpoint = sp;
-
-    // Print log
-    char buff[100];
-    sprintf(buff,"Command: Set yaw rate (yaw rate %f)", sp.yaw_rate);
-    LOG(buff);
+    return (dist < eps);
 }
 
 
 void PX4Communicator::UpdateCurrentLocalPosition(mavlink_local_position_ned_t curLocPos){
     this->currentLocalPosition = curLocPos;
-    //printf("x:%f,y:%f,z:%f\n",this->currentLocalPosition.x,this->currentLocalPosition.y,this->currentLocalPosition.z);
 }
 
 void PX4Communicator::UpdateCurrentGlobalPosition(mavlink_global_position_int_t curGlobPos){
     this->currentGlobalPosition = curGlobPos;
-    //printf("x:%f,y:%f,z:%f\n",this->currentGlobalPosition.lat,this->currentGlobalPosition.lon,this->currentGlobalPosition.alt);
 }
 
 void PX4Communicator::UpdateBatteryStatus(mavlink_battery_status_t batteryStatus){
     this->batteryStatus = batteryStatus;
-    //printf("x:%f,y:%f,z:%f\n",this->currentGlobalPosition.lat,this->currentGlobalPosition.lon,this->currentGlobalPosition.alt);
+}
+
+void PX4Communicator::UpdateRadioStatus(mavlink_radio_status_t radioStatus){
+    this->radioStatus = radioStatus;
 }
 
 
@@ -339,7 +450,7 @@ void PX4Communicator::WriteSetpoint(){
     if ( len <= 0 ){
         LOG("WARNING Command: Could not send target set point");
     }else{
-        LOG("Command: Write setpoint");
+        //LOG("Command: Write setpoint");
     }
 
     return;
@@ -356,18 +467,6 @@ int PX4Communicator::WriteMessage(mavlink_message_t msg){
 
     // TODO it's a fake len
     return len;
-}
-
-void PX4Communicator::StartAutopilot(){
-
-    // Get current target setpoint
-    this->StartOffBoard();
-
-    pthread_t writeThread;
-    int wt = pthread_create(&writeThread, NULL, StartWriteSetPointThread, this);
-
-    LOG("Command: Start autopilot");
-
 }
 
 
@@ -389,100 +488,19 @@ void* StartWriteSetPointThread(void *args){
 
 }
 
-// Check if drone is eps-close to (x,y,x)
-bool PX4Communicator::CloseTo(float x, float y, float z, float eps){
+void PX4Communicator::PrintStatus(){
 
-    float dx = x - this->currentLocalPosition.x;
-    float dy = y - this->currentLocalPosition.y;
-    float dz = z - this->currentLocalPosition.z;
-    float dist = sqrt( pow(dx,2) + pow(dy,2) + pow(dz,2) );
+    char buf[100];
+    sprintf(buf, "Local position: %f,%f,%f", this->currentLocalPosition.x,this->currentLocalPosition.y,this->currentLocalPosition.z);
+    LOG(buf);
+    sprintf(buf, "Global position: %d,%d,%d", this->currentGlobalPosition.lat,this->currentGlobalPosition.lon,this->currentGlobalPosition.alt);
 
-    return (dist < eps);
-}
-
-void PX4Communicator::FollowTrajectory(vector< vector< float > > traj, float eps){
-    this->FollowTrajectory(traj,1,eps);
-}
-
-void PX4Communicator::FollowTrajectory(vector< vector< float > > traj, int rounds, float eps){
-
-    if( rounds <= 0 ){
-        ERROR("FollowTrajectory: rounds must be nonnegative");
-    }
-
-    if( traj.size() <= 0 ){
-        ERROR("FollowTrajectory: provide at least one way point");
-        if( traj[0].size() != 3 ){
-            ERROR("FollowTrajectory: waypoints must be 3d arrays");
-        }
-    }
-
-
-    int currentTarget = 0;
-    int currentRound = 0;
-
-    this->SetPosition(traj[currentTarget][0],traj[currentTarget][1],traj[currentTarget][2]);
-
-    while(true){
-        if( this->CloseTo(traj[currentTarget][0],traj[currentTarget][1],traj[currentTarget][2],eps) ){
-            currentTarget = currentTarget + 1;
-            if(currentTarget >=  traj.size()){
-                currentTarget = 0;
-                currentRound = currentRound + 1;
-                if(currentRound >=  rounds){
-                    return;
-                }
-            }
-            this->SetPosition(traj[currentTarget][0],traj[currentTarget][1],traj[currentTarget][2]);
-        }
-    }
-}
-
-
-
-void PX4Communicator::Loiter(vector< float > center, float radius, int rounds, float eps, float loitStep){
-
-
-    if( center.size() != 3 ){
-        ERROR("Loiter: center must be 3d array");
-    }
-
-    vector< vector<float> > waypoints;
-
-    for(double angle=0; angle <= 2*M_PI; angle += loitStep){
-
-        vector<float> waypoint;
-        waypoint.push_back(center[0] + radius*cos(angle));
-        waypoint.push_back(center[1] + radius*sin(angle));
-        waypoint.push_back(center[2]);
-
-        waypoints.push_back(waypoint);
-    }
-
-    this->FollowTrajectory(waypoints, rounds, eps);
-}
-
-void PX4Communicator::Square(vector< float > corner, float edge, int rounds, float eps){
-
-    if( corner.size() != 3 ){
-        ERROR("Square: corner must be 3d array");
-    }
-
-    vector<float> loRight = corner;
-    loRight[0] = corner[0] + edge;
-    vector<float> upRight = loRight;
-    upRight[1] = loRight[1] + edge;
-    vector<float> upLeft = corner;
-    upLeft[1] = corner[1] + edge;
-
-    vector< vector<float> > waypoints;
-    waypoints.push_back(corner);
-    waypoints.push_back(loRight);
-    waypoints.push_back(upRight);
-    waypoints.push_back(upLeft);
-    waypoints.push_back(corner);
-
-    this->FollowTrajectory(waypoints,rounds,eps);
+    LOG(buf);
+    sprintf(buf, "Battery: %d", this->batteryStatus.current_battery);
+    LOG(buf);
+    sprintf(buf, "Radio: %d", this->radioStatus.fixed);
+    LOG(buf);
+    printf("\n");
 
 }
 
