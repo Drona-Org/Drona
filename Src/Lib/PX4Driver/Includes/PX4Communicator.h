@@ -51,45 +51,33 @@ private:
     void UpdateBatteryStatus(mavlink_battery_status_t batteryStatus);
     void UpdateRadioStatus(mavlink_radio_status_t radioStatus);
 
-    // Offboard control routines
-    void OffBoard(bool on);
-    void StartOffBoard();
-    void WriteSetpoint();
-
-    int WriteMessage(mavlink_message_t msg);
     static void *DispatchMavLinkMessages(void* ptr);
 
     void PrintStatus();
 
+    bool writing;
+    bool reading;
 
 public:
 
     UdpCommunicationSocket *server;
-
     PX4Communicator(int simulatorPort);
 
-    void StartAutopilot();
-    void StopAutopilot();
-
     // Setpoint routines
-    void SetPosition(float x, float y, float z);
-    void SetVelocity(float vx, float vy, float vz);
-    void SetYaw(float yaw);
-    void SetYawRate(float yawRate);
-
-
-    // Maneuvers
-    void Arm();
-    void Takeoff(float alt);
-    void ReturnToLaunch();
-    void FollowTrajectory(vector< vector< float > > traj, int rounds, float eps);
-    void Loiter(vector< float > center, float radius, int rounds, float eps, float loitStep);
-    void Square(vector< float > corner, float edge, int rounds, float eps);
-
-    bool CloseTo(float x, float y, float z, float eps);
+    void SetTargetLocalPosition(float x, float y, float z);
+    void SetTargetGlobalPosition(int lat, int lon, int alt);
 
     static void HeartBeat(UdpCommunicationSocket* server);
     void WriteSetPointThread(void);
+
+    int WriteMessage(mavlink_message_t msg);
+
+    void WriteSetpoint();
+    bool StartWrite();
+    bool StopWrite();
+
+    mavlink_local_position_ned_t getLocalPosition(){ return this->currentLocalPosition; };
+    mavlink_global_position_int_t getGlobalPosition(){ return this->currentGlobalPosition; };
 
 };
 #endif // !PX4COMMUNICATOR_H
