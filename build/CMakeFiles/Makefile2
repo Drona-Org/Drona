@@ -79,7 +79,7 @@ Samples/TestCommunicationLib/CMakeFiles/server.dir/all: Src/Lib/Communication/CM
 Samples/TestCommunicationLib/CMakeFiles/server.dir/all: Src/Lib/PX4Driver/CMakeFiles/px4driver.dir/all
 	$(MAKE) -f Samples/TestCommunicationLib/CMakeFiles/server.dir/build.make Samples/TestCommunicationLib/CMakeFiles/server.dir/depend
 	$(MAKE) -f Samples/TestCommunicationLib/CMakeFiles/server.dir/build.make Samples/TestCommunicationLib/CMakeFiles/server.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/drona/Workspace/DronaForPX4/build/CMakeFiles  4
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/drona/Workspace/DronaForPX4/build/CMakeFiles  9
 	@echo "Built target server"
 .PHONY : Samples/TestCommunicationLib/CMakeFiles/server.dir/all
 
@@ -108,6 +108,130 @@ clean: Samples/TestCommunicationLib/CMakeFiles/server.dir/clean
 .PHONY : clean
 
 #=============================================================================
+# Directory level rules for directory Samples/PSample
+
+# Convenience name for "all" pass in the directory.
+Samples/PSample/all: Samples/PSample/CMakeFiles/PingPong.dir/all
+Samples/PSample/all: Samples/PSample/CMakeFiles/compiler.dir/all
+Samples/PSample/all: Samples/PSample/CMakeFiles/linker.dir/all
+.PHONY : Samples/PSample/all
+
+# Convenience name for "clean" pass in the directory.
+Samples/PSample/clean: Samples/PSample/CMakeFiles/PingPong.dir/clean
+Samples/PSample/clean: Samples/PSample/CMakeFiles/compiler.dir/clean
+Samples/PSample/clean: Samples/PSample/CMakeFiles/linker.dir/clean
+.PHONY : Samples/PSample/clean
+
+# Convenience name for "preinstall" pass in the directory.
+Samples/PSample/preinstall:
+.PHONY : Samples/PSample/preinstall
+
+#=============================================================================
+# Target rules for target Samples/PSample/CMakeFiles/PingPong.dir
+
+# All Build rule for target.
+Samples/PSample/CMakeFiles/PingPong.dir/all: Samples/PSample/CMakeFiles/linker.dir/all
+	$(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/depend
+	$(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/drona/Workspace/DronaForPX4/build/CMakeFiles  1 2 3
+	@echo "Built target PingPong"
+.PHONY : Samples/PSample/CMakeFiles/PingPong.dir/all
+
+# Include target in all.
+all: Samples/PSample/CMakeFiles/PingPong.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+Samples/PSample/CMakeFiles/PingPong.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/drona/Workspace/DronaForPX4/build/CMakeFiles 5
+	$(MAKE) -f CMakeFiles/Makefile2 Samples/PSample/CMakeFiles/PingPong.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/drona/Workspace/DronaForPX4/build/CMakeFiles 0
+.PHONY : Samples/PSample/CMakeFiles/PingPong.dir/rule
+
+# Convenience name for target.
+PingPong: Samples/PSample/CMakeFiles/PingPong.dir/rule
+.PHONY : PingPong
+
+# clean rule for target.
+Samples/PSample/CMakeFiles/PingPong.dir/clean:
+	$(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/clean
+.PHONY : Samples/PSample/CMakeFiles/PingPong.dir/clean
+
+# clean rule for target.
+clean: Samples/PSample/CMakeFiles/PingPong.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target Samples/PSample/CMakeFiles/compiler.dir
+
+# All Build rule for target.
+Samples/PSample/CMakeFiles/compiler.dir/all:
+	$(MAKE) -f Samples/PSample/CMakeFiles/compiler.dir/build.make Samples/PSample/CMakeFiles/compiler.dir/depend
+	$(MAKE) -f Samples/PSample/CMakeFiles/compiler.dir/build.make Samples/PSample/CMakeFiles/compiler.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/drona/Workspace/DronaForPX4/build/CMakeFiles  5
+	@echo "Built target compiler"
+.PHONY : Samples/PSample/CMakeFiles/compiler.dir/all
+
+# Include target in all.
+all: Samples/PSample/CMakeFiles/compiler.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+Samples/PSample/CMakeFiles/compiler.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/drona/Workspace/DronaForPX4/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 Samples/PSample/CMakeFiles/compiler.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/drona/Workspace/DronaForPX4/build/CMakeFiles 0
+.PHONY : Samples/PSample/CMakeFiles/compiler.dir/rule
+
+# Convenience name for target.
+compiler: Samples/PSample/CMakeFiles/compiler.dir/rule
+.PHONY : compiler
+
+# clean rule for target.
+Samples/PSample/CMakeFiles/compiler.dir/clean:
+	$(MAKE) -f Samples/PSample/CMakeFiles/compiler.dir/build.make Samples/PSample/CMakeFiles/compiler.dir/clean
+.PHONY : Samples/PSample/CMakeFiles/compiler.dir/clean
+
+# clean rule for target.
+clean: Samples/PSample/CMakeFiles/compiler.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target Samples/PSample/CMakeFiles/linker.dir
+
+# All Build rule for target.
+Samples/PSample/CMakeFiles/linker.dir/all: Samples/PSample/CMakeFiles/compiler.dir/all
+	$(MAKE) -f Samples/PSample/CMakeFiles/linker.dir/build.make Samples/PSample/CMakeFiles/linker.dir/depend
+	$(MAKE) -f Samples/PSample/CMakeFiles/linker.dir/build.make Samples/PSample/CMakeFiles/linker.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/drona/Workspace/DronaForPX4/build/CMakeFiles  6
+	@echo "Built target linker"
+.PHONY : Samples/PSample/CMakeFiles/linker.dir/all
+
+# Include target in all.
+all: Samples/PSample/CMakeFiles/linker.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+Samples/PSample/CMakeFiles/linker.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/drona/Workspace/DronaForPX4/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 Samples/PSample/CMakeFiles/linker.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/drona/Workspace/DronaForPX4/build/CMakeFiles 0
+.PHONY : Samples/PSample/CMakeFiles/linker.dir/rule
+
+# Convenience name for target.
+linker: Samples/PSample/CMakeFiles/linker.dir/rule
+.PHONY : linker
+
+# clean rule for target.
+Samples/PSample/CMakeFiles/linker.dir/clean:
+	$(MAKE) -f Samples/PSample/CMakeFiles/linker.dir/build.make Samples/PSample/CMakeFiles/linker.dir/clean
+.PHONY : Samples/PSample/CMakeFiles/linker.dir/clean
+
+# clean rule for target.
+clean: Samples/PSample/CMakeFiles/linker.dir/clean
+.PHONY : clean
+
+#=============================================================================
 # Directory level rules for directory Src/Lib/Logger
 
 # Convenience name for "all" pass in the directory.
@@ -129,7 +253,7 @@ Src/Lib/Logger/preinstall:
 Src/Lib/Logger/CMakeFiles/logger.dir/all:
 	$(MAKE) -f Src/Lib/Logger/CMakeFiles/logger.dir/build.make Src/Lib/Logger/CMakeFiles/logger.dir/depend
 	$(MAKE) -f Src/Lib/Logger/CMakeFiles/logger.dir/build.make Src/Lib/Logger/CMakeFiles/logger.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/drona/Workspace/DronaForPX4/build/CMakeFiles  2
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/drona/Workspace/DronaForPX4/build/CMakeFiles  7
 	@echo "Built target logger"
 .PHONY : Src/Lib/Logger/CMakeFiles/logger.dir/all
 
@@ -179,7 +303,7 @@ Src/Lib/Communication/preinstall:
 Src/Lib/Communication/CMakeFiles/communication.dir/all: Src/Lib/Logger/CMakeFiles/logger.dir/all
 	$(MAKE) -f Src/Lib/Communication/CMakeFiles/communication.dir/build.make Src/Lib/Communication/CMakeFiles/communication.dir/depend
 	$(MAKE) -f Src/Lib/Communication/CMakeFiles/communication.dir/build.make Src/Lib/Communication/CMakeFiles/communication.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/drona/Workspace/DronaForPX4/build/CMakeFiles  1
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/drona/Workspace/DronaForPX4/build/CMakeFiles  4
 	@echo "Built target communication"
 .PHONY : Src/Lib/Communication/CMakeFiles/communication.dir/all
 
@@ -230,7 +354,7 @@ Src/Lib/PX4Driver/CMakeFiles/px4driver.dir/all: Src/Lib/Logger/CMakeFiles/logger
 Src/Lib/PX4Driver/CMakeFiles/px4driver.dir/all: Src/Lib/Communication/CMakeFiles/communication.dir/all
 	$(MAKE) -f Src/Lib/PX4Driver/CMakeFiles/px4driver.dir/build.make Src/Lib/PX4Driver/CMakeFiles/px4driver.dir/depend
 	$(MAKE) -f Src/Lib/PX4Driver/CMakeFiles/px4driver.dir/build.make Src/Lib/PX4Driver/CMakeFiles/px4driver.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/drona/Workspace/DronaForPX4/build/CMakeFiles  3
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/drona/Workspace/DronaForPX4/build/CMakeFiles  8
 	@echo "Built target px4driver"
 .PHONY : Src/Lib/PX4Driver/CMakeFiles/px4driver.dir/all
 

@@ -5,7 +5,7 @@
       <Option title="dronaSrcLibLogger" />
       <Option makefile_is_custom="1" />
       <Option compiler="gcc" />
-      <Option virtualFolders="CMake Files\;CMake Files\Samples\;CMake Files\Samples\TestCommunicationLib\;CMake Files\Src\;CMake Files\Src\Lib\;CMake Files\Src\Lib\PX4Driver\;CMake Files\Src\Lib\Logger\;CMake Files\Src\Lib\Communication\;" />
+      <Option virtualFolders="CMake Files\;CMake Files\Samples\;CMake Files\Samples\TestCommunicationLib\;CMake Files\Samples\PSample\;CMake Files\Src\;CMake Files\Src\Lib\;CMake Files\Src\Lib\PX4Driver\;CMake Files\Src\Lib\Logger\;CMake Files\Src\Lib\Communication\;" />
       <Build>
       <Target title="all">
          <Option working_dir="/home/drona/Workspace/DronaForPX4/build/Src/Lib/Logger" />
@@ -88,6 +88,12 @@
       </Unit>
       <Unit filename="/home/drona/Workspace/DronaForPX4/Samples/TestCommunicationLib/CMakeLists.txt">
           <Option virtualFolder="CMake Files\Samples\TestCommunicationLib\" />
+      </Unit>
+      <Unit filename="/home/drona/Workspace/DronaForPX4/Samples/PSample/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\Samples\PSample\" />
+      </Unit>
+      <Unit filename="/home/drona/Workspace/DronaForPX4/Samples/PSample/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\Samples\PSample\" />
       </Unit>
       <Unit filename="/home/drona/Workspace/DronaForPX4/Src/Lib/PX4Driver/CMakeLists.txt">
           <Option virtualFolder="CMake Files\Src\Lib\PX4Driver\" />

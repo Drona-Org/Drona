@@ -100,6 +100,14 @@ stdarg.h
 
 ../Submodule/P/Bld/Drops/PrtUser/include/sal.h
 
+/home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/PingPong.c
+PingPong.h
+/home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/PingPong.h
+
+/home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/PingPong.h
+linker.h
+/home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/linker.h
+
 /home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/linker.c
 linker.h
 /home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/linker.h

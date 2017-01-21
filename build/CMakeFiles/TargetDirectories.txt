@@ -1,4 +1,7 @@
+/home/drona/Workspace/DronaForPX4/build/Samples/PSample/CMakeFiles/linker.dir
+/home/drona/Workspace/DronaForPX4/build/Samples/PSample/CMakeFiles/PingPong.dir
 /home/drona/Workspace/DronaForPX4/build/Src/Lib/Logger/CMakeFiles/logger.dir
 /home/drona/Workspace/DronaForPX4/build/Samples/TestCommunicationLib/CMakeFiles/server.dir
+/home/drona/Workspace/DronaForPX4/build/Samples/PSample/CMakeFiles/compiler.dir
 /home/drona/Workspace/DronaForPX4/build/Src/Lib/PX4Driver/CMakeFiles/px4driver.dir
 /home/drona/Workspace/DronaForPX4/build/Src/Lib/Communication/CMakeFiles/communication.dir

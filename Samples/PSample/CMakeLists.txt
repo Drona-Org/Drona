@@ -12,6 +12,8 @@ add_executable(PingPong
   ${PingPong_GENERATED_SRCS}
   ${pingpong_csource_dir}/tester.c
 )
+
+add_dependencies(PingPong linker)
 set_property(TARGET PingPong PROPERTY C_STANDARD 99)
 target_include_directories(PingPong PRIVATE
   ${PingPong_INCLUDE_DIRS}

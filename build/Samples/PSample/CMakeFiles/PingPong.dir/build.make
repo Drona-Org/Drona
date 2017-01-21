@@ -52,7 +52,100 @@ include Samples/PSample/CMakeFiles/PingPong.dir/progress.make
 # Include the compile flags for this target's objects.
 include Samples/PSample/CMakeFiles/PingPong.dir/flags.make
 
-Samples/PSample/CMakeFiles/PingPong.dir/requires:
+Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.o: Samples/PSample/CMakeFiles/PingPong.dir/flags.make
+Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.o: ../Samples/PSample/Generated/PingPong.c
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/drona/Workspace/DronaForPX4/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.o"
+	cd /home/drona/Workspace/DronaForPX4/build/Samples/PSample && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/PingPong.dir/Generated/PingPong.c.o   -c /home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/PingPong.c
+
+Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/PingPong.dir/Generated/PingPong.c.i"
+	cd /home/drona/Workspace/DronaForPX4/build/Samples/PSample && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/PingPong.c > CMakeFiles/PingPong.dir/Generated/PingPong.c.i
+
+Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/PingPong.dir/Generated/PingPong.c.s"
+	cd /home/drona/Workspace/DronaForPX4/build/Samples/PSample && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/PingPong.c -o CMakeFiles/PingPong.dir/Generated/PingPong.c.s
+
+Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.o.requires:
+.PHONY : Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.o.requires
+
+Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.o.provides: Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.o.requires
+	$(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.o.provides.build
+.PHONY : Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.o.provides
+
+Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.o.provides.build: Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.o
+
+Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.o: Samples/PSample/CMakeFiles/PingPong.dir/flags.make
+Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.o: ../Samples/PSample/Generated/linker.c
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/drona/Workspace/DronaForPX4/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.o"
+	cd /home/drona/Workspace/DronaForPX4/build/Samples/PSample && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/PingPong.dir/Generated/linker.c.o   -c /home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/linker.c
+
+Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/PingPong.dir/Generated/linker.c.i"
+	cd /home/drona/Workspace/DronaForPX4/build/Samples/PSample && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/linker.c > CMakeFiles/PingPong.dir/Generated/linker.c.i
+
+Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/PingPong.dir/Generated/linker.c.s"
+	cd /home/drona/Workspace/DronaForPX4/build/Samples/PSample && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/linker.c -o CMakeFiles/PingPong.dir/Generated/linker.c.s
+
+Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.o.requires:
+.PHONY : Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.o.requires
+
+Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.o.provides: Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.o.requires
+	$(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.o.provides.build
+.PHONY : Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.o.provides
+
+Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.o.provides.build: Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.o
+
+Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.o: Samples/PSample/CMakeFiles/PingPong.dir/flags.make
+Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.o: ../Samples/PSample/Src/tester.c
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/drona/Workspace/DronaForPX4/build/CMakeFiles $(CMAKE_PROGRESS_3)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.o"
+	cd /home/drona/Workspace/DronaForPX4/build/Samples/PSample && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/PingPong.dir/Src/tester.c.o   -c /home/drona/Workspace/DronaForPX4/Samples/PSample/Src/tester.c
+
+Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/PingPong.dir/Src/tester.c.i"
+	cd /home/drona/Workspace/DronaForPX4/build/Samples/PSample && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/drona/Workspace/DronaForPX4/Samples/PSample/Src/tester.c > CMakeFiles/PingPong.dir/Src/tester.c.i
+
+Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/PingPong.dir/Src/tester.c.s"
+	cd /home/drona/Workspace/DronaForPX4/build/Samples/PSample && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/drona/Workspace/DronaForPX4/Samples/PSample/Src/tester.c -o CMakeFiles/PingPong.dir/Src/tester.c.s
+
+Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.o.requires:
+.PHONY : Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.o.requires
+
+Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.o.provides: Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.o.requires
+	$(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.o.provides.build
+.PHONY : Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.o.provides
+
+Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.o.provides.build: Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.o
+
+# Object files for target PingPong
+PingPong_OBJECTS = \
+"CMakeFiles/PingPong.dir/Generated/PingPong.c.o" \
+"CMakeFiles/PingPong.dir/Generated/linker.c.o" \
+"CMakeFiles/PingPong.dir/Src/tester.c.o"
+
+# External object files for target PingPong
+PingPong_EXTERNAL_OBJECTS =
+
+Samples/PSample/PingPong: Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.o
+Samples/PSample/PingPong: Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.o
+Samples/PSample/PingPong: Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.o
+Samples/PSample/PingPong: Samples/PSample/CMakeFiles/PingPong.dir/build.make
+Samples/PSample/PingPong: ../Submodule/P/Bld/Drops/PrtUser/lib/libPrt_shared.so
+Samples/PSample/PingPong: Samples/PSample/CMakeFiles/PingPong.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable PingPong"
+	cd /home/drona/Workspace/DronaForPX4/build/Samples/PSample && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/PingPong.dir/link.txt --verbose=$(VERBOSE)
+
+# Rule to build all files generated by this target.
+Samples/PSample/CMakeFiles/PingPong.dir/build: Samples/PSample/PingPong
+.PHONY : Samples/PSample/CMakeFiles/PingPong.dir/build
+
+Samples/PSample/CMakeFiles/PingPong.dir/requires: Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.o.requires
+Samples/PSample/CMakeFiles/PingPong.dir/requires: Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.o.requires
+Samples/PSample/CMakeFiles/PingPong.dir/requires: Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.o.requires
 .PHONY : Samples/PSample/CMakeFiles/PingPong.dir/requires
 
 Samples/PSample/CMakeFiles/PingPong.dir/clean:

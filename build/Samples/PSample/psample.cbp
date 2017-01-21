@@ -100,6 +100,16 @@
          </MakeCommands>
       </Target>
       </Build>
+      <Unit filename="/home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/PingPong.c">
+      </Unit>
+      <Unit filename="/home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/linker.c">
+      </Unit>
+      <Unit filename="/home/drona/Workspace/DronaForPX4/Samples/PSample/Src/tester.c">
+      </Unit>
+      <Unit filename="/home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/PingPong.h">
+      </Unit>
+      <Unit filename="/home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/linker.h">
+      </Unit>
       <Unit filename="/home/drona/Workspace/DronaForPX4/CMakeLists.txt">
           <Option virtualFolder="CMake Files\" />
       </Unit>

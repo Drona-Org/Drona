@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "../CMakeLists.txt"
+  "../Samples/PSample/CMakeLists.txt"
   "../Samples/TestCommunicationLib/CMakeLists.txt"
   "../Src/Lib/Communication/CMakeLists.txt"
   "../Src/Lib/Logger/CMakeLists.txt"
@@ -46,6 +47,7 @@ set(CMAKE_MAKEFILE_OUTPUTS
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "Samples/TestCommunicationLib/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "Samples/PSample/CMakeFiles/CMakeDirectoryInformation.cmake"
   "Src/Lib/Logger/CMakeFiles/CMakeDirectoryInformation.cmake"
   "Src/Lib/Communication/CMakeFiles/CMakeDirectoryInformation.cmake"
   "Src/Lib/PX4Driver/CMakeFiles/CMakeDirectoryInformation.cmake"
@@ -54,6 +56,9 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "Samples/TestCommunicationLib/CMakeFiles/server.dir/DependInfo.cmake"
+  "Samples/PSample/CMakeFiles/linker.dir/DependInfo.cmake"
+  "Samples/PSample/CMakeFiles/PingPong.dir/DependInfo.cmake"
+  "Samples/PSample/CMakeFiles/compiler.dir/DependInfo.cmake"
   "Src/Lib/Logger/CMakeFiles/logger.dir/DependInfo.cmake"
   "Src/Lib/Communication/CMakeFiles/communication.dir/DependInfo.cmake"
   "Src/Lib/PX4Driver/CMakeFiles/px4driver.dir/DependInfo.cmake"
