@@ -1,2 +1,0 @@
-/usr/bin/ar cq libcommunication.a  CMakeFiles/communication.dir/Src/UdpSocketPort.cpp.o
-/usr/bin/ranlib libcommunication.a
