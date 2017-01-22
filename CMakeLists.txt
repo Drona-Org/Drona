@@ -80,6 +80,7 @@ function (p_link pproject formula_srcs)
             COMMAND ${p_link_cmd} /outputDir:${output_dir} ${allfiles}
             WORKING_DIRECTORY ${output_dir}
     )
+add_dependencies(linker compiler)
     set(${pproject}_GENERATED_SRCS ${${pproject}_GENERATED_SRCS} ${output_c_srcs} PARENT_SCOPE)
 endfunction(p_link)
 ##########################################################################

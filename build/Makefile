@@ -118,6 +118,45 @@ server/fast:
 .PHONY : server/fast
 
 #=============================================================================
+# Target rules for targets named PingPong
+
+# Build rule for target.
+PingPong: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 PingPong
+.PHONY : PingPong
+
+# fast build rule for target.
+PingPong/fast:
+	$(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/build
+.PHONY : PingPong/fast
+
+#=============================================================================
+# Target rules for targets named compiler
+
+# Build rule for target.
+compiler: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 compiler
+.PHONY : compiler
+
+# fast build rule for target.
+compiler/fast:
+	$(MAKE) -f Samples/PSample/CMakeFiles/compiler.dir/build.make Samples/PSample/CMakeFiles/compiler.dir/build
+.PHONY : compiler/fast
+
+#=============================================================================
+# Target rules for targets named linker
+
+# Build rule for target.
+linker: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 linker
+.PHONY : linker
+
+# fast build rule for target.
+linker/fast:
+	$(MAKE) -f Samples/PSample/CMakeFiles/linker.dir/build.make Samples/PSample/CMakeFiles/linker.dir/build
+.PHONY : linker/fast
+
+#=============================================================================
 # Target rules for targets named logger
 
 # Build rule for target.
@@ -165,6 +204,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... server"
+	@echo "... linker"
+	@echo "... PingPong"
+	@echo "... compiler"
 	@echo "... logger"
 	@echo "... communication"
 	@echo "... px4driver"

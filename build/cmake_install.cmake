@@ -35,6 +35,7 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/drona/Workspace/DronaForPX4/build/Samples/TestCommunicationLib/cmake_install.cmake")
+  include("/home/drona/Workspace/DronaForPX4/build/Samples/PSample/cmake_install.cmake")
   include("/home/drona/Workspace/DronaForPX4/build/Src/Lib/Logger/cmake_install.cmake")
   include("/home/drona/Workspace/DronaForPX4/build/Src/Lib/Communication/cmake_install.cmake")
   include("/home/drona/Workspace/DronaForPX4/build/Src/Lib/PX4Driver/cmake_install.cmake")

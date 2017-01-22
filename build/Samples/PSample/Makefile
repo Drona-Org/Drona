@@ -146,6 +146,78 @@ linker/fast:
 	cd /home/drona/Workspace/DronaForPX4/build && $(MAKE) -f Samples/PSample/CMakeFiles/linker.dir/build.make Samples/PSample/CMakeFiles/linker.dir/build
 .PHONY : linker/fast
 
+Generated/PingPong.o: Generated/PingPong.c.o
+.PHONY : Generated/PingPong.o
+
+# target to build an object file
+Generated/PingPong.c.o:
+	cd /home/drona/Workspace/DronaForPX4/build && $(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.o
+.PHONY : Generated/PingPong.c.o
+
+Generated/PingPong.i: Generated/PingPong.c.i
+.PHONY : Generated/PingPong.i
+
+# target to preprocess a source file
+Generated/PingPong.c.i:
+	cd /home/drona/Workspace/DronaForPX4/build && $(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.i
+.PHONY : Generated/PingPong.c.i
+
+Generated/PingPong.s: Generated/PingPong.c.s
+.PHONY : Generated/PingPong.s
+
+# target to generate assembly for a file
+Generated/PingPong.c.s:
+	cd /home/drona/Workspace/DronaForPX4/build && $(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.s
+.PHONY : Generated/PingPong.c.s
+
+Generated/linker.o: Generated/linker.c.o
+.PHONY : Generated/linker.o
+
+# target to build an object file
+Generated/linker.c.o:
+	cd /home/drona/Workspace/DronaForPX4/build && $(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.o
+.PHONY : Generated/linker.c.o
+
+Generated/linker.i: Generated/linker.c.i
+.PHONY : Generated/linker.i
+
+# target to preprocess a source file
+Generated/linker.c.i:
+	cd /home/drona/Workspace/DronaForPX4/build && $(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.i
+.PHONY : Generated/linker.c.i
+
+Generated/linker.s: Generated/linker.c.s
+.PHONY : Generated/linker.s
+
+# target to generate assembly for a file
+Generated/linker.c.s:
+	cd /home/drona/Workspace/DronaForPX4/build && $(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.s
+.PHONY : Generated/linker.c.s
+
+Src/tester.o: Src/tester.c.o
+.PHONY : Src/tester.o
+
+# target to build an object file
+Src/tester.c.o:
+	cd /home/drona/Workspace/DronaForPX4/build && $(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.o
+.PHONY : Src/tester.c.o
+
+Src/tester.i: Src/tester.c.i
+.PHONY : Src/tester.i
+
+# target to preprocess a source file
+Src/tester.c.i:
+	cd /home/drona/Workspace/DronaForPX4/build && $(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.i
+.PHONY : Src/tester.c.i
+
+Src/tester.s: Src/tester.c.s
+.PHONY : Src/tester.s
+
+# target to generate assembly for a file
+Src/tester.c.s:
+	cd /home/drona/Workspace/DronaForPX4/build && $(MAKE) -f Samples/PSample/CMakeFiles/PingPong.dir/build.make Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.s
+.PHONY : Src/tester.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -157,6 +229,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... PingPong"
 	@echo "... compiler"
+	@echo "... Generated/PingPong.o"
+	@echo "... Generated/PingPong.i"
+	@echo "... Generated/PingPong.s"
+	@echo "... Generated/linker.o"
+	@echo "... Generated/linker.i"
+	@echo "... Generated/linker.s"
+	@echo "... Src/tester.o"
+	@echo "... Src/tester.i"
+	@echo "... Src/tester.s"
 .PHONY : help
 
 

@@ -1,7 +1,14 @@
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
+  "C"
   )
 # The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_C
+  "/home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/PingPong.c" "/home/drona/Workspace/DronaForPX4/build/Samples/PSample/CMakeFiles/PingPong.dir/Generated/PingPong.c.o"
+  "/home/drona/Workspace/DronaForPX4/Samples/PSample/Generated/linker.c" "/home/drona/Workspace/DronaForPX4/build/Samples/PSample/CMakeFiles/PingPong.dir/Generated/linker.c.o"
+  "/home/drona/Workspace/DronaForPX4/Samples/PSample/Src/tester.c" "/home/drona/Workspace/DronaForPX4/build/Samples/PSample/CMakeFiles/PingPong.dir/Src/tester.c.o"
+  )
+set(CMAKE_C_COMPILER_ID "GNU")
 
 # Preprocessor definitions for this target.
 set(CMAKE_TARGET_DEFINITIONS

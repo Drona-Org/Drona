@@ -27,6 +27,10 @@ using namespace std;
 void* StartWriteSetPointThread(void *args);
 void* StartReadThread(void *args);
 
+struct RobotState {
+
+};
+
 class PX4Communicator
 {
 private:
