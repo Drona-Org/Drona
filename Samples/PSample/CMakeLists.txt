@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
-project(psample)
+project(dronaSrcSamplesPSample)
+
+FILE(GLOB_RECURSE psources PSrc/*)
 
 
 set(pingpong_psource_dir PSrc)
@@ -11,9 +13,11 @@ p_link(PingPong PingPong.4ml)
 add_executable(PingPong
   ${PingPong_GENERATED_SRCS}
   ${pingpong_csource_dir}/tester.c
+  ${psources}
 )
 
-add_dependencies(PingPong linker)
+add_dependencies(PingPong linker_PingPong)
+
 set_property(TARGET PingPong PROPERTY C_STANDARD 99)
 target_include_directories(PingPong PRIVATE
   ${PingPong_INCLUDE_DIRS}
