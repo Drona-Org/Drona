@@ -1130,20 +1130,4 @@
     0U,
     NULL
   };
-  void P_DTOR_Main_IMPL(PRT_MACHINEINST *context)
-  {
-  }
-
-  void P_DTOR_PONG_IMPL(PRT_MACHINEINST *context)
-  {
-  }
-
-  void P_CTOR_Main_IMPL(PRT_MACHINEINST *context, PRT_VALUE *value)
-  {
-  }
-
-  void P_CTOR_PONG_IMPL(PRT_MACHINEINST *context, PRT_VALUE *value)
-  {
-  }
-
   

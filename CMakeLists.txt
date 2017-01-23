@@ -44,12 +44,12 @@ function (p_compile pproject p_src)
         set(generated_c_src ${p_src_basename}.c)
         set(output_dir ${CMAKE_CURRENT_SOURCE_DIR}/Generated)
         set(output_c_srcs ${output_dir}/${generated_c_src})
+        file(MAKE_DIRECTORY ${output_dir})
         ADD_CUSTOM_TARGET("compile_${p_src_basename}" ALL
-                WORKING_DIRECTORY ${output_dir}
-                COMMAND ${CMAKE_COMMAND} -E make_directory ${output_dir}
                 COMMENT "Compiling P ${p_src}..."
-                COMMAND ${p_compile_cmd} /generate:C ../PSrc/${p_src}
+                COMMAND ${p_compile_cmd} /generate:C0 ../PSrc/${p_src}
                 DEPENDS PSrc/${p_src}
+                WORKING_DIRECTORY ${output_dir}
         )
 
         set(${pproject}_GENERATED_SRCS ${${pproject}_GENERATED_SRCS} ${output_c_srcs} PARENT_SCOPE)
