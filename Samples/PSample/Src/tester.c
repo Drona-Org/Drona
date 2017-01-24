@@ -49,9 +49,9 @@ static long perfEndTime = 0;
 static const char* parg = NULL;
 static const char* workspaceConfig;
 
-void Log(PRT_STEP step, PRT_MACHINEINST *sender, PRT_MACHINEINST *receiver, PRT_VALUE* event, PRT_VALUE* payload)
+void Log(PRT_STEP step, PRT_MACHINESTATE *senderState, PRT_MACHINEINST *receiver, PRT_VALUE* event, PRT_VALUE* payload)
 { 
-    PrtPrintStep(step, sender, receiver, event, payload);
+    PrtPrintStep(step, senderState, receiver, event, payload);
 }
 
 static PRT_BOOLEAN ParseCommandLine(int argc, char *argv[])
@@ -192,7 +192,6 @@ int main(int argc, char *argv[])
     printf("Press any key to start simulation\n");
     getchar();
 
-	PRT_DBG_START_MEM_BALANCED_REGION
 	{
 		PRT_PROCESS *process;
 		PRT_GUID processGuid;
@@ -238,7 +237,6 @@ int main(int argc, char *argv[])
 		PrtFreeValue(payload);
 		PrtStopProcess(process);
 	}
-	PRT_DBG_END_MEM_BALANCED_REGION
 
 	//_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
 	//_CrtDumpMemoryLeaks();

@@ -358,7 +358,7 @@
       p_tmp_mach_priv = (PRT_MACHINEINST_PRIV *)context;
       p_tmp_ret = NULL;
       PrtPopFrame(p_tmp_mach_priv, &p_tmp_frame);
-      P_SEQ(p_tmp_machine = P_EXPR_0(p_tmp_mach_priv->varValues[P_VAR_Main_pongId], PRT_FALSE), p_tmp_event = P_EXPR_0(&P_GEND_VALUE_0, PRT_FALSE), P_EXPR_3(P_SEQ(PrtCheckIsLocalMachineId(context, p_tmp_expr_2), PrtSend(context, PrtGetMachine(context->process, p_tmp_expr_2), p_tmp_expr_1, 1U, PRT_FUN_PARAM_CLONE, p_tmp_expr_0), NULL), PRT_FALSE, p_tmp_machine, PRT_FALSE, p_tmp_event, PRT_FALSE, p_tmp_mach_priv->id, PRT_FALSE));
+      P_SEQ(p_tmp_machine = P_EXPR_0(p_tmp_mach_priv->varValues[P_VAR_Main_pongId], PRT_FALSE), p_tmp_event = P_EXPR_0(&P_GEND_VALUE_0, PRT_FALSE), P_EXPR_3(P_SEQ(PrtCheckIsLocalMachineId(context, p_tmp_expr_2), PrtSendInternal(context, PrtGetMachine(context->process, p_tmp_expr_2), p_tmp_expr_1, 1U, PRT_FUN_PARAM_CLONE, p_tmp_expr_0), NULL), PRT_FALSE, p_tmp_machine, PRT_FALSE, p_tmp_event, PRT_FALSE, p_tmp_mach_priv->id, PRT_FALSE));
       P_STMT_0(PrtRaise(p_tmp_mach_priv, p_tmp_stmt_0, 0U), P_EXPR_0(&P_GEND_VALUE_2, PRT_FALSE), PRT_FALSE);
       goto P_EXIT_FUN;
       goto P_EXIT_FUN;
@@ -636,7 +636,7 @@
       p_tmp_mach_priv = (PRT_MACHINEINST_PRIV *)context;
       p_tmp_ret = NULL;
       PrtPopFrame(p_tmp_mach_priv, &p_tmp_frame);
-      P_STMT_1(P_SEQ(PrtCheckIsLocalMachineId(context, p_tmp_stmt_0), PrtSend(context, PrtGetMachine(context->process, p_tmp_stmt_0), p_tmp_stmt_1, 0U)), P_EXPR_0(&P_GEND_VALUE_1, PRT_FALSE), PRT_FALSE, P_EXPR_0(p_tmp_frame.locals[0U], PRT_FALSE), PRT_FALSE);
+      P_STMT_1(P_SEQ(PrtCheckIsLocalMachineId(context, p_tmp_stmt_0), PrtSendInternal(context, PrtGetMachine(context->process, p_tmp_stmt_0), p_tmp_stmt_1, 0U)), P_EXPR_0(&P_GEND_VALUE_1, PRT_FALSE), PRT_FALSE, P_EXPR_0(p_tmp_frame.locals[0U], PRT_FALSE), PRT_FALSE);
       P_STMT_0(PrtRaise(p_tmp_mach_priv, p_tmp_stmt_0, 0U), P_EXPR_0(&P_GEND_VALUE_2, PRT_FALSE), PRT_FALSE);
       goto P_EXIT_FUN;
       goto P_EXIT_FUN;

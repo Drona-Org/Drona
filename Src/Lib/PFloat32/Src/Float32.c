@@ -217,7 +217,7 @@ PRT_VALUE* PrtMkFloat32Value(float value)
 {
 	PRT_LIB_FLOAT32_DATA f;
 	f.value = value;
-	return PrtMkForeignValue(f.bits, P_GEND_TYPE_float32->typeUnion.typeTag);
+    return PrtMkForeignValue(f.bits, P_GEND_TYPE_float32);
 }
 
 //Helper function for getting a float from the given value
@@ -233,7 +233,7 @@ float PrtGetFloat32(PRT_VALUE* value)
 	case PRT_VALUE_KIND_FORGN:
 		{
 			PRT_LIB_FLOAT32_DATA arg;
-			arg.bits = PrtGetForeignValue(value)->value;
+            arg.bits = PrtGetForeignValue(value);
 			return arg.value;
 		}
 		break;
@@ -259,5 +259,5 @@ float PrtGetFloat32(PRT_VALUE* value)
 
 void PrtSetFloat32(PRT_VALUE* frgnVal, float newVal) 
 {
-	((PRT_LIB_FLOAT32_DATA*)&PrtGetForeignValue(frgnVal)->value)->value = newVal;
+    frgnVal->valueUnion.frgn->value = newVal;
 }
