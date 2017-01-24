@@ -31,11 +31,8 @@ public:
 
     PX4API(int simulatorPort);
 
-    void setTargetLocalPosition(float x, float y, float z){ this->px4com->SetTargetLocalPosition(x,y,z); };
-    void setTargetGlobalPosition(int lat, int lon, int alt){ this->px4com->SetTargetGlobalPosition(lat,lon,alt); };
-
-    mavlink_local_position_ned_t getLocalPosition(){ return this->px4com->getLocalPosition(); };
-    mavlink_global_position_int_t getGlobalPosition(){ return this->px4com->getGlobalPosition(); };
+    void SetTargetLocalPosition(float x, float y, float z){ this->px4com->SetTargetLocalPosition(x,y,z); };
+    void SetTargetGlobalPosition(int lat, int lon, int alt){ this->px4com->SetTargetGlobalPosition(lat,lon,alt); };
 
     bool Arm();
     void TakeoffGlobal(float alt);

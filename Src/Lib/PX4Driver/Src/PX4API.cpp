@@ -39,6 +39,7 @@ bool PX4API::Arm(){
 
 }
 
+
 void PX4API::TakeoffGlobal(float alt){
 
     mavlink_command_long_t cmd = {0};
@@ -71,7 +72,7 @@ bool PX4API::StartAutopilot(float x, float y, float z){
         return false;
     }
 
-    this->setTargetLocalPosition(x,y,z);
+    this->SetTargetLocalPosition(x,y,z);
     this->px4com->WriteSetpoint();
 
     if( !this->ToggleOffBoard(true) ){
@@ -81,7 +82,7 @@ bool PX4API::StartAutopilot(float x, float y, float z){
     this->autopilot = true;
 
     LOG("PX4API::StartAutopilot Autopilot on");
-    this->px4com->StartWrite();
+    this->px4com->StartAutoPilot();
 
     return true;
 }
@@ -93,7 +94,7 @@ bool PX4API::StopAutopilot(){
         return false;
     }
 
-    this->px4com->StopWrite();
+    this->px4com->StopAutoPilot();
     this->ToggleOffBoard(false);
     this->autopilot = false;
 

@@ -1,18 +1,44 @@
 cmake_minimum_required(VERSION 3.0)
-project(PX4Driver)
+project(dronaSrcLibPX4Driver)
 
 # Search .cpp in ./src
-file(GLOB_RECURSE sources Src/*.cpp)
-file(GLOB_RECURSE includes Includes/*.h)
+FILE(GLOB_RECURSE psources PSrc/*)
+FILE(GLOB_RECURSE csources Src/*)
+FILE(GLOB_RECURSE includes Includes/*)
 
-# Include path
-INCLUDE_DIRECTORIES(includes)
+set(floatincludes ${drona_SOURCE_DIR}/Src/Lib/PFloat32/Src/)
+
+p_compile(px4driver MavlinkEnums.p)
+p_compile(px4driver MavlinkMessageTypes.p)
+p_link(px4driver MavlinkEnums.4ml MavlinkMessageTypes.4ml)
 
 
 # Build exectuable
-add_library(px4driver STATIC ${sources} ${includes})
+add_library(px4driver STATIC
+    ${px4driver_GENERATED_SRCS}
+    ${csources}
+    ${psources}
+    ${includes}
+)
 
-TARGET_LINK_LIBRARIES(px4driver communication)
-TARGET_LINK_LIBRARIES(px4driver pthread)
-TARGET_LINK_LIBRARIES(px4driver logger)
+
+add_dependencies(px4driver linker_px4driver)
+
+
+target_include_directories(px4driver PRIVATE
+  ${px4driver_INCLUDE_DIRS}
+  Includes
+  ${floatincludes}
+)
+
+target_link_libraries(px4driver
+  ${px4driver_LINK_LIBS}
+  pthread
+  logger
+  communication
+)
+
+set_property(TARGET px4driver PROPERTY C_STANDARD 99)
+
+set_target_properties (px4driver PROPERTIES LINKER_LANGUAGE CXX)
 

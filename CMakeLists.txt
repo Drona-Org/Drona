@@ -4,14 +4,15 @@ project(drona)
 #SET(CMAKE_BUILD_TYPE Debug)
 SET(CMAKE_VERBOSE_MAKEFILE true)
 
+
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Includes/MavlinkHeaders/common)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Includes/MavlinkHeaders)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Includes/PMavlinkHeaders)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Communication/Includes)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Logger/Includes)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PX4Driver/Includes)
-INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Float32/Generated)
-
+INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PX4Driver/Generated)
+INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PFloat32/Src)
 
 ## Projects
 subdirs(Samples/TestCommunicationLib)
@@ -20,7 +21,6 @@ subdirs(Src/Lib/Logger)
 subdirs(Src/Lib/Communication)
 subdirs(Src/Lib/PX4Driver)
 subdirs(Src/Lib/PFloat32)
-
 
 ###########################################################################
 ## P Compilation Related Helper Functions
