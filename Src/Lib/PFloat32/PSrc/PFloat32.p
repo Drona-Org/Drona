@@ -1,12 +1,6 @@
 #include "PFloat32Interface.p"
 
 /** Constructors **/
-//// Assign the float value
-model fun AssignFloat32(lhs: float32, rhs: float32)
-[pure = null]
-{
-   lhs = rhs;
-}
 
 //// Converts an integer to float
 model fun IntToFloat32(val: int) : float32

@@ -36,6 +36,7 @@ target_link_libraries(px4driver
   pthread
   logger
   communication
+  pfloat32
 )
 
 set_property(TARGET px4driver PROPERTY C_STANDARD 99)

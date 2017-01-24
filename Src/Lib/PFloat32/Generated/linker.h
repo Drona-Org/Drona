@@ -29,27 +29,26 @@
       _P_FUN_PUSH_OR_IGN = 0,
       P_FUN_AbsFloat32 = 2,
       P_FUN_AddFloat32 = 4,
-      P_FUN_AssignFloat32 = 6,
-      P_FUN_DivFloat32 = 8,
-      P_FUN_IntToFloat32 = 10,
-      P_FUN_IsEqFloat32 = 12,
-      P_FUN_IsFiniteFloat32 = 14,
-      P_FUN_IsGeFloat32 = 16,
-      P_FUN_IsGtFloat32 = 18,
-      P_FUN_IsInftyFloat32 = 20,
-      P_FUN_IsLeFloat32 = 22,
-      _P_FUNS_COUNT = 23,
-      P_FUN_IsLtFloat32 = 24,
-      P_FUN_IsNEqFloat32 = 26,
-      P_FUN_IsNaNFloat32 = 28,
-      P_FUN_IsNearFloat32 = 30,
-      P_FUN_IsNegInftyFloat32 = 32,
-      P_FUN_IsPosInftyFloat32 = 34,
-      P_FUN_MulFloat32 = 36,
-      P_FUN_NaNFloat32 = 38,
-      P_FUN_NegFloat32 = 40,
-      P_FUN_ScientificToFloat32 = 42,
-      P_FUN_SubFloat32 = 44
+      P_FUN_DivFloat32 = 6,
+      P_FUN_IntToFloat32 = 8,
+      P_FUN_IsEqFloat32 = 10,
+      P_FUN_IsFiniteFloat32 = 12,
+      P_FUN_IsGeFloat32 = 14,
+      P_FUN_IsGtFloat32 = 16,
+      P_FUN_IsInftyFloat32 = 18,
+      P_FUN_IsLeFloat32 = 20,
+      P_FUN_IsLtFloat32 = 22,
+      _P_FUNS_COUNT = 22,
+      P_FUN_IsNEqFloat32 = 24,
+      P_FUN_IsNaNFloat32 = 26,
+      P_FUN_IsNearFloat32 = 28,
+      P_FUN_IsNegInftyFloat32 = 30,
+      P_FUN_IsPosInftyFloat32 = 32,
+      P_FUN_MulFloat32 = 34,
+      P_FUN_NaNFloat32 = 36,
+      P_FUN_NegFloat32 = 38,
+      P_FUN_ScientificToFloat32 = 40,
+      P_FUN_SubFloat32 = 42
     };
 
     enum P_IORM
@@ -81,7 +80,6 @@
 
     extern PRT_FUNDECL P_FUN_AbsFloat32_STRUCT;
     extern PRT_FUNDECL P_FUN_AddFloat32_STRUCT;
-    extern PRT_FUNDECL P_FUN_AssignFloat32_STRUCT;
     extern PRT_FUNDECL P_FUN_DivFloat32_STRUCT;
     extern PRT_FUNDECL P_FUN_IntToFloat32_STRUCT;
     extern PRT_FUNDECL P_FUN_IsEqFloat32_STRUCT;

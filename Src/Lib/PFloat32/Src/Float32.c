@@ -140,7 +140,7 @@ PRT_VALUE *P_FUN_IsGtFloat32_FOREIGN(PRT_MACHINEINST *context, PRT_VALUE *op1, P
 	return PrtMkBoolValue(value1 > value2 ? PRT_TRUE : PRT_FALSE);
 }
 
-PRT_VALUE *P_FUN_IsInfinityFloat32_FOREIGN(PRT_MACHINEINST *context, PRT_VALUE *op1)
+PRT_VALUE *P_FUN_IsInftyFloat32_FOREIGN(PRT_MACHINEINST *context, PRT_VALUE *op1)
 {
 	float value = PrtGetFloat32(op1);
 	return PrtMkBoolValue(isinf(value) ? PRT_TRUE : PRT_FALSE);
@@ -173,13 +173,13 @@ PRT_VALUE *P_FUN_IsNaNFloat32_FOREIGN(PRT_MACHINEINST *context, PRT_VALUE *op1)
 	return PrtMkBoolValue(isnan(value) ? PRT_TRUE : PRT_FALSE);
 }
 
-PRT_VALUE *P_FUN_IsNegInfinityFloat32_FOREIGN(PRT_MACHINEINST *context, PRT_VALUE *op1)
+PRT_VALUE *P_FUN_IsNegInftyFloat32_FOREIGN(PRT_MACHINEINST *context, PRT_VALUE *op1)
 {
 	float value = PrtGetFloat32(op1);
 	return PrtMkBoolValue(isinf(value) && value < 0 ? PRT_TRUE : PRT_FALSE);
 }
 
-PRT_VALUE *P_FUN_IsPosInfinityFloat32_FOREIGN(PRT_MACHINEINST *context, PRT_VALUE *op1)
+PRT_VALUE *P_FUN_IsPosInftyFloat32_FOREIGN(PRT_MACHINEINST *context, PRT_VALUE *op1)
 {
 	float value = PrtGetFloat32(op1);
 	return PrtMkBoolValue(isinf(value) && value > 0 ? PRT_TRUE : PRT_FALSE);

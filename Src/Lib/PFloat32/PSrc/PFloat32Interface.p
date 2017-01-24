@@ -1,8 +1,6 @@
 model type float32 = int;
 
 /** Conversion **/
-//// Assign the float value
-extern fun AssignFloat32(lhs: float32, rhs: float32);
 
 //// Converts an integer to float
 extern fun IntToFloat32(val: int) : float32;

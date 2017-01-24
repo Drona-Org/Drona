@@ -6,6 +6,18 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
     int BUFFER_LENGTH = 255;
     BYTE buf[BUFFER_LENGTH];
     BYTE temp;
+
+    //Declare all variables for optimization
+    PRT_VALUE* pMessage_heartbeat = NULL;
+    PRT_VALUE* pMessage_global_position = NULL;
+    PRT_VALUE* pMessage_gps_raw = NULL;
+    PRT_VALUE* pMessage_gps_status = NULL;
+    PRT_VALUE* pMessage_attitute = NULL;
+    PRT_VALUE* pMessage_battery_status = NULL;
+    PRT_VALUE* pMessage_local_position_ned = NULL;
+    PRT_VALUE* pMessage_command_ack = NULL;
+    PRT_VALUE* pMessage_extended_sys_state = NULL;
+
     while(true) {
         memset(buf, 0, BUFFER_LENGTH);
         int recsize = px4->udpcomm->Read(buf,BUFFER_LENGTH);
@@ -24,7 +36,10 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
                 {
                      switch (msg.msgid) {
                         case MAVLINK_MSG_ID_HEARTBEAT:{
-                            //LOG("Heart beat received");
+                            p_mavlink_msg_heartbeat_decode(&msg, &pMessage_heartbeat);
+
+                            LOG("Heart beat received :: ");
+                            PrtPrintValue(pMessage_heartbeat);
                             break;
                         }
                         case MAVLINK_MSG_ID_LOCAL_POSITION_NED:{
@@ -60,6 +75,18 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
             }
         }
     }
+
+    //free all the prt values
+    if (pMessage_heartbeat != nullptr) PrtFreeValue(pMessage_heartbeat);
+    if (pMessage_global_position != nullptr) PrtFreeValue(pMessage_global_position);
+    if (pMessage_attitute != nullptr) PrtFreeValue(pMessage_attitute);
+    if (pMessage_battery_status != nullptr) PrtFreeValue(pMessage_battery_status);
+    if (pMessage_local_position_ned != nullptr) PrtFreeValue(pMessage_local_position_ned);
+    if (pMessage_command_ack != nullptr) PrtFreeValue(pMessage_command_ack);
+    if (pMessage_gps_status != nullptr)  PrtFreeValue(pMessage_gps_status);
+    if (pMessage_gps_raw != nullptr) PrtFreeValue(pMessage_gps_raw);
+    if (pMessage_extended_sys_state != nullptr) PrtFreeValue(pMessage_extended_sys_state);
+    return 0;
 }
 
 //   Time

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 project(dronaSrcLibPFloat32)
 
 FILE(GLOB_RECURSE psources PSrc/*)
-FILE(GLOB_RECURSE csources Src/*)
+FILE(GLOB_RECURSE csources Src/*.c)
 FILE(GLOB_RECURSE gsources Generated/*.c)
 
 set(pfloat32_csource_dir Src)
