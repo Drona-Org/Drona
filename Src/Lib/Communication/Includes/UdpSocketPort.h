@@ -11,30 +11,19 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "Port.h"
 #include "Logger.h"
 
 using namespace std;
 
-#define HRESULT long
-#define BYTE unsigned char
-#define SUCCESS 0
-#define FAILURE -1
-#define SOCKET int
-#define INVALID_SOCKET -1
-
-class UdpCommunicationSocket
-{
+class UdpCommunicationSocket : public Port{
 public:
-    struct sockaddr_in writeAddr;
-    struct sockaddr_in readAddr;
     char buffer[255]; // datagram max size
     int size = 0;
     int pos = 0;
     SOCKET readSock = INVALID_SOCKET;
 
-
-
-    SOCKET writeSock = INVALID_SOCKET;
     //write to port
     HRESULT Write(const BYTE* ptr, int count);
 

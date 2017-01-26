@@ -20,9 +20,9 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
 
     while(true) {
         memset(buf, 0, BUFFER_LENGTH);
-        int recsize = px4->udpcomm->Read(buf,BUFFER_LENGTH);
+        int recsize = px4->comm->Read(buf,BUFFER_LENGTH);
 
-        SendHeartBeat(px4->udpcomm);
+        SendHeartBeat(px4->comm);
 
         if (recsize > 0) {
 
@@ -97,7 +97,7 @@ uint64_t get_time_usec()
     return _time_stamp.tv_sec*1000000 + _time_stamp.tv_usec;
 }
 
-// Constructor
+// Constructor for UDP
 PX4Communicator::PX4Communicator(int simulatorPort){
 
     //Initialize the locals
@@ -106,9 +106,9 @@ PX4Communicator::PX4Communicator(int simulatorPort){
     this->companionId = 1;
     this->isAutoPilot = false;
 
-    //initialize the udpcomm
-    this->udpcomm = new UdpCommunicationSocket();
-    udpcomm->ReadFrom(simulatorPort);
+    //initialize the comm port
+    this->comm = new UdpCommunicationSocket();
+    comm->ReadFrom(simulatorPort);
 
     struct addrinfo hints;
     hints.ai_family = AF_UNSPEC;
@@ -126,9 +126,9 @@ PX4Communicator::PX4Communicator(int simulatorPort){
         {
             // found it!
             sockaddr_in* sptr = (sockaddr_in*)ptr->ai_addr;
-            udpcomm->writeAddr.sin_family = sptr->sin_family;
-            udpcomm->writeAddr.sin_addr.s_addr = sptr->sin_addr.s_addr;
-            udpcomm->writeAddr.sin_port = 0; // don't know yet.
+            comm->writeAddr.sin_family = sptr->sin_family;
+            comm->writeAddr.sin_addr.s_addr = sptr->sin_addr.s_addr;
+            comm->writeAddr.sin_port = 0; // don't know yet.
             break;
         }
     }
@@ -144,11 +144,11 @@ PX4Communicator::PX4Communicator(int simulatorPort){
     {
         ERROR("Failed to create the dispatch thread");
     }
-    while(udpcomm->writeSock == INVALID_SOCKET);
+    while(comm->writeSock == INVALID_SOCKET);
 }
 
 
-void PX4Communicator::SendHeartBeat(UdpCommunicationSocket* server){
+void PX4Communicator::SendHeartBeat(Port* server){
 
     mavlink_message_t msg;
     BYTE buf[255];
@@ -252,7 +252,7 @@ int PX4Communicator::WriteMessage(mavlink_message_t msg){
     BYTE buf[300];
     int len = mavlink_msg_to_send_buffer(buf, &msg);
 
-    this->udpcomm->Write(buf,len);
+    this->comm->Write(buf,len);
 
     // TODO it's a fake len
     return len;
@@ -265,7 +265,7 @@ void* PX4Communicator::WriteSetPointThread(void* args){
     while(px4->isAutoPilot){
         usleep(175000);   // Read at 2Hz
         px4->WriteSetpoint();
-        SendHeartBeat(px4->udpcomm);
+        SendHeartBeat(px4->comm);
     }
     pthread_exit(NULL);
 }

@@ -2,6 +2,7 @@
 #define PX4COMMUNICATOR_H
 
 #include "UdpSocketPort.h"
+#include "CCrazyflie.h"
 
 #include "mavlink.h"
 #include "mavlink_helpers.h"
@@ -42,10 +43,14 @@ private:
 
     static void* WriteSetPointThread(void *args);
 
-    static void SendHeartBeat(UdpCommunicationSocket* server);
+    static void SendHeartBeat(Port* server);
+
 public:
 
-    UdpCommunicationSocket *udpcomm;
+    //UdpCommunicationSocket *udpcomm;
+
+    Port *comm;
+
     PX4Communicator(int simulatorPort);
 
     // Setpoint routines
