@@ -13,6 +13,7 @@ INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Logger/Includes)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PX4Driver/Includes)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PX4Driver/Generated)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PFloat32/Src)
+INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Crazyflie/Includes)
 
 ## Projects
 subdirs(Samples/TestCommunicationLib)
@@ -21,6 +22,7 @@ subdirs(Src/Lib/Logger)
 subdirs(Src/Lib/Communication)
 subdirs(Src/Lib/PX4Driver)
 subdirs(Src/Lib/PFloat32)
+subdirs(Src/Lib/Crazyflie)
 
 ###########################################################################
 ## P Compilation Related Helper Functions
