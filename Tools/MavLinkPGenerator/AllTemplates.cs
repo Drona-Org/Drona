@@ -88,7 +88,7 @@ else
         //0: ctype
         //1: offset
         public static string createFloat32Val = @"
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_{0}(msg, {1}));
 " + "\n";
         //0: ctype
