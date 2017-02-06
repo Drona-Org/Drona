@@ -50,7 +50,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_6 = 
+  PRT_TYPE P_GEND_TYPE_6 = 
   {
     PRT_KIND_INT,
     
@@ -58,7 +58,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_7 = 
+  PRT_TYPE P_GEND_TYPE_7 = 
   {
     PRT_KIND_INT,
     
@@ -66,7 +66,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_8 = 
+  PRT_TYPE P_GEND_TYPE_8 = 
   {
     PRT_KIND_INT,
     
@@ -74,7 +74,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_9 = 
+  PRT_TYPE P_GEND_TYPE_9 = 
   {
     PRT_KIND_INT,
     
@@ -82,7 +82,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_10 = 
+  PRT_TYPE P_GEND_TYPE_10 = 
   {
     PRT_KIND_INT,
     
@@ -90,7 +90,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_11 = 
+  PRT_TYPE P_GEND_TYPE_11 = 
   {
     PRT_KIND_INT,
     
@@ -98,7 +98,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_12 = 
+  PRT_TYPE P_GEND_TYPE_12 = 
   {
     PRT_KIND_INT,
     
@@ -106,7 +106,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_13 = 
+  PRT_TYPE P_GEND_TYPE_13 = 
   {
     PRT_KIND_INT,
     
@@ -114,7 +114,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_14 = 
+  PRT_TYPE P_GEND_TYPE_14 = 
   {
     PRT_KIND_INT,
     
@@ -122,7 +122,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_15 = 
+  PRT_TYPE P_GEND_TYPE_15 = 
   {
     PRT_KIND_INT,
     
@@ -130,7 +130,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_16 = 
+  PRT_TYPE P_GEND_TYPE_16 = 
   {
     PRT_KIND_INT,
     
@@ -138,7 +138,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_17 = 
+  PRT_TYPE P_GEND_TYPE_17 = 
   {
     PRT_KIND_INT,
     
@@ -146,7 +146,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_18 = 
+  PRT_TYPE P_GEND_TYPE_18 = 
   {
     PRT_KIND_INT,
     
@@ -154,7 +154,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_19 = 
+  PRT_TYPE P_GEND_TYPE_19 = 
   {
     PRT_KIND_INT,
     
@@ -162,7 +162,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_20 = 
+  PRT_TYPE P_GEND_TYPE_20 = 
   {
     PRT_KIND_INT,
     
@@ -170,7 +170,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_21 = 
+  PRT_TYPE P_GEND_TYPE_21 = 
   {
     PRT_KIND_INT,
     
@@ -178,7 +178,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_22 = 
+  PRT_TYPE P_GEND_TYPE_22 = 
   {
     PRT_KIND_INT,
     
@@ -186,7 +186,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_23 = 
+  PRT_TYPE P_GEND_TYPE_23 = 
   {
     PRT_KIND_INT,
     
@@ -194,7 +194,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_24 = 
+  PRT_TYPE P_GEND_TYPE_24 = 
   {
     PRT_KIND_INT,
     
@@ -202,7 +202,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_25 = 
+  PRT_TYPE P_GEND_TYPE_25 = 
   {
     PRT_KIND_INT,
     
@@ -210,7 +210,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_26 = 
+  PRT_TYPE P_GEND_TYPE_26 = 
   {
     PRT_KIND_INT,
     
@@ -218,7 +218,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_27 = 
+  PRT_TYPE P_GEND_TYPE_27 = 
   {
     PRT_KIND_INT,
     
@@ -226,7 +226,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_28 = 
+  PRT_TYPE P_GEND_TYPE_28 = 
   {
     PRT_KIND_INT,
     
@@ -234,7 +234,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_29 = 
+  PRT_TYPE P_GEND_TYPE_29 = 
   {
     PRT_KIND_INT,
     
@@ -242,7 +242,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_30 = 
+  PRT_TYPE P_GEND_TYPE_30 = 
   {
     PRT_KIND_INT,
     
@@ -250,7 +250,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_31 = 
+  PRT_TYPE P_GEND_TYPE_31 = 
   {
     PRT_KIND_INT,
     
@@ -258,7 +258,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_32 = 
+  PRT_TYPE P_GEND_TYPE_32 = 
   {
     PRT_KIND_INT,
     
@@ -266,7 +266,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_33 = 
+  PRT_TYPE P_GEND_TYPE_33 = 
   {
     PRT_KIND_INT,
     
@@ -274,7 +274,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_34 = 
+  PRT_TYPE P_GEND_TYPE_34 = 
   {
     PRT_KIND_INT,
     
@@ -282,7 +282,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_35 = 
+  PRT_TYPE P_GEND_TYPE_35 = 
   {
     PRT_KIND_INT,
     
@@ -290,7 +290,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_36 = 
+  PRT_TYPE P_GEND_TYPE_36 = 
   {
     PRT_KIND_INT,
     
@@ -298,7 +298,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_37 = 
+  PRT_TYPE P_GEND_TYPE_37 = 
   {
     PRT_KIND_INT,
     
@@ -306,7 +306,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_38 = 
+  PRT_TYPE P_GEND_TYPE_38 = 
   {
     PRT_KIND_INT,
     
@@ -314,7 +314,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_39 = 
+  PRT_TYPE P_GEND_TYPE_39 = 
   {
     PRT_KIND_INT,
     
@@ -322,7 +322,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_40 = 
+  PRT_TYPE P_GEND_TYPE_40 = 
   {
     PRT_KIND_INT,
     
@@ -330,7 +330,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_41 = 
+  PRT_TYPE P_GEND_TYPE_41 = 
   {
     PRT_KIND_INT,
     
@@ -338,7 +338,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_42 = 
+  PRT_TYPE P_GEND_TYPE_42 = 
   {
     PRT_KIND_INT,
     
@@ -346,7 +346,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_43 = 
+  PRT_TYPE P_GEND_TYPE_43 = 
   {
     PRT_KIND_INT,
     
@@ -354,7 +354,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_44 = 
+  PRT_TYPE P_GEND_TYPE_44 = 
   {
     PRT_KIND_INT,
     
@@ -362,7 +362,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_45 = 
+  PRT_TYPE P_GEND_TYPE_45 = 
   {
     PRT_KIND_INT,
     
@@ -370,7 +370,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_46 = 
+  PRT_TYPE P_GEND_TYPE_46 = 
   {
     PRT_KIND_INT,
     
@@ -378,7 +378,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_47 = 
+  PRT_TYPE P_GEND_TYPE_47 = 
   {
     PRT_KIND_INT,
     
@@ -386,7 +386,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_48 = 
+  PRT_TYPE P_GEND_TYPE_48 = 
   {
     PRT_KIND_INT,
     
@@ -394,7 +394,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_49 = 
+  PRT_TYPE P_GEND_TYPE_49 = 
   {
     PRT_KIND_INT,
     
@@ -402,7 +402,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_50 = 
+  PRT_TYPE P_GEND_TYPE_50 = 
   {
     PRT_KIND_INT,
     
@@ -410,7 +410,7 @@
         NULL
     }
   };
-  static PRT_TYPE P_GEND_TYPE_51 = 
+  PRT_TYPE P_GEND_TYPE_51 = 
   {
     PRT_KIND_INT,
     
@@ -5872,6 +5872,374 @@
     
     {
         PRT_SPECIAL_EVENT_NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_adsb_altitude_type = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_adsb_emitter_type = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_adsb_flags = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_estimator_status_flags = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_fence_action = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_fence_breach = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_firmware_version_type = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_gps_fix_type = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_gps_input_ignore_flags = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_autopilot = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_battery_function = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_battery_type = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_cmd = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_cmd_ack = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_collision_action = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_collision_src = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_collision_threat_level = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_component = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_data_stream = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_distance_sensor = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_do_reposition_flags = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_estimator_type = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_frame = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_goto = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_landed_state = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_mission_result = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_mode = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_mode_flag = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_mode_flag_decode_position = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_mount_mode = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_param_type = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_power_status = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_protocol_capability = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_result = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_roi = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_sensor_orientation = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_severity = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_state = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_sys_status_sensor = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_type = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mav_vtol_state = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mavlink_data_stream_type = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_mavlink_messages = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_motor_test_throttle_type = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_serial_control_dev = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
+    }
+  };
+  PRT_TYPE P_GEND_TYPE_serial_control_flag = 
+  {
+    PRT_KIND_INT,
+    
+    {
+        NULL
     }
   };
   

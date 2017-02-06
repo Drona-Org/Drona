@@ -3,7 +3,7 @@
 #include "mavlink.h"
 #include "Float32.h"
 #include "PrtValues.h"
-
+#include "MavlinkMessageTypes.h"
 
 static inline uint16_t p_mavlink_msg_heartbeat_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* heartbeat)
 {

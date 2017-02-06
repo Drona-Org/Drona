@@ -8,9 +8,10 @@ FILE(GLOB_RECURSE includes Includes/*)
 
 set(floatincludes ${drona_SOURCE_DIR}/Src/Lib/PFloat32/Src/)
 
-p_compile(px4driver MavlinkEnums.p)
-p_compile(px4driver MavlinkMessageTypes.p)
-p_link(px4driver MavlinkEnums.4ml MavlinkMessageTypes.4ml)
+p_compile(px4driver ../../PFloat32/PSrc/PFloat32.p)
+p_compile(px4driver ../PSrc/MavlinkEnums.p)
+p_compile(px4driver ../PSrc/MavlinkMessageTypes.p)
+p_link(px4driver MavlinkEnums.4ml MavlinkMessageTypes.4ml PFloat32.4ml)
 
 
 # Build exectuable

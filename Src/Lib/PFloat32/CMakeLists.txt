@@ -6,7 +6,7 @@ FILE(GLOB_RECURSE csources Src/*.c)
 FILE(GLOB_RECURSE gsources Generated/*.c)
 
 set(pfloat32_csource_dir Src)
-p_compile(pfloat32 PFloat32.p)
+p_compile(pfloat32 ../PSrc/PFloat32.p)
 p_link(pfloat32 PFloat32.4ml)
 
 ## Declare a C++ executable

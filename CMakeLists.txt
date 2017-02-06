@@ -47,10 +47,9 @@ function (p_compile pproject p_src)
         set(output_dir ${CMAKE_CURRENT_SOURCE_DIR}/Generated)
         set(output_c_srcs ${output_dir}/${generated_c_src})
         file(MAKE_DIRECTORY ${output_dir})
-        ADD_CUSTOM_TARGET("compile_${p_src_basename}" ALL
+        ADD_CUSTOM_TARGET("compile_${pproject}_${p_src_basename}" ALL
                 COMMENT "Compiling P ${p_src}..."
-                COMMAND ${p_compile_cmd} /generate:C0 ../PSrc/${p_src}
-                DEPENDS PSrc/${p_src}
+                COMMAND ${p_compile_cmd} /generate:C0 ${p_src}
                 WORKING_DIRECTORY ${output_dir}
         )
 
@@ -68,7 +67,7 @@ function (p_link pproject formula_srcs)
     FOREACH(infileName ${ARGV})
         SET(allfiles ${allfiles} "${infileName}")
         get_filename_component(temp ${infileName} NAME_WE)
-        SET(dependencies ${dependencies} "compile_${temp}")
+        SET(dependencies ${dependencies} "compile_${pproject}_${temp}")
     ENDFOREACH(infileName)
 
     ADD_CUSTOM_TARGET(

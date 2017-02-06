@@ -1,83 +1,5 @@
 
   #include "linker.h"
-  PRT_TYPE P_GEND_TYPE_0 = 
-  {
-    PRT_KIND_ANY,
-    
-    {
-        NULL
-    }
-  };
-  PRT_TYPE P_GEND_TYPE_1 = 
-  {
-    PRT_KIND_BOOL,
-    
-    {
-        NULL
-    }
-  };
-  PRT_TYPE P_GEND_TYPE_2 = 
-  {
-    PRT_KIND_EVENT,
-    
-    {
-        NULL
-    }
-  };
-  PRT_TYPE P_GEND_TYPE_3 = 
-  {
-    PRT_KIND_INT,
-    
-    {
-        NULL
-    }
-  };
-  PRT_TYPE P_GEND_TYPE_4 = 
-  {
-    PRT_KIND_MACHINE,
-    
-    {
-        NULL
-    }
-  };
-  PRT_TYPE P_GEND_TYPE_5 = 
-  {
-    PRT_KIND_NULL,
-    
-    {
-        NULL
-    }
-  };
-  PRT_TYPE P_GEND_TYPE_6 = 
-  {
-    PRT_KIND_FORGN,
-    
-    {
-        (PRT_MAPTYPE *)P_FORGN_TYPE_float32
-    }
-  };
-  PRT_TYPE *P_GEND_TYPE_float32 = &P_GEND_TYPE_6;
-  PRT_EVENTDECL P_GEND_EVENTS[] = 
-  {
-    
-    {
-        _P_EVENT_NULL,
-        "null",
-        0U,
-        &P_GEND_TYPE_5,
-        0U,
-        NULL
-    },
-    
-    {
-        _P_EVENT_HALT,
-        "halt",
-        4294967295U,
-        &P_GEND_TYPE_0,
-        0U,
-        NULL
-    }
-  };
   PRT_FUNDECL P_FUN_IGNORE_PUSH_STRUCT = 
   {
     _P_FUN_PUSH_OR_IGN,
@@ -109,6 +31,11 @@
         0U,
         NULL
     }
+  };
+  PRT_EVENTDECL *P_GEND_EVENTS[] = 
+  {
+    &_P_EVENT_NULL_STRUCT,
+    &_P_EVENT_HALT_STRUCT
   };
   PRT_FUNDECL *P_GEND_FUNS[] = 
   {

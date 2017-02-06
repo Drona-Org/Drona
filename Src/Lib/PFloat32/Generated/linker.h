@@ -10,7 +10,7 @@
     {
       _P_EVENT_NULL = 0,
       _P_EVENT_HALT = 1,
-      _P_EVENTS_COUNT = 2
+      _P_EVENTS_COUNT = 4
     };
 
     enum P_EVENTSET
@@ -78,6 +78,8 @@
 
     PRT_UINT64 PRT_FORGN_CLONE_float32_IMPL(PRT_UINT64 frgnVal);
 
+    extern PRT_EVENTDECL _P_EVENT_HALT_STRUCT;
+    extern PRT_EVENTDECL _P_EVENT_NULL_STRUCT;
     extern PRT_FUNDECL P_FUN_AbsFloat32_STRUCT;
     extern PRT_FUNDECL P_FUN_AddFloat32_STRUCT;
     extern PRT_FUNDECL P_FUN_DivFloat32_STRUCT;
@@ -100,7 +102,6 @@
     extern PRT_FUNDECL P_FUN_ScientificToFloat32_STRUCT;
     extern PRT_FUNDECL P_FUN_SubFloat32_STRUCT;
     extern PRT_PROGRAMDECL P_GEND_PROGRAM;
-    extern PRT_TYPE *P_GEND_TYPE_float32;
     #ifdef __cplusplus
       }
     #endif
