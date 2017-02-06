@@ -32,7 +32,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*heartbeat == NULL)
 {
-*heartbeat = PrtMkDefaultValue(P_GEND_TYPE_mavlink_heartbeat_t);
+*heartbeat = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_heartbeat_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*heartbeat, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*heartbeat, 1), _MAV_RETURN_uint8_t(msg, 4));
@@ -91,7 +91,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*sys_status == NULL)
 {
-*sys_status = PrtMkDefaultValue(P_GEND_TYPE_mavlink_sys_status_t);
+*sys_status = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_sys_status_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*sys_status, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*sys_status, 1), _MAV_RETURN_uint32_t(msg, 4));
@@ -153,7 +153,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*system_time == NULL)
 {
-*system_time = PrtMkDefaultValue(P_GEND_TYPE_mavlink_system_time_t);
+*system_time = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_system_time_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*system_time, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*system_time, 1), _MAV_RETURN_uint32_t(msg, 8));
@@ -195,7 +195,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*ping == NULL)
 {
-*ping = PrtMkDefaultValue(P_GEND_TYPE_mavlink_ping_t);
+*ping = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_ping_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*ping, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*ping, 1), _MAV_RETURN_uint32_t(msg, 8));
@@ -249,7 +249,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*change_operator_control == NULL)
 {
-*change_operator_control = PrtMkDefaultValue(P_GEND_TYPE_mavlink_change_operator_control_t);
+*change_operator_control = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_change_operator_control_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*change_operator_control, 0), _MAV_RETURN_uint8_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*change_operator_control, 1), _MAV_RETURN_uint8_t(msg, 1));
@@ -313,7 +313,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*change_operator_control_ack == NULL)
 {
-*change_operator_control_ack = PrtMkDefaultValue(P_GEND_TYPE_mavlink_change_operator_control_ack_t);
+*change_operator_control_ack = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_change_operator_control_ack_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*change_operator_control_ack, 0), _MAV_RETURN_uint8_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*change_operator_control_ack, 1), _MAV_RETURN_uint8_t(msg, 1));
@@ -362,7 +362,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*auth_key == NULL)
 {
-*auth_key = PrtMkDefaultValue(P_GEND_TYPE_mavlink_auth_key_t);
+*auth_key = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_auth_key_t);
 
 
 count = 0;
@@ -420,7 +420,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*set_mode == NULL)
 {
-*set_mode = PrtMkDefaultValue(P_GEND_TYPE_mavlink_set_mode_t);
+*set_mode = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_set_mode_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*set_mode, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*set_mode, 1), _MAV_RETURN_uint8_t(msg, 4));
@@ -472,7 +472,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*param_request_read == NULL)
 {
-*param_request_read = PrtMkDefaultValue(P_GEND_TYPE_mavlink_param_request_read_t);
+*param_request_read = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_param_request_read_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*param_request_read, 0), _MAV_RETURN_int16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*param_request_read, 1), _MAV_RETURN_uint8_t(msg, 2));
@@ -535,7 +535,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*param_request_list == NULL)
 {
-*param_request_list = PrtMkDefaultValue(P_GEND_TYPE_mavlink_param_request_list_t);
+*param_request_list = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_param_request_list_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*param_request_list, 0), _MAV_RETURN_uint8_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*param_request_list, 1), _MAV_RETURN_uint8_t(msg, 1));
@@ -586,7 +586,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*param_value == NULL)
 {
-*param_value = PrtMkDefaultValue(P_GEND_TYPE_mavlink_param_value_t);
+*param_value = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_param_value_t);
 
 PrtSetFloat32(PrtTupleGetNC(*param_value, 0), _MAV_RETURN_float(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*param_value, 1), _MAV_RETURN_uint16_t(msg, 4));
@@ -662,7 +662,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*param_set == NULL)
 {
-*param_set = PrtMkDefaultValue(P_GEND_TYPE_mavlink_param_set_t);
+*param_set = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_param_set_t);
 
 PrtSetFloat32(PrtTupleGetNC(*param_set, 0), _MAV_RETURN_float(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*param_set, 1), _MAV_RETURN_uint8_t(msg, 4));
@@ -735,7 +735,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*gps_raw_int == NULL)
 {
-*gps_raw_int = PrtMkDefaultValue(P_GEND_TYPE_mavlink_gps_raw_int_t);
+*gps_raw_int = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_gps_raw_int_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*gps_raw_int, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*gps_raw_int, 1), _MAV_RETURN_int32_t(msg, 8));
@@ -835,7 +835,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*gps_status == NULL)
 {
-*gps_status = PrtMkDefaultValue(P_GEND_TYPE_mavlink_gps_status_t);
+*gps_status = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_gps_status_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*gps_status, 0), _MAV_RETURN_uint8_t(msg, 0));
 
@@ -986,7 +986,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*scaled_imu == NULL)
 {
-*scaled_imu = PrtMkDefaultValue(P_GEND_TYPE_mavlink_scaled_imu_t);
+*scaled_imu = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_scaled_imu_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*scaled_imu, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*scaled_imu, 1), _MAV_RETURN_int16_t(msg, 4));
@@ -1050,7 +1050,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*raw_imu == NULL)
 {
-*raw_imu = PrtMkDefaultValue(P_GEND_TYPE_mavlink_raw_imu_t);
+*raw_imu = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_raw_imu_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*raw_imu, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*raw_imu, 1), _MAV_RETURN_int16_t(msg, 8));
@@ -1109,7 +1109,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*raw_pressure == NULL)
 {
-*raw_pressure = PrtMkDefaultValue(P_GEND_TYPE_mavlink_raw_pressure_t);
+*raw_pressure = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_raw_pressure_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*raw_pressure, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*raw_pressure, 1), _MAV_RETURN_int16_t(msg, 8));
@@ -1157,7 +1157,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*scaled_pressure == NULL)
 {
-*scaled_pressure = PrtMkDefaultValue(P_GEND_TYPE_mavlink_scaled_pressure_t);
+*scaled_pressure = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_scaled_pressure_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*scaled_pressure, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*scaled_pressure, 1), _MAV_RETURN_float(msg, 4));
@@ -1206,7 +1206,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*attitude == NULL)
 {
-*attitude = PrtMkDefaultValue(P_GEND_TYPE_mavlink_attitude_t);
+*attitude = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_attitude_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*attitude, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*attitude, 1), _MAV_RETURN_float(msg, 4));
@@ -1262,7 +1262,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*attitude_quaternion == NULL)
 {
-*attitude_quaternion = PrtMkDefaultValue(P_GEND_TYPE_mavlink_attitude_quaternion_t);
+*attitude_quaternion = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_attitude_quaternion_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*attitude_quaternion, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion, 1), _MAV_RETURN_float(msg, 4));
@@ -1319,7 +1319,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*local_position_ned == NULL)
 {
-*local_position_ned = PrtMkDefaultValue(P_GEND_TYPE_mavlink_local_position_ned_t);
+*local_position_ned = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_local_position_ned_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*local_position_ned, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*local_position_ned, 1), _MAV_RETURN_float(msg, 4));
@@ -1376,7 +1376,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*global_position_int == NULL)
 {
-*global_position_int = PrtMkDefaultValue(P_GEND_TYPE_mavlink_global_position_int_t);
+*global_position_int = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_global_position_int_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*global_position_int, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*global_position_int, 1), _MAV_RETURN_int32_t(msg, 4));
@@ -1439,7 +1439,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*rc_channels_scaled == NULL)
 {
-*rc_channels_scaled = PrtMkDefaultValue(P_GEND_TYPE_mavlink_rc_channels_scaled_t);
+*rc_channels_scaled = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_rc_channels_scaled_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*rc_channels_scaled, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*rc_channels_scaled, 1), _MAV_RETURN_int16_t(msg, 4));
@@ -1506,7 +1506,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*rc_channels_raw == NULL)
 {
-*rc_channels_raw = PrtMkDefaultValue(P_GEND_TYPE_mavlink_rc_channels_raw_t);
+*rc_channels_raw = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_rc_channels_raw_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*rc_channels_raw, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*rc_channels_raw, 1), _MAV_RETURN_uint16_t(msg, 4));
@@ -1580,7 +1580,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*servo_output_raw == NULL)
 {
-*servo_output_raw = PrtMkDefaultValue(P_GEND_TYPE_mavlink_servo_output_raw_t);
+*servo_output_raw = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_servo_output_raw_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*servo_output_raw, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*servo_output_raw, 1), _MAV_RETURN_uint16_t(msg, 4));
@@ -1654,7 +1654,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*mission_request_partial_list == NULL)
 {
-*mission_request_partial_list = PrtMkDefaultValue(P_GEND_TYPE_mavlink_mission_request_partial_list_t);
+*mission_request_partial_list = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mission_request_partial_list_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*mission_request_partial_list, 0), _MAV_RETURN_int16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*mission_request_partial_list, 1), _MAV_RETURN_int16_t(msg, 2));
@@ -1700,7 +1700,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*mission_write_partial_list == NULL)
 {
-*mission_write_partial_list = PrtMkDefaultValue(P_GEND_TYPE_mavlink_mission_write_partial_list_t);
+*mission_write_partial_list = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mission_write_partial_list_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*mission_write_partial_list, 0), _MAV_RETURN_int16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*mission_write_partial_list, 1), _MAV_RETURN_int16_t(msg, 2));
@@ -1756,7 +1756,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*mission_item == NULL)
 {
-*mission_item = PrtMkDefaultValue(P_GEND_TYPE_mavlink_mission_item_t);
+*mission_item = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mission_item_t);
 
 PrtSetFloat32(PrtTupleGetNC(*mission_item, 0), _MAV_RETURN_float(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*mission_item, 1), _MAV_RETURN_float(msg, 4));
@@ -1821,7 +1821,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*mission_request == NULL)
 {
-*mission_request = PrtMkDefaultValue(P_GEND_TYPE_mavlink_mission_request_t);
+*mission_request = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mission_request_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*mission_request, 0), _MAV_RETURN_uint16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*mission_request, 1), _MAV_RETURN_uint8_t(msg, 2));
@@ -1864,7 +1864,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*mission_set_current == NULL)
 {
-*mission_set_current = PrtMkDefaultValue(P_GEND_TYPE_mavlink_mission_set_current_t);
+*mission_set_current = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mission_set_current_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*mission_set_current, 0), _MAV_RETURN_uint16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*mission_set_current, 1), _MAV_RETURN_uint8_t(msg, 2));
@@ -1905,7 +1905,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*mission_current == NULL)
 {
-*mission_current = PrtMkDefaultValue(P_GEND_TYPE_mavlink_mission_current_t);
+*mission_current = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mission_current_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*mission_current, 0), _MAV_RETURN_uint16_t(msg, 0));
 
@@ -1943,7 +1943,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*mission_request_list == NULL)
 {
-*mission_request_list = PrtMkDefaultValue(P_GEND_TYPE_mavlink_mission_request_list_t);
+*mission_request_list = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mission_request_list_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*mission_request_list, 0), _MAV_RETURN_uint8_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*mission_request_list, 1), _MAV_RETURN_uint8_t(msg, 1));
@@ -1984,7 +1984,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*mission_count == NULL)
 {
-*mission_count = PrtMkDefaultValue(P_GEND_TYPE_mavlink_mission_count_t);
+*mission_count = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mission_count_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*mission_count, 0), _MAV_RETURN_uint16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*mission_count, 1), _MAV_RETURN_uint8_t(msg, 2));
@@ -2026,7 +2026,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*mission_clear_all == NULL)
 {
-*mission_clear_all = PrtMkDefaultValue(P_GEND_TYPE_mavlink_mission_clear_all_t);
+*mission_clear_all = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mission_clear_all_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*mission_clear_all, 0), _MAV_RETURN_uint8_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*mission_clear_all, 1), _MAV_RETURN_uint8_t(msg, 1));
@@ -2065,7 +2065,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*mission_item_reached == NULL)
 {
-*mission_item_reached = PrtMkDefaultValue(P_GEND_TYPE_mavlink_mission_item_reached_t);
+*mission_item_reached = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mission_item_reached_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*mission_item_reached, 0), _MAV_RETURN_uint16_t(msg, 0));
 
@@ -2104,7 +2104,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*mission_ack == NULL)
 {
-*mission_ack = PrtMkDefaultValue(P_GEND_TYPE_mavlink_mission_ack_t);
+*mission_ack = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mission_ack_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*mission_ack, 0), _MAV_RETURN_uint8_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*mission_ack, 1), _MAV_RETURN_uint8_t(msg, 1));
@@ -2148,7 +2148,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*set_gps_global_origin == NULL)
 {
-*set_gps_global_origin = PrtMkDefaultValue(P_GEND_TYPE_mavlink_set_gps_global_origin_t);
+*set_gps_global_origin = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_set_gps_global_origin_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*set_gps_global_origin, 0), _MAV_RETURN_int32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*set_gps_global_origin, 1), _MAV_RETURN_int32_t(msg, 4));
@@ -2193,7 +2193,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*gps_global_origin == NULL)
 {
-*gps_global_origin = PrtMkDefaultValue(P_GEND_TYPE_mavlink_gps_global_origin_t);
+*gps_global_origin = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_gps_global_origin_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*gps_global_origin, 0), _MAV_RETURN_int32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*gps_global_origin, 1), _MAV_RETURN_int32_t(msg, 4));
@@ -2250,7 +2250,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*param_map_rc == NULL)
 {
-*param_map_rc = PrtMkDefaultValue(P_GEND_TYPE_mavlink_param_map_rc_t);
+*param_map_rc = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_param_map_rc_t);
 
 PrtSetFloat32(PrtTupleGetNC(*param_map_rc, 0), _MAV_RETURN_float(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*param_map_rc, 1), _MAV_RETURN_float(msg, 4));
@@ -2324,7 +2324,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*mission_request_int == NULL)
 {
-*mission_request_int = PrtMkDefaultValue(P_GEND_TYPE_mavlink_mission_request_int_t);
+*mission_request_int = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mission_request_int_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*mission_request_int, 0), _MAV_RETURN_uint16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*mission_request_int, 1), _MAV_RETURN_uint8_t(msg, 2));
@@ -2373,7 +2373,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*safety_set_allowed_area == NULL)
 {
-*safety_set_allowed_area = PrtMkDefaultValue(P_GEND_TYPE_mavlink_safety_set_allowed_area_t);
+*safety_set_allowed_area = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_safety_set_allowed_area_t);
 
 PrtSetFloat32(PrtTupleGetNC(*safety_set_allowed_area, 0), _MAV_RETURN_float(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*safety_set_allowed_area, 1), _MAV_RETURN_float(msg, 4));
@@ -2432,7 +2432,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*safety_allowed_area == NULL)
 {
-*safety_allowed_area = PrtMkDefaultValue(P_GEND_TYPE_mavlink_safety_allowed_area_t);
+*safety_allowed_area = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_safety_allowed_area_t);
 
 PrtSetFloat32(PrtTupleGetNC(*safety_allowed_area, 0), _MAV_RETURN_float(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*safety_allowed_area, 1), _MAV_RETURN_float(msg, 4));
@@ -2504,7 +2504,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*attitude_quaternion_cov == NULL)
 {
-*attitude_quaternion_cov = PrtMkDefaultValue(P_GEND_TYPE_mavlink_attitude_quaternion_cov_t);
+*attitude_quaternion_cov = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_attitude_quaternion_cov_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*attitude_quaternion_cov, 0), _MAV_RETURN_uint64_t(msg, 0));
 
@@ -2602,7 +2602,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*nav_controller_output == NULL)
 {
-*nav_controller_output = PrtMkDefaultValue(P_GEND_TYPE_mavlink_nav_controller_output_t);
+*nav_controller_output = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_nav_controller_output_t);
 
 PrtSetFloat32(PrtTupleGetNC(*nav_controller_output, 0), _MAV_RETURN_float(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*nav_controller_output, 1), _MAV_RETURN_float(msg, 4));
@@ -2671,7 +2671,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*global_position_int_cov == NULL)
 {
-*global_position_int_cov = PrtMkDefaultValue(P_GEND_TYPE_mavlink_global_position_int_cov_t);
+*global_position_int_cov = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_global_position_int_cov_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*global_position_int_cov, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*global_position_int_cov, 1), _MAV_RETURN_int32_t(msg, 8));
@@ -2768,7 +2768,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*local_position_ned_cov == NULL)
 {
-*local_position_ned_cov = PrtMkDefaultValue(P_GEND_TYPE_mavlink_local_position_ned_cov_t);
+*local_position_ned_cov = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_local_position_ned_cov_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*local_position_ned_cov, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 1), _MAV_RETURN_float(msg, 8));
@@ -2869,7 +2869,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*rc_channels == NULL)
 {
-*rc_channels = PrtMkDefaultValue(P_GEND_TYPE_mavlink_rc_channels_t);
+*rc_channels = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_rc_channels_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*rc_channels, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*rc_channels, 1), _MAV_RETURN_uint16_t(msg, 4));
@@ -2950,7 +2950,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*request_data_stream == NULL)
 {
-*request_data_stream = PrtMkDefaultValue(P_GEND_TYPE_mavlink_request_data_stream_t);
+*request_data_stream = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_request_data_stream_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*request_data_stream, 0), _MAV_RETURN_uint16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*request_data_stream, 1), _MAV_RETURN_uint8_t(msg, 2));
@@ -2997,7 +2997,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*data_stream == NULL)
 {
-*data_stream = PrtMkDefaultValue(P_GEND_TYPE_mavlink_data_stream_t);
+*data_stream = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_data_stream_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*data_stream, 0), _MAV_RETURN_uint16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*data_stream, 1), _MAV_RETURN_uint8_t(msg, 2));
@@ -3043,7 +3043,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*manual_control == NULL)
 {
-*manual_control = PrtMkDefaultValue(P_GEND_TYPE_mavlink_manual_control_t);
+*manual_control = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_manual_control_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*manual_control, 0), _MAV_RETURN_int16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*manual_control, 1), _MAV_RETURN_int16_t(msg, 2));
@@ -3099,7 +3099,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*rc_channels_override == NULL)
 {
-*rc_channels_override = PrtMkDefaultValue(P_GEND_TYPE_mavlink_rc_channels_override_t);
+*rc_channels_override = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_rc_channels_override_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*rc_channels_override, 0), _MAV_RETURN_uint16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*rc_channels_override, 1), _MAV_RETURN_uint16_t(msg, 2));
@@ -3167,7 +3167,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*mission_item_int == NULL)
 {
-*mission_item_int = PrtMkDefaultValue(P_GEND_TYPE_mavlink_mission_item_int_t);
+*mission_item_int = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mission_item_int_t);
 
 PrtSetFloat32(PrtTupleGetNC(*mission_item_int, 0), _MAV_RETURN_float(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*mission_item_int, 1), _MAV_RETURN_float(msg, 4));
@@ -3235,7 +3235,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*vfr_hud == NULL)
 {
-*vfr_hud = PrtMkDefaultValue(P_GEND_TYPE_mavlink_vfr_hud_t);
+*vfr_hud = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_vfr_hud_t);
 
 PrtSetFloat32(PrtTupleGetNC(*vfr_hud, 0), _MAV_RETURN_float(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*vfr_hud, 1), _MAV_RETURN_float(msg, 4));
@@ -3294,7 +3294,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*command_int == NULL)
 {
-*command_int = PrtMkDefaultValue(P_GEND_TYPE_mavlink_command_int_t);
+*command_int = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_command_int_t);
 
 PrtSetFloat32(PrtTupleGetNC(*command_int, 0), _MAV_RETURN_float(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*command_int, 1), _MAV_RETURN_float(msg, 4));
@@ -3365,7 +3365,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*command_long == NULL)
 {
-*command_long = PrtMkDefaultValue(P_GEND_TYPE_mavlink_command_long_t);
+*command_long = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_command_long_t);
 
 PrtSetFloat32(PrtTupleGetNC(*command_long, 0), _MAV_RETURN_float(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*command_long, 1), _MAV_RETURN_float(msg, 4));
@@ -3423,7 +3423,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*command_ack == NULL)
 {
-*command_ack = PrtMkDefaultValue(P_GEND_TYPE_mavlink_command_ack_t);
+*command_ack = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_command_ack_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*command_ack, 0), _MAV_RETURN_uint16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*command_ack, 1), _MAV_RETURN_uint8_t(msg, 2));
@@ -3468,7 +3468,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*manual_setpoint == NULL)
 {
-*manual_setpoint = PrtMkDefaultValue(P_GEND_TYPE_mavlink_manual_setpoint_t);
+*manual_setpoint = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_manual_setpoint_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*manual_setpoint, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*manual_setpoint, 1), _MAV_RETURN_float(msg, 4));
@@ -3534,7 +3534,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*set_attitude_target == NULL)
 {
-*set_attitude_target = PrtMkDefaultValue(P_GEND_TYPE_mavlink_set_attitude_target_t);
+*set_attitude_target = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_set_attitude_target_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*set_attitude_target, 0), _MAV_RETURN_uint32_t(msg, 0));
 
@@ -3624,7 +3624,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*attitude_target == NULL)
 {
-*attitude_target = PrtMkDefaultValue(P_GEND_TYPE_mavlink_attitude_target_t);
+*attitude_target = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_attitude_target_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*attitude_target, 0), _MAV_RETURN_uint32_t(msg, 0));
 
@@ -3710,7 +3710,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*set_position_target_local_ned == NULL)
 {
-*set_position_target_local_ned = PrtMkDefaultValue(P_GEND_TYPE_mavlink_set_position_target_local_ned_t);
+*set_position_target_local_ned = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_set_position_target_local_ned_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_local_ned, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 1), _MAV_RETURN_float(msg, 4));
@@ -3790,7 +3790,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*position_target_local_ned == NULL)
 {
-*position_target_local_ned = PrtMkDefaultValue(P_GEND_TYPE_mavlink_position_target_local_ned_t);
+*position_target_local_ned = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_position_target_local_ned_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*position_target_local_ned, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 1), _MAV_RETURN_float(msg, 4));
@@ -3868,7 +3868,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*set_position_target_global_int == NULL)
 {
-*set_position_target_global_int = PrtMkDefaultValue(P_GEND_TYPE_mavlink_set_position_target_global_int_t);
+*set_position_target_global_int = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_set_position_target_global_int_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_global_int, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_global_int, 1), _MAV_RETURN_int32_t(msg, 4));
@@ -3948,7 +3948,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*position_target_global_int == NULL)
 {
-*position_target_global_int = PrtMkDefaultValue(P_GEND_TYPE_mavlink_position_target_global_int_t);
+*position_target_global_int = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_position_target_global_int_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*position_target_global_int, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*position_target_global_int, 1), _MAV_RETURN_int32_t(msg, 4));
@@ -4017,7 +4017,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*local_position_ned_system_global_offset == NULL)
 {
-*local_position_ned_system_global_offset = PrtMkDefaultValue(P_GEND_TYPE_mavlink_local_position_ned_system_global_offset_t);
+*local_position_ned_system_global_offset = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_local_position_ned_system_global_offset_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*local_position_ned_system_global_offset, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*local_position_ned_system_global_offset, 1), _MAV_RETURN_float(msg, 4));
@@ -4081,7 +4081,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*hil_state == NULL)
 {
-*hil_state = PrtMkDefaultValue(P_GEND_TYPE_mavlink_hil_state_t);
+*hil_state = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_hil_state_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_state, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*hil_state, 1), _MAV_RETURN_float(msg, 8));
@@ -4158,7 +4158,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*hil_controls == NULL)
 {
-*hil_controls = PrtMkDefaultValue(P_GEND_TYPE_mavlink_hil_controls_t);
+*hil_controls = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_hil_controls_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_controls, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*hil_controls, 1), _MAV_RETURN_float(msg, 8));
@@ -4228,7 +4228,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*hil_rc_inputs_raw == NULL)
 {
-*hil_rc_inputs_raw = PrtMkDefaultValue(P_GEND_TYPE_mavlink_hil_rc_inputs_raw_t);
+*hil_rc_inputs_raw = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_hil_rc_inputs_raw_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_rc_inputs_raw, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*hil_rc_inputs_raw, 1), _MAV_RETURN_uint16_t(msg, 8));
@@ -4303,7 +4303,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*hil_actuator_controls == NULL)
 {
-*hil_actuator_controls = PrtMkDefaultValue(P_GEND_TYPE_mavlink_hil_actuator_controls_t);
+*hil_actuator_controls = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_hil_actuator_controls_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_actuator_controls, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*hil_actuator_controls, 1), _MAV_RETURN_uint64_t(msg, 8));
@@ -4375,7 +4375,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*optical_flow == NULL)
 {
-*optical_flow = PrtMkDefaultValue(P_GEND_TYPE_mavlink_optical_flow_t);
+*optical_flow = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_optical_flow_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*optical_flow, 1), _MAV_RETURN_float(msg, 8));
@@ -4432,7 +4432,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*global_vision_position_estimate == NULL)
 {
-*global_vision_position_estimate = PrtMkDefaultValue(P_GEND_TYPE_mavlink_global_vision_position_estimate_t);
+*global_vision_position_estimate = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_global_vision_position_estimate_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*global_vision_position_estimate, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*global_vision_position_estimate, 1), _MAV_RETURN_float(msg, 8));
@@ -4487,7 +4487,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*vision_position_estimate == NULL)
 {
-*vision_position_estimate = PrtMkDefaultValue(P_GEND_TYPE_mavlink_vision_position_estimate_t);
+*vision_position_estimate = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_vision_position_estimate_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*vision_position_estimate, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*vision_position_estimate, 1), _MAV_RETURN_float(msg, 8));
@@ -4539,7 +4539,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*vision_speed_estimate == NULL)
 {
-*vision_speed_estimate = PrtMkDefaultValue(P_GEND_TYPE_mavlink_vision_speed_estimate_t);
+*vision_speed_estimate = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_vision_speed_estimate_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*vision_speed_estimate, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*vision_speed_estimate, 1), _MAV_RETURN_float(msg, 8));
@@ -4588,7 +4588,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*vicon_position_estimate == NULL)
 {
-*vicon_position_estimate = PrtMkDefaultValue(P_GEND_TYPE_mavlink_vicon_position_estimate_t);
+*vicon_position_estimate = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_vicon_position_estimate_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*vicon_position_estimate, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*vicon_position_estimate, 1), _MAV_RETURN_float(msg, 8));
@@ -4651,7 +4651,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*highres_imu == NULL)
 {
-*highres_imu = PrtMkDefaultValue(P_GEND_TYPE_mavlink_highres_imu_t);
+*highres_imu = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_highres_imu_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*highres_imu, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*highres_imu, 1), _MAV_RETURN_float(msg, 8));
@@ -4727,7 +4727,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*optical_flow_rad == NULL)
 {
-*optical_flow_rad = PrtMkDefaultValue(P_GEND_TYPE_mavlink_optical_flow_rad_t);
+*optical_flow_rad = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_optical_flow_rad_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow_rad, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow_rad, 1), _MAV_RETURN_uint32_t(msg, 8));
@@ -4800,7 +4800,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*hil_sensor == NULL)
 {
-*hil_sensor = PrtMkDefaultValue(P_GEND_TYPE_mavlink_hil_sensor_t);
+*hil_sensor = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_hil_sensor_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_sensor, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 1), _MAV_RETURN_float(msg, 8));
@@ -4885,7 +4885,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*sim_state == NULL)
 {
-*sim_state = PrtMkDefaultValue(P_GEND_TYPE_mavlink_sim_state_t);
+*sim_state = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_sim_state_t);
 
 PrtSetFloat32(PrtTupleGetNC(*sim_state, 0), _MAV_RETURN_float(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*sim_state, 1), _MAV_RETURN_float(msg, 4));
@@ -4968,7 +4968,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*radio_status == NULL)
 {
-*radio_status = PrtMkDefaultValue(P_GEND_TYPE_mavlink_radio_status_t);
+*radio_status = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_radio_status_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*radio_status, 0), _MAV_RETURN_uint16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*radio_status, 1), _MAV_RETURN_uint16_t(msg, 2));
@@ -5028,7 +5028,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*file_transfer_protocol == NULL)
 {
-*file_transfer_protocol = PrtMkDefaultValue(P_GEND_TYPE_mavlink_file_transfer_protocol_t);
+*file_transfer_protocol = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_file_transfer_protocol_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*file_transfer_protocol, 0), _MAV_RETURN_uint8_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*file_transfer_protocol, 1), _MAV_RETURN_uint8_t(msg, 1));
@@ -5091,7 +5091,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*timesync == NULL)
 {
-*timesync = PrtMkDefaultValue(P_GEND_TYPE_mavlink_timesync_t);
+*timesync = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_timesync_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*timesync, 0), _MAV_RETURN_int64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*timesync, 1), _MAV_RETURN_int64_t(msg, 8));
@@ -5131,7 +5131,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*camera_trigger == NULL)
 {
-*camera_trigger = PrtMkDefaultValue(P_GEND_TYPE_mavlink_camera_trigger_t);
+*camera_trigger = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_camera_trigger_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*camera_trigger, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*camera_trigger, 1), _MAV_RETURN_uint32_t(msg, 8));
@@ -5182,7 +5182,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*hil_gps == NULL)
 {
-*hil_gps = PrtMkDefaultValue(P_GEND_TYPE_mavlink_hil_gps_t);
+*hil_gps = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_hil_gps_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_gps, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*hil_gps, 1), _MAV_RETURN_int32_t(msg, 8));
@@ -5254,7 +5254,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*hil_optical_flow == NULL)
 {
-*hil_optical_flow = PrtMkDefaultValue(P_GEND_TYPE_mavlink_hil_optical_flow_t);
+*hil_optical_flow = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_hil_optical_flow_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_optical_flow, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*hil_optical_flow, 1), _MAV_RETURN_uint32_t(msg, 8));
@@ -5337,7 +5337,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*hil_state_quaternion == NULL)
 {
-*hil_state_quaternion = PrtMkDefaultValue(P_GEND_TYPE_mavlink_hil_state_quaternion_t);
+*hil_state_quaternion = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_hil_state_quaternion_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_state_quaternion, 0), _MAV_RETURN_uint64_t(msg, 0));
 
@@ -5435,7 +5435,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*scaled_imu2 == NULL)
 {
-*scaled_imu2 = PrtMkDefaultValue(P_GEND_TYPE_mavlink_scaled_imu2_t);
+*scaled_imu2 = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_scaled_imu2_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*scaled_imu2, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*scaled_imu2, 1), _MAV_RETURN_int16_t(msg, 4));
@@ -5493,7 +5493,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*log_request_list == NULL)
 {
-*log_request_list = PrtMkDefaultValue(P_GEND_TYPE_mavlink_log_request_list_t);
+*log_request_list = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_log_request_list_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*log_request_list, 0), _MAV_RETURN_uint16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*log_request_list, 1), _MAV_RETURN_uint16_t(msg, 2));
@@ -5540,7 +5540,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*log_entry == NULL)
 {
-*log_entry = PrtMkDefaultValue(P_GEND_TYPE_mavlink_log_entry_t);
+*log_entry = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_log_entry_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*log_entry, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*log_entry, 1), _MAV_RETURN_uint32_t(msg, 4));
@@ -5589,7 +5589,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*log_request_data == NULL)
 {
-*log_request_data = PrtMkDefaultValue(P_GEND_TYPE_mavlink_log_request_data_t);
+*log_request_data = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_log_request_data_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*log_request_data, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*log_request_data, 1), _MAV_RETURN_uint32_t(msg, 4));
@@ -5645,7 +5645,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*log_data == NULL)
 {
-*log_data = PrtMkDefaultValue(P_GEND_TYPE_mavlink_log_data_t);
+*log_data = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_log_data_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*log_data, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*log_data, 1), _MAV_RETURN_uint16_t(msg, 4));
@@ -5708,7 +5708,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*log_erase == NULL)
 {
-*log_erase = PrtMkDefaultValue(P_GEND_TYPE_mavlink_log_erase_t);
+*log_erase = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_log_erase_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*log_erase, 0), _MAV_RETURN_uint8_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*log_erase, 1), _MAV_RETURN_uint8_t(msg, 1));
@@ -5748,7 +5748,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*log_request_end == NULL)
 {
-*log_request_end = PrtMkDefaultValue(P_GEND_TYPE_mavlink_log_request_end_t);
+*log_request_end = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_log_request_end_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*log_request_end, 0), _MAV_RETURN_uint8_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*log_request_end, 1), _MAV_RETURN_uint8_t(msg, 1));
@@ -5798,7 +5798,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*gps_inject_data == NULL)
 {
-*gps_inject_data = PrtMkDefaultValue(P_GEND_TYPE_mavlink_gps_inject_data_t);
+*gps_inject_data = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_gps_inject_data_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*gps_inject_data, 0), _MAV_RETURN_uint8_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*gps_inject_data, 1), _MAV_RETURN_uint8_t(msg, 1));
@@ -5871,7 +5871,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*gps2_raw == NULL)
 {
-*gps2_raw = PrtMkDefaultValue(P_GEND_TYPE_mavlink_gps2_raw_t);
+*gps2_raw = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_gps2_raw_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*gps2_raw, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*gps2_raw, 1), _MAV_RETURN_int32_t(msg, 8));
@@ -5932,7 +5932,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*power_status == NULL)
 {
-*power_status = PrtMkDefaultValue(P_GEND_TYPE_mavlink_power_status_t);
+*power_status = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_power_status_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*power_status, 0), _MAV_RETURN_uint16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*power_status, 1), _MAV_RETURN_uint16_t(msg, 2));
@@ -5986,7 +5986,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*serial_control == NULL)
 {
-*serial_control = PrtMkDefaultValue(P_GEND_TYPE_mavlink_serial_control_t);
+*serial_control = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_serial_control_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*serial_control, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*serial_control, 1), _MAV_RETURN_uint16_t(msg, 4));
@@ -6064,7 +6064,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*gps_rtk == NULL)
 {
-*gps_rtk = PrtMkDefaultValue(P_GEND_TYPE_mavlink_gps_rtk_t);
+*gps_rtk = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_gps_rtk_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*gps_rtk, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*gps_rtk, 1), _MAV_RETURN_uint32_t(msg, 4));
@@ -6137,7 +6137,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*gps2_rtk == NULL)
 {
-*gps2_rtk = PrtMkDefaultValue(P_GEND_TYPE_mavlink_gps2_rtk_t);
+*gps2_rtk = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_gps2_rtk_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*gps2_rtk, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*gps2_rtk, 1), _MAV_RETURN_uint32_t(msg, 4));
@@ -6207,7 +6207,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*scaled_imu3 == NULL)
 {
-*scaled_imu3 = PrtMkDefaultValue(P_GEND_TYPE_mavlink_scaled_imu3_t);
+*scaled_imu3 = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_scaled_imu3_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*scaled_imu3, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*scaled_imu3, 1), _MAV_RETURN_int16_t(msg, 4));
@@ -6268,7 +6268,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*data_transmission_handshake == NULL)
 {
-*data_transmission_handshake = PrtMkDefaultValue(P_GEND_TYPE_mavlink_data_transmission_handshake_t);
+*data_transmission_handshake = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_data_transmission_handshake_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*data_transmission_handshake, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*data_transmission_handshake, 1), _MAV_RETURN_uint16_t(msg, 4));
@@ -6326,7 +6326,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*encapsulated_data == NULL)
 {
-*encapsulated_data = PrtMkDefaultValue(P_GEND_TYPE_mavlink_encapsulated_data_t);
+*encapsulated_data = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_encapsulated_data_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*encapsulated_data, 0), _MAV_RETURN_uint16_t(msg, 0));
 
@@ -6391,7 +6391,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*distance_sensor == NULL)
 {
-*distance_sensor = PrtMkDefaultValue(P_GEND_TYPE_mavlink_distance_sensor_t);
+*distance_sensor = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_distance_sensor_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*distance_sensor, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*distance_sensor, 1), _MAV_RETURN_uint16_t(msg, 4));
@@ -6445,7 +6445,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*terrain_request == NULL)
 {
-*terrain_request = PrtMkDefaultValue(P_GEND_TYPE_mavlink_terrain_request_t);
+*terrain_request = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_terrain_request_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*terrain_request, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*terrain_request, 1), _MAV_RETURN_int32_t(msg, 8));
@@ -6500,7 +6500,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*terrain_data == NULL)
 {
-*terrain_data = PrtMkDefaultValue(P_GEND_TYPE_mavlink_terrain_data_t);
+*terrain_data = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_terrain_data_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*terrain_data, 0), _MAV_RETURN_int32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*terrain_data, 1), _MAV_RETURN_int32_t(msg, 4));
@@ -6565,7 +6565,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*terrain_check == NULL)
 {
-*terrain_check = PrtMkDefaultValue(P_GEND_TYPE_mavlink_terrain_check_t);
+*terrain_check = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_terrain_check_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*terrain_check, 0), _MAV_RETURN_int32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*terrain_check, 1), _MAV_RETURN_int32_t(msg, 4));
@@ -6610,7 +6610,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*terrain_report == NULL)
 {
-*terrain_report = PrtMkDefaultValue(P_GEND_TYPE_mavlink_terrain_report_t);
+*terrain_report = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_terrain_report_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*terrain_report, 0), _MAV_RETURN_int32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*terrain_report, 1), _MAV_RETURN_int32_t(msg, 4));
@@ -6662,7 +6662,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*scaled_pressure2 == NULL)
 {
-*scaled_pressure2 = PrtMkDefaultValue(P_GEND_TYPE_mavlink_scaled_pressure2_t);
+*scaled_pressure2 = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_scaled_pressure2_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*scaled_pressure2, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*scaled_pressure2, 1), _MAV_RETURN_float(msg, 4));
@@ -6718,7 +6718,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*att_pos_mocap == NULL)
 {
-*att_pos_mocap = PrtMkDefaultValue(P_GEND_TYPE_mavlink_att_pos_mocap_t);
+*att_pos_mocap = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_att_pos_mocap_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*att_pos_mocap, 0), _MAV_RETURN_uint64_t(msg, 0));
 
@@ -6798,7 +6798,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*set_actuator_control_target == NULL)
 {
-*set_actuator_control_target = PrtMkDefaultValue(P_GEND_TYPE_mavlink_set_actuator_control_target_t);
+*set_actuator_control_target = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_set_actuator_control_target_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*set_actuator_control_target, 0), _MAV_RETURN_uint64_t(msg, 0));
 
@@ -6876,7 +6876,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*actuator_control_target == NULL)
 {
-*actuator_control_target = PrtMkDefaultValue(P_GEND_TYPE_mavlink_actuator_control_target_t);
+*actuator_control_target = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_actuator_control_target_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*actuator_control_target, 0), _MAV_RETURN_uint64_t(msg, 0));
 
@@ -6945,7 +6945,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*altitude == NULL)
 {
-*altitude = PrtMkDefaultValue(P_GEND_TYPE_mavlink_altitude_t);
+*altitude = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_altitude_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*altitude, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*altitude, 1), _MAV_RETURN_float(msg, 8));
@@ -7014,7 +7014,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*resource_request == NULL)
 {
-*resource_request = PrtMkDefaultValue(P_GEND_TYPE_mavlink_resource_request_t);
+*resource_request = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_resource_request_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*resource_request, 0), _MAV_RETURN_uint8_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*resource_request, 1), _MAV_RETURN_uint8_t(msg, 1));
@@ -7100,7 +7100,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*scaled_pressure3 == NULL)
 {
-*scaled_pressure3 = PrtMkDefaultValue(P_GEND_TYPE_mavlink_scaled_pressure3_t);
+*scaled_pressure3 = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_scaled_pressure3_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*scaled_pressure3, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*scaled_pressure3, 1), _MAV_RETURN_float(msg, 4));
@@ -7198,7 +7198,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*follow_target == NULL)
 {
-*follow_target = PrtMkDefaultValue(P_GEND_TYPE_mavlink_follow_target_t);
+*follow_target = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_follow_target_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*follow_target, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*follow_target, 1), _MAV_RETURN_uint64_t(msg, 8));
@@ -7408,7 +7408,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*control_system_state == NULL)
 {
-*control_system_state = PrtMkDefaultValue(P_GEND_TYPE_mavlink_control_system_state_t);
+*control_system_state = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_control_system_state_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*control_system_state, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*control_system_state, 1), _MAV_RETURN_float(msg, 8));
@@ -7559,7 +7559,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*battery_status == NULL)
 {
-*battery_status = PrtMkDefaultValue(P_GEND_TYPE_mavlink_battery_status_t);
+*battery_status = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_battery_status_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*battery_status, 0), _MAV_RETURN_int32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*battery_status, 1), _MAV_RETURN_int32_t(msg, 4));
@@ -7665,7 +7665,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*autopilot_version == NULL)
 {
-*autopilot_version = PrtMkDefaultValue(P_GEND_TYPE_mavlink_autopilot_version_t);
+*autopilot_version = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_autopilot_version_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*autopilot_version, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*autopilot_version, 1), _MAV_RETURN_uint64_t(msg, 8));
@@ -7786,7 +7786,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*landing_target == NULL)
 {
-*landing_target = PrtMkDefaultValue(P_GEND_TYPE_mavlink_landing_target_t);
+*landing_target = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_landing_target_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*landing_target, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*landing_target, 1), _MAV_RETURN_float(msg, 8));
@@ -7846,7 +7846,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*estimator_status == NULL)
 {
-*estimator_status = PrtMkDefaultValue(P_GEND_TYPE_mavlink_estimator_status_t);
+*estimator_status = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_estimator_status_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*estimator_status, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*estimator_status, 1), _MAV_RETURN_float(msg, 8));
@@ -7909,7 +7909,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*wind_cov == NULL)
 {
-*wind_cov = PrtMkDefaultValue(P_GEND_TYPE_mavlink_wind_cov_t);
+*wind_cov = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_wind_cov_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*wind_cov, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*wind_cov, 1), _MAV_RETURN_float(msg, 8));
@@ -7979,7 +7979,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*gps_input == NULL)
 {
-*gps_input = PrtMkDefaultValue(P_GEND_TYPE_mavlink_gps_input_t);
+*gps_input = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_gps_input_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*gps_input, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*gps_input, 1), _MAV_RETURN_uint32_t(msg, 8));
@@ -8060,7 +8060,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*gps_rtcm_data == NULL)
 {
-*gps_rtcm_data = PrtMkDefaultValue(P_GEND_TYPE_mavlink_gps_rtcm_data_t);
+*gps_rtcm_data = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_gps_rtcm_data_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*gps_rtcm_data, 0), _MAV_RETURN_uint8_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*gps_rtcm_data, 1), _MAV_RETURN_uint8_t(msg, 1));
@@ -8143,7 +8143,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*high_latency == NULL)
 {
-*high_latency = PrtMkDefaultValue(P_GEND_TYPE_mavlink_high_latency_t);
+*high_latency = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_high_latency_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*high_latency, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*high_latency, 1), _MAV_RETURN_int32_t(msg, 4));
@@ -8232,7 +8232,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*vibration == NULL)
 {
-*vibration = PrtMkDefaultValue(P_GEND_TYPE_mavlink_vibration_t);
+*vibration = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_vibration_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*vibration, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*vibration, 1), _MAV_RETURN_float(msg, 8));
@@ -8299,7 +8299,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*home_position == NULL)
 {
-*home_position = PrtMkDefaultValue(P_GEND_TYPE_mavlink_home_position_t);
+*home_position = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_home_position_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*home_position, 0), _MAV_RETURN_int32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*home_position, 1), _MAV_RETURN_int32_t(msg, 4));
@@ -8395,7 +8395,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*set_home_position == NULL)
 {
-*set_home_position = PrtMkDefaultValue(P_GEND_TYPE_mavlink_set_home_position_t);
+*set_home_position = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_set_home_position_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*set_home_position, 0), _MAV_RETURN_int32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*set_home_position, 1), _MAV_RETURN_int32_t(msg, 4));
@@ -8475,7 +8475,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*message_interval == NULL)
 {
-*message_interval = PrtMkDefaultValue(P_GEND_TYPE_mavlink_message_interval_t);
+*message_interval = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_message_interval_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*message_interval, 0), _MAV_RETURN_int32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*message_interval, 1), _MAV_RETURN_uint16_t(msg, 4));
@@ -8515,7 +8515,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*extended_sys_state == NULL)
 {
-*extended_sys_state = PrtMkDefaultValue(P_GEND_TYPE_mavlink_extended_sys_state_t);
+*extended_sys_state = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_extended_sys_state_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*extended_sys_state, 0), _MAV_RETURN_uint8_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*extended_sys_state, 1), _MAV_RETURN_uint8_t(msg, 1));
@@ -8574,7 +8574,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*adsb_vehicle == NULL)
 {
-*adsb_vehicle = PrtMkDefaultValue(P_GEND_TYPE_mavlink_adsb_vehicle_t);
+*adsb_vehicle = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_adsb_vehicle_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*adsb_vehicle, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*adsb_vehicle, 1), _MAV_RETURN_int32_t(msg, 4));
@@ -8660,7 +8660,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*collision == NULL)
 {
-*collision = PrtMkDefaultValue(P_GEND_TYPE_mavlink_collision_t);
+*collision = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_collision_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*collision, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*collision, 1), _MAV_RETURN_float(msg, 4));
@@ -8721,7 +8721,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*v2_extension == NULL)
 {
-*v2_extension = PrtMkDefaultValue(P_GEND_TYPE_mavlink_v2_extension_t);
+*v2_extension = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_v2_extension_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*v2_extension, 0), _MAV_RETURN_uint16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*v2_extension, 1), _MAV_RETURN_uint8_t(msg, 2));
@@ -8796,7 +8796,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*memory_vect == NULL)
 {
-*memory_vect = PrtMkDefaultValue(P_GEND_TYPE_mavlink_memory_vect_t);
+*memory_vect = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_memory_vect_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*memory_vect, 0), _MAV_RETURN_uint16_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*memory_vect, 1), _MAV_RETURN_uint8_t(msg, 2));
@@ -8870,7 +8870,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*debug_vect == NULL)
 {
-*debug_vect = PrtMkDefaultValue(P_GEND_TYPE_mavlink_debug_vect_t);
+*debug_vect = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_debug_vect_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*debug_vect, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*debug_vect, 1), _MAV_RETURN_float(msg, 8));
@@ -8944,7 +8944,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*named_value_float == NULL)
 {
-*named_value_float = PrtMkDefaultValue(P_GEND_TYPE_mavlink_named_value_float_t);
+*named_value_float = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_named_value_float_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*named_value_float, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*named_value_float, 1), _MAV_RETURN_float(msg, 4));
@@ -9014,7 +9014,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*named_value_int == NULL)
 {
-*named_value_int = PrtMkDefaultValue(P_GEND_TYPE_mavlink_named_value_int_t);
+*named_value_int = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_named_value_int_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*named_value_int, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*named_value_int, 1), _MAV_RETURN_int32_t(msg, 4));
@@ -9083,7 +9083,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*statustext == NULL)
 {
-*statustext = PrtMkDefaultValue(P_GEND_TYPE_mavlink_statustext_t);
+*statustext = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_statustext_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*statustext, 0), _MAV_RETURN_uint8_t(msg, 0));
 
@@ -9143,7 +9143,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*debug == NULL)
 {
-*debug = PrtMkDefaultValue(P_GEND_TYPE_mavlink_debug_t);
+*debug = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_debug_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*debug, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtSetFloat32(PrtTupleGetNC(*debug, 1), _MAV_RETURN_float(msg, 4));
@@ -9161,4 +9161,841 @@ PrtPrimSetInt(PrtTupleGetNC(*debug, 2), _MAV_RETURN_uint8_t(msg, 8));
 
 }         
 
+
+static inline uint16_t p_mavlink_msg_button_change_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* button_change)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_BUTTON_CHANGE_LEN];
+
+_mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(button_change, 0)));
+_mav_put_uint32_t(buf, 4, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(button_change, 1)));
+_mav_put_uint8_t(buf, 8, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(button_change, 2)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_BUTTON_CHANGE_LEN);
+msg->msgid = MAVLINK_MSG_ID_BUTTON_CHANGE;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_BUTTON_CHANGE_MIN_LEN, MAVLINK_MSG_ID_BUTTON_CHANGE_LEN, MAVLINK_MSG_ID_BUTTON_CHANGE_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_button_change_decode(const mavlink_message_t* msg, PRT_VALUE** button_change)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*button_change == NULL)
+{
+*button_change = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_button_change_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*button_change, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*button_change, 1), _MAV_RETURN_uint32_t(msg, 4));
+PrtPrimSetInt(PrtTupleGetNC(*button_change, 2), _MAV_RETURN_uint8_t(msg, 8));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*button_change, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*button_change, 1), _MAV_RETURN_uint32_t(msg, 4));
+PrtPrimSetInt(PrtTupleGetNC(*button_change, 2), _MAV_RETURN_uint8_t(msg, 8));
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_play_tune_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* play_tune)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_PLAY_TUNE_LEN];
+
+_mav_put_uint8_t(buf, 0, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(play_tune, 0)));
+_mav_put_uint8_t(buf, 1, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(play_tune, 1)));
+
+count = 0;
+seqVal = PrtTupleGetNC(play_tune, 2);
+while(count < 30)
+{
+    _mav_put_char(buf, 2 + count * 1, (char)PrtPrimGetInt(PrtSeqGetNCIntIndex(seqVal, count)));
+
+    count++;
+}  
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_PLAY_TUNE_LEN);
+msg->msgid = MAVLINK_MSG_ID_PLAY_TUNE;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_PLAY_TUNE_MIN_LEN, MAVLINK_MSG_ID_PLAY_TUNE_LEN, MAVLINK_MSG_ID_PLAY_TUNE_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_play_tune_decode(const mavlink_message_t* msg, PRT_VALUE** play_tune)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*play_tune == NULL)
+{
+*play_tune = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_play_tune_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*play_tune, 0), _MAV_RETURN_uint8_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*play_tune, 1), _MAV_RETURN_uint8_t(msg, 1));
+
+count = 0;
+seqVal = PrtTupleGetNC(*play_tune, 2);
+while(count < 30)
+{
+    
+tmpVal = PrtMkIntValue(_MAV_RETURN_char(msg, 2 + count * 1));
+PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
+
+    count++;
+}  
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*play_tune, 0), _MAV_RETURN_uint8_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*play_tune, 1), _MAV_RETURN_uint8_t(msg, 1));
+
+count = 0;
+seqVal = PrtTupleGetNC(*play_tune, 2);
+while(count < 30)
+{
+    
+PrtPrimSetInt(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_char(msg, 2 + count * 1));
+
+    count++;
+}  
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_camera_information_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* camera_information)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_CAMERA_INFORMATION_LEN];
+
+_mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(camera_information, 0)));
+_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(camera_information, 1)));
+_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(camera_information, 2)));
+_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(camera_information, 3)));
+_mav_put_uint16_t(buf, 16, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(camera_information, 4)));
+_mav_put_uint16_t(buf, 18, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(camera_information, 5)));
+_mav_put_uint8_t(buf, 20, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_information, 6)));
+
+count = 0;
+seqVal = PrtTupleGetNC(camera_information, 7);
+while(count < 32)
+{
+    _mav_put_uint8_t(buf, 21 + count * 1, (uint8_t)PrtPrimGetInt(PrtSeqGetNCIntIndex(seqVal, count)));
+
+    count++;
+}  
+
+count = 0;
+seqVal = PrtTupleGetNC(camera_information, 8);
+while(count < 32)
+{
+    _mav_put_uint8_t(buf, 53 + count * 1, (uint8_t)PrtPrimGetInt(PrtSeqGetNCIntIndex(seqVal, count)));
+
+    count++;
+}  
+_mav_put_uint8_t(buf, 85, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_information, 9)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_CAMERA_INFORMATION_LEN);
+msg->msgid = MAVLINK_MSG_ID_CAMERA_INFORMATION;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_CAMERA_INFORMATION_MIN_LEN, MAVLINK_MSG_ID_CAMERA_INFORMATION_LEN, MAVLINK_MSG_ID_CAMERA_INFORMATION_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_camera_information_decode(const mavlink_message_t* msg, PRT_VALUE** camera_information)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*camera_information == NULL)
+{
+*camera_information = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_camera_information_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtSetFloat32(PrtTupleGetNC(*camera_information, 1), _MAV_RETURN_float(msg, 4));
+PrtSetFloat32(PrtTupleGetNC(*camera_information, 2), _MAV_RETURN_float(msg, 8));
+PrtSetFloat32(PrtTupleGetNC(*camera_information, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 4), _MAV_RETURN_uint16_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 5), _MAV_RETURN_uint16_t(msg, 18));
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 6), _MAV_RETURN_uint8_t(msg, 20));
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_information, 7);
+while(count < 32)
+{
+    
+tmpVal = PrtMkIntValue(_MAV_RETURN_uint8_t(msg, 21 + count * 1));
+PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
+
+    count++;
+}  
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_information, 8);
+while(count < 32)
+{
+    
+tmpVal = PrtMkIntValue(_MAV_RETURN_uint8_t(msg, 53 + count * 1));
+PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
+
+    count++;
+}  
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 9), _MAV_RETURN_uint8_t(msg, 85));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtSetFloat32(PrtTupleGetNC(*camera_information, 1), _MAV_RETURN_float(msg, 4));
+PrtSetFloat32(PrtTupleGetNC(*camera_information, 2), _MAV_RETURN_float(msg, 8));
+PrtSetFloat32(PrtTupleGetNC(*camera_information, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 4), _MAV_RETURN_uint16_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 5), _MAV_RETURN_uint16_t(msg, 18));
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 6), _MAV_RETURN_uint8_t(msg, 20));
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_information, 7);
+while(count < 32)
+{
+    
+PrtPrimSetInt(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_uint8_t(msg, 21 + count * 1));
+
+    count++;
+}  
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_information, 8);
+while(count < 32)
+{
+    
+PrtPrimSetInt(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_uint8_t(msg, 53 + count * 1));
+
+    count++;
+}  
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 9), _MAV_RETURN_uint8_t(msg, 85));
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_camera_settings_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* camera_settings)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_CAMERA_SETTINGS_LEN];
+
+_mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 0)));
+_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(camera_settings, 1)));
+_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(camera_settings, 2)));
+_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(camera_settings, 3)));
+_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(camera_settings, 4)));
+_mav_put_uint8_t(buf, 20, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 5)));
+_mav_put_uint8_t(buf, 21, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 6)));
+_mav_put_uint8_t(buf, 22, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 7)));
+_mav_put_uint8_t(buf, 23, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 8)));
+_mav_put_uint8_t(buf, 24, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 9)));
+_mav_put_uint8_t(buf, 25, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 10)));
+_mav_put_uint8_t(buf, 26, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 11)));
+_mav_put_uint8_t(buf, 27, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 12)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_CAMERA_SETTINGS_LEN);
+msg->msgid = MAVLINK_MSG_ID_CAMERA_SETTINGS;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_CAMERA_SETTINGS_MIN_LEN, MAVLINK_MSG_ID_CAMERA_SETTINGS_LEN, MAVLINK_MSG_ID_CAMERA_SETTINGS_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_camera_settings_decode(const mavlink_message_t* msg, PRT_VALUE** camera_settings)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*camera_settings == NULL)
+{
+*camera_settings = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_camera_settings_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtSetFloat32(PrtTupleGetNC(*camera_settings, 1), _MAV_RETURN_float(msg, 4));
+PrtSetFloat32(PrtTupleGetNC(*camera_settings, 2), _MAV_RETURN_float(msg, 8));
+PrtSetFloat32(PrtTupleGetNC(*camera_settings, 3), _MAV_RETURN_float(msg, 12));
+PrtSetFloat32(PrtTupleGetNC(*camera_settings, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 5), _MAV_RETURN_uint8_t(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 6), _MAV_RETURN_uint8_t(msg, 21));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 7), _MAV_RETURN_uint8_t(msg, 22));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 8), _MAV_RETURN_uint8_t(msg, 23));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 9), _MAV_RETURN_uint8_t(msg, 24));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 10), _MAV_RETURN_uint8_t(msg, 25));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 11), _MAV_RETURN_uint8_t(msg, 26));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 12), _MAV_RETURN_uint8_t(msg, 27));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtSetFloat32(PrtTupleGetNC(*camera_settings, 1), _MAV_RETURN_float(msg, 4));
+PrtSetFloat32(PrtTupleGetNC(*camera_settings, 2), _MAV_RETURN_float(msg, 8));
+PrtSetFloat32(PrtTupleGetNC(*camera_settings, 3), _MAV_RETURN_float(msg, 12));
+PrtSetFloat32(PrtTupleGetNC(*camera_settings, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 5), _MAV_RETURN_uint8_t(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 6), _MAV_RETURN_uint8_t(msg, 21));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 7), _MAV_RETURN_uint8_t(msg, 22));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 8), _MAV_RETURN_uint8_t(msg, 23));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 9), _MAV_RETURN_uint8_t(msg, 24));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 10), _MAV_RETURN_uint8_t(msg, 25));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 11), _MAV_RETURN_uint8_t(msg, 26));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 12), _MAV_RETURN_uint8_t(msg, 27));
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_storage_information_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* storage_information)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_STORAGE_INFORMATION_LEN];
+
+_mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(storage_information, 0)));
+_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(storage_information, 1)));
+_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(storage_information, 2)));
+_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(storage_information, 3)));
+_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(storage_information, 4)));
+_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(storage_information, 5)));
+_mav_put_uint8_t(buf, 24, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(storage_information, 6)));
+_mav_put_uint8_t(buf, 25, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(storage_information, 7)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_STORAGE_INFORMATION_LEN);
+msg->msgid = MAVLINK_MSG_ID_STORAGE_INFORMATION;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_STORAGE_INFORMATION_MIN_LEN, MAVLINK_MSG_ID_STORAGE_INFORMATION_LEN, MAVLINK_MSG_ID_STORAGE_INFORMATION_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_storage_information_decode(const mavlink_message_t* msg, PRT_VALUE** storage_information)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*storage_information == NULL)
+{
+*storage_information = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_storage_information_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*storage_information, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtSetFloat32(PrtTupleGetNC(*storage_information, 1), _MAV_RETURN_float(msg, 4));
+PrtSetFloat32(PrtTupleGetNC(*storage_information, 2), _MAV_RETURN_float(msg, 8));
+PrtSetFloat32(PrtTupleGetNC(*storage_information, 3), _MAV_RETURN_float(msg, 12));
+PrtSetFloat32(PrtTupleGetNC(*storage_information, 4), _MAV_RETURN_float(msg, 16));
+PrtSetFloat32(PrtTupleGetNC(*storage_information, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*storage_information, 6), _MAV_RETURN_uint8_t(msg, 24));
+PrtPrimSetInt(PrtTupleGetNC(*storage_information, 7), _MAV_RETURN_uint8_t(msg, 25));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*storage_information, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtSetFloat32(PrtTupleGetNC(*storage_information, 1), _MAV_RETURN_float(msg, 4));
+PrtSetFloat32(PrtTupleGetNC(*storage_information, 2), _MAV_RETURN_float(msg, 8));
+PrtSetFloat32(PrtTupleGetNC(*storage_information, 3), _MAV_RETURN_float(msg, 12));
+PrtSetFloat32(PrtTupleGetNC(*storage_information, 4), _MAV_RETURN_float(msg, 16));
+PrtSetFloat32(PrtTupleGetNC(*storage_information, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*storage_information, 6), _MAV_RETURN_uint8_t(msg, 24));
+PrtPrimSetInt(PrtTupleGetNC(*storage_information, 7), _MAV_RETURN_uint8_t(msg, 25));
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_camera_capture_status_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* camera_capture_status)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS_LEN];
+
+_mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 0)));
+_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(camera_capture_status, 1)));
+_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(camera_capture_status, 2)));
+_mav_put_uint16_t(buf, 12, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 3)));
+_mav_put_uint16_t(buf, 14, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 4)));
+_mav_put_uint16_t(buf, 16, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 5)));
+_mav_put_uint16_t(buf, 18, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 6)));
+_mav_put_uint8_t(buf, 20, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 7)));
+_mav_put_uint8_t(buf, 21, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 8)));
+_mav_put_uint8_t(buf, 22, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 9)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS_LEN);
+msg->msgid = MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS_MIN_LEN, MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS_LEN, MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_camera_capture_status_decode(const mavlink_message_t* msg, PRT_VALUE** camera_capture_status)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*camera_capture_status == NULL)
+{
+*camera_capture_status = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_camera_capture_status_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtSetFloat32(PrtTupleGetNC(*camera_capture_status, 1), _MAV_RETURN_float(msg, 4));
+PrtSetFloat32(PrtTupleGetNC(*camera_capture_status, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 3), _MAV_RETURN_uint16_t(msg, 12));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 4), _MAV_RETURN_uint16_t(msg, 14));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 5), _MAV_RETURN_uint16_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 6), _MAV_RETURN_uint16_t(msg, 18));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 7), _MAV_RETURN_uint8_t(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 8), _MAV_RETURN_uint8_t(msg, 21));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 9), _MAV_RETURN_uint8_t(msg, 22));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtSetFloat32(PrtTupleGetNC(*camera_capture_status, 1), _MAV_RETURN_float(msg, 4));
+PrtSetFloat32(PrtTupleGetNC(*camera_capture_status, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 3), _MAV_RETURN_uint16_t(msg, 12));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 4), _MAV_RETURN_uint16_t(msg, 14));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 5), _MAV_RETURN_uint16_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 6), _MAV_RETURN_uint16_t(msg, 18));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 7), _MAV_RETURN_uint8_t(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 8), _MAV_RETURN_uint8_t(msg, 21));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 9), _MAV_RETURN_uint8_t(msg, 22));
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_camera_image_captured_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* camera_image_captured)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN];
+
+_mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(camera_image_captured, 0)));
+_mav_put_uint32_t(buf, 8, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(camera_image_captured, 1)));
+_mav_put_int32_t(buf, 12, (int32_t)PrtPrimGetInt(PrtTupleGetNC(camera_image_captured, 2)));
+_mav_put_int32_t(buf, 16, (int32_t)PrtPrimGetInt(PrtTupleGetNC(camera_image_captured, 3)));
+_mav_put_int32_t(buf, 20, (int32_t)PrtPrimGetInt(PrtTupleGetNC(camera_image_captured, 4)));
+_mav_put_int32_t(buf, 24, (int32_t)PrtPrimGetInt(PrtTupleGetNC(camera_image_captured, 5)));
+
+count = 0;
+seqVal = PrtTupleGetNC(camera_image_captured, 6);
+while(count < 4)
+{
+    
+_mav_put_float(buf, 28 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+
+    count++;
+}  
+_mav_put_uint8_t(buf, 44, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_image_captured, 7)));
+
+count = 0;
+seqVal = PrtTupleGetNC(camera_image_captured, 8);
+while(count < 210)
+{
+    _mav_put_char(buf, 45 + count * 1, (char)PrtPrimGetInt(PrtSeqGetNCIntIndex(seqVal, count)));
+
+    count++;
+}  
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN);
+msg->msgid = MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_MIN_LEN, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_camera_image_captured_decode(const mavlink_message_t* msg, PRT_VALUE** camera_image_captured)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*camera_image_captured == NULL)
+{
+*camera_image_captured = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_camera_image_captured_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 0), _MAV_RETURN_uint64_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 1), _MAV_RETURN_uint32_t(msg, 8));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 2), _MAV_RETURN_int32_t(msg, 12));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 3), _MAV_RETURN_int32_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 4), _MAV_RETURN_int32_t(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 5), _MAV_RETURN_int32_t(msg, 24));
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_image_captured, 6);
+while(count < 4)
+{
+    
+
+tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 28 + count * 4));
+
+PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
+
+    count++;
+}  
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 7), _MAV_RETURN_uint8_t(msg, 44));
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_image_captured, 8);
+while(count < 210)
+{
+    
+tmpVal = PrtMkIntValue(_MAV_RETURN_char(msg, 45 + count * 1));
+PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
+
+    count++;
+}  
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 0), _MAV_RETURN_uint64_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 1), _MAV_RETURN_uint32_t(msg, 8));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 2), _MAV_RETURN_int32_t(msg, 12));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 3), _MAV_RETURN_int32_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 4), _MAV_RETURN_int32_t(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 5), _MAV_RETURN_int32_t(msg, 24));
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_image_captured, 6);
+while(count < 4)
+{
+    
+PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 28 + count * 4));
+
+    count++;
+}  
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 7), _MAV_RETURN_uint8_t(msg, 44));
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_image_captured, 8);
+while(count < 210)
+{
+    
+PrtPrimSetInt(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_char(msg, 45 + count * 1));
+
+    count++;
+}  
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_flight_information_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* flight_information)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_FLIGHT_INFORMATION_LEN];
+
+_mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(flight_information, 0)));
+_mav_put_uint64_t(buf, 8, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(flight_information, 1)));
+_mav_put_uint64_t(buf, 16, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(flight_information, 2)));
+_mav_put_uint32_t(buf, 24, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(flight_information, 3)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_FLIGHT_INFORMATION_LEN);
+msg->msgid = MAVLINK_MSG_ID_FLIGHT_INFORMATION;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_FLIGHT_INFORMATION_MIN_LEN, MAVLINK_MSG_ID_FLIGHT_INFORMATION_LEN, MAVLINK_MSG_ID_FLIGHT_INFORMATION_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_flight_information_decode(const mavlink_message_t* msg, PRT_VALUE** flight_information)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*flight_information == NULL)
+{
+*flight_information = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_flight_information_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 0), _MAV_RETURN_uint64_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 1), _MAV_RETURN_uint64_t(msg, 8));
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 2), _MAV_RETURN_uint64_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 3), _MAV_RETURN_uint32_t(msg, 24));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 0), _MAV_RETURN_uint64_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 1), _MAV_RETURN_uint64_t(msg, 8));
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 2), _MAV_RETURN_uint64_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 3), _MAV_RETURN_uint32_t(msg, 24));
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_mount_orientation_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* mount_orientation)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_MOUNT_ORIENTATION_LEN];
+
+_mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(mount_orientation, 0)));
+_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(mount_orientation, 1)));
+_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(mount_orientation, 2)));
+_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(mount_orientation, 3)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_MOUNT_ORIENTATION_LEN);
+msg->msgid = MAVLINK_MSG_ID_MOUNT_ORIENTATION;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_MOUNT_ORIENTATION_MIN_LEN, MAVLINK_MSG_ID_MOUNT_ORIENTATION_LEN, MAVLINK_MSG_ID_MOUNT_ORIENTATION_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_mount_orientation_decode(const mavlink_message_t* msg, PRT_VALUE** mount_orientation)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*mount_orientation == NULL)
+{
+*mount_orientation = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mount_orientation_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*mount_orientation, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtSetFloat32(PrtTupleGetNC(*mount_orientation, 1), _MAV_RETURN_float(msg, 4));
+PrtSetFloat32(PrtTupleGetNC(*mount_orientation, 2), _MAV_RETURN_float(msg, 8));
+PrtSetFloat32(PrtTupleGetNC(*mount_orientation, 3), _MAV_RETURN_float(msg, 12));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*mount_orientation, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtSetFloat32(PrtTupleGetNC(*mount_orientation, 1), _MAV_RETURN_float(msg, 4));
+PrtSetFloat32(PrtTupleGetNC(*mount_orientation, 2), _MAV_RETURN_float(msg, 8));
+PrtSetFloat32(PrtTupleGetNC(*mount_orientation, 3), _MAV_RETURN_float(msg, 12));
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_logging_data_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* logging_data)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_LOGGING_DATA_LEN];
+
+_mav_put_uint16_t(buf, 0, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(logging_data, 0)));
+_mav_put_uint8_t(buf, 2, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data, 1)));
+_mav_put_uint8_t(buf, 3, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data, 2)));
+_mav_put_uint8_t(buf, 4, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data, 3)));
+_mav_put_uint8_t(buf, 5, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data, 4)));
+
+count = 0;
+seqVal = PrtTupleGetNC(logging_data, 5);
+while(count < 249)
+{
+    _mav_put_uint8_t(buf, 6 + count * 1, (uint8_t)PrtPrimGetInt(PrtSeqGetNCIntIndex(seqVal, count)));
+
+    count++;
+}  
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_LOGGING_DATA_LEN);
+msg->msgid = MAVLINK_MSG_ID_LOGGING_DATA;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_LOGGING_DATA_MIN_LEN, MAVLINK_MSG_ID_LOGGING_DATA_LEN, MAVLINK_MSG_ID_LOGGING_DATA_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_logging_data_decode(const mavlink_message_t* msg, PRT_VALUE** logging_data)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*logging_data == NULL)
+{
+*logging_data = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_logging_data_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 0), _MAV_RETURN_uint16_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 1), _MAV_RETURN_uint8_t(msg, 2));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 2), _MAV_RETURN_uint8_t(msg, 3));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 3), _MAV_RETURN_uint8_t(msg, 4));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 4), _MAV_RETURN_uint8_t(msg, 5));
+
+count = 0;
+seqVal = PrtTupleGetNC(*logging_data, 5);
+while(count < 249)
+{
+    
+tmpVal = PrtMkIntValue(_MAV_RETURN_uint8_t(msg, 6 + count * 1));
+PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
+
+    count++;
+}  
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 0), _MAV_RETURN_uint16_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 1), _MAV_RETURN_uint8_t(msg, 2));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 2), _MAV_RETURN_uint8_t(msg, 3));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 3), _MAV_RETURN_uint8_t(msg, 4));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 4), _MAV_RETURN_uint8_t(msg, 5));
+
+count = 0;
+seqVal = PrtTupleGetNC(*logging_data, 5);
+while(count < 249)
+{
+    
+PrtPrimSetInt(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_uint8_t(msg, 6 + count * 1));
+
+    count++;
+}  
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_logging_data_acked_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* logging_data_acked)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_LOGGING_DATA_ACKED_LEN];
+
+_mav_put_uint16_t(buf, 0, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(logging_data_acked, 0)));
+_mav_put_uint8_t(buf, 2, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data_acked, 1)));
+_mav_put_uint8_t(buf, 3, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data_acked, 2)));
+_mav_put_uint8_t(buf, 4, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data_acked, 3)));
+_mav_put_uint8_t(buf, 5, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data_acked, 4)));
+
+count = 0;
+seqVal = PrtTupleGetNC(logging_data_acked, 5);
+while(count < 249)
+{
+    _mav_put_uint8_t(buf, 6 + count * 1, (uint8_t)PrtPrimGetInt(PrtSeqGetNCIntIndex(seqVal, count)));
+
+    count++;
+}  
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_LOGGING_DATA_ACKED_LEN);
+msg->msgid = MAVLINK_MSG_ID_LOGGING_DATA_ACKED;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_LOGGING_DATA_ACKED_MIN_LEN, MAVLINK_MSG_ID_LOGGING_DATA_ACKED_LEN, MAVLINK_MSG_ID_LOGGING_DATA_ACKED_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_logging_data_acked_decode(const mavlink_message_t* msg, PRT_VALUE** logging_data_acked)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*logging_data_acked == NULL)
+{
+*logging_data_acked = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_logging_data_acked_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 0), _MAV_RETURN_uint16_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 1), _MAV_RETURN_uint8_t(msg, 2));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 2), _MAV_RETURN_uint8_t(msg, 3));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 3), _MAV_RETURN_uint8_t(msg, 4));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 4), _MAV_RETURN_uint8_t(msg, 5));
+
+count = 0;
+seqVal = PrtTupleGetNC(*logging_data_acked, 5);
+while(count < 249)
+{
+    
+tmpVal = PrtMkIntValue(_MAV_RETURN_uint8_t(msg, 6 + count * 1));
+PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
+
+    count++;
+}  
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 0), _MAV_RETURN_uint16_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 1), _MAV_RETURN_uint8_t(msg, 2));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 2), _MAV_RETURN_uint8_t(msg, 3));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 3), _MAV_RETURN_uint8_t(msg, 4));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 4), _MAV_RETURN_uint8_t(msg, 5));
+
+count = 0;
+seqVal = PrtTupleGetNC(*logging_data_acked, 5);
+while(count < 249)
+{
+    
+PrtPrimSetInt(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_uint8_t(msg, 6 + count * 1));
+
+    count++;
+}  
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_logging_ack_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* logging_ack)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_LOGGING_ACK_LEN];
+
+_mav_put_uint16_t(buf, 0, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(logging_ack, 0)));
+_mav_put_uint8_t(buf, 2, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_ack, 1)));
+_mav_put_uint8_t(buf, 3, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_ack, 2)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_LOGGING_ACK_LEN);
+msg->msgid = MAVLINK_MSG_ID_LOGGING_ACK;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_LOGGING_ACK_MIN_LEN, MAVLINK_MSG_ID_LOGGING_ACK_LEN, MAVLINK_MSG_ID_LOGGING_ACK_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_logging_ack_decode(const mavlink_message_t* msg, PRT_VALUE** logging_ack)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*logging_ack == NULL)
+{
+*logging_ack = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_logging_ack_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*logging_ack, 0), _MAV_RETURN_uint16_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*logging_ack, 1), _MAV_RETURN_uint8_t(msg, 2));
+PrtPrimSetInt(PrtTupleGetNC(*logging_ack, 2), _MAV_RETURN_uint8_t(msg, 3));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*logging_ack, 0), _MAV_RETURN_uint16_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*logging_ack, 1), _MAV_RETURN_uint8_t(msg, 2));
+PrtPrimSetInt(PrtTupleGetNC(*logging_ack, 2), _MAV_RETURN_uint8_t(msg, 3));
+
+}
+
+}         
 

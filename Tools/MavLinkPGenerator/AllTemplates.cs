@@ -54,7 +54,7 @@ PRT_VALUE* seqVal;
 int count = 0;
 if(*{0} == NULL)
 {{
-*{0} = PrtMkDefaultValue(P_GEND_TYPE_mavlink_{0}_t);
+*{0} = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_{0}_t);
 {1}
 }}
 else
