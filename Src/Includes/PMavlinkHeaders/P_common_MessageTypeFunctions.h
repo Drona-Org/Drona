@@ -2514,7 +2514,7 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 8 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -2531,7 +2531,7 @@ while(count < 9)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 36 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -2688,7 +2688,7 @@ while(count < 36)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 36 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -2787,7 +2787,7 @@ while(count < 45)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 44 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -3544,7 +3544,7 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 4 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -3634,7 +3634,7 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 4 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -4314,7 +4314,7 @@ while(count < 16)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 16 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -5347,7 +5347,7 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 8 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -6728,7 +6728,7 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 8 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -6808,7 +6808,7 @@ while(count < 8)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 8 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -6886,7 +6886,7 @@ while(count < 8)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 8 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -7212,7 +7212,7 @@ while(count < 3)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 28 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -7226,7 +7226,7 @@ while(count < 3)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 40 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -7240,7 +7240,7 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 52 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -7254,7 +7254,7 @@ while(count < 3)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 68 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -7268,7 +7268,7 @@ while(count < 3)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 80 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -7428,7 +7428,7 @@ while(count < 3)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 48 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -7442,7 +7442,7 @@ while(count < 3)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 60 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -7456,7 +7456,7 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 72 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -8314,7 +8314,7 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 24 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -8410,7 +8410,7 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 24 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
@@ -9650,7 +9650,7 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(P_GEND_TYPE_float32);
+tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
 PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 28 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
