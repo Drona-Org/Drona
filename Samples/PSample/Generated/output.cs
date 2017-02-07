@@ -11,6 +11,12 @@ namespace P.Program
 
     public partial class Application : StateImpl
     {
+        public partial class Events
+        {
+            public static PrtEventValue halt = new PrtEventValue(new PrtEvent("halt", new PrtNullType(), 1, false));
+            public static PrtEventValue @null = new PrtEventValue(new PrtEvent("null", new PrtNullType(), 1, false));
+        }
+
         public Application(): base ()
         {
         }
@@ -35,13 +41,15 @@ namespace P.Program
             (createMachineMap).Add("PONG", CreateMachine_PONG);
             Dictionary<string, string> _temp;
             _temp = new Dictionary<string, string>();
-            (_temp).Add("PONG", "PONG");
             (_temp).Add("Main", "Main");
+            (_temp).Add("PONG", "PONG");
             (linkMap).Add("Main", _temp);
             _temp = new Dictionary<string, string>();
-            (_temp).Add("PONG", "PONG");
             (_temp).Add("Main", "Main");
+            (_temp).Add("PONG", "PONG");
             (linkMap).Add("PONG", _temp);
+            Types.Types_PingPong();
+            Events.Events_PingPong();
         }
     }
 }

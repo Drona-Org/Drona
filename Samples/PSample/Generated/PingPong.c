@@ -55,116 +55,6 @@
         NULL
     }
   };
-  static PRT_STRING P_GEND_TYPE_NMDTUP_NARR_6[] = 
-  {
-    "_payload_0"
-  };
-  static PRT_TYPE *P_GEND_TYPE_NMDTUP_TARR_6[] = 
-  {
-    &P_GEND_TYPE_5
-  };
-  static PRT_NMDTUPTYPE P_GEND_TYPE_NMDTUP_6 = 
-  {
-    1,
-    P_GEND_TYPE_NMDTUP_NARR_6,
-    P_GEND_TYPE_NMDTUP_TARR_6
-  };
-  static PRT_TYPE P_GEND_TYPE_6 = 
-  {
-    PRT_KIND_NMDTUP,
-    
-    {
-        (PRT_MAPTYPE *)&P_GEND_TYPE_NMDTUP_6
-    }
-  };
-  static PRT_STRING P_GEND_TYPE_NMDTUP_NARR_7[] = 
-  {
-    "_payload_1"
-  };
-  static PRT_TYPE *P_GEND_TYPE_NMDTUP_TARR_7[] = 
-  {
-    &P_GEND_TYPE_5
-  };
-  static PRT_NMDTUPTYPE P_GEND_TYPE_NMDTUP_7 = 
-  {
-    1,
-    P_GEND_TYPE_NMDTUP_NARR_7,
-    P_GEND_TYPE_NMDTUP_TARR_7
-  };
-  static PRT_TYPE P_GEND_TYPE_7 = 
-  {
-    PRT_KIND_NMDTUP,
-    
-    {
-        (PRT_MAPTYPE *)&P_GEND_TYPE_NMDTUP_7
-    }
-  };
-  static PRT_STRING P_GEND_TYPE_NMDTUP_NARR_8[] = 
-  {
-    "_payload_2"
-  };
-  static PRT_TYPE *P_GEND_TYPE_NMDTUP_TARR_8[] = 
-  {
-    &P_GEND_TYPE_5
-  };
-  static PRT_NMDTUPTYPE P_GEND_TYPE_NMDTUP_8 = 
-  {
-    1,
-    P_GEND_TYPE_NMDTUP_NARR_8,
-    P_GEND_TYPE_NMDTUP_TARR_8
-  };
-  static PRT_TYPE P_GEND_TYPE_8 = 
-  {
-    PRT_KIND_NMDTUP,
-    
-    {
-        (PRT_MAPTYPE *)&P_GEND_TYPE_NMDTUP_8
-    }
-  };
-  static PRT_STRING P_GEND_TYPE_NMDTUP_NARR_9[] = 
-  {
-    "_payload_skip"
-  };
-  static PRT_TYPE *P_GEND_TYPE_NMDTUP_TARR_9[] = 
-  {
-    &P_GEND_TYPE_5
-  };
-  static PRT_NMDTUPTYPE P_GEND_TYPE_NMDTUP_9 = 
-  {
-    1,
-    P_GEND_TYPE_NMDTUP_NARR_9,
-    P_GEND_TYPE_NMDTUP_TARR_9
-  };
-  static PRT_TYPE P_GEND_TYPE_9 = 
-  {
-    PRT_KIND_NMDTUP,
-    
-    {
-        (PRT_MAPTYPE *)&P_GEND_TYPE_NMDTUP_9
-    }
-  };
-  static PRT_STRING P_GEND_TYPE_NMDTUP_NARR_10[] = 
-  {
-    "payload"
-  };
-  static PRT_TYPE *P_GEND_TYPE_NMDTUP_TARR_10[] = 
-  {
-    &P_GEND_TYPE_4
-  };
-  static PRT_NMDTUPTYPE P_GEND_TYPE_NMDTUP_10 = 
-  {
-    1,
-    P_GEND_TYPE_NMDTUP_NARR_10,
-    P_GEND_TYPE_NMDTUP_TARR_10
-  };
-  static PRT_TYPE P_GEND_TYPE_10 = 
-  {
-    PRT_KIND_NMDTUP,
-    
-    {
-        (PRT_MAPTYPE *)&P_GEND_TYPE_NMDTUP_10
-    }
-  };
   static PRT_VALUE P_GEND_VALUE_0 = 
   {
     PRT_VALUE_KIND_EVENT,
@@ -204,6 +94,33 @@
     {
         PRT_SPECIAL_EVENT_NULL
     }
+  };
+  PRT_EVENTDECL P_EVENT_Ping_STRUCT = 
+  {
+    P_EVENT_Ping,
+    "Ping",
+    1U,
+    &P_GEND_TYPE_4,
+    0U,
+    NULL
+  };
+  PRT_EVENTDECL P_EVENT_Pong_STRUCT = 
+  {
+    P_EVENT_Pong,
+    "Pong",
+    1U,
+    &P_GEND_TYPE_5,
+    0U,
+    NULL
+  };
+  PRT_EVENTDECL P_EVENT_Success_STRUCT = 
+  {
+    P_EVENT_Success,
+    "Success",
+    4294967295U,
+    &P_GEND_TYPE_5,
+    0U,
+    NULL
   };
   PRT_VARDECL P_GEND_VARS_Main[] = 
   {
