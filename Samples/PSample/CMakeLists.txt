@@ -7,7 +7,7 @@ FILE(GLOB_RECURSE csources Src/*)
 set(pingpong_psource_dir PSrc)
 set(pingpong_csource_dir Src)
 
-p_compile(PingPong PingPong.p)
+p_compile(PingPong ../PSrc/PingPong.p)
 p_link(PingPong PingPong.4ml)
 
 ## Declare a C++ executable

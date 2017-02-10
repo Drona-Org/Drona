@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 	
-extern PRT_TYPE *P_GEND_TYPE_float32;
+extern PRT_TYPE P_GEND_TYPE_float32;
 
 //helper functions
 extern float PrtGetFloat32(PRT_VALUE* frgnVal);

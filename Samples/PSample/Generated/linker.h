@@ -13,7 +13,7 @@
       P_EVENT_Ping = 2,
       P_EVENT_Pong = 3,
       P_EVENT_Success = 4,
-      _P_EVENTS_COUNT = 5
+      _P_EVENTS_COUNT = 7
     };
 
     enum P_EVENTSET
@@ -57,6 +57,11 @@
       _P_RENAME_COUNT = 2
     };
 
+    extern PRT_EVENTDECL P_EVENT_Ping_STRUCT;
+    extern PRT_EVENTDECL P_EVENT_Pong_STRUCT;
+    extern PRT_EVENTDECL P_EVENT_Success_STRUCT;
+    extern PRT_EVENTDECL _P_EVENT_HALT_STRUCT;
+    extern PRT_EVENTDECL _P_EVENT_NULL_STRUCT;
     extern PRT_MACHINEDECL P_MACHINE_Main_STRUCT;
     extern PRT_MACHINEDECL P_MACHINE_PONG_STRUCT;
     extern PRT_PROGRAMDECL P_GEND_PROGRAM;

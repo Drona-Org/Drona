@@ -217,7 +217,7 @@ PRT_VALUE* PrtMkFloat32Value(float value)
 {
 	PRT_LIB_FLOAT32_DATA f;
 	f.value = value;
-    return PrtMkForeignValue(f.bits, P_GEND_TYPE_float32);
+    return PrtMkForeignValue(f.bits, &P_GEND_TYPE_float32);
 }
 
 //Helper function for getting a float from the given value

@@ -1,0 +1,28 @@
+//// Program PFloat32Interface_p_LinkModel.4ml
+model PFloat32Interface_p_LinkModel of PLink at "/home/catfix/Workspace/DronaForPX4/Submodule/P/Bld/Drops/Debug/x86/Binaries/PLink.4ml"
+{
+  ModelType("float32", IdList(143, IdList("/home/catfix/Workspace/DronaForPX4/Src/Lib/PFloat32/PSrc/PFloat32Interface.p", NIL))),
+  DependsOn("/home/catfix/Workspace/DronaForPX4/Src/Lib/PFloat32/PSrc/PFloat32Interface.p", "/home/catfix/Workspace/DronaForPX4/Src/Lib/PFloat32/PSrc/PFloat32Interface.p"),
+  FunProtoDecl("NaNFloat32", NIL, NameType("float32")),
+  FunProtoDecl("NegFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NIL), NameType("float32")),
+  FunProtoDecl("IsNaNFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NIL), BaseType(BOOL)),
+  FunProtoDecl("IsInftyFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NIL), BaseType(BOOL)),
+  FunProtoDecl("IsPosInftyFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NIL), BaseType(BOOL)),
+  FunProtoDecl("IsNegInftyFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NIL), BaseType(BOOL)),
+  FunProtoDecl("IsFiniteFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NIL), BaseType(BOOL)),
+  FunProtoDecl("AddFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NmdTupType(NmdTupTypeField("op2", NameType("float32")), NIL)), NameType("float32")),
+  FunProtoDecl("SubFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NmdTupType(NmdTupTypeField("op2", NameType("float32")), NIL)), NameType("float32")),
+  FunProtoDecl("MulFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NmdTupType(NmdTupTypeField("op2", NameType("float32")), NIL)), NameType("float32")),
+  FunProtoDecl("DivFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NmdTupType(NmdTupTypeField("op2", NameType("float32")), NIL)), NameType("float32")),
+  FunProtoDecl("AbsFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NmdTupType(NmdTupTypeField("op2", NameType("float32")), NIL)), NameType("float32")),
+  FunProtoDecl("IsEqFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NmdTupType(NmdTupTypeField("op2", NameType("float32")), NIL)), BaseType(BOOL)),
+  FunProtoDecl("IsNEqFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NmdTupType(NmdTupTypeField("op2", NameType("float32")), NIL)), BaseType(BOOL)),
+  FunProtoDecl("IsLtFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NmdTupType(NmdTupTypeField("op2", NameType("float32")), NIL)), BaseType(BOOL)),
+  FunProtoDecl("IsGtFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NmdTupType(NmdTupTypeField("op2", NameType("float32")), NIL)), BaseType(BOOL)),
+  FunProtoDecl("IsLeFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NmdTupType(NmdTupTypeField("op2", NameType("float32")), NIL)), BaseType(BOOL)),
+  FunProtoDecl("IsGeFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NmdTupType(NmdTupTypeField("op2", NameType("float32")), NIL)), BaseType(BOOL)),
+  FunProtoDecl("IsNearFloat32", NmdTupType(NmdTupTypeField("op1", NameType("float32")), NmdTupType(NmdTupTypeField("op2", NameType("float32")), NmdTupType(NmdTupTypeField("epsilon", NameType("float32")), NIL))), BaseType(BOOL)),
+  FunProtoDecl("ScientificToFloat32", NmdTupType(NmdTupTypeField("mantissa", BaseType(INT)), NmdTupType(NmdTupTypeField("exp", BaseType(INT)), NIL)), NameType("float32")),
+  FunProtoDecl("IntToFloat32", NmdTupType(NmdTupTypeField("val", BaseType(INT)), NIL), NameType("float32")).
+}
+
