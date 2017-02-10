@@ -17,12 +17,12 @@ INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Crazyflie/Includes)
 
 ## Projects
 subdirs(Samples/TestCommunicationLib)
-subdirs(Samples/PSample)
+#subdirs(Samples/PSample)
 subdirs(Src/Lib/Logger)
 subdirs(Src/Lib/Communication)
 subdirs(Src/Lib/PX4Driver)
 subdirs(Src/Lib/PFloat32)
-subdirs(Src/Lib/Crazyflie)
+#subdirs(Src/Lib/Crazyflie)
 
 ###########################################################################
 ## P Compilation Related Helper Functions
