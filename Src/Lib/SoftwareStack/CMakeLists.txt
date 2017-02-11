@@ -7,7 +7,8 @@ FILE(GLOB_RECURSE csources Src/*)
 FILE(GLOB_RECURSE includes Includes/*)
 
 #Compile POrb
-p_compile(px4driver ../PSrc/POrb/POrb.p)
+p_fakecompile(dronasoftstack ../PSrc/POrb)
+p_compile(dronasoftstack ../PSrc/POrb/POrb.p)
 
 # Build exectuable
 add_library(dronasoftstack STATIC

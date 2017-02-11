@@ -37,15 +37,12 @@ set(P_LIB_LINK_PATH ${P_BUILT_LIB_PATH}/lib)
 
 
 function (p_fakecompile pproject p_src)
-    ADD_CUSTOM_TARGET("compile_${pproject}_${p_src_basename}" ALL)
-    return()
+    ADD_CUSTOM_TARGET("compile_${pproject}_${p_src_basename}" ALL
+        COMMENT "Linking P ${p_src}..."
+        )
 endfunction(p_fakecompile)
 
 function (p_compile pproject p_src)
-    if(docompile EQUAL "false")
-        ADD_CUSTOM_TARGET("compile_${pproject}_${p_src_basename}" ALL)
-        return()
-    endif()
     if (NOT (TARGET Prt))
             add_library(Prt SHARED IMPORTED)
             set_target_properties(Prt PROPERTIES IMPORTED_LOCATION ${P_LIB_LINK_PATH}/libPrt_shared.so)
