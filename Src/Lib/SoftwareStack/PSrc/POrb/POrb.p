@@ -3,22 +3,6 @@
  
 #include "POrbInterface.p""
 
-fun sealwithRTC()
-//[invokescheduler = sealRTC]
-{}
-
-fun unsealwithRTC()
-//[invokescheduler = unsealRTC]
-{}
-
-fun sealwithRR()
-//[invokescheduler = sealRR]
-{}
-
-fun unsealwithRR()
-//[invokescheduler = unsealRR]
-{}
-
 event porb_local;
 
 machine POrbMachine : POrbInterface {
