@@ -5370,10 +5370,10 @@
         (PRT_MAPTYPE *)&P_GEND_TYPE_NMDTUP_74
     }
   };
-  PRT_TYPE P_GEND_TYPE_mavlink_vision_speed_estimate_t =
+  PRT_TYPE P_GEND_TYPE_mavlink_vision_speed_estimate_t = 
   {
     PRT_KIND_NMDTUP,
-
+    
     {
         (PRT_MAPTYPE *)&P_GEND_TYPE_NMDTUP_39
     }
@@ -5386,3 +5386,4 @@
         (PRT_MAPTYPE *)&P_GEND_TYPE_NMDTUP_84
     }
   };
+  

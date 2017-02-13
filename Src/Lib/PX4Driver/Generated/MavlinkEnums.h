@@ -915,6 +915,52 @@
       serial_control_flag_serial_control_flag_multi = 16
     };
 
+    extern PRT_TYPE P_GEND_TYPE_adsb_altitude_type;
+    extern PRT_TYPE P_GEND_TYPE_adsb_emitter_type;
+    extern PRT_TYPE P_GEND_TYPE_adsb_flags;
+    extern PRT_TYPE P_GEND_TYPE_estimator_status_flags;
+    extern PRT_TYPE P_GEND_TYPE_fence_action;
+    extern PRT_TYPE P_GEND_TYPE_fence_breach;
+    extern PRT_TYPE P_GEND_TYPE_firmware_version_type;
+    extern PRT_TYPE P_GEND_TYPE_gps_fix_type;
+    extern PRT_TYPE P_GEND_TYPE_gps_input_ignore_flags;
+    extern PRT_TYPE P_GEND_TYPE_mav_autopilot;
+    extern PRT_TYPE P_GEND_TYPE_mav_battery_function;
+    extern PRT_TYPE P_GEND_TYPE_mav_battery_type;
+    extern PRT_TYPE P_GEND_TYPE_mav_cmd;
+    extern PRT_TYPE P_GEND_TYPE_mav_cmd_ack;
+    extern PRT_TYPE P_GEND_TYPE_mav_collision_action;
+    extern PRT_TYPE P_GEND_TYPE_mav_collision_src;
+    extern PRT_TYPE P_GEND_TYPE_mav_collision_threat_level;
+    extern PRT_TYPE P_GEND_TYPE_mav_component;
+    extern PRT_TYPE P_GEND_TYPE_mav_data_stream;
+    extern PRT_TYPE P_GEND_TYPE_mav_distance_sensor;
+    extern PRT_TYPE P_GEND_TYPE_mav_do_reposition_flags;
+    extern PRT_TYPE P_GEND_TYPE_mav_estimator_type;
+    extern PRT_TYPE P_GEND_TYPE_mav_frame;
+    extern PRT_TYPE P_GEND_TYPE_mav_goto;
+    extern PRT_TYPE P_GEND_TYPE_mav_landed_state;
+    extern PRT_TYPE P_GEND_TYPE_mav_mission_result;
+    extern PRT_TYPE P_GEND_TYPE_mav_mode;
+    extern PRT_TYPE P_GEND_TYPE_mav_mode_flag;
+    extern PRT_TYPE P_GEND_TYPE_mav_mode_flag_decode_position;
+    extern PRT_TYPE P_GEND_TYPE_mav_mount_mode;
+    extern PRT_TYPE P_GEND_TYPE_mav_param_type;
+    extern PRT_TYPE P_GEND_TYPE_mav_power_status;
+    extern PRT_TYPE P_GEND_TYPE_mav_protocol_capability;
+    extern PRT_TYPE P_GEND_TYPE_mav_result;
+    extern PRT_TYPE P_GEND_TYPE_mav_roi;
+    extern PRT_TYPE P_GEND_TYPE_mav_sensor_orientation;
+    extern PRT_TYPE P_GEND_TYPE_mav_severity;
+    extern PRT_TYPE P_GEND_TYPE_mav_state;
+    extern PRT_TYPE P_GEND_TYPE_mav_sys_status_sensor;
+    extern PRT_TYPE P_GEND_TYPE_mav_type;
+    extern PRT_TYPE P_GEND_TYPE_mav_vtol_state;
+    extern PRT_TYPE P_GEND_TYPE_mavlink_data_stream_type;
+    extern PRT_TYPE P_GEND_TYPE_mavlink_messages;
+    extern PRT_TYPE P_GEND_TYPE_motor_test_throttle_type;
+    extern PRT_TYPE P_GEND_TYPE_serial_control_dev;
+    extern PRT_TYPE P_GEND_TYPE_serial_control_flag;
     #ifdef __cplusplus
       }
     #endif

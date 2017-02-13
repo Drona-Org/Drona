@@ -2,7 +2,6 @@
 #define PX4COMMUNICATOR_H
 
 #include "UdpSocketPort.h"
-#include "CCrazyflie.h"
 
 #include "mavlink.h"
 #include "mavlink_helpers.h"

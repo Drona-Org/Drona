@@ -13,17 +13,15 @@ INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Logger/Includes)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PX4Driver/Includes)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PX4Driver/Generated)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PFloat32/Src)
-INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Crazyflie/Includes)
+INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PFloat32/Generated)
 
 ## Projects
-subdirs(Samples/TestCommunicationLib)
-#subdirs(Samples/PSample)
+#subdirs(Samples/TestCommunicationLib)
 subdirs(Src/Lib/Logger)
 subdirs(Src/Lib/Communication)
-subdirs(Src/Lib/PX4Driver)
 subdirs(Src/Lib/PFloat32)
-#subdirs(Src/Lib/Crazyflie)
-#subdirs(Src/Lib/SoftwareStack/)
+subdirs(Src/Lib/PX4Driver)
+subdirs(Src/Lib/SoftwareStack/)
 
 ###########################################################################
 ## P Compilation Related Helper Functions
@@ -36,13 +34,7 @@ set(P_LIB_INCLUDE_PATH ${P_BUILT_LIB_PATH}/include)
 set(P_LIB_LINK_PATH ${P_BUILT_LIB_PATH}/lib)
 
 
-function (p_fakecompile pproject p_src)
-    ADD_CUSTOM_TARGET("compile_${pproject}_${p_src_basename}" ALL
-        COMMENT "Linking P ${p_src}..."
-        )
-endfunction(p_fakecompile)
-
-function (p_compile pproject p_src)
+function (p_compile pproject p_srcs)
     if (NOT (TARGET Prt))
             add_library(Prt SHARED IMPORTED)
             set_target_properties(Prt PROPERTIES IMPORTED_LOCATION ${P_LIB_LINK_PATH}/libPrt_shared.so)
@@ -50,32 +42,49 @@ function (p_compile pproject p_src)
     endif()
 
     set(p_compile_cmd mono ${P_COMPILER_PATH})
-    get_filename_component(p_src_basename ${p_src} NAME_WE)
-    set(generated_c_src ${p_src_basename}.c)
-    set(output_dir ${CMAKE_CURRENT_SOURCE_DIR}/Generated)
-    set(output_c_srcs ${output_dir}/${generated_c_src})
-    file(MAKE_DIRECTORY ${output_dir})
-    ADD_CUSTOM_TARGET("compile_${pproject}_${p_src_basename}" ALL
-            COMMENT "Compiling P ${p_src}..."
-            COMMAND ${p_compile_cmd} /generate:C0 ${p_src}
-            WORKING_DIRECTORY ${output_dir}
-    )
+    MESSAGE("--------- Compiling ----------------")
+    MESSAGE("${${p_srcs}}")
+    MESSAGE("------------------------------------")
+    FOREACH(p_src ${${p_srcs}})
 
-    set(${pproject}_GENERATED_SRCS ${${pproject}_GENERATED_SRCS} ${output_c_srcs} PARENT_SCOPE)
-    set(${pproject}_INCLUDE_DIRS ${output_dir} ${P_LIB_INCLUDE_PATH} PARENT_SCOPE)
-    set(${pproject}_LINK_LIBS Prt PARENT_SCOPE)
+        get_filename_component(p_src_basename ${p_src} NAME_WE)
+        set(generated_c_src ${p_src_basename}.c)
+        set(output_dir ${CMAKE_CURRENT_SOURCE_DIR}/Generated)
+        set(output_c_srcs ${output_dir}/${generated_c_src})
+        file(MAKE_DIRECTORY ${output_dir})
+        ADD_CUSTOM_TARGET("compile_${pproject}_${p_src_basename}" ALL
+                COMMENT "Compiling P ${p_src}..."
+                COMMAND ${p_compile_cmd} /generate:C0 ${p_src}
+                WORKING_DIRECTORY ${output_dir}
+        )
+        set(${pproject}_GENERATED_SRCS ${${pproject}_GENERATED_SRCS} ${output_c_srcs} PARENT_SCOPE)
+        set(${pproject}_INCLUDE_DIRS ${output_dir} ${P_LIB_INCLUDE_PATH} PARENT_SCOPE)
+        set(${pproject}_LINK_LIBS Prt PARENT_SCOPE)
+    ENDFOREACH(p_src)
+
 endfunction(p_compile)
+
+function (p_add_linker_dependencies pproject p_srcs)
+    FOREACH(infileName ${${p_srcs}})
+        SET(allfiles ${allfiles} "${infileName}")
+        get_filename_component(temp ${infileName} NAME_WE)
+        SET(dependencies ${dependencies} "compile_${pproject}_${temp}")
+    ENDFOREACH(infileName)
+    add_dependencies(linker_${pproject} ${dependencies})
+endfunction(p_add_linker_dependencies)
+
 
 function (p_link pproject formula_srcs)
     set(p_link_cmd mono ${P_COMPILER_PATH} /link)
     set(output_dir ${CMAKE_CURRENT_SOURCE_DIR}/Generated)
     set(output_c_srcs ${output_dir}/linker.c)
 
-    list(REMOVE_AT ARGV 0)
-    FOREACH(infileName ${ARGV})
+    MESSAGE("--------- linking ----------------")
+    MESSAGE("${${formula_srcs}}")
+    MESSAGE("------------------------------------")
+
+    FOREACH(infileName ${${formula_srcs}})
         SET(allfiles ${allfiles} "${infileName}")
-        get_filename_component(temp ${infileName} NAME_WE)
-        SET(dependencies ${dependencies} "compile_${pproject}_${temp}")
     ENDFOREACH(infileName)
 
     ADD_CUSTOM_TARGET(
@@ -85,8 +94,6 @@ function (p_link pproject formula_srcs)
             COMMAND ${p_link_cmd} /outputDir:${output_dir} ${allfiles}
             WORKING_DIRECTORY ${output_dir}
     )
-
-    add_dependencies(linker_${pproject} ${dependencies})
     set(${pproject}_GENERATED_SRCS ${${pproject}_GENERATED_SRCS} ${output_c_srcs} PARENT_SCOPE)
 endfunction(p_link)
 
