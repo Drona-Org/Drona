@@ -41,8 +41,6 @@ set_property(TARGET ${projectName} PROPERTY C_STANDARD 99)
 set(floatincludes ${drona_SOURCE_DIR}/Src/Lib/PFloat32/Generated/)
 target_include_directories(${projectName} PRIVATE
   ${${projectName}_INCLUDE_DIRS}
-  ${floatincludes}
-
 )
 
 target_link_libraries(${projectName}

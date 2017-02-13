@@ -50,7 +50,7 @@
         NULL
     }
   };
-  PRT_TYPE P_GEND_TYPE_6 = 
+  static PRT_TYPE P_GEND_TYPE_6 = 
   {
     PRT_KIND_FORGN,
     

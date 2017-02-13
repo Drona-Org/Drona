@@ -1,0 +1,7 @@
+//// Program POrbTopics_p_LinkModel.4ml
+model POrbTopics_p_LinkModel of PLink at "/home/ankush/Workspace/DronaForPX4/Submodule/P/Bld/Drops/Debug/x86/Binaries/PLink.4ml"
+{
+  EnumTypeDef("Topics", StringList("heartbeat_topic", StringList("attitude_topic", StringList("global_position_topic", StringList("local_position_topic", StringList("battery_status_topic", StringList("gps_raw_int_topic", StringList("gps_status_topic", StringList("command_ack_topic", StringList("extended_sys_state_topic", StringList("px4status_topic", StringList("altitude_reached_topic", StringList("geofence_reached_topic", StringList("heartbeat_status_topic", StringList("battery_critical_topic", StringList("gps_health_topic", StringList("vehicle_ready_topic", StringList("vehicle_armed_topic", StringList("vehicle_disarmed_topic", StringList("vehicle_landed_topic", StringList("vehicle_loitering_topic", StringList("vehicle_crashed_topic", NIL))))))))))))))))))))), NIL, IdList(135, IdList("/home/ankush/Workspace/DronaForPX4/Src/Lib/SoftwareStack/PSrc/POrb/POrbTopics.p", NIL))),
+  DependsOn("/home/ankush/Workspace/DronaForPX4/Src/Lib/SoftwareStack/PSrc/POrb/POrbTopics.p", "/home/ankush/Workspace/DronaForPX4/Src/Lib/SoftwareStack/PSrc/POrb/POrbTopics.p").
+}
+

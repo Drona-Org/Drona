@@ -2,7 +2,6 @@
 /*******************************************************/
 /*	Topic for data coming from the PX4 				   */
 /*******************************************************/
-//make sure that the ints here match with the enums in POrbTopics.h
 enum Topics {
 	//from px4
 	heartbeat_topic,
