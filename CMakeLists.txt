@@ -44,7 +44,6 @@ function (p_compile pproject p_srcs)
     set(p_compile_cmd mono ${P_COMPILER_PATH})
     MESSAGE("--------- Compiling ----------------")
     MESSAGE("${${p_srcs}}")
-    MESSAGE("------------------------------------")
     FOREACH(p_src ${${p_srcs}})
 
         get_filename_component(p_src_basename ${p_src} NAME_WE)
@@ -81,7 +80,6 @@ function (p_link pproject formula_srcs)
 
     MESSAGE("--------- linking ----------------")
     MESSAGE("${${formula_srcs}}")
-    MESSAGE("------------------------------------")
 
     FOREACH(infileName ${${formula_srcs}})
         SET(allfiles ${allfiles} "${infileName}")
