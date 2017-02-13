@@ -1,6 +1,7 @@
 
   #ifndef P_MAVLINKMESSAGETYPES_H_
     #define P_MAVLINKMESSAGETYPES_H_
+    #include "PFloat32.h"
     #include "linker.h"
     #ifdef __cplusplus
       extern "C"{

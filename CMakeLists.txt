@@ -22,7 +22,7 @@ subdirs(Src/Lib/Communication)
 subdirs(Src/Lib/PFloat32)
 subdirs(Src/Lib/PX4Driver)
 subdirs(Src/Lib/SoftwareStack/)
-
+#subdirs(Src/TestApp/)
 ###########################################################################
 ## P Compilation Related Helper Functions
 ###########################################################################
@@ -53,7 +53,7 @@ function (p_compile pproject p_srcs)
         file(MAKE_DIRECTORY ${output_dir})
         ADD_CUSTOM_TARGET("compile_${pproject}_${p_src_basename}" ALL
                 COMMENT "Compiling P ${p_src}..."
-                COMMAND ${p_compile_cmd} /generate:C0 ${p_src}
+                COMMAND ${p_compile_cmd} /generate:C0 ${p_src} /rebuild
                 WORKING_DIRECTORY ${output_dir}
         )
         set(${pproject}_GENERATED_SRCS ${${pproject}_GENERATED_SRCS} ${output_c_srcs} PARENT_SCOPE)

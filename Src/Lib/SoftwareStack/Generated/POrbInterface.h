@@ -1,6 +1,7 @@
 
   #ifndef P_PORBINTERFACE_H_
     #define P_PORBINTERFACE_H_
+    #include "POrbTopics.h"
     #include "linker.h"
     #ifdef __cplusplus
       extern "C"{

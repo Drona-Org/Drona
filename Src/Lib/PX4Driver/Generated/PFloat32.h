@@ -1,6 +1,7 @@
 
   #ifndef P_PFLOAT32_H_
     #define P_PFLOAT32_H_
+    #include "PFloat32Interface.h"
     #include "linker.h"
     #ifdef __cplusplus
       extern "C"{

@@ -4,8 +4,6 @@
 #include "linker.h"
 #include "POrbMavlink.h"
 
-BOOLEAN POrb_isUDP = TRUE;
-char* POrb_portAddr = nullptr;
 extern PRT_PROCESS* MAIN_APPLICATION_PROCESS;
 
 extern "C" {
