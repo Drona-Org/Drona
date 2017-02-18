@@ -13,6 +13,7 @@ add_executable(genWorld Src/genWorld.cpp ${includes})
 
 #add_definitions( -DPRT_PLAT_LINUXUSER )
 # Target Communication Libraries
+TARGET_LINK_LIBRARIES(genWorld world)
 
 
 

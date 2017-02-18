@@ -8,7 +8,6 @@ file(GLOB_RECURSE includes Includes/*.h)
 # Include path
 INCLUDE_DIRECTORIES(includes)
 
-
 # Build exectuable
 add_library(logger STATIC ${sources} ${includes})
 
