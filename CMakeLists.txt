@@ -23,7 +23,7 @@ subdirs(Src/Lib/Logger)
 subdirs(Src/Lib/Communication)
 subdirs(Src/Lib/PFloat32)
 subdirs(Src/Lib/PX4Driver)
-subdirs(Src/Lib/SoftwareStack/)
+#subdirs(Src/Lib/SoftwareStack/)
 #subdirs(Src/TestApp/)
 subdirs(Src/Lib/World)
 ###########################################################################

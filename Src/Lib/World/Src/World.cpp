@@ -19,6 +19,65 @@ World::World(char* wordName){
 
 }
 
+// Box centered in (x,y,z) with size (lx*ly*lz)
+void World::Box(float x, float y, float z, float lx, float ly, float lz){
+
+    this->iOut("<model name='unit_box'>",2);
+
+    this->file<<"\t\t\t"<<"<pose frame=''>"<<x<<" "<<y<<" "<<z<<" 0 0 0</pose>\n";
+    this->iOut("<link name='link'>",3);
+    this->iOut("<inertial>",4);
+    this->iOut("<mass>1</mass>",5);
+    this->iOut("<inertia>",5);
+    this->iOut("<ixx>0.166667</ixx>",6);
+    this->iOut("<ixy>0</ixy>",6);
+    this->iOut("<ixz>0</ixz>",6);
+    this->iOut("<iyy>0.166667</iyy>",6);
+    this->iOut("<iyz>0</iyz>",6);
+    this->iOut("<izz>0.166667</izz>",6);
+    this->iOut("</inertia>",5);
+    this->iOut("</inertial>",4);
+    this->iOut("<collision name='collision'>",4);
+    this->iOut("<geometry>",5);
+    this->iOut("<box>",6);
+    this->file<<"\t\t\t\t\t\t\t<size>"<<lx<<" "<<ly<<" "<<lz<<"</size>\n";
+    this->iOut("</box>",6);
+    this->iOut("</geometry>",5);
+    this->iOut("<max_contacts>10</max_contacts>",5);
+    this->iOut("<surface>",5);
+    this->iOut("<contact>",6);
+    this->iOut("<ode/>",7);
+    this->iOut("</contact>",6);
+    this->iOut("<bounce/>",6);
+    this->iOut("<friction>",6);
+    this->iOut("<torsional>",7);
+    this->iOut("<ode/>",8);
+    this->iOut("</torsional>",7);
+    this->iOut("<ode/>",7);
+    this->iOut("</friction>",6);
+    this->iOut("</surface>",5);
+    this->iOut("</collision>",4);
+    this->iOut("<visual name='visual'>",4);
+    this->iOut("<geometry>",5);
+    this->iOut("<box>",6);
+    this->file<<"\t\t\t\t\t\t\t<size>"<<lx<<" "<<ly<<" "<<lz<<"</size>\n";
+    this->iOut("</box>",6);
+    this->iOut("</geometry>",5);
+    this->iOut("<material>",5);
+    this->iOut("<script>",6);
+    this->iOut("<name>Gazebo/Grey</name>",7);
+    this->iOut("<uri>file://media/materials/scripts/gazebo.material</uri>",7);
+    this->iOut("</script>",6);
+    this->iOut("</material>",5);
+    this->iOut("</visual>",4);
+    this->iOut("<self_collide>0</self_collide>",4);
+    this->iOut("<kinematic>0</kinematic>",4);
+    this->iOut("</link>",3);
+    this->iOut("</model>",2);
+
+}
+
+
 // <include>
 void World::include(char* str, int inds){
 
@@ -65,6 +124,10 @@ void World::iOut(char* str, int inds){
 }
 
 void World::CloseWorld(){
+
+    this->iOut("</world>",1);
+    this->iOut("</sdf>",0);
+
     this->file.close();
 }
 

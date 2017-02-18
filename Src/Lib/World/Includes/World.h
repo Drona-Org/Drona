@@ -22,6 +22,7 @@ public:
     World(char* wordName);
 
     void InitWorld();
+    void Box(float x, float y, float z, float lx, float ly, float lz);
     void CloseWorld();
 
 };
