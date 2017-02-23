@@ -11,6 +11,7 @@ using namespace std;
 
 struct coord {
     int x,y,z;
+    bool less(coord c){ return ((x < c.x) && (y < c.y) && (z >= c.z)); }
 };
 
 class Map
