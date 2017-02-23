@@ -25,7 +25,7 @@ public:
     World(char* wordName);
 
     void InitWorld();
-    void Box(coord c, int lx, int ly, int lz);
+    bool AddBox(coord c, int lx, int ly, int lz);
     void CloseWorld();
 
 };

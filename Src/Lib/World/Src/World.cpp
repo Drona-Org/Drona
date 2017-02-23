@@ -4,7 +4,7 @@ World::World(char* wordName){
 
     // TODO (tom): get flexible bounds
     coord lc = {-10,-10,0};
-    coord uc = {10,10,0};
+    coord uc = {10,10,10};
     this->map = new Map(lc,uc);
 
     this->file.open(wordName);
@@ -24,12 +24,18 @@ World::World(char* wordName){
 
 }
 
-// Box centered in (x,y,z) with size (lx*ly*lz)
-void World::Box(coord c, int lx, int ly, int lz){
+// Box in lower coordinate (lc) with size (lx*ly*lz)
+bool World::AddBox(coord lc, int lx, int ly, int lz){
 
+    // Add box to the map
+    coord uc = {lc.x+lx,lc.y+ly,lc.z+lz,};
+    if( !(this->map->AddObstacle(lc,uc)) ){
+        LOG("World::Box Box not added");
+        return false;
+    }
     this->iOut("<model name='unit_box'>",2);
 
-    this->file<<"\t\t\t"<<"<pose frame=''>"<<c.x+((float)lx/2)<<" "<<c.y+((float)ly/2)<<" "<<c.z+((float)lz/2)<<" 0 0 0</pose>\n";
+    this->file<<"\t\t\t"<<"<pose frame=''>"<<lc.x+((float)lx/2)<<" "<<lc.y+((float)ly/2)<<" "<<lc.z+((float)lz/2)<<" 0 0 0</pose>\n";
     this->iOut("<link name='link'>",3);
     this->iOut("<inertial>",4);
     this->iOut("<mass>1</mass>",5);
@@ -38,7 +44,7 @@ void World::Box(coord c, int lx, int ly, int lz){
     this->iOut("<ixy>0</ixy>",6);
     this->iOut("<ixz>0</ixz>",6);
     this->iOut("<iyy>0.166667</iyy>",6);
-    this->iOut("<iyz>0</iyz>",6);
+    this->iOut("<iyz>0.166667</iyz>",6);
     this->iOut("<izz>0.166667</izz>",6);
     this->iOut("</inertia>",5);
     this->iOut("</inertial>",4);
@@ -80,6 +86,7 @@ void World::Box(coord c, int lx, int ly, int lz){
     this->iOut("</link>",3);
     this->iOut("</model>",2);
 
+    return true;
 }
 
 

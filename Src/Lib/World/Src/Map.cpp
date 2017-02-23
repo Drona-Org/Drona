@@ -8,13 +8,23 @@ Map::Map(coord lc, coord uc){
 }
 
 // Add an obstacle to the map
-bool Map::addObstacle(coord lc, coord uc){
+bool Map::AddObstacle(coord lc, coord uc){
 
     // Check coordinate
-    if( !(lc.less(uc)) ){
-         LOG(" Map::addObstacle Lower coordinates must be larger than upper coordinates");
+    if( !(lc.Less(uc)) ){
+         LOG("Map::addObstacle Lower coordinates must be larger than upper coordinates");
          return false;
     }
+
+
+    // Check if box is in map space
+    if( !( lc.In(this->lc,this->uc) && uc.In(this->lc,this->uc)) ){
+        LOG("Map::addObstacle Obstacle falls outside map space");
+        return false;
+    }
+
+    this->obstacles.push_back(tuple<coord,coord>(lc,uc));
+    return true;
 
 }
 

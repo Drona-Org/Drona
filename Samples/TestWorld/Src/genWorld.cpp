@@ -8,8 +8,14 @@ int main(){
     World *w = new World(fileName);
 
 
-    coord c = {2,2,2};
-    w->Box(c,2,3,1);
+    coord c1 = {2,2,0};
+    coord c2 = {-5,-3,0};
+
+    w->AddBox(c1,2,3,1);
+    w->AddBox(c2,1,5,2);
+
+
+
 
 
 
