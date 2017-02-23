@@ -1,6 +1,8 @@
 #ifndef WORLD
 #define WORLD
 
+#include "Map.h"
+
 #include <iostream>
 #include <fstream>
 
@@ -10,6 +12,7 @@ class World
 {
 private:
 
+    Map *map;        // Map representation of the world
     ofstream file;
 
     void include(char* str, int inds);
@@ -22,7 +25,7 @@ public:
     World(char* wordName);
 
     void InitWorld();
-    void Box(float x, float y, float z, float lx, float ly, float lz);
+    void Box(coord c, int lx, int ly, int lz);
     void CloseWorld();
 
 };

@@ -11,3 +11,5 @@ INCLUDE_DIRECTORIES(includes)
 
 # Build exectuable
 add_library(world STATIC ${sources} ${includes})
+
+TARGET_LINK_LIBRARIES(world logger)

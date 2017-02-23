@@ -2,6 +2,11 @@
 
 World::World(char* wordName){
 
+    // TODO (tom): get flexible bounds
+    coord lc = {-10,-10,0};
+    coord uc = {10,10,0};
+    this->map = new Map(lc,uc);
+
     this->file.open(wordName);
 
     // Initialize the model
@@ -20,11 +25,11 @@ World::World(char* wordName){
 }
 
 // Box centered in (x,y,z) with size (lx*ly*lz)
-void World::Box(float x, float y, float z, float lx, float ly, float lz){
+void World::Box(coord c, int lx, int ly, int lz){
 
     this->iOut("<model name='unit_box'>",2);
 
-    this->file<<"\t\t\t"<<"<pose frame=''>"<<x<<" "<<y<<" "<<z<<" 0 0 0</pose>\n";
+    this->file<<"\t\t\t"<<"<pose frame=''>"<<c.x+((float)lx/2)<<" "<<c.y+((float)ly/2)<<" "<<c.z+((float)lz/2)<<" 0 0 0</pose>\n";
     this->iOut("<link name='link'>",3);
     this->iOut("<inertial>",4);
     this->iOut("<mass>1</mass>",5);
