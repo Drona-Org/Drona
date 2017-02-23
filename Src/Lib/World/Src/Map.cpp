@@ -28,5 +28,19 @@ bool Map::AddObstacle(coord lc, coord uc){
 
 }
 
+// Check if there's an obstacle in c
+bool Map::ObstacleIn(coord c){
+
+    vector< tuple<coord,coord> >::iterator it;
+    for(it=this->obstacles.begin() ; it < this->obstacles.end(); it++ ) {
+
+        // check if c is in an obstacle
+        if( c.In( get<0>(*it), get<1>(*it) ) ){
+            return true;
+        }
+    }
+    return false;
+}
+
 
 

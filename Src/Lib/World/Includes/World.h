@@ -28,5 +28,7 @@ public:
     bool AddBox(coord c, int lx, int ly, int lz);
     void CloseWorld();
 
+    Map* GetMap(){ return this->map; };
+
 };
 #endif // !World

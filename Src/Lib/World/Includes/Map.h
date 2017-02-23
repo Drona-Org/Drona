@@ -14,11 +14,11 @@ struct coord {
     int x,y,z;
 
     //Comparison functions
-    bool Less(coord c){ return ((x < c.x) && (y < c.y) && (z < c.z)); }
-    bool LessEq(coord c){ return ((x <= c.x) && (y <= c.y) && (z <= c.z)); }
-    bool Great(coord c){ return !(LessEq(c)); }
-    bool GreatEq(coord c){ return !(Less(c)); }
-    bool In(coord lc, coord uc){ return (GreatEq(lc) && LessEq(uc)); }
+    bool Less(coord c){ return ((x <= c.x) && (y <= c.y) && (z <= c.z)); }
+    bool Great(coord c){ return ((x >= c.x) && (y >= c.y) && (z >= c.z)); }
+    bool In(coord lc, coord uc){ return (Great(lc) && Less(uc)); }
+
+    void Print(){ cout<<x<<","<<y<<","<<z<<"\n"; }
 };
 
 class Map
@@ -32,6 +32,7 @@ public:
 
     Map(coord lc, coord uc);
     bool AddObstacle(coord lc, coord uc);
+    bool ObstacleIn(coord lc);
 
 };
 #endif // !Map
