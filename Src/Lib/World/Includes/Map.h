@@ -26,6 +26,7 @@ class Map
 private:
 
     coord lc, uc;                               // lower and upper corners of the map
+    int dx, dy, dz;                             // space dimensions
     vector< tuple<coord,coord> > obstacles;     // list of obstacles (upper and lower corners)
 
 public:
@@ -33,6 +34,8 @@ public:
     Map(coord lc, coord uc);
     bool AddObstacle(coord lc, coord uc);
     bool ObstacleIn(coord lc);
+    bool InMapSpace(coord c);
+    int Coord2Idx(coord c);
 
 };
 #endif // !Map
