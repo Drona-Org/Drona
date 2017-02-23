@@ -32,8 +32,11 @@ private:
 public:
 
     Map(coord lc, coord uc);
+
     bool AddObstacle(coord lc, coord uc);
     bool ObstacleIn(coord lc);
+    vector<int> GetObstaclesIdxs();
+
     bool InMapSpace(coord c);
     int Coord2Idx(coord c);
 

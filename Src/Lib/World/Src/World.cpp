@@ -1,12 +1,8 @@
 #include "World.h"
 
-World::World(char* wordName){
+World::World(coord lc, coord uc, char* wordName){
 
-    // TODO (tom): get flexible bounds
-    coord lc = {-10,-10,0};
-    coord uc = {10,10,10};
     this->map = new Map(lc,uc);
-
     this->file.open(wordName);
 
     // Initialize the model

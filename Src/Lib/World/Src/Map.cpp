@@ -51,6 +51,30 @@ bool Map::ObstacleIn(coord c){
     return false;
 }
 
+// Generate list of obstacle indexes
+vector<int> Map::GetObstaclesIdxs(){
+
+    vector<int> idxs;
+    vector< tuple<coord,coord> >::iterator it;
+
+    for(it=this->obstacles.begin() ; it < this->obstacles.end(); it++ ) {
+
+        // get obstacle corners
+        coord lc = get<0>(*it);
+        coord uc = get<1>(*it);
+
+        for( int i=lc.x; i<uc.x; i++ ){
+            for( int j=lc.y; j<uc.y; j++ ){
+                for( int k=lc.z; k<uc.z; k++ ){
+                    coord obs = {i,j,k};
+                    idxs.push_back(this->Coord2Idx(obs));
+                }
+            }
+        }
+    }
+    return idxs;
+}
+
 // Convert coordinate to index
 int Map::Coord2Idx(coord c){
 

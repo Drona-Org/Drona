@@ -22,7 +22,7 @@ private:
 
 public:
 
-    World(char* wordName);
+    World(coord lc, coord uc, char* wordName);
 
     void InitWorld();
     bool AddBox(coord c, int lx, int ly, int lz);
