@@ -39,6 +39,7 @@ public:
 
     bool InMapSpace(coord c);
     int Coord2Idx(coord c);
+    coord Idx2Coord(int idx);
 
 };
 #endif // !Map

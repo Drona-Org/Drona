@@ -90,6 +90,18 @@ int Map::Coord2Idx(coord c){
     return c.x + c.y*this->dx + c.z*(this->dx*this->dy);
 }
 
+// Convert index to coordinate
+coord Map::Idx2Coord(int idx){
+
+    coord c;
+    c.z = (idx/(this->dx*this->dy)) + this->lc.z;
+    int rem = idx % (this->dx*this->dy);
+    c.y = (rem/this->dx) + this->lc.y;
+    c.x = (rem % this->dx) + this->lc.x;
+
+    return c;
+}
+
 // Check if coordinate is in map space
 bool Map::InMapSpace(coord c){
     return c.In(this->lc,this->uc);

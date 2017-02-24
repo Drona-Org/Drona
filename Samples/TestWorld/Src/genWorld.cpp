@@ -23,6 +23,5 @@ int main(){
     for(int i=0; i<obs.size(); i++){
         cout<<obs[i]<<" ";
     }
-
 }
 
