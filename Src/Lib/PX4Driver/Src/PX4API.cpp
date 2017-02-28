@@ -3,6 +3,7 @@
 PX4API::PX4API(int simulatorPort){
 
     this->px4com = new PX4Communicator(simulatorPort);
+    this->px4logger = new PX4Logger();
 
     this->systemId = 255;
     this->autopilotId = 1;
@@ -133,6 +134,54 @@ bool PX4API::ToggleOffBoard(bool on){
     ERROR("PX4API::ToggleOffBoard Couldn't toggle offboard control");
     return false;
 }
+
+
+bool PX4API::StartLogger(){
+
+    if(this->px4logger->IsOn()){
+        LOG("PX4API::StartLogger logger already on");
+        return false;
+    }
+
+    this->px4logger->Toggle();
+
+    pthread_t loggerThread;
+    int result = pthread_create(&loggerThread, NULL, LoggerThread, this);
+    if(result != 0)
+    {
+        ERROR("Failed to create the logger thread");
+        return false;
+    }
+
+    LOG("PX4API::StartLogger Logger on");
+    return true;
+}
+
+bool PX4API::StopLogger(){
+
+    if(!this->px4logger->IsOn()){
+        LOG("PX4API::StopLogger logger already off");
+        return false;
+    }
+
+    this->px4logger->Toggle();
+    LOG("PX4API::StopLogger Logger off");
+    return true;
+}
+
+void* PX4API::LoggerThread(void* args){
+
+    PX4API *px4 = (PX4API*) args;
+     px4->GetLogger()->ResetClock();
+
+    while(px4->GetLogger()->IsOn()){
+        usleep(175000);   // Read at 2Hz
+        px4->GetLogger()->UpdateLogs(clock());
+        px4->GetLogger()->Print();
+    }
+    pthread_exit(NULL);
+}
+
 
 /*
 void PX4API::FollowTrajectory(vector< vector< float > > traj, int rounds, float eps){

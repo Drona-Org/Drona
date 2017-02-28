@@ -7,8 +7,10 @@
 
 #include <pthread.h>
 #include <iostream>
+#include <ctime>
 
 #include "PX4Communicator.h"
+#include "PX4Logger.h"
 
 using namespace std;
 
@@ -17,6 +19,7 @@ class PX4API
 private:
 
     PX4Communicator *px4com;
+    PX4Logger *px4logger;
 
     int systemId;
     int autopilotId;
@@ -26,6 +29,8 @@ private:
     bool autopilot;
 
     bool ToggleOffBoard(bool on);
+
+    static void* LoggerThread(void *args);
 
 public:
 
@@ -39,6 +44,10 @@ public:
 
     bool StartAutopilot(float x, float y, float z);
     bool StopAutopilot();
+
+    bool StartLogger();
+    bool StopLogger();
+    PX4Logger* GetLogger(){ return this->px4logger; };
 
     //void FollowTrajectory(vector< vector< float > > traj, int rounds, float eps);
     //void Loiter(vector< float > center, float radius, int rounds, float eps, float loitStep);
