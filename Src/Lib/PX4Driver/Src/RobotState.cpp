@@ -18,6 +18,14 @@ void RobotState::UpdateRadioStatus(mavlink_radio_status_t radioStatus){
     this->radioStatus = radioStatus;
 }
 
+mavlink_local_position_ned_t RobotState::GetLocalPosition(){
+    return this->currentLocalPosition;
+}
+
+mavlink_global_position_int_t RobotState::GetGlobalPosition(){
+    return this->currentGlobalPosition;
+}
+
 char* RobotState::CurrentStateToString(){
 
     char* ret = (char*)malloc(sizeof(char)*1000);

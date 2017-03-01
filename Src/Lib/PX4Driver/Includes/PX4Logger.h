@@ -2,9 +2,18 @@
 #define PX4LOGGER_H
 
 #include <vector>
+#include <unistd.h>
 #include <ctime>
+#include <iostream>
+#include <fstream>
+#include <tuple>
+
+#include "mavlink.h"
+#include "mavlink_helpers.h"
+#include "mavlink_types.h"
 
 #include "RobotState.h"
+#include "PX4Logger.h"
 
 using namespace std;
 
@@ -12,25 +21,31 @@ class PX4Logger
 {
 private:
 
-    vector< RobotState* > logs;
-    vector< float > timeStamps;
-
+    double freq;    // log frequency (Hz)
     bool on;    // is logger on?
     clock_t t0;  // initial clock time
 
+    vector< tuple<double,RobotState*> > logs; // (time_stamp, state)
+
+    static void* LoggerThread(void *args);
+
 public:
 
-    PX4Logger();
+    PX4Logger(double freq);
+
+    bool Start();
+    bool Stop();
+
     bool IsOn(){ return this->on; }
     bool Toggle(){ this->on = !this->on; }
-
     void ResetClock(){ this->t0 = clock(); }
 
-    void UpdateLogs(clock_t t);
-    void Print();
-    void Dump();
+    double GetFreq(){ return this->freq; }
+    void UpdateLogs();
+
+    bool CSV(const char* filename, vector<bool> mask);
+
 
 };
 
-extern PX4Logger* PX4LOGGER;
 #endif // !PX4LOGGER_H

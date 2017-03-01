@@ -30,8 +30,6 @@ private:
 
     bool ToggleOffBoard(bool on);
 
-    static void* LoggerThread(void *args);
-
 public:
 
     PX4API(int simulatorPort);
@@ -47,7 +45,7 @@ public:
 
     bool StartLogger();
     bool StopLogger();
-    PX4Logger* GetLogger(){ return this->px4logger; };
+    void Logs2CSV(const char* filename, vector<bool> mask);
 
     //void FollowTrajectory(vector< vector< float > > traj, int rounds, float eps);
     //void Loiter(vector< float > center, float radius, int rounds, float eps, float loitStep);

@@ -27,7 +27,8 @@ public:
     //getters
     mavlink_local_position_ned_t GetLocalPosition();
     mavlink_global_position_int_t GetGlobalPosition();
-    RobotState *GetState(){ return this; };
+    RobotState* GetState(){ return this; };
+    RobotState* Clone() const { return new RobotState(*this); }
 
     //printers
     char* CurrentStateToString();
