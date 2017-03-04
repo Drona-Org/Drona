@@ -15,6 +15,7 @@ INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PX4Driver/Generated)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PFloat32/Src)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PFloat32/Generated)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/World/Includes)
+INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Breach/Includes)
 
 ## Projects
 subdirs(Samples/TestCommunicationLib)
@@ -114,3 +115,22 @@ else()
 endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+
+
+
+#############################################
+
+set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR})
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake) # add FindMatlab module
+
+add_definitions(/DMATLAB_MEX_FILE) #define matlab macros
+add_definitions(/DMX_COMPAT_32)
+
+find_package(Matlab REQUIRED)
+
+IF(MATLAB_FOUND)
+    message(STATUS "MATLAB Found, MATLAB MEX will be compiled.")
+    #add_subdirectory(mex)
+ELSE(MATLAB_FOUND)
+    MESSAGE("MATLAB not found...nothing will be built.")
+ENDIF(MATLAB_FOUND)
