@@ -19,6 +19,7 @@ INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/World/Includes)
 ## Projects
 subdirs(Samples/TestCommunicationLib)
 subdirs(Samples/TestWorld)
+subdirs(Samples/TestBreach)
 subdirs(Src/Lib/Logger)
 subdirs(Src/Lib/Communication)
 subdirs(Src/Lib/PFloat32)
@@ -26,6 +27,7 @@ subdirs(Src/Lib/PX4Driver)
 #subdirs(Src/Lib/SoftwareStack/)
 #subdirs(Src/TestApp/)
 subdirs(Src/Lib/World)
+subdirs(Src/Lib/Breach)
 ###########################################################################
 ## P Compilation Related Helper Functions
 ###########################################################################
