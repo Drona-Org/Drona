@@ -36,7 +36,9 @@ bool BreachAPI::StopMatlabEngine(){
 
     engClose(this->matEng);
     this->engOn = false;
+
     cout<<"BreachAPI::StopMatlabEngine MATLAB engine stopped"<<endl;
+    return true;
 }
 
 // Stop Matlab engine
@@ -47,6 +49,15 @@ bool BreachAPI::InitBreach(char* pathToBreach){
         return false;
     }
 
+    char buff[100];
+    sprintf(buff,"addpath('%s')", pathToBreach);
+    engEvalString(this->matEng,buff);
+    engEvalString(this->matEng,"InitBreach");
+    engEvalString(this->matEng,"system.name = 'Drona'");
+    engEvalString(this->matEng,"system.name = 'system.init_state = [0 0 0]'");
+    this->initBreach = true;
+
+    cout<<"BreachAPI::InitBreach Breach initialized"<<endl;
     return true;
 }
 
