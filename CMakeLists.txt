@@ -120,6 +120,18 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
 #############################################
 
+
+
+function (mex_compile output_dir c_srcs)
+    MESSAGE("--------- Compiling Mex ----------------")
+
+    ADD_CUSTOM_TARGET("compile_mex" ALL
+            COMMENT "Compiling Mex..."
+            COMMAND mex -v -client engine ${${c_srcs}}
+            WORKING_DIRECTORY ${output_dir}
+    )
+endfunction(mex_compile)
+
 set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR})
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake) # add FindMatlab module
 

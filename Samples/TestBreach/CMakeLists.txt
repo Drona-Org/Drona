@@ -13,7 +13,7 @@ add_executable(monitor Src/monitor.cpp ${includes})
 
 #add_definitions( -DPRT_PLAT_LINUXUSER )
 # Target Communication Libraries
-TARGET_LINK_LIBRARIES(monitor breach)
+#TARGET_LINK_LIBRARIES(monitor breach)
 
 
 
