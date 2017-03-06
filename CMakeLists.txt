@@ -122,27 +122,12 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
 
 
-function (mex_compile output_dir c_srcs)
+function (mex_compile src_dir c_srcs inc_dir)
     MESSAGE("--------- Compiling Mex ----------------")
 
     ADD_CUSTOM_TARGET("compile_mex" ALL
             COMMENT "Compiling Mex..."
-            COMMAND mex -v -client engine ${${c_srcs}}
-            WORKING_DIRECTORY ${output_dir}
+            COMMAND mex -v -client engine -I${inc_dir} ${${c_srcs}}
+            WORKING_DIRECTORY ${src_dir}
     )
 endfunction(mex_compile)
-
-set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR})
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake) # add FindMatlab module
-
-add_definitions(/DMATLAB_MEX_FILE) #define matlab macros
-add_definitions(/DMX_COMPAT_32)
-
-find_package(Matlab REQUIRED)
-
-IF(MATLAB_FOUND)
-    message(STATUS "MATLAB Found, MATLAB MEX will be compiled.")
-    #add_subdirectory(mex)
-ELSE(MATLAB_FOUND)
-    MESSAGE("MATLAB not found...nothing will be built.")
-ENDIF(MATLAB_FOUND)
