@@ -3,6 +3,8 @@
 
 #include "engine.h"
 #include <iostream>
+#include <stdio.h>
+#include <string.h>
 
 using namespace std;
 
@@ -21,5 +23,8 @@ public:
     bool StopMatlabEngine();
 
     bool InitBreach(char* pathToBreach);
+
+    void STLEval();
+
 };
 #endif // !BreachAPI

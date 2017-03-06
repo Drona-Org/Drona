@@ -53,11 +53,44 @@ bool BreachAPI::InitBreach(char* pathToBreach){
     sprintf(buff,"addpath('%s')", pathToBreach);
     engEvalString(this->matEng,buff);
     engEvalString(this->matEng,"InitBreach");
-    engEvalString(this->matEng,"system.name = 'Drona'");
-    engEvalString(this->matEng,"system.name = 'system.init_state = [0 0 0]'");
+
+
     this->initBreach = true;
 
     cout<<"BreachAPI::InitBreach Breach initialized"<<endl;
     return true;
 }
+
+// Evaluate an STL formula
+void BreachAPI::STLEval(){
+
+    if( !this->matEng || !this->initBreach){
+        cout<<"BreachAPI::STLEval Matlab engine off or Breach not initialized"<<endl;
+    }
+
+    // Initialize system
+    engEvalString(this->matEng,"time = 0:.01:10; x = cos(time); y = sin(time);");
+    engEvalString(this->matEng,"trace = [time' x' y'];");
+    engEvalString(this->matEng,"BrTrace = BreachTraceSystem({'x','y'}, trace);");
+    engEvalString(this->matEng,"rob = BrTrace.GetRobustSat('alw (x[t] < 1.5)')");
+
+    mxArray *result;
+    double *r;
+    result = engGetVariable(this->matEng,"rob");
+    r = mxGetPr(result);
+
+    cout<<"Robuts: "<<r[0]<<"\n";
+
+
+
+    // Compute robustness
+    //engEvalString(this->matEng,"rob = STL_EvalClassicOnline(Sys,phi,P,traj)");
+
+
+}
+
+
+
+
+
 
