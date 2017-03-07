@@ -12,6 +12,7 @@ void PX4Logger::UpdateLogs(){
     tuple<double,RobotState*> state(t_stamp,ROBOTSTATE->Clone());
 
     this->logs.push_back(state);
+
 }
 
 

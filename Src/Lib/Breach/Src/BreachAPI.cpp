@@ -100,7 +100,7 @@ double* BreachAPI::STLEvalOnLine(char* spec, char* fileName){
         return 0;
     }
 
-    char mat_cmd[100];
+    char mat_cmd[256];
 
     // Initialize system
     engEvalString(this->matEng,"system.name = 'Brass';");
