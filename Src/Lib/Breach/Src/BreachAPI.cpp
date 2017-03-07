@@ -61,30 +61,33 @@ bool BreachAPI::InitBreach(char* pathToBreach){
 }
 
 // Evaluate an STL formula
-void BreachAPI::STLEval(char* spec, char* fileName){
+double BreachAPI::STLEval(char* spec, char* fileName){
 
     if( !this->matEng || !this->initBreach){
         cout<<"BreachAPI::STLEval Matlab engine off or Breach not initialized"<<endl;
-        return;
+        return 0;
     }
 
+    char mat_cmd[100];
 
+    // Read trace
+    engEvalString(this->matEng,"");
+    sprintf(mat_cmd,"trace_csv = csvread('%s');", fileName);
+    engEvalString(this->matEng,mat_cmd);
+    engEvalString(this->matEng,"trace = trace_csv(:,1:end-1)"); // Drop last useless column
 
     // Initialize system
-    engEvalString(this->matEng,"trace = dlmread('traj.csv');");
     engEvalString(this->matEng,"BrTrace = BreachTraceSystem({'x','y','z'}, trace);");
-    engEvalString(this->matEng,"rob = BrTrace.GetRobustSat('alw (x[t] < 1.5)')");
 
+    // Compute robustness
+    sprintf(mat_cmd,"rob = BrTrace.GetRobustSat('%s')", spec);
+    engEvalString(this->matEng,mat_cmd);
+
+    // Get robustness
     mxArray *result;
     double *r;
     result = engGetVariable(this->matEng,"rob");
     r = mxGetPr(result);
-    cout<<"Robuts: "<<r[0]<<"\n";
 
-
-
-    // Compute robustness
-    //engEvalString(this->matEng,"rob = STL_EvalClassicOnline(Sys,phi,P,traj)");
-
-
+    return r[0];
 }
