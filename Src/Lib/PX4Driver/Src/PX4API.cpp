@@ -3,7 +3,9 @@
 PX4API::PX4API(int simulatorPort){
 
     this->px4com = new PX4Communicator(simulatorPort);
-    this->px4logger = new PX4Logger(10);    // log frequency
+
+    vector<bool> logMask = {true,true,true};
+    this->px4logger = new PX4Logger(10, "traj.csv", true, logMask);    // log frequency
 
     this->systemId = 255;
     this->autopilotId = 1;

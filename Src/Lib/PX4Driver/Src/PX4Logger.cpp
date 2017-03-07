@@ -1,8 +1,11 @@
 #include "PX4Logger.h"
 
-PX4Logger::PX4Logger(double freq){
+PX4Logger::PX4Logger(double freq, char* filename, bool onLine, vector<bool> logMask){
     this->freq = freq;
     this->on = false;
+    this->filename = filename;
+    this->onLine = onLine;
+    this->logMask = logMask;
 }
 
 // Update log records
@@ -13,6 +16,8 @@ void PX4Logger::UpdateLogs(){
 
     this->logs.push_back(state);
 
+    // Write on line logs
+    if(this->onLine){ this->writeCSVLine(state); };
 }
 
 
@@ -98,6 +103,29 @@ bool PX4Logger::CSV(const char* filename,  vector<bool> mask){
     myfile.close();
 
     return true;
+}
+
+// Print CSV line
+void PX4Logger::writeCSVLine(tuple<double,RobotState*> state){
+
+    ofstream myfile;
+    myfile.open (this->filename,ios_base::app);
+
+    double time_stamp = get<0>(state);
+    RobotState* pose = get<1>(state);
+    //dump time
+
+    myfile<<time_stamp<<",";
+
+    // dump x
+    if( this->logMask[0] ){ myfile<<pose->GetLocalPosition().x <<","; }
+    // dump y
+    if( this->logMask[1] ){ myfile<<pose->GetLocalPosition().y <<","; }
+    // dump z
+    if( this->logMask[2] ){ myfile<<pose->GetLocalPosition().z <<","; }
+
+    myfile<<"\n";
+    myfile.close();
 }
 
 

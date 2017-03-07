@@ -25,13 +25,17 @@ private:
     bool on;    // is logger on?
     clock_t t0;  // initial clock time
 
+    char* filename;
+    bool onLine;
+    vector<bool> logMask;
+
     vector< tuple<double,RobotState*> > logs; // (time_stamp, state)
 
     static void* LoggerThread(void *args);
 
 public:
 
-    PX4Logger(double freq);
+    PX4Logger(double freq, char* filename, bool onLine, vector<bool> logMask);
 
     bool Start();
     bool Stop();
@@ -41,9 +45,11 @@ public:
     void ResetClock(){ this->t0 = clock(); }
 
     double GetFreq(){ return this->freq; }
+
     void UpdateLogs();
 
     bool CSV(const char* filename, vector<bool> mask);
+    void writeCSVLine(tuple<double,RobotState*> state);
 
 
 };
