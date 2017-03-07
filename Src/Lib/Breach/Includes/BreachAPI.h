@@ -3,11 +3,12 @@
 
 #include "engine.h"
 #include <iostream>
+#include <fstream>
 #include <stdio.h>
+#include <vector>
 #include <string.h>
 
 using namespace std;
-
 
 class BreachAPI
 {
@@ -24,7 +25,7 @@ public:
 
     bool InitBreach(char* pathToBreach);
 
-    void STLEval();
+    void STLEval(char* spec, char* fileName);
 
 };
 #endif // !BreachAPI

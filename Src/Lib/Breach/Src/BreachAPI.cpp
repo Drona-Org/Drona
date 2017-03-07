@@ -54,7 +54,6 @@ bool BreachAPI::InitBreach(char* pathToBreach){
     engEvalString(this->matEng,buff);
     engEvalString(this->matEng,"InitBreach");
 
-
     this->initBreach = true;
 
     cout<<"BreachAPI::InitBreach Breach initialized"<<endl;
@@ -62,23 +61,24 @@ bool BreachAPI::InitBreach(char* pathToBreach){
 }
 
 // Evaluate an STL formula
-void BreachAPI::STLEval(){
+void BreachAPI::STLEval(char* spec, char* fileName){
 
     if( !this->matEng || !this->initBreach){
         cout<<"BreachAPI::STLEval Matlab engine off or Breach not initialized"<<endl;
+        return;
     }
 
+
+
     // Initialize system
-    engEvalString(this->matEng,"time = 0:.01:10; x = cos(time); y = sin(time);");
-    engEvalString(this->matEng,"trace = [time' x' y'];");
-    engEvalString(this->matEng,"BrTrace = BreachTraceSystem({'x','y'}, trace);");
+    engEvalString(this->matEng,"trace = dlmread('traj.csv');");
+    engEvalString(this->matEng,"BrTrace = BreachTraceSystem({'x','y','z'}, trace);");
     engEvalString(this->matEng,"rob = BrTrace.GetRobustSat('alw (x[t] < 1.5)')");
 
     mxArray *result;
     double *r;
     result = engGetVariable(this->matEng,"rob");
     r = mxGetPr(result);
-
     cout<<"Robuts: "<<r[0]<<"\n";
 
 
@@ -88,9 +88,3 @@ void BreachAPI::STLEval(){
 
 
 }
-
-
-
-
-
-
