@@ -91,3 +91,44 @@ double BreachAPI::STLEval(char* spec, char* fileName){
 
     return r[0];
 }
+
+// Evaluate an STL formula online
+double* BreachAPI::STLEvalOnLine(char* spec, char* fileName){
+
+    if( !this->matEng || !this->initBreach){
+        cout<<"BreachAPI::STLEval Matlab engine off or Breach not initialized"<<endl;
+        return 0;
+    }
+
+    char mat_cmd[100];
+
+    // Initialize system
+    engEvalString(this->matEng,"system.name = 'Brass';");
+    engEvalString(this->matEng,"system.init_state = [0 0 0];");
+    sprintf(mat_cmd,"options.phi = '%s';", spec);
+    engEvalString(this->matEng,mat_cmd);
+    engEvalString(this->matEng,"nb_signals = numel(system.init_state);");
+    engEvalString(this->matEng,"Sys = CreateExternSystem(system.name, nb_signals, 0);");
+    engEvalString(this->matEng,"P = CreateParamSet(Sys);");
+    engEvalString(this->matEng,"phi = STL_Formula('phi', options.phi);");
+
+    // Initialize trace
+    engEvalString(this->matEng,"traj.param = zeros(1, nb_signals);");
+    sprintf(mat_cmd,"trace_csv = csvread('%s');", fileName);
+    engEvalString(this->matEng,mat_cmd);
+    engEvalString(this->matEng,"traj.time = trace_csv(:,1)';");
+    engEvalString(this->matEng,"traj.X = trace_csv(:,2:end-1)';");
+
+    // Compute robustness bounds
+     engEvalString(this->matEng,"rob_bounds = STL_EvalClassicOnline(Sys,phi,P,traj,0);");
+
+     // Get robustness bouns
+     mxArray *result;
+     double *r;
+     result = engGetVariable(this->matEng,"rob_bounds");
+     r = mxGetPr(result);
+
+     return r;
+}
+
+

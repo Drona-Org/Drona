@@ -26,6 +26,7 @@ public:
     bool InitBreach(char* pathToBreach);
 
     double STLEval(char* spec, char* fileName);
+    double* STLEvalOnLine(char* spec, char* fileName);
 
 };
 #endif // !BreachAPI
