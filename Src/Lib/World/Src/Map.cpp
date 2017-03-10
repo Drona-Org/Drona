@@ -110,12 +110,54 @@ coord Map::Idx2Coord(int idx){
 coord Map::Centroid(int idx){
 
     coord c = this->Idx2Coord(idx);
-    c.x = c.x + (UNIT_LEN/2);
-    c.y = c.y + (UNIT_LEN/2);
-    c.z = c.z + (UNIT_LEN/2);
+    c.x = c.x + (GRID_STEP/2);
+    c.y = c.y + (GRID_STEP/2);
+    c.z = c.z + (GRID_STEP/2);
 
     return c;
 }
+
+// Get the index of a neighbor box
+int Map::IdxNeigh(int idx, char neigh){
+
+    coord c = this->Idx2Coord(idx);
+
+    switch(neigh){
+        case 'r':
+            c.x = c.x + this->GRID_STEP;
+        break;
+        case 'l':
+            c.x = c.x - this->GRID_STEP;
+        break;
+        case 'f':
+            c.y = c.y + this->GRID_STEP;
+        break;
+        case 'b':
+            c.y = c.y - this->GRID_STEP;
+        break;
+        case 'u':
+            c.z = c.z + this->GRID_STEP;
+        break;
+        case 'd':
+            c.z = c.z - this->GRID_STEP;
+        break;
+        default:
+            LOG("Map::Idx2Neigh Unkown neighbor instruction");
+            return -1;
+    }
+    return this->Coord2Idx(c);
+}
+
+// Get the index of a neighbor box
+coord Map::CentroidNeigh(int idx, char neigh){
+    return this->Centroid(this->IdxNeigh(idx,neigh));
+}
+
+// Get the cooridnates of a neighbor box
+coord Map::CentroidNeigh(coord c, char neigh){
+    return this->CentroidNeigh(this->Coord2Idx(c),neigh);
+}
+
 
 // Check if coordinate is in map space
 bool Map::InMapSpace(coord c){

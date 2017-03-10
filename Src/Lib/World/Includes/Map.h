@@ -30,7 +30,7 @@ private:
     int dx, dy, dz;                             // space dimensions
     vector< tuple<coord,coord> > obstacles;     // list of obstacles (upper and lower corners)
 
-    float UNIT_LEN = 1;      // Grid granularity
+    float GRID_STEP = 1;      // Grid granularity
 
 public:
 
@@ -44,6 +44,12 @@ public:
     int Coord2Idx(coord c);
     coord Idx2Coord(int idx);
     coord Centroid(int idx);
+    int IdxNeigh(int idx, char neigh);
+
+    coord CentroidNeigh(int idx, char neigh);
+    coord CentroidNeigh(coord c, char neigh);
+
+    float GetGridStep(){ return this->GRID_STEP; };
 
 };
 #endif // !Map

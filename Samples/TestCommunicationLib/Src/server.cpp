@@ -17,12 +17,13 @@ int main()
 
     PX4API *px4 = new PX4API(SIMULATOR_PORT,map);
 
-    coord test = {-8,-9.1,2.2};
-    test = px4->map->Centroid(px4->map->Coord2Idx(test));
+    coord test = {0.9,0.5,0.5};
+    test = px4->map->CentroidNeigh(test,'u');
 
     cout<<test.x<<"\n";
     cout<<test.y<<"\n";
     cout<<test.z<<"\n";
+
 
 
 //    usleep(2500000);
