@@ -49,9 +49,7 @@ public:
     // High level APIs
     void Goto(float x, float y, float z);
 
-    bool MotionPrimitive();
-    bool Up();
-    bool Down();
+    void MotionPrimitive(char motion);
 
     bool StartLogger();
     bool StopLogger();

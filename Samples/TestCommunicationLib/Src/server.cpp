@@ -17,23 +17,39 @@ int main()
 
     PX4API *px4 = new PX4API(SIMULATOR_PORT,map);
 
-    coord test = {0.9,0.5,0.5};
-    test = px4->map->CentroidNeigh(test,'u');
+//    coord test = {0.9,0.5,0.5};
+//    test = px4->map->CentroidNeigh(test,'u');
 
-    cout<<test.x<<"\n";
-    cout<<test.y<<"\n";
-    cout<<test.z<<"\n";
+//    cout<<test.x<<"\n";
+//    cout<<test.y<<"\n";
+//    cout<<test.z<<"\n";
 
 
 
-//    usleep(2500000);
+    usleep(2500000);
 
-//    px4->StartLogger();
-//    px4->Arm();
+    //px4->StartLogger();
+    px4->Arm();
 
-//    usleep(2500000);
-//    px4->StartAutopilot(0,0,-3);
-//    usleep(2500000);
+    usleep(2500000);
+    px4->StartAutopilot(0,0,-3);
+    usleep(2500000);
+
+    px4->MotionPrimitive('r');
+    usleep(2500000);
+    px4->MotionPrimitive('r');
+    usleep(2500000);
+    px4->MotionPrimitive('f');
+    usleep(2500000);
+    px4->MotionPrimitive('f');
+    usleep(2500000);
+    px4->MotionPrimitive('l');
+    usleep(2500000);
+    px4->MotionPrimitive('l');
+    usleep(2500000);
+    px4->MotionPrimitive('b');
+    usleep(2500000);
+    px4->MotionPrimitive('b');
 
 //    px4->SetTargetLocalPosition(-1,-6,-1);
 //    usleep(2500000);
@@ -61,9 +77,9 @@ int main()
 //    vector<bool> mask = {true,true,true};
 //    px4->Logs2CSV("traj.csv",mask);
 
-//    while(true){
-//       usleep(5000);
-//    }
+    while(true){
+       usleep(5000);
+    }
 
 }
 

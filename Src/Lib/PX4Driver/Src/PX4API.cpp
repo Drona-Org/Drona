@@ -2,11 +2,11 @@
 
 PX4API::PX4API(int simulatorPort, Map *map){
 
-    //this->px4com = new PX4Communicator(simulatorPort);
+    this->px4com = new PX4Communicator(simulatorPort);
     this->map = map;
 
     vector<bool> logMask = {true,true,true};
-    //this->px4logger = new PX4Logger(10, "traj.csv", true, logMask);    // log frequency
+    this->px4logger = new PX4Logger(10, "traj.csv", true, logMask);    // log frequency
 
     this->systemId = 255;
     this->autopilotId = 1;
@@ -106,12 +106,6 @@ bool PX4API::StopAutopilot(){
     return true;
 }
 
-// High level APIs
-bool PX4API::MotionPrimitive(){
-}
-
-
-
 
 bool PX4API::ToggleOffBoard(bool on){
 
@@ -152,6 +146,28 @@ bool PX4API::StartLogger(){
 bool PX4API::StopLogger(){
     return this->px4logger->Stop();
 }
+
+void PX4API::MotionPrimitive(char motion){
+
+    char buff[100];
+    strcpy(buff,"PX4API::MotionPrimitive received");
+
+    // Retrieve current coords
+    RobotState *state = ROBOTSTATE->Clone();
+    mavlink_local_position_ned_t act_pos = state->GetLocalPosition();
+
+    // Get grid index
+    coord c = {act_pos.x,act_pos.y,-act_pos.z};
+    int cur_idx = this->map->Coord2Idx(c);
+
+    // Get neighbor grid coordinates
+    c = this->map->CentroidNeigh(cur_idx,motion);
+
+    this->SetTargetLocalPosition(c.x,c.y,-c.z);
+
+}
+
+
 
 void PX4API::Logs2CSV(const char* filename, vector<bool> mask){
     this->px4logger->CSV(filename,mask);
