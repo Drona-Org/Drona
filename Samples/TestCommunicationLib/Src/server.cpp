@@ -38,15 +38,12 @@ int main()
     int steps = 2;
     int step_len = 3;
 
-    for(int i=0; i<1; i++){
-        px4->MotionPrimitive('r',9);
-    }
-    for(int i=0; i<1; i++){
-        px4->MotionPrimitive('l',19);
-    }
-    for(int i=0; i<2*steps; i++){
-        px4->MotionPrimitive('f',2);
-    }
+    px4->GoTo(201);
+    px4->GoTo(50);
+    px4->GoTo(250);
+
+
+
 //    for(int i=0; i<2*steps; i++){
 //        px4->MotionPrimitive('b',step_len);
 //    }

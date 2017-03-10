@@ -117,6 +117,16 @@ coord Map::Centroid(int idx){
     return c;
 }
 
+// Get the centroid of a idx box
+coord Map::Centroid(coord c){
+
+    c.x = floor(c.x) + (GRID_STEP/2);
+    c.y = floor(c.y) + (GRID_STEP/2);
+    c.z = floor(c.z) + (GRID_STEP/2);
+
+    return c;
+}
+
 // Get the index of a neighbor box
 int Map::IdxNeigh(int idx, char neigh, int steps){
 

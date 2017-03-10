@@ -48,6 +48,7 @@ public:
 
     // High level APIs
     void MotionPrimitive(char motion, int steps);
+    void GoTo(int idx);
 
     bool StartLogger();
     bool StopLogger();

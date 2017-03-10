@@ -168,6 +168,19 @@ void PX4API::MotionPrimitive(char motion, int steps){
 
 }
 
+void PX4API::GoTo(int idx){
+
+    coord c = this->map->Centroid(this->map->Idx2Coord(idx));
+    this->SetTargetLocalPosition(c.x,c.y,-c.z);
+
+    char buff[100];
+    sprintf(buff,"Command: GoTo (idx %i, x %f, y %f, z %f)", idx, c.x, c.y, -c.z);
+    LOG(buff);
+
+    while(!(this->CloseTo(c.x,c.y,-c.z,0.5))){}
+
+}
+
 
 
 void PX4API::Logs2CSV(const char* filename, vector<bool> mask){

@@ -44,6 +44,7 @@ public:
     int Coord2Idx(coord c);
     coord Idx2Coord(int idx);
     coord Centroid(int idx);
+    coord Centroid(coord c);
     int IdxNeigh(int idx, char neigh, int steps);
 
     coord CentroidNeigh(int idx, char neigh, int steps);
