@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <tuple>
+#include <math.h>
 
 #include "Logger.h"
 #include<iostream>
@@ -11,7 +12,7 @@ using namespace std;
 
 struct coord {
 
-    int x,y,z;
+    float x,y,z;
 
     //Comparison functions
     bool Less(coord c){ return ((x <= c.x) && (y <= c.y) && (z <= c.z)); }
@@ -29,6 +30,8 @@ private:
     int dx, dy, dz;                             // space dimensions
     vector< tuple<coord,coord> > obstacles;     // list of obstacles (upper and lower corners)
 
+    float UNIT_LEN = 1;      // Grid granularity
+
 public:
 
     Map(coord lc, coord uc);
@@ -40,6 +43,7 @@ public:
     bool InMapSpace(coord c);
     int Coord2Idx(coord c);
     coord Idx2Coord(int idx);
+    coord Centroid(int idx);
 
 };
 #endif // !Map

@@ -15,8 +15,8 @@ int main(){
     coord c1 = {2,2,0};
     coord c2 = {-5,-3,0};
 
-    w->AddBox(c1,2,3,1);
-    w->AddBox(c2,1,5,2);
+    w->AddBox(c1,2,2,6);
+    w->AddBox(c2,1,1,7);
     w->CloseWorld();
 
     vector<int> obs = w->GetMap()->GetObstaclesIdxs();

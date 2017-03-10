@@ -1,11 +1,12 @@
 #include "PX4API.h"
 
-PX4API::PX4API(int simulatorPort){
+PX4API::PX4API(int simulatorPort, Map *map){
 
-    this->px4com = new PX4Communicator(simulatorPort);
+    //this->px4com = new PX4Communicator(simulatorPort);
+    this->map = map;
 
     vector<bool> logMask = {true,true,true};
-    this->px4logger = new PX4Logger(10, "traj.csv", true, logMask);    // log frequency
+    //this->px4logger = new PX4Logger(10, "traj.csv", true, logMask);    // log frequency
 
     this->systemId = 255;
     this->autopilotId = 1;
@@ -105,6 +106,13 @@ bool PX4API::StopAutopilot(){
     return true;
 }
 
+// High level APIs
+bool PX4API::MotionPrimitive(){
+}
+
+
+
+
 bool PX4API::ToggleOffBoard(bool on){
 
     mavlink_command_long_t cmd = {0};
@@ -186,6 +194,8 @@ void PX4API::FollowTrajectory(vector< vector< float > > traj, int rounds, float 
         }
     }
 }
+
+/*
 
 void PX4API::Loiter(vector< float > center, float radius, int rounds, float eps, float loitStep){
 

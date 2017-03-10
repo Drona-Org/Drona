@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "PX4API.h"
+#include "Map.h"
 
 using namespace std;
 
@@ -9,34 +10,59 @@ using namespace std;
 
 int main()
 {
-    PX4API *px4 = new PX4API(SIMULATOR_PORT);
 
-    usleep(2500000);
+    coord lc = {-10,-10,0};
+    coord uc = {10,10,10};
+    Map *map = new Map(lc,uc);
 
-    px4->StartLogger();
-    px4->Arm();
+    PX4API *px4 = new PX4API(SIMULATOR_PORT,map);
 
-    usleep(2500000);
-    px4->StartAutopilot(0,0,-3);
-    usleep(2500000);
+    coord test = {-8,-9.1,2.2};
+    test = px4->map->Centroid(px4->map->Coord2Idx(test));
+
+    cout<<test.x<<"\n";
+    cout<<test.y<<"\n";
+    cout<<test.z<<"\n";
 
 
-    px4->SetTargetLocalPosition(-4,-4,-4);
-    usleep(5000000);
-    px4->SetTargetLocalPosition(5,5,-4);
-    usleep(5000000);
-    px4->SetTargetLocalPosition(0,0,-1);
-    usleep(5000000);
+//    usleep(2500000);
 
-    px4->StopAutopilot();
-    px4->StopLogger();
+//    px4->StartLogger();
+//    px4->Arm();
 
-    vector<bool> mask = {true,true,true};
-    px4->Logs2CSV("traj.csv",mask);
+//    usleep(2500000);
+//    px4->StartAutopilot(0,0,-3);
+//    usleep(2500000);
 
-    while(true){
-       usleep(5000);
-    }
+//    px4->SetTargetLocalPosition(-1,-6,-1);
+//    usleep(2500000);
+//    px4->SetTargetLocalPosition(-5,-7,-1);
+//    usleep(2500000);
+//    px4->SetTargetLocalPosition(-5,-3,-1);
+//    usleep(2500000);
+
+//    px4->SetTargetLocalPosition(0,0,-1);
+//    usleep(4000000);
+
+//    px4->SetTargetLocalPosition(1,5,-3);
+//    usleep(2500000);
+//    px4->SetTargetLocalPosition(5,5,-3);
+//    usleep(2500000);
+//    px4->SetTargetLocalPosition(5,1,-3);
+//    usleep(2500000);
+
+//    px4->SetTargetLocalPosition(0,0,-1);
+//    usleep(4000000);
+
+//    px4->StopAutopilot();
+//    px4->StopLogger();
+
+//    vector<bool> mask = {true,true,true};
+//    px4->Logs2CSV("traj.csv",mask);
+
+//    while(true){
+//       usleep(5000);
+//    }
 
 }
 

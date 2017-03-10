@@ -83,11 +83,15 @@ int Map::Coord2Idx(coord c){
         return -1;
     }
 
+    int cx = floor(c.x);
+    int cy = floor(c.y);
+    int cz = floor(c.z);
+
     // shift space in (0,0,0)
-    c.x = c.x - this->lc.x;
-    c.y = c.y - this->lc.y;
-    c.z = c.z - this->lc.z;
-    return c.x + c.y*this->dx + c.z*(this->dx*this->dy);
+    cx = cx - this->lc.x;
+    cy = cy - this->lc.y;
+    cz = cz - this->lc.z;
+    return cx + cy*this->dx + cz*(this->dx*this->dy);
 }
 
 // Convert index to coordinate
@@ -98,6 +102,17 @@ coord Map::Idx2Coord(int idx){
     int rem = idx % (this->dx*this->dy);
     c.y = (rem/this->dx) + this->lc.y;
     c.x = (rem % this->dx) + this->lc.x;
+
+    return c;
+}
+
+// Get the centroid of a idx box
+coord Map::Centroid(int idx){
+
+    coord c = this->Idx2Coord(idx);
+    c.x = c.x + (UNIT_LEN/2);
+    c.y = c.y + (UNIT_LEN/2);
+    c.z = c.z + (UNIT_LEN/2);
 
     return c;
 }
