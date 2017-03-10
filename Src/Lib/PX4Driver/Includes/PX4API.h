@@ -47,9 +47,7 @@ public:
     bool StopAutopilot();
 
     // High level APIs
-    void Goto(float x, float y, float z);
-
-    void MotionPrimitive(char motion);
+    void MotionPrimitive(char motion, int steps);
 
     bool StartLogger();
     bool StopLogger();
@@ -59,7 +57,7 @@ public:
     void FollowTrajectory(vector< vector< float > > traj, int rounds, float eps);
     //void Loiter(vector< float > center, float radius, int rounds, float eps, float loitStep);
     //void Square(vector< float > corner, float edge, int rounds, float eps);
-    //bool CloseTo(float x, float y, float z, float eps);
+    bool CloseTo(float x, float y, float z, float eps);
 
 };
 #endif // !PX4API_H

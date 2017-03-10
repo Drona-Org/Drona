@@ -35,21 +35,28 @@ int main()
     px4->StartAutopilot(0,0,-3);
     usleep(2500000);
 
-    px4->MotionPrimitive('r');
-    usleep(2500000);
-    px4->MotionPrimitive('r');
-    usleep(2500000);
-    px4->MotionPrimitive('f');
-    usleep(2500000);
-    px4->MotionPrimitive('f');
-    usleep(2500000);
-    px4->MotionPrimitive('l');
-    usleep(2500000);
-    px4->MotionPrimitive('l');
-    usleep(2500000);
-    px4->MotionPrimitive('b');
-    usleep(2500000);
-    px4->MotionPrimitive('b');
+    int steps = 2;
+    int step_len = 3;
+
+    for(int i=0; i<1; i++){
+        px4->MotionPrimitive('r',9);
+    }
+    for(int i=0; i<1; i++){
+        px4->MotionPrimitive('l',19);
+    }
+    for(int i=0; i<2*steps; i++){
+        px4->MotionPrimitive('f',2);
+    }
+//    for(int i=0; i<2*steps; i++){
+//        px4->MotionPrimitive('b',step_len);
+//    }
+//    for(int i=0; i<2*steps; i++){
+//        px4->MotionPrimitive('r',step_len);
+//    }
+//    for(int i=0; i<steps; i++){
+//        px4->MotionPrimitive('f',step_len);
+//    }
+
 
 //    px4->SetTargetLocalPosition(-1,-6,-1);
 //    usleep(2500000);

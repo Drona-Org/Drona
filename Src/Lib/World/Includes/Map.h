@@ -44,10 +44,10 @@ public:
     int Coord2Idx(coord c);
     coord Idx2Coord(int idx);
     coord Centroid(int idx);
-    int IdxNeigh(int idx, char neigh);
+    int IdxNeigh(int idx, char neigh, int steps);
 
-    coord CentroidNeigh(int idx, char neigh);
-    coord CentroidNeigh(coord c, char neigh);
+    coord CentroidNeigh(int idx, char neigh, int steps);
+    coord CentroidNeigh(coord c, char neigh, int steps);
 
     float GetGridStep(){ return this->GRID_STEP; };
 

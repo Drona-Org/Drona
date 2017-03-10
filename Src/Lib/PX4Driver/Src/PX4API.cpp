@@ -147,23 +147,24 @@ bool PX4API::StopLogger(){
     return this->px4logger->Stop();
 }
 
-void PX4API::MotionPrimitive(char motion){
+void PX4API::MotionPrimitive(char motion, int steps){
 
     char buff[100];
     strcpy(buff,"PX4API::MotionPrimitive received");
 
     // Retrieve current coords
-    RobotState *state = ROBOTSTATE->Clone();
-    mavlink_local_position_ned_t act_pos = state->GetLocalPosition();
+    mavlink_local_position_ned_t act_pos = ROBOTSTATE->GetLocalPosition();
 
     // Get grid index
     coord c = {act_pos.x,act_pos.y,-act_pos.z};
     int cur_idx = this->map->Coord2Idx(c);
 
     // Get neighbor grid coordinates
-    c = this->map->CentroidNeigh(cur_idx,motion);
+    c = this->map->CentroidNeigh(cur_idx,motion,steps);
 
     this->SetTargetLocalPosition(c.x,c.y,-c.z);
+
+    while(!(this->CloseTo(c.x,c.y,-c.z,0.5))){}
 
 }
 
@@ -266,19 +267,20 @@ void PX4API::Square(vector< float > corner, float edge, int rounds, float eps){
 
 }
 
+*/
+
 // Check if drone is eps-close to (x,y,x)
 bool PX4API::CloseTo(float x, float y, float z, float eps){
 
-    mavlink_local_position_ned_t currentLocalPosition = this->px4com->getLocalPosition();
+    mavlink_local_position_ned_t act_pos = ROBOTSTATE->GetLocalPosition();
 
-    float dx = x - currentLocalPosition.x;
-    float dy = y - currentLocalPosition.y;
-    float dz = z - currentLocalPosition.z;
+    float dx = x - act_pos.x;
+    float dy = y - act_pos.y;
+    float dz = z - act_pos.z;
     float dist = sqrt( pow(dx,2) + pow(dy,2) + pow(dz,2) );
 
     return (dist < eps);
 }
-*/
 
 
 

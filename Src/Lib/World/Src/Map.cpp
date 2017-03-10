@@ -118,28 +118,28 @@ coord Map::Centroid(int idx){
 }
 
 // Get the index of a neighbor box
-int Map::IdxNeigh(int idx, char neigh){
+int Map::IdxNeigh(int idx, char neigh, int steps){
 
     coord c = this->Idx2Coord(idx);
 
     switch(neigh){
         case 'r':
-            c.x = c.x + this->GRID_STEP;
+            c.x = c.x + steps*this->GRID_STEP;
         break;
         case 'l':
-            c.x = c.x - this->GRID_STEP;
+            c.x = c.x - steps*this->GRID_STEP;
         break;
         case 'f':
-            c.y = c.y + this->GRID_STEP;
+            c.y = c.y + steps*this->GRID_STEP;
         break;
         case 'b':
-            c.y = c.y - this->GRID_STEP;
+            c.y = c.y - steps*this->GRID_STEP;
         break;
         case 'u':
-            c.z = c.z + this->GRID_STEP;
+            c.z = c.z + steps*this->GRID_STEP;
         break;
         case 'd':
-            c.z = c.z - this->GRID_STEP;
+            c.z = c.z - steps*this->GRID_STEP;
         break;
         default:
             LOG("Map::Idx2Neigh Unkown neighbor instruction");
@@ -149,13 +149,13 @@ int Map::IdxNeigh(int idx, char neigh){
 }
 
 // Get the index of a neighbor box
-coord Map::CentroidNeigh(int idx, char neigh){
-    return this->Centroid(this->IdxNeigh(idx,neigh));
+coord Map::CentroidNeigh(int idx, char neigh, int steps){
+    return this->Centroid(this->IdxNeigh(idx,neigh,steps));
 }
 
 // Get the cooridnates of a neighbor box
-coord Map::CentroidNeigh(coord c, char neigh){
-    return this->CentroidNeigh(this->Coord2Idx(c),neigh);
+coord Map::CentroidNeigh(coord c, char neigh, int steps){
+    return this->CentroidNeigh(this->Coord2Idx(c),neigh,steps);
 }
 
 
