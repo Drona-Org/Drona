@@ -35,12 +35,55 @@ int main()
     px4->StartAutopilot(0,0,-3);
     usleep(2500000);
 
-    int steps = 2;
-    int step_len = 3;
+    coord c1 = {3,3,-2};
+    coord c2 = {-3,6,-2};
+    coord c3 = {3,9,-2};
+    coord c4 = {-3,12,-2};
+    coord c5 = {3,15,-2};
+    coord c6 = {-3,18,-2};
 
-    px4->GoTo(201);
-    px4->GoTo(50);
-    px4->GoTo(250);
+    vector<coord> c {c1,c2,c3,c4,c5,c6};
+
+//    for(int i=0; i<c.size(); i++){
+//        coord cc = c[i];
+//        if(cc.x > 0){
+//            px4->GoTo(cc.x-1,cc.y+2,cc.z);
+//            px4->GoTo(cc.x,cc.y+2,cc.z);
+//            px4->GoTo(cc.x+1,cc.y+2,cc.z);
+//        }else{
+//            px4->GoTo(cc.x-1,cc.y-1,cc.z);
+//            px4->GoTo(cc.x,cc.y-1,cc.z);
+//            px4->GoTo(cc.x+1,cc.y-1,cc.z);
+//        }
+//    }
+
+
+    px4->GoTo(5,2.5,-2);
+    px4->GoTo(5,3.5,-2);
+    px4->GoTo(5,4.5,-2);
+
+
+    px4->GoTo(-5,6.5,-2);
+    px4->GoTo(-5,7.5,-2);
+    px4->GoTo(-5,8.5,-2);
+
+    px4->GoTo(5,8.5,-2);
+    px4->GoTo(5,9.5,-2);
+    px4->GoTo(5,10.5,-2);
+
+    px4->GoTo(-5,12.5,-2);
+    px4->GoTo(-5,13.5,-2);
+    px4->GoTo(-5,14.5,-2);
+
+    px4->GoTo(5,14.5,-2);
+    px4->GoTo(5,15.5,-2);
+    px4->GoTo(5,16.5,-2);
+
+    px4->GoTo(-5,17.5,-2);
+    px4->GoTo(-5,18.5,-2);
+    px4->GoTo(-5,19.5,-2);
+
+
 
 
 

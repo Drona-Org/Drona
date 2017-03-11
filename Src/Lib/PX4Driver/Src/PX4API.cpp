@@ -181,6 +181,14 @@ void PX4API::GoTo(int idx){
 
 }
 
+void PX4API::GoTo(float x, float y, float z){
+
+    this->SetTargetLocalPosition(x,y,z);
+
+    while(!(this->CloseTo(x,y,z,0.5))){}
+
+}
+
 
 
 void PX4API::Logs2CSV(const char* filename, vector<bool> mask){
