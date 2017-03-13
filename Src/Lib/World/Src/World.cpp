@@ -87,7 +87,7 @@ bool World::AddBox(coord lc, int lx, int ly, int lz){
 
 
 // <include>
-void World::include(char* str, int inds){
+void World::include(string str, int inds){
 
     this->iOut("<include>",inds);
     this->iOut(str,inds+1);
@@ -122,7 +122,7 @@ void World::physics(int inds){
 }
 
 // Prinst str in file with inds indentation level
-void World::iOut(char* str, int inds){
+void World::iOut(string str, int inds){
 
     for(int i=0; i<inds; i++){
         this->file<<"\t";

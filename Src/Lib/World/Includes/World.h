@@ -14,10 +14,9 @@ private:
 
     Map *map;        // Map representation of the world
     ofstream file;
-
-    void include(char* str, int inds);
+    void include(string str, int inds);
     void physics(int inds);
-    void iOut(char* str, int inds);
+    void iOut(string str, int inds);
 
 
 public:

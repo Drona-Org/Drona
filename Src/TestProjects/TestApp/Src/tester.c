@@ -54,9 +54,9 @@ static long perfEndTime = 0;
 static const char* parg = NULL;
 static const char* workspaceConfig;
 
-void Log(PRT_STEP step, PRT_MACHINEINST *sender, PRT_MACHINEINST *receiver, PRT_VALUE* event, PRT_VALUE* payload)
-{ 
-    PrtPrintStep(step, sender, receiver, event, payload);
+void Log(PRT_STEP step, PRT_MACHINESTATE *senderState, PRT_MACHINEINST *receiver, PRT_VALUE* event, PRT_VALUE* payload)
+{
+    PrtPrintStep(step, senderState, receiver, event, payload);
 }
 
 static PRT_BOOLEAN ParseCommandLine(int argc, char *argv[])
@@ -131,7 +131,7 @@ static void PrintUsage(void)
     printf("Usage: Tester [options]\n");
     printf("This program tests the compiled state machine in program.c and program.h\n");
     printf("Options:\n");
-    printf("    -w [path]       [path] represents the path to the workspace config file\n");
+    printf("   -w [path]       [path] represents the path to the workspace config file\n");
     printf("   -cooperative     run state machine with the cooperative scheduler\n");
     printf("   -threads [n]     run P using multiple threads\n");
     printf("   -perf [n]        run performance test that outputs #steps every 10 seconds, terminating after n seconds\n");
@@ -190,69 +190,53 @@ int main(int argc, char *argv[])
 
     printf("Press any key to start simulation\n");
     getchar();
+    PRT_PROCESS *process;
+    PRT_GUID processGuid;
+    PRT_VALUE *payload;
 
-    PRT_DBG_START_MEM_BALANCED_REGION
+    //Initialize the workspace
+    WORKSPACE_INFO = ParseWorkspaceConfig(workspaceConfig);
+    processGuid.data1 = 1;
+    processGuid.data2 = 0;
+    processGuid.data3 = 0;
+    processGuid.data4 = 0;
+    process = PrtStartProcess(processGuid, &P_GEND_PROGRAM, ErrorHandler, Log);
+    if (cooperative)
     {
-        PRT_PROCESS *process;
-        PRT_GUID processGuid;
-        PRT_VALUE *payload;
-
-        //Initialize the workspace
-        WORKSPACE_INFO = ParseWorkspaceConfig(workspaceConfig);
-        processGuid.data1 = 1;
-        processGuid.data2 = 0;
-        processGuid.data3 = 0;
-        processGuid.data4 = 0;
-        process = PrtStartProcess(processGuid, &P_GEND_PROGRAM, ErrorHandler, Log);
-        if (cooperative)
-        {
-            PrtSetSchedulingPolicy(process, PRT_SCHEDULINGPOLICY_COOPERATIVE);
-        }
-        if (parg == NULL)
-        {
-            payload = PrtMkNullValue();
-        }
-        else
-        {
-            int i = atoi(parg);
-            payload = PrtMkIntValue(i);
-        }
-
-        PrtUpdateAssertFn(MyAssert);
-
-        PrtMkMachine(process, P_MACHINE_StubMotionPlannerMachine, payload);
-
-        if (cooperative)
-        {
-            // test some multithreading across state machines.
-#if defined(PRT_PLAT_WINUSER)
-            HANDLE* threadsArr = (HANDLE*)PrtMalloc(threads*sizeof(HANDLE));
-            for (int i = 0; i < threads; i++)
-            {
-                DWORD threadId;
-                threadsArr[i] = CreateThread(NULL, 16000, (LPTHREAD_START_ROUTINE)RunToIdle, process, 0, &threadId);
-            }
-            WaitForMultipleObjects(threads, threadsArr, TRUE, INFINITE);
-            PrtFree(threadsArr);
-#elif defined(PRT_PLAT_LINUXUSER)
-typedef void *(*start_routine) (void *);
-            pthread_t tid[threads];
-            for (int i = 0; i < threads; i++)
-            {
-                pthread_create(&tid[i], NULL, (start_routine)RunToIdle, (void*)process);
-            }
-            for (int i = 0; i < threads; i++)
-            {
-                pthread_join(tid[i], NULL);
-            }
-#else
-#error Invalid Platform
-#endif
-        }
-        PrtFreeValue(payload);
-        PrtStopProcess(process);
+        PrtSetSchedulingPolicy(process, PRT_SCHEDULINGPOLICY_COOPERATIVE);
     }
-    PRT_DBG_END_MEM_BALANCED_REGION
+    if (parg == NULL)
+    {
+        payload = PrtMkNullValue();
+    }
+    else
+    {
+        int i = atoi(parg);
+        payload = PrtMkIntValue(i);
+    }
+
+    PrtUpdateAssertFn(MyAssert);
+
+    PrtMkMachine(process, P_MACHINE_StubMotionPlannerMachine, payload);
+
+    if (cooperative)
+    {
+        // test some multithreading across state machines.
+
+        typedef void *(*start_routine) (void *);
+        pthread_t tid[threads];
+        for (int i = 0; i < threads; i++)
+        {
+            pthread_create(&tid[i], NULL, (start_routine)RunToIdle, (void*)process);
+        }
+        for (int i = 0; i < threads; i++)
+        {
+            pthread_join(tid[i], NULL);
+        }
+    }
+    PrtFreeValue(payload);
+    PrtStopProcess(process);
+
 
     //_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
     //_CrtDumpMemoryLeaks();

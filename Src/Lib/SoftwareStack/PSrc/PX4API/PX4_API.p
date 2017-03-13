@@ -137,10 +137,6 @@ extern fun GoToLocation(commander: machine, local: mavlink_local_position_ned_t,
 extern fun LandVehicle(commander: machine, caller: machine);
 extern fun SetMessageInterval(commander: machine, msg_stream: mavlink_messages, interval: int, caller: machine);
 extern fun SendHeartbeat();
-extern fun sealwithRTC();
-extern fun unsealwithRTC();
-extern fun sealwithRR();
-extern fun unsealwithRR();
 extern fun GetSystemTime() : int;
 extern fun Publish(orb: machine, payload: POrbPubMsgType);
 extern fun Subscribe(orb:machine, payload: POrbSubMsgType);

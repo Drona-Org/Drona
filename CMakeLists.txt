@@ -18,17 +18,11 @@ INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/World/Includes)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Breach/Includes)
 
 ## Projects
-subdirs(Samples/TestCommunicationLib)
-subdirs(Samples/TestWorld)
-subdirs(Samples/TestBreach)
-subdirs(Src/Lib/Logger)
-subdirs(Src/Lib/Communication)
-subdirs(Src/Lib/PFloat32)
-subdirs(Src/Lib/PX4Driver)
-#subdirs(Src/Lib/SoftwareStack/)
-#subdirs(Src/TestApp/)
-subdirs(Src/Lib/World)
-subdirs(Src/Lib/Breach)
+subdirs(Src/TestProjects)
+subdirs(Src/Lib)
+
+
+
 ###########################################################################
 ## P Compilation Related Helper Functions
 ###########################################################################
@@ -59,7 +53,7 @@ function (p_compile pproject p_srcs)
         file(MAKE_DIRECTORY ${output_dir})
         ADD_CUSTOM_TARGET("compile_${pproject}_${p_src_basename}" ALL
                 COMMENT "Compiling P ${p_src}..."
-                #COMMAND ${p_compile_cmd} /generate:C0 ${p_src}
+                COMMAND ${p_compile_cmd} /generate:C0 ${p_src}
                 WORKING_DIRECTORY ${output_dir}
         )
         set(${pproject}_GENERATED_SRCS ${${pproject}_GENERATED_SRCS} ${output_c_srcs} PARENT_SCOPE)
@@ -95,7 +89,7 @@ function (p_link pproject formula_srcs)
             linker_${pproject} ALL
             COMMAND ${CMAKE_COMMAND} -E make_directory ${output_dir}
             COMMENT "Linking P ${p_src}..."
-            #COMMAND ${p_link_cmd} /outputDir:${output_dir} ${allfiles}
+            COMMAND ${p_link_cmd} /outputDir:${output_dir} ${allfiles}
             WORKING_DIRECTORY ${output_dir}
     )
     set(${pproject}_GENERATED_SRCS ${${pproject}_GENERATED_SRCS} ${output_c_srcs} PARENT_SCOPE)
