@@ -4,10 +4,11 @@
 #subdirs(PFloat32)
 #subdirs(PX4Driver)
 #subdirs(SoftwareStack/)
-#subdirs(World)
+subdirs(World)
 #subdirs(Breach)
 subdirs(Communication)
 subdirs(WorkspaceParser)
+subdirs(AStarPlanner)
 #subdirs(Logger)
 
 

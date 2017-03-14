@@ -1,7 +1,7 @@
 #ifndef DRONA_ASTAR_H
 #define DRONA_ASTAR_H
 
-#include "../WorkspaceParser/Workspace.h"
+#include "Workspace.h"
 
 #ifdef __cplusplus
 #include <memory>

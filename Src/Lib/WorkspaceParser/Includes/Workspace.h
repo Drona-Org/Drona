@@ -118,9 +118,9 @@ typedef struct WorkspaceInfo {
         vector<int> locations;
         for(int obs = 0; obs< obstacles.size(); obs++) {
             WS_Box box = obstacles.at(obs);
-            for(int i= box.low.x; i<box.high.x; i++){
-                for( int j= box.low.y; j<box.high.y; j++ ){
-                    for( int k=box.low.z; k<box.high.z; k++ ){
+            for(int i= box.low.x; i<=box.high.x; i++){
+                for( int j= box.low.y; j<=box.high.y; j++ ){
+                    for( int k=box.low.z; k<=box.high.z; k++ ){
                         locations.push_back(this->ConvertCoordToGridLocation(WS_Coord(i,j,k)));
                     }
                 }

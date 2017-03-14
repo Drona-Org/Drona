@@ -27,17 +27,15 @@ int total_num_calculations = 0;
 int total_num_calculations_ext = 0;
 int total_length_of_path = 0;
 
-bool GenerateMotionPlanFor(
-	int robotid,
-	WorkspaceInfo WSInfo,
-	int startLocation,
-	int endLocation,
-	int* sequenceOfObstacles,
-	int obsSize,
-	vector< vector<WS_Coord> > avoidPositions,
-	int sequenceOfSteps[1000],
-	int* stepsSize
-	)
+bool GenerateMotionPlanFor(int robotid,
+    WorkspaceInfo* WSInfo,
+    int startLocation,
+    int endLocation,
+    vector<int> obstacleLocations,
+    vector< vector<WS_Coord> > avoidPositions,
+    int sequenceOfSteps[1000],
+    int* stepsSize
+    )
 {
 #ifdef _WIN32
 	if(!print_lock) {
@@ -49,32 +47,30 @@ bool GenerateMotionPlanFor(
 #endif
 
 	RobotPosition_Vector obstacles;
-	string line;
 	int count;
 	WS_Coord coord;
 	WS_Coord pos_start, pos_end, pos_obs;
-    int index;
    	int ***obsmap;
 
-	coord = ExtractCoordFromGridLocation(startLocation, WSInfo.dimension);
-	SetCoordTo(&pos_start, coord);
+    coord = WSInfo->ConvertGridLocationToCoord(startLocation);
+    pos_start = coord;
 
-	coord = ExtractCoordFromGridLocation(endLocation, WSInfo.dimension);
-	SetCoordTo(&pos_end, coord);
+    coord = WSInfo->ConvertGridLocationToCoord(endLocation);
+    pos_end = coord;
 
-	for (count = 0; count < obsSize; count++)
+    for (count = 0; count < obstacleLocations.size(); count++)
 	{
-		coord = ExtractCoordFromGridLocation(sequenceOfObstacles[count], WSInfo.dimension);
+        coord = WSInfo->ConvertGridLocationToCoord(obstacleLocations.at(count));
 		//cout << "x = " << x << " " << "y = " << y << endl;
-		SetCoordTo(&pos_obs, coord);
+        pos_obs = coord;
 		obstacles.push_back(pos_obs);
 	}
 
     CAstar astar;
-  	astar.SetDimension(WSInfo.dimension);
-  	astar.SetObstacleMap(WSInfo.dimension, obstacles);
+    astar.SetDimension(WSInfo->dimension);
+    astar.SetObstacleMap(WSInfo->dimension, obstacles);
  	astar.SetSEpoint(pos_start, pos_end);
-    astar.SetAvoidPositions(WSInfo.dimension, avoidPositions);
+    astar.SetAvoidPositions(WSInfo->dimension, avoidPositions);
 		
 	clock_t begin = clock();
     RobotPosition_Vector path;
@@ -112,8 +108,14 @@ bool GenerateMotionPlanFor(
 
 	printf("====================================================\n");
 	printf("Robot %d\n", robotid);
-	PrintObstaclesList(*WORKSPACE_INFO);
-	
+    vector<int> obstList = WSInfo->GetObstaclesLocations();
+    cout << "Obstacles:: ";
+    for(int i = 0; i< obstList.size();i++)
+    {
+        cout<< obstList.at(i) << " ";
+    }
+    cout<< endl;
+
 	astar.PrintAvoidPositions();
 	printf("traj calculation takes %f\n", elapsed_secs);
 
@@ -121,7 +123,7 @@ bool GenerateMotionPlanFor(
 	for (count = 0; count < *stepsSize; count++)
 	{
 		//cout << path[count] << " " << (path[count] << endl;
-		sequenceOfSteps[count] = ConvertCoordToGridLocation(path[count], WSInfo.dimension);;
+        sequenceOfSteps[count] = WSInfo->ConvertCoordToGridLocation(path[count]);;
 	}
 
     obsmap = astar.GetObstacleMap();

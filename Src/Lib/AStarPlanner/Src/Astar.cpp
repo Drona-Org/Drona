@@ -6,6 +6,7 @@
 #include "Astar.h"
 #include "PathSearchNode.h"
 #include "stlastar.h"
+#include "Workspace.h"
 #include <time.h>
 
 int Delta = 1;
@@ -104,7 +105,7 @@ void CAstar::PrintAvoidPositions()
 		cout << "Robot : " << count1 << endl;
 		for (count2 = 0; count2 < avoidTrajs[count1].size(); count2++)
 		{
-			cout << ConvertCoordToGridLocation(avoidTrajs[count1][count2], dimension) << " ";
+            cout << WORKSPACE_INFO->ConvertCoordToGridLocation(avoidTrajs[count1][count2]) << " ";
 		}
 		cout << endl;
 	}

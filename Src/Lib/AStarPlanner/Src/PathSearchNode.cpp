@@ -1,37 +1,29 @@
 #include "PathSearchNode.h"
-#include "DijkstraPrecomputation.h"
 
 bool PathSearchNode::IsSameState( PathSearchNode &rhs , void* context)
 {
-  return CoordAreEqual(coord, rhs.coord) && timestamp == rhs.timestamp;
+  return coord == rhs.coord && timestamp == rhs.timestamp;
 }
 
 float PathSearchNode::GoalDistanceEstimate( PathSearchNode &nodeGoal , void* _context)
 {
-#ifdef USE_DIJKSTRA_PRECOMPUTATION
-  CAstar* context = (CAstar*)_context;
-  int goal_loc = ConvertCoordToGridLocation(nodeGoal.coord, context->GetDimension());
-  int curr_loc = ConvertCoordToGridLocation(coord, context->GetDimension());
-  return precomputed_dists[goal_loc][curr_loc];
-#else
   int cost_hX = abs(coord.x - nodeGoal.coord.x);
   int cost_hY = abs(coord.y - nodeGoal.coord.y);
   int cost_hZ = abs(coord.z - nodeGoal.coord.z);
   float cost_h = cost_hX + cost_hY + cost_hZ;
   return cost_h;
-#endif
 }
 
 bool PathSearchNode::IsGoal( PathSearchNode &nodeGoal , void* _context)
 {
   CAstar* context = (CAstar*)_context;
-  if(CoordAreEqual(coord, nodeGoal.coord)) {
+  if(coord == nodeGoal.coord) {
     vector< vector<WS_Coord> > avoidTrajs = context->GetAvoidTrajs();
     for(int i=0; i < avoidTrajs.size(); i++)
     {
       for(int t=timestamp; t < avoidTrajs[i].size(); t++)
       {
-        if(CoordAreEqual(avoidTrajs[i][t], nodeGoal.coord)) {
+        if(avoidTrajs[i][t] == nodeGoal.coord) {
           return false;
         }
       }
@@ -52,11 +44,11 @@ bool isBlocked(WS_Coord pos, int timestep, int ***obsmap, vector< vector<WS_Coor
     {
       if(t >= 0) {
         if(t < avoidTrajs[i].size()) {
-          if(CoordAreEqual(pos, avoidTrajs[i][t])) {
+          if(pos == avoidTrajs[i][t]) {
             return true;
           } 
         } else {
-          if(CoordAreEqual(pos, avoidTrajs[i][avoidTrajs[i].size() - 1])) {
+          if(pos == avoidTrajs[i][avoidTrajs[i].size() - 1]) {
             return true;
           }
         }
@@ -92,7 +84,7 @@ bool PathSearchNode::GetSuccessors( AStarSearch<PathSearchNode> *astarsearch, Pa
 
 float PathSearchNode::GetCost( PathSearchNode &successor , void* context)
 {
-  if(CoordAreEqual(coord, successor.coord)) {
+  if(coord == successor.coord) {
     return HOVERING_COST;
   } else {
     return STEP_COST;

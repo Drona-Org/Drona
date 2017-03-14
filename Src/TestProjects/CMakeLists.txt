@@ -6,5 +6,5 @@
 #subdirs(TestBreach)
 #subdirs(TestCommunicationLib)
 subdirs(TestWorkspaceParser)
-
+subdirs(TestPlanGenerator)
 
