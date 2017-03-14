@@ -8,14 +8,14 @@
 	</robots>
 	<obstacles>
 		<box>
-			<low> x="4" y="13" z="0" </low>
-			<high> x="5" y="15" z="1" </high>
+			<low  x="4" y="13" z="0" />
+			<high x="5" y="15" z="1" />
 	  </box>
 	</obstacles>
 	<charging_stations>
 		<box>
-			<low> x="4" y="13" z="0" </low>
-			<high> x="5" y="15" z="1" </high>
+			<low  x="4" y="13" z="0" />
+			<high x="5" y="15" z="1" />
 		</box>
 	</charging_stations>
 </configuration>

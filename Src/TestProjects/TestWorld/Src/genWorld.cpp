@@ -5,7 +5,7 @@
 
 int main(){
 
-    char* const fileName = "/home/tommaso/src/Firmware/Tools/sitl_gazebo/worlds/iris.world";
+    string fileName = "/home/tommaso/src/Firmware/Tools/sitl_gazebo/worlds/iris.world";
 
     coord lc = {-20,-20,0};
     coord uc = {20,20,10};

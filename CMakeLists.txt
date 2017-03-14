@@ -1,9 +1,14 @@
 cmake_minimum_required(VERSION 3.0)
 project(drona)
 
-
+#include the cmake functions and macros
 include(CMakeFunAndMacros.txt)
 
+## Projects
+subdirs(Src/TestProjects)
+subdirs(Src/Lib)
+
+#Global Include Directories
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Includes/MavlinkHeaders/common)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Includes/MavlinkHeaders)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Includes/PMavlinkHeaders)
@@ -15,10 +20,6 @@ INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PFloat32/Src)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PFloat32/Generated)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/World/Includes)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Breach/Includes)
-
-## Projects
-subdirs(Src/TestProjects)
-subdirs(Src/Lib)
 
 
 
