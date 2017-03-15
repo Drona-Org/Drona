@@ -10,7 +10,7 @@ INCLUDE_DIRECTORIES(includes)
 
 
 # Build exectuable
-add_library(world STATIC ${sources} ${includes})
+add_library(gazeboworldgenerator STATIC ${sources} ${includes})
 
-TARGET_LINK_LIBRARIES(world logger)
+TARGET_LINK_LIBRARIES(gazeboworldgenerator logger)
 

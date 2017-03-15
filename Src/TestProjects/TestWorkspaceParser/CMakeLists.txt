@@ -12,7 +12,7 @@ INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/GazeboWorldGenerator/Includes)
 add_executable(testworkspaceparser ${sources} ${includes})
 
 # Target Communication Libraries
-TARGET_LINK_LIBRARIES(testworkspaceparser workspaceparser world)
+TARGET_LINK_LIBRARIES(testworkspaceparser workspaceparser gazeboworldgenerator)
 
 
 

@@ -1,9 +1,9 @@
 #include "GazeboWorldGenerator.h"
 
-GazeboWorldGenerator::GazeboWorldGenerator(coord lc, coord uc, char* wordName){
+void GazeboWorldGenerator::GenerateWorld(const char* importFileName, const char* exportFileName){
 
-    this->map = new Map(lc,uc);
-    this->file.open(wordName);
+    this->wSInfo = ParseWorkspaceConfig(importFileName);
+    this->exportFile.open(exportFileName);
 
     // Initialize the model
     this->iOut("<?xml version=\"1.0\" ?>",0);
@@ -17,20 +17,27 @@ GazeboWorldGenerator::GazeboWorldGenerator(coord lc, coord uc, char* wordName){
 
     this->physics(2);
 
+    // Insert obstacles
+    vector<WS_Box> obstacles = this->wSInfo->obstacles;
+    for (vector<WS_Box>::iterator it = obstacles.begin() ; it != obstacles.end(); ++it){
+        this->AddBox((*it).low,(*it).high);
+    }
+
+
+    // Close file
+    this->iOut("</world>",1);
+    this->iOut("</sdf>",0);
+
+    this->exportFile.close();
 }
 
-// Box in lower coordinate (lc) with size (lx*ly*lz)
-bool GazeboWorldGenerator::AddBox(coord lc, int lx, int ly, int lz){
 
-    // Add box to the map
-    coord uc = {lc.x+lx,lc.y+ly,lc.z+lz,};
-    if( !(this->map->AddObstacle(lc,uc)) ){
-        LOG("World::Box Box not added");
-        return false;
-    }
+// Add box obstacle
+void GazeboWorldGenerator::AddBox(WS_Coord low, WS_Coord high){
+
     this->iOut("<model name='unit_box'>",2);
 
-    this->file<<"\t\t\t"<<"<pose frame=''>"<<lc.x+((float)lx/2)<<" "<<lc.y+((float)ly/2)<<" "<<lc.z+((float)lz/2)<<" 0 0 0</pose>\n";
+    this->exportFile<<"\t\t\t"<<"<pose frame=''>"<<(float)(high.x+low.x)/2<<" "<<(float)(high.x+low.x)/2<<" "<<(float)(high.x+low.x)/2<<" 0 0 0</pose>\n";
     this->iOut("<link name='link'>",3);
     this->iOut("<inertial>",4);
     this->iOut("<mass>1</mass>",5);
@@ -46,7 +53,7 @@ bool GazeboWorldGenerator::AddBox(coord lc, int lx, int ly, int lz){
     this->iOut("<collision name='collision'>",4);
     this->iOut("<geometry>",5);
     this->iOut("<box>",6);
-    this->file<<"\t\t\t\t\t\t\t<size>"<<lx<<" "<<ly<<" "<<lz<<"</size>\n";
+    this->exportFile<<"\t\t\t\t\t\t\t<size>"<<high.x-low.x<<" "<<high.y-low.y<<" "<<high.z-low.z<<"</size>\n";
     this->iOut("</box>",6);
     this->iOut("</geometry>",5);
     this->iOut("<max_contacts>10</max_contacts>",5);
@@ -66,7 +73,7 @@ bool GazeboWorldGenerator::AddBox(coord lc, int lx, int ly, int lz){
     this->iOut("<visual name='visual'>",4);
     this->iOut("<geometry>",5);
     this->iOut("<box>",6);
-    this->file<<"\t\t\t\t\t\t\t<size>"<<lx<<" "<<ly<<" "<<lz<<"</size>\n";
+    this->exportFile<<"\t\t\t\t\t\t\t<size>"<<high.x-low.x<<" "<<high.y-low.y<<" "<<high.z-low.z<<"</size>\n";
     this->iOut("</box>",6);
     this->iOut("</geometry>",5);
     this->iOut("<material>",5);
@@ -80,10 +87,7 @@ bool GazeboWorldGenerator::AddBox(coord lc, int lx, int ly, int lz){
     this->iOut("<kinematic>0</kinematic>",4);
     this->iOut("</link>",3);
     this->iOut("</model>",2);
-
-    return true;
 }
-
 
 // <include>
 void GazeboWorldGenerator::include(string str, int inds){
@@ -124,109 +128,10 @@ void GazeboWorldGenerator::physics(int inds){
 void GazeboWorldGenerator::iOut(string str, int inds){
 
     for(int i=0; i<inds; i++){
-        this->file<<"\t";
+        this->exportFile<<"\t";
     }
-    this->file<<str;
-    this->file<<"\n";
-}
-
-void GazeboWorldGenerator::CloseWorld(){
-
-    this->iOut("</world>",1);
-    this->iOut("</sdf>",0);
-
-    this->file.close();
-}
-
-void GazeboWorldGenerator::GenerateWorld(const char* importFileName, const char* exportFileName){
-
-    this->wSInfo = ParseWorkspaceConfig(importFileName);
-    this->file.open(exportFileName);
-
-    // Initialize the model
-    this->iOut("<?xml version=\"1.0\" ?>",0);
-    this->iOut("<sdf version=\"1.5\">",0);
-    this->iOut("<world name=\"default\">",1);
-
-    // Sun and ground plane
-    this->include(" <uri>model://sun</uri>",2);
-    this->include(" <uri>model://ground_plane</uri>",2);
-    this->include(" <uri>model://iris</uri>",2);
-
-    this->physics(2);
-
-    // Insert obstacles
-    vector<WS_Box> obstacles = this->wSInfo->obstacles;
-    for (vector<WS_Box>::iterator it = obstacles.begin() ; it != obstacles.end(); ++it){
-        this->AddBox((*it).low,(*it).high);
-    }
-
-
-    // Close file
-    this->iOut("</world>",1);
-    this->iOut("</sdf>",0);
-
-    this->file.close();
-}
-
-
-
-bool GazeboWorldGenerator::AddBox(WS_Coord low, WS_Coord high){
-
-    this->iOut("<model name='unit_box'>",2);
-
-    this->file<<"\t\t\t"<<"<pose frame=''>"<<(float)(high.x+low.x)/2<<" "<<(float)(high.x+low.x)/2<<" "<<(float)(high.x+low.x)/2<<" 0 0 0</pose>\n";
-    this->iOut("<link name='link'>",3);
-    this->iOut("<inertial>",4);
-    this->iOut("<mass>1</mass>",5);
-    this->iOut("<inertia>",5);
-    this->iOut("<ixx>0.166667</ixx>",6);
-    this->iOut("<ixy>0</ixy>",6);
-    this->iOut("<ixz>0</ixz>",6);
-    this->iOut("<iyy>0.166667</iyy>",6);
-    this->iOut("<iyz>0.166667</iyz>",6);
-    this->iOut("<izz>0.166667</izz>",6);
-    this->iOut("</inertia>",5);
-    this->iOut("</inertial>",4);
-    this->iOut("<collision name='collision'>",4);
-    this->iOut("<geometry>",5);
-    this->iOut("<box>",6);
-    this->file<<"\t\t\t\t\t\t\t<size>"<<high.x-low.x<<" "<<high.y-low.y<<" "<<high.z-low.z<<"</size>\n";
-    this->iOut("</box>",6);
-    this->iOut("</geometry>",5);
-    this->iOut("<max_contacts>10</max_contacts>",5);
-    this->iOut("<surface>",5);
-    this->iOut("<contact>",6);
-    this->iOut("<ode/>",7);
-    this->iOut("</contact>",6);
-    this->iOut("<bounce/>",6);
-    this->iOut("<friction>",6);
-    this->iOut("<torsional>",7);
-    this->iOut("<ode/>",8);
-    this->iOut("</torsional>",7);
-    this->iOut("<ode/>",7);
-    this->iOut("</friction>",6);
-    this->iOut("</surface>",5);
-    this->iOut("</collision>",4);
-    this->iOut("<visual name='visual'>",4);
-    this->iOut("<geometry>",5);
-    this->iOut("<box>",6);
-    this->file<<"\t\t\t\t\t\t\t<size>"<<high.x-low.x<<" "<<high.y-low.y<<" "<<high.z-low.z<<"</size>\n";
-    this->iOut("</box>",6);
-    this->iOut("</geometry>",5);
-    this->iOut("<material>",5);
-    this->iOut("<script>",6);
-    this->iOut("<name>Gazebo/Grey</name>",7);
-    this->iOut("<uri>file://media/materials/scripts/gazebo.material</uri>",7);
-    this->iOut("</script>",6);
-    this->iOut("</material>",5);
-    this->iOut("</visual>",4);
-    this->iOut("<self_collide>0</self_collide>",4);
-    this->iOut("<kinematic>0</kinematic>",4);
-    this->iOut("</link>",3);
-    this->iOut("</model>",2);
-
-    return true;
+    this->exportFile<<str;
+    this->exportFile<<"\n";
 }
 
 
