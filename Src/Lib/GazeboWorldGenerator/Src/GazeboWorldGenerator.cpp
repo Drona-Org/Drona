@@ -1,5 +1,7 @@
 #include "GazeboWorldGenerator.h"
 
+WorkspaceInfo *wSInfo;
+
 void GazeboWorldGenerator::GenerateWorld(const char* importFileName, const char* exportFileName){
 
     this->wSInfo = ParseWorkspaceConfig(importFileName);
