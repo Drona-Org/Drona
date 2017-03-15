@@ -18,8 +18,8 @@ INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PX4Driver/Includes)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PX4Driver/Generated)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PFloat32/Src)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/PFloat32/Generated)
-INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/World/Includes)
-INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/Breach/Includes)
+INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/GazeboWorldGenerator/Includes)
+INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/STLMonitor/Includes)
 
 
 
