@@ -49,6 +49,7 @@ public:
     void GoTo(WS_Coord goal, double eps);
 
     bool StartLogger();
+    bool ResetLogger();
     bool StopLogger();
     void Logs2CSV(const char* filename, vector<bool> mask);
 

@@ -54,6 +54,21 @@ bool PX4Logger::Stop(){
     return true;
 }
 
+bool PX4Logger::Reset(){
+
+    if(!this->on){
+        //LOG("PX4Logger::Reset logger is off");
+        return false;
+    }
+
+    this->Stop();
+    this->Start();
+
+    return true;
+}
+
+
+
 // Run logger
 void* PX4Logger::LoggerThread(void* args){
 

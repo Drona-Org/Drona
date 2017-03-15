@@ -38,6 +38,7 @@ public:
     PX4Logger(double freq, char* filename, bool onLine, vector<bool> logMask);
 
     bool Start();
+    bool Reset();
     bool Stop();
 
     bool IsOn(){ return this->on; }

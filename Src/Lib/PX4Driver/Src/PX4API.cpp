@@ -142,6 +142,10 @@ bool PX4API::StartLogger(){
     return this->px4logger->Start();
 }
 
+bool PX4API::ResetLogger(){
+    return this->px4logger->Reset();
+}
+
 bool PX4API::StopLogger(){
     return this->px4logger->Stop();
 }
