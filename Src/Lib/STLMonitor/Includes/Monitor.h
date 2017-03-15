@@ -28,7 +28,7 @@ private:
 
 public:
     Monitor();
-    //void Robustness(char* STLspec, char* fileName);
+    double Robustness(char* STLspec, char* fileName);
     void RobustnessOnLine(char* STLspec, char* fileName);
 
 };

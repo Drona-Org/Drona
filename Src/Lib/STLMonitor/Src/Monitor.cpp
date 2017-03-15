@@ -14,6 +14,12 @@ Monitor::Monitor(){
 }
 
 // Online STL monitoring
+double Monitor::Robustness(char* STLspec, char* fileName){
+    return this->breach->STLEval(STLspec,fileName);
+}
+
+
+// Online STL monitoring
 void Monitor::RobustnessOnLine(char* STLspec, char* fileName){
 
     while(true){
