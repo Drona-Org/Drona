@@ -7,7 +7,6 @@ int main(){
 
     BreachAPI *breach = new BreachAPI();
     breach->StartMatlabEngine();
-
     breach->InitBreach("./breach");
 
     char* fileName = "/home/tommaso/build-DronaForPX4-Desktop_Qt_5_8_0_GCC_64bit-Default/Samples/TestCommunicationLib/traj.csv";
