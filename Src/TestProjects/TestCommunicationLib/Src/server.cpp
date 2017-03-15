@@ -28,7 +28,7 @@ int main()
 
     usleep(2500000);
 
-    //px4->StartLogger();
+    px4->StartLogger();
     px4->Arm();
 
     usleep(2500000);
@@ -119,7 +119,7 @@ int main()
 //    usleep(4000000);
 
 //    px4->StopAutopilot();
-//    px4->StopLogger();
+    px4->StopLogger();
 
 //    vector<bool> mask = {true,true,true};
 //    px4->Logs2CSV("traj.csv",mask);

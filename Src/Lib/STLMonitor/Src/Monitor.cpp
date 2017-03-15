@@ -8,9 +8,9 @@ Monitor::Monitor(){
     this->breach->InitBreach("./breach");
 
     // Robustness thresholds
-    this->strong2weakSat = 0.5;
+    this->strong2weakSat = 1;
     this->sat2unsat = 0.0;
-    this->weak2strongUnsat = -0.5;
+    this->weak2strongUnsat = -1;
 }
 
 // Online STL monitoring
@@ -39,8 +39,8 @@ char* Monitor::RobustnessColor(double rob){
 
     if(rob > this->strong2weakSat)      return SH_FG_GREEN;
     if(rob > this->sat2unsat)           return SH_FG_YELLOW;
-    if(rob > this->weak2strongUnsat)    return SH_FG_LIGHT_RED;
-                                        return SH_FG_RED;
+    if(rob > this->weak2strongUnsat)    return SH_FG_RED;
+                                        return SH_FG_LIGHT_RED;
 }
 
 
