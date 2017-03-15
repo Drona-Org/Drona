@@ -11,6 +11,7 @@ add_custom_target(sources SOURCES ${src})
 set(cfiles
     monitor.cpp
     BreachAPI.cpp
+    Monitor.cpp
 )
 
 set(inc_dir
