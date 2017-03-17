@@ -71,13 +71,12 @@ double BreachAPI::STLEval(char* spec, char* fileName){
     char mat_cmd[100];
 
     // Read trace
-    engEvalString(this->matEng,"");
     sprintf(mat_cmd,"trace_csv = csvread('%s');", fileName);
     engEvalString(this->matEng,mat_cmd);
-    engEvalString(this->matEng,"trace = trace_csv(:,1:end-1)"); // Drop last useless column
+    engEvalString(this->matEng,"trace = trace_csv(:,1:end-1);"); // Drop last useless column
 
     // Initialize system
-    engEvalString(this->matEng,"BrTrace = BreachTraceSystem({'x','y','z'}, trace);");
+    engEvalString(this->matEng,"BrTrace = BreachTraceSystem({'x1','x2','x3'}, trace);");
 
     // Compute robustness
     sprintf(mat_cmd,"rob = BrTrace.GetRobustSat('%s')", spec);

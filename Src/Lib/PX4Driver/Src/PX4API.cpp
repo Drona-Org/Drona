@@ -5,7 +5,7 @@ PX4API::PX4API(int simulatorPort){
     this->px4com = new PX4Communicator(simulatorPort);
 
     vector<bool> logMask = {true,true,true};
-    this->px4logger = new PX4Logger(10, "traj.csv", true, logMask);    // log frequency
+    this->px4logger = new PX4Logger(10, "traj.csv", false, logMask);    // log frequency
 
     this->systemId = 255;
     this->autopilotId = 1;
@@ -178,6 +178,11 @@ void PX4API::MotionPrimitive(char motion, int steps){
 void PX4API::GoTo(WS_Coord goal, double eps){
     this->SetTargetLocalPosition(goal.x,goal.y,goal.z);
     while(!(this->CloseTo(goal.x,goal.y,goal.z,eps))){}
+}
+
+void PX4API::GoTo(float x, float y, float z, double eps){
+    this->SetTargetLocalPosition(x,y,z);
+    while(!(this->CloseTo(x,y,z,eps))){}
 }
 
 

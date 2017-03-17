@@ -47,6 +47,7 @@ public:
     // High level APIs
     void MotionPrimitive(char motion, int steps);
     void GoTo(WS_Coord goal, double eps);
+    void GoTo(float x, float y, float z, double eps);
 
     bool StartLogger();
     bool ResetLogger();

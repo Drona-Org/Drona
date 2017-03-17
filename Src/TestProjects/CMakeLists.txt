@@ -5,4 +5,5 @@
 #subdirs(TestCommunicationLib)
 subdirs(TestWorkspaceParser)
 #subdirs(TestPlanGenerator)
+subdirs(CDC)
 

@@ -56,12 +56,8 @@ bool PX4Logger::Stop(){
 
 bool PX4Logger::Reset(){
 
-    if(!this->on){
-        //LOG("PX4Logger::Reset logger is off");
-        return false;
-    }
-
     this->Stop();
+    this->logs.clear();
     this->Start();
 
     return true;

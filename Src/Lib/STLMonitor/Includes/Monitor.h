@@ -20,13 +20,13 @@ using namespace std;
 class Monitor
 {
 private:
-    BreachAPI *breach;
     double strong2weakSat, sat2unsat, weak2strongUnsat;  // Robustness thresholds
 
     char* RobustnessColor(double rob);
     void PrintRobustnessBounds(double upBound, double lowBound);
 
 public:
+    BreachAPI *breach;
     Monitor();
     double Robustness(char* STLspec, char* fileName);
     void RobustnessOnLine(char* STLspec, char* fileName);
