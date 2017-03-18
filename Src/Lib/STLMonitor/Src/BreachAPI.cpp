@@ -92,7 +92,7 @@ double BreachAPI::STLEval(char* spec, char* fileName){
 }
 
 // Evaluate an STL formula online
-double* BreachAPI::STLEvalOnLine(char* spec, char* fileName){
+double* BreachAPI::STLEvalOnLine(const char* spec, const char* fileName){
 
     if( !this->matEng || !this->initBreach){
         cout<<"BreachAPI::STLEval Matlab engine off or Breach not initialized"<<endl;

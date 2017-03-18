@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <ctime>
 
-//// Foreground Colours ////
+// Foreground colours
 #define SH_FG_GREEN          "\033[0;32m"
 #define SH_FG_RED            "\033[0;31m"
 #define SH_FG_YELLOW         "\033[0;33m"
@@ -29,7 +29,7 @@ public:
     BreachAPI *breach;
     Monitor();
     double Robustness(char* STLspec, char* fileName);
-    void RobustnessOnLine(char* STLspec, char* fileName);
+    void RobustnessOnLine(const char* STLspec, const char* fileName);
 
 };
 #endif // !Monitor

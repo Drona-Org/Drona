@@ -20,7 +20,7 @@ double Monitor::Robustness(char* STLspec, char* fileName){
 
 
 // Online STL monitoring
-void Monitor::RobustnessOnLine(char* STLspec, char* fileName){
+void Monitor::RobustnessOnLine(const char* STLspec, const char* fileName){
 
     while(true){
         double *robBouns = this->breach->STLEvalOnLine(STLspec,fileName);
