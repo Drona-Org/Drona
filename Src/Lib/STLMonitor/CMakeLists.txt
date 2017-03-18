@@ -11,7 +11,7 @@ add_custom_target(sources SOURCES ${src})
 
 
 set(cfiles
-    monitor.cpp
+    OnlineMonitor.cpp
     BreachAPI.cpp
     Monitor.cpp
 )

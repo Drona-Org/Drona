@@ -35,7 +35,7 @@ int main()
     // Execute mission
     px4->StartLogger();
 
-    for(int i=0; i<2; i++){
+    for(int i=0; i<500; i++){
 
         cout<<"LOOP"<<i<<"\n";
 

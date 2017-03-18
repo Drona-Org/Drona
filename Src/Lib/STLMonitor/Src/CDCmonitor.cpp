@@ -31,24 +31,24 @@ int main(){
         }while(!f.good());
         double *robBouns = monitor->breach->STLEvalOnLine(STLSpec1,fileName);
 
-        cout<<"ROB1: "<<robBouns[1]<<","<<robBouns[0]<<"\n";
+        //cout<<"ROB1: "<<robBouns[1]<<","<<robBouns[0]<<"\n";
         robust = min(robust,robBouns[1]);
 
         robBouns = monitor->breach->STLEvalOnLine(STLSpec2,fileName);
-        cout<<"ROB2: "<<robBouns[1]<<","<<robBouns[0]<<"\n";
+        //cout<<"ROB2: "<<robBouns[1]<<","<<robBouns[0]<<"\n";
         robust = min(robust,robBouns[1]);
 
 
         robBouns = monitor->breach->STLEvalOnLine(STLSpec3,fileName);
-        cout<<"ROB3: "<<robBouns[1]<<","<<robBouns[0]<<"\n";
+        //cout<<"ROB3: "<<robBouns[1]<<","<<robBouns[0]<<"\n";
         robust = min(robust,robBouns[0]);
 
         robBouns = monitor->breach->STLEvalOnLine(STLSpec4,fileName);
-        cout<<"ROB4: "<<robBouns[1]<<","<<robBouns[0]<<"\n";
+        //cout<<"ROB4: "<<robBouns[1]<<","<<robBouns[0]<<"\n";
         robust = min(robust,robBouns[0]);
 
         robBouns = monitor->breach->STLEvalOnLine(STLSpec5,fileName);
-        cout<<"ROB5: "<<robBouns[1]<<","<<robBouns[0]<<"\n";
+        //cout<<"ROB5: "<<robBouns[1]<<","<<robBouns[0]<<"\n";
         robust = min(robust,robBouns[0]);
 
         cout<<"ROB: "<<robust;
