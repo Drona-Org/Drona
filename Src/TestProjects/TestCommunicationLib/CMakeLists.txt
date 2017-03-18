@@ -14,7 +14,7 @@ add_executable(server Src/server.cpp ${includes})
 
 add_definitions( -DPRT_PLAT_LINUXUSER )
 # Target Communication Libraries
-TARGET_LINK_LIBRARIES(server px4driver world)
+TARGET_LINK_LIBRARIES(server px4driver workspaceparser)
 
 
 
