@@ -11,7 +11,10 @@ int main(int argc, char const *argv[])
     STL *conj = new And(a1,a2);
     STL *f = new Not(conj);
 
-    cout<<f->ToString();
+    vector<string> vars = {"x1[t]","x2[t]","x3[t]"};
+    vector<double> wd = {5,4,-5};
+
+    cout<<f->Dist(vars,wd,0.5);
 
     return 0;
 

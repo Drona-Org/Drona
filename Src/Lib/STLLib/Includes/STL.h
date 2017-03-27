@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -17,6 +18,7 @@ public:
     //STL(vector<string> vars, vector<string> params);
     STL();
     virtual string ToString(){};
+    string Dist(vector<string> wp, vector<double> w, double eps);
 
 
 };
