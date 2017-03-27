@@ -9,6 +9,7 @@
 
 #include "STL.h"
 #include "Atom.h"
+#include "Always.h"
 
 using namespace std;
 
@@ -33,7 +34,8 @@ public:
     string ToString(double n);
     vector<string> ToString(vector<double> n);
 
-    string Close(vector<string> v1, vector<string> v2, string eps);
+    STL* Close(vector<string> v1, vector<string> v2, string eps);
+    STL* Tube(vector<string> v, vector<double> p1, vector<double> p2, double t_start, double t_end, string eps);
 
 };
 

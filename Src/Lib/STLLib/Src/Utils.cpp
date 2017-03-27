@@ -98,11 +98,20 @@ vector<string> Utils::ToString(vector<double> n){
 }
 
 // v1 eps-close to v2
-string Utils::Close(vector<string> v1, vector<string> v2, string eps){
+STL* Utils::Close(vector<string> v1, vector<string> v2, string eps){
 
     string pred = Dist(v1,v2) + " < " + eps;
     STL *close = new Atom(pred);
-    return close->ToString();
+    return close;
 
+}
+
+// v eps-close to the line passing through p1 and p2
+STL* Utils::Tube(vector<string> v, vector<double> p1, vector<double> p2, double t_start, double t_end, string eps){
+
+    string pred = this->DistFromLine(v,p1,p2) +  " < " + eps;
+    STL *close = new Atom(pred);
+    STL *tube = new Always(close,t_start,t_end);
+    return tube;
 }
 
