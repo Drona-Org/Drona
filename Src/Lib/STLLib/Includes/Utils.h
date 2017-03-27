@@ -8,8 +8,10 @@
 #include <sstream>
 
 #include "STL.h"
+#include "And.h"
 #include "Atom.h"
 #include "Always.h"
+#include "Not.h"
 
 using namespace std;
 
@@ -36,6 +38,7 @@ public:
 
     STL* Close(vector<string> v1, vector<string> v2, string eps);
     STL* Tube(vector<string> v, vector<double> p1, vector<double> p2, double t_start, double t_end, string eps);
+    STL* Hover(vector<string> v1, vector<string> v2, double t_start, double t_end, string eps);
 
 };
 

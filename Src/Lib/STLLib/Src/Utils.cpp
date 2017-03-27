@@ -115,3 +115,16 @@ STL* Utils::Tube(vector<string> v, vector<double> p1, vector<double> p2, double 
     return tube;
 }
 
+// If v1 eps-close to v2, then v1 must stay eps-close to v2
+STL* Utils::Hover(vector<string> v1, vector<string> v2, double t_start, double t_end, string eps){
+
+    STL *close = this->Close(v1, v2, eps);
+    STL *alwClose = new Always(close,t_start,t_end);
+    STL *hover = new Not(new And(close, new Not(alwClose))); // close -> alw(close)
+
+    return hover;
+}
+
+
+
+
