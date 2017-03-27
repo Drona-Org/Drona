@@ -7,7 +7,12 @@ using namespace std;
 
 class Atom : public STL
 {
+private:
+    string predicate;
 
+public:
+    Atom(string predicate);    
+    string ToString();
 
 };
 

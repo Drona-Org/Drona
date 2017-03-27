@@ -16,7 +16,7 @@ protected:
 public:
     //STL(vector<string> vars, vector<string> params);
     STL();
-    string ToString();
+    virtual string ToString(){};
 
 
 };

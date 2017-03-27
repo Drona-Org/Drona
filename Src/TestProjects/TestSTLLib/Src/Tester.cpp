@@ -1,7 +1,17 @@
 #include "STL.h"
+#include "Atom.h"
+#include "And.h"
+#include "Not.h"
 
 int main(int argc, char const *argv[])
 {
+
+    STL *a1 = new Atom("x1[t] < 10");
+    STL *a2 = new Atom("x2[t] > 50");
+    STL *conj = new And(a1,a2);
+    STL *f = new Not(conj);
+
+    cout<<f->ToString();
 
     return 0;
 

@@ -10,6 +10,6 @@ INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/STLLib/Includes)
 # Build exectuable
 add_executable(testSTLLib ${sources} ${includes})
 
-
+TARGET_LINK_LIBRARIES(testSTLLib STLLib)
 
 
