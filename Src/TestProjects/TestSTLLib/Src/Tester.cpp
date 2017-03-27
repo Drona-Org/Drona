@@ -3,6 +3,8 @@
 #include "And.h"
 #include "Not.h"
 
+#include "Utils.h"
+
 int main(int argc, char const *argv[])
 {
 
@@ -12,9 +14,11 @@ int main(int argc, char const *argv[])
     STL *f = new Not(conj);
 
     vector<string> vars = {"x1[t]","x2[t]","x3[t]"};
-    vector<double> wd = {5,4,-5};
+    vector<string> wd = {"5","4","-5"};
 
-    cout<<f->Dist(vars,wd,0.5);
+    Utils *utils = new Utils();
+
+    cout<<utils->Dist(vars,wd,"0.5");
 
     return 0;
 
