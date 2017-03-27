@@ -15,10 +15,12 @@ int main(int argc, char const *argv[])
 
     vector<string> vars = {"x1[t]","x2[t]","x3[t]"};
     vector<string> wd = {"5","4","-5"};
+    vector<double> w1 = {0,2,2};
+    vector<double> w2 = {10,2,2};
 
     Utils *utils = new Utils();
 
-    cout<<utils->Dist(vars,wd,"0.5");
+    cout<<utils->DistFromLine(vars,w1,w2,"0.5");
 
     return 0;
 

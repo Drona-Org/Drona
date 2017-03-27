@@ -19,7 +19,7 @@ string Utils::Norm(vector<string> v){
     string sqrDiff = "( " + v[v.size()-1] + " )^ 2";
     sqrSum += sqrDiff;
 
-    return "sqrt( " + sqrSum + " )";
+    return "( " + sqrSum + " )^(-1)";
 }
 
 // Numeric norm of v
@@ -42,6 +42,17 @@ vector<double> Utils::Diff(vector<double> v1, vector<double> v2){
     return diff;
 }
 
+// Apply operator to vector elements
+vector<string> Utils::Op(vector<string> v1, vector<string> v2, string op){
+
+    vector<string> res;
+
+    for(int i=0; i<v1.size(); i++){
+        res.push_back("( " + v1[i] + " " + op + " " + v2[i] + " )");
+    }
+    return res;
+}
+
 // v/n
 vector<double> Utils::Div(vector<double> v, double n){
     for( int i=0; i<v.size(); i++ ){
@@ -62,11 +73,30 @@ string Utils::Dist(vector<string> v1, vector<string> v2, string eps){
 }
 
 // Distance of v from the line passing through p1 and p2
-string Utils::DistFromLine(vector<string> w, vector<double> p1, vector<double> p2){
+string Utils::DistFromLine(vector<string> wp, vector<double> p1, vector<double> p2, string eps){
 
-    vector<double> t = Div( Diff(p2,p1), Norm(Diff(p2,p1)) );
+    vector<string> t = this->ToString(Div( Diff(p2,p1), Norm(Diff(p2,p1))));
+    vector<string> ws_wp = this->Op(ToString(p1),wp,"-");
+    vector<string> ws_wp_tt = Op(Op(ws_wp,t,"*"),t,"*");
+    string dist = Norm( Op(ws_wp,ws_wp_tt,"-") );
+
+    return dist + " < " + eps;
+}
 
 
+// Double to string
+string Utils::ToString(double n){
+    ostringstream strs;
+    strs << n;
+    return strs.str();
+}
 
+// Doubles to strings
+vector<string> Utils::ToString(vector<double> n){
+    vector<string> strs;
+    for(int i=0; i<n.size(); i++){
+        strs.push_back(this->ToString(n[i]));
+    }
+    return strs;
 }
 
