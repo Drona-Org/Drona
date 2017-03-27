@@ -1,7 +1,6 @@
 #include "Utils.h"
 
-Utils::Utils(){
-}
+Utils::Utils(){}
 
 
 // Generate the Euclidean norm of v
@@ -19,7 +18,7 @@ string Utils::Norm(vector<string> v){
     string sqrDiff = "( " + v[v.size()-1] + " )^ 2";
     sqrSum += sqrDiff;
 
-    return "( " + sqrSum + " )^(-1)";
+    return "( " + sqrSum + " )^(0.5)";
 }
 
 // Numeric norm of v
@@ -62,25 +61,23 @@ vector<double> Utils::Div(vector<double> v, double n){
 }
 
 // Generate the Euclidean distance formula dist(x,y) < eps
-string Utils::Dist(vector<string> v1, vector<string> v2, string eps){
+string Utils::Dist(vector<string> v1, vector<string> v2){
 
     vector<string> diffs;
     for(int i=0; i<v1.size(); i++){
        diffs.push_back( v1[i] + " - " + v2[i] );
     }
 
-    return this->Norm(diffs) + " < " + eps;
+    return this->Norm(diffs);
 }
 
 // Distance of v from the line passing through p1 and p2
-string Utils::DistFromLine(vector<string> wp, vector<double> p1, vector<double> p2, string eps){
+string Utils::DistFromLine(vector<string> wp, vector<double> p1, vector<double> p2){
 
     vector<string> t = this->ToString(Div( Diff(p2,p1), Norm(Diff(p2,p1))));
     vector<string> ws_wp = this->Op(ToString(p1),wp,"-");
     vector<string> ws_wp_tt = Op(Op(ws_wp,t,"*"),t,"*");
-    string dist = Norm( Op(ws_wp,ws_wp_tt,"-") );
-
-    return dist + " < " + eps;
+    return Norm( Op(ws_wp,ws_wp_tt,"-") );
 }
 
 
@@ -98,5 +95,14 @@ vector<string> Utils::ToString(vector<double> n){
         strs.push_back(this->ToString(n[i]));
     }
     return strs;
+}
+
+// v1 eps-close to v2
+string Utils::Close(vector<string> v1, vector<string> v2, string eps){
+
+    string pred = Dist(v1,v2) + " < " + eps;
+    STL *close = new Atom(pred);
+    return close->ToString();
+
 }
 

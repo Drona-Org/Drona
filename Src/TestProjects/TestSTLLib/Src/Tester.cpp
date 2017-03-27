@@ -14,13 +14,13 @@ int main(int argc, char const *argv[])
     STL *f = new Not(conj);
 
     vector<string> vars = {"x1[t]","x2[t]","x3[t]"};
-    vector<string> wd = {"5","4","-5"};
+    vector<string> wd = {"0","8","0"};
     vector<double> w1 = {0,2,2};
     vector<double> w2 = {10,2,2};
 
     Utils *utils = new Utils();
 
-    cout<<utils->DistFromLine(vars,w1,w2,"0.5");
+    cout<<utils->Close(vars,wd,"5");
 
     return 0;
 
