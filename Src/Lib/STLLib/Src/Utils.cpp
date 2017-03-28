@@ -97,6 +97,20 @@ vector<string> Utils::ToString(vector<double> n){
     return strs;
 }
 
+// String to double
+double Utils::ToDouble(string s){
+    return atof(s.c_str());
+}
+
+// Strings to doubles
+vector<double> Utils::ToDouble(vector<string> s){
+    vector<double> dbls;
+    for(int i=0; i<s.size(); i++){
+        dbls.push_back(this->ToDouble(s[i]));
+    }
+    return dbls;
+}
+
 // v1 eps-close to v2
 STL* Utils::Close(vector<string> v1, vector<string> v2, string eps){
 
@@ -123,6 +137,20 @@ STL* Utils::Hover(vector<string> v1, vector<string> v2, double t_start, double t
     STL *hover = new Not(new And(close, new Not(alwClose))); // close -> alw(close)
 
     return hover;
+}
+
+// v eps-reaches v2
+// v: robot vars
+// v1: starting position
+// v2 ending position (destination)
+STL* Utils::GoTo(vector<string> v, vector<string> v1, vector<string> v2, double t_start, double t_end, string eps){
+
+    STL *ev_close = new Eventually(this->Close(v,v2,eps),t_start,t_end);
+    STL *tube = this->Tube(v,ToDouble(v1),ToDouble(v2),t_start,t_end,eps);
+    STL *hover = this->Hover(v,v2,t_start,t_end,eps);
+    STL *goTo = new And(ev_close,new And(tube,hover));
+
+    return goTo;
 }
 
 

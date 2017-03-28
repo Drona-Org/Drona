@@ -16,13 +16,13 @@ int main(int argc, char const *argv[])
 
     vector<string> vars = {"x1[t]","x2[t]","x3[t]"};
     vector<string> wd = {"0","8","0"};
-    vector<double> w1 = {0,2,0};
-    vector<double> w2 = {20,2,0};
+    vector<string> w1 = {"0","5","0"};
+    vector<string> w2 = {"10","5","0"};
 
     Utils *utils = new Utils();
 
 
-    cout<<utils->Tube(vars,w1,w2,0,10,"3")->ToString();
+    cout<<utils->GoTo(vars,w1,w2,0,10,"1")->ToString();
 
     return 0;
 
