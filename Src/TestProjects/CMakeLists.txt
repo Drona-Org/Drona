@@ -6,6 +6,6 @@ subdirs(TestCommunicationLib)
 #subdirs(TestWorkspaceParser)
 #subdirs(TestPlanGenerator)
 #subdirs(CDC)
-subdirs(TestSTLLib)
+#subdirs(TestSTLLib)
 
 

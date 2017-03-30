@@ -75,7 +75,15 @@ int main(int argc, char const *argv[])
         px4->GoTo(gotoLocation.x, gotoLocation.y, gotoLocation.z, 0.5);
 
         px4logger->Stop();
+        //dump logs
         px4logger->ToCSV();
+        //dump the positions
+        sprintf(fileName, "traj_%d_(%d-%d-%d)_(%d-%d-%d).text", lenOfGoto, start.x, start.y, start.z, gotoLocation.x, gotoLocation.y, gotoLocation.z);
+        ofstream textFile;
+        textFile.open (fileName);
+        textFile << start.x << "," << start.y << "," << start.z <<endl;
+        textFile << gotoLocation.x << "," << gotoLocation.y << "," << gotoLocation.z <<endl;
+        textFile.close();
         px4logger->logs.clear();
         px4logger->ResetClock();
         free(px4logger);
