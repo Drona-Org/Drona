@@ -29,12 +29,12 @@ private:
     bool onLine;
     vector<bool> logMask;
 
-    vector< tuple<double, RobotState*> > logs; // (time_stamp, state)
+
 
     static void* LoggerThread(void *args);
 
 public:
-
+    vector< tuple<double, RobotState*> > logs; // (time_stamp, state)
     PX4Logger(double freq, char* filename, bool onLine, vector<bool> logMask);
 
     bool Start();
