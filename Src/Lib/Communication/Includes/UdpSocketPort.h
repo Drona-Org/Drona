@@ -17,7 +17,7 @@
 
 using namespace std;
 
-class UdpCommunicationSocket : public Port{
+class UdpCommunicationSocket : public Port {
 public:
     char buffer[255]; // datagram max size
     int size = 0;

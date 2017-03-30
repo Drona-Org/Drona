@@ -18,14 +18,21 @@ const XMLNode* ParseXMLChildElement(const XMLNode* node, const char* optionName)
 
 WS_Coord ParseXMLCoord(const XMLNode* node)
 {
-	WS_Coord coord;
 	const XMLElement *e = node->ToElement();
 	if(!e)
 		throw std::runtime_error("Not a valid coordinate element");
-	coord.x = e->IntAttribute("x");
-	coord.y = e->IntAttribute("y");
-	coord.z = e->IntAttribute("z");
-	return coord;
+    return WS_Coord(e->IntAttribute("x"), e->IntAttribute("y"), e->IntAttribute("z"));
+}
+
+WS_Box ParseXMLBox(const XMLNode* node)
+{
+    const XMLElement *e = node->ToElement();
+    if(!e)
+        throw std::runtime_error("Not a valid coordinate element");
+    WS_Box ret;
+    ret.low = ParseXMLCoord(node->FirstChildElement("low"));
+    ret.high = ParseXMLCoord(node->FirstChildElement("high"));
+    return ret;
 }
 
 int CountXMLChild(const XMLNode* node, const char* name) 
@@ -40,19 +47,16 @@ int CountXMLChild(const XMLNode* node, const char* name)
 	return count;
 }
 
-WS_LocationsList ParseListOfCoordinates(const XMLNode* node, WS_Dimension dim)
+vector<WS_Box> ParseListOfBoxes(const XMLNode* node, WS_Dimension dim)
 {
-	WS_LocationsList locations;
-	locations.size = CountXMLChild(node, "coord");
-	locations.locations = (int*)malloc(sizeof(int) * locations.size);
-	int count = 0;
-	for(const XMLElement* nodeIter = node->FirstChildElement("coord"); 
+    vector<WS_Box> boxes;
+    for(const XMLElement* nodeIter = node->FirstChildElement("box");
 		nodeIter != NULL; 
-		nodeIter = nodeIter->NextSiblingElement("coord"))
+        nodeIter = nodeIter->NextSiblingElement("box"))
 	{
-		locations.locations[count++] = ConvertCoordToGridLocation(ParseXMLCoord(nodeIter), dim);
+        boxes.push_back(ParseXMLBox(nodeIter));
 	}
-	return locations;
+    return boxes;
 }
 
 WorkspaceInfo* ParseWorkspaceConfig(const char* configurationFile)
@@ -69,40 +73,27 @@ WorkspaceInfo* ParseWorkspaceConfig(const char* configurationFile)
 		workspace_info->dimension = *((WS_Dimension*)&tmp_coord);
 	}
 	if(tmp = ParseXMLChildElement(configuration, "robots")) {
-		workspace_info->numOfRobots = CountXMLChild(tmp, "robot");
-		workspace_info->robots = (WS_RobotInfo*)malloc(sizeof(WS_RobotInfo) * workspace_info->numOfRobots);
-		int count = 0;
 		for(const XMLElement* nodeIter = tmp->FirstChildElement("robot"); 
 			nodeIter != NULL; 
 			nodeIter = nodeIter->NextSiblingElement("robot"))
-		{
-			WS_RobotInfo& robot_info = workspace_info->robots[count++]; 
+		{ 
+            WS_RobotInfo robot_info;
 			robot_info.id = nodeIter->IntAttribute("id");
-			robot_info.start_position = ConvertCoordToGridLocation(ParseXMLCoord(ParseXMLChildElement(nodeIter, "start")), workspace_info->dimension);
+            robot_info.startingLocation = ParseXMLCoord(ParseXMLChildElement(nodeIter, "start"));
+            workspace_info->robots.push_back(robot_info);
 		}
 	}
 	if(tmp = ParseXMLChildElement(configuration, "obstacles")) {
-		workspace_info->obstacles = ParseListOfCoordinates(tmp, workspace_info->dimension);
+        workspace_info->obstacles = ParseListOfBoxes(tmp, workspace_info->dimension);
 	}
 	if(tmp = ParseXMLChildElement(configuration, "charging_stations")) {
-		workspace_info->charging_stations = ParseListOfCoordinates(tmp, workspace_info->dimension);
+        workspace_info->charging_stations = ParseListOfBoxes(tmp, workspace_info->dimension);
 	}
 	return workspace_info;
 }
 
 void FreeWorkspaceInfo(WorkspaceInfo* info)
 {
-	free(info->obstacles.locations);
-	free(info->robots);
 	free(info);
 }
 
-#ifdef TEST_WS_PARSER
-int main(int argc, char const *argv[])
-{
-	WorkspaceInfo* ws_info = ParseConfiguration(argv[1]);
-	printf("Successfully parsed %s\n", argv[1]);
-	FreeWorkspaceInfo(ws_info);
-	return 0;
-}
-#endif

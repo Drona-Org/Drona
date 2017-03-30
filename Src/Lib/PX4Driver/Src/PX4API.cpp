@@ -1,13 +1,8 @@
 #include "PX4API.h"
 
-PX4API::PX4API(int simulatorPort, Map *map){
+PX4API::PX4API(int simulatorPort){
 
     this->px4com = new PX4Communicator(simulatorPort);
-    this->map = map;
-
-    vector<bool> logMask = {true,true,true};
-    this->px4logger = new PX4Logger(10, "traj.csv", true, logMask);    // log frequency
-
     this->systemId = 255;
     this->autopilotId = 1;
     this->companionId = 1;
@@ -139,61 +134,41 @@ bool PX4API::ToggleOffBoard(bool on){
     return false;
 }
 
-bool PX4API::StartLogger(){
-    return this->px4logger->Start();
-}
-
-bool PX4API::StopLogger(){
-    return this->px4logger->Stop();
-}
-
 void PX4API::MotionPrimitive(char motion, int steps){
 
-    char buff[100];
-    strcpy(buff,"PX4API::MotionPrimitive received");
+//    char buff[100];
+//    strcpy(buff,"PX4API::MotionPrimitive received");
 
-    // Retrieve current coords
-    mavlink_local_position_ned_t act_pos = ROBOTSTATE->GetLocalPosition();
+//    // Retrieve current coords
+//    mavlink_local_position_ned_t act_pos = ROBOTSTATE->GetLocalPosition();
 
-    // Get grid index
-    coord c = {act_pos.x,act_pos.y,-act_pos.z};
-    int cur_idx = this->map->Coord2Idx(c);
+//    // Get grid index
+//    coord c = {act_pos.x,act_pos.y,-act_pos.z};
+//    int cur_idx = this->map->Coord2Idx(c);
 
-    // Get neighbor grid coordinates
-    c = this->map->CentroidNeigh(cur_idx,motion,steps);
+//    // Get neighbor grid coordinates
+//    c = this->map->CentroidNeigh(cur_idx,motion,steps);
 
-    this->SetTargetLocalPosition(c.x,c.y,-c.z);
+    int a, b, c;
 
-    while(!(this->CloseTo(c.x,c.y,-c.z,0.5))){}
+    this->SetTargetLocalPosition(a,b,c);
 
-}
-
-void PX4API::GoTo(int idx){
-
-    coord c = this->map->Centroid(this->map->Idx2Coord(idx));
-    this->SetTargetLocalPosition(c.x,c.y,-c.z);
-
-    char buff[100];
-    sprintf(buff,"Command: GoTo (idx %i, x %f, y %f, z %f)", idx, c.x, c.y, -c.z);
-    LOG(buff);
-
-    while(!(this->CloseTo(c.x,c.y,-c.z,0.5))){}
+    while(!(this->CloseTo(a,b,c,0.5))){}
 
 }
 
-void PX4API::GoTo(float x, float y, float z){
 
+// GoTo a workspace coordinate with precitions eps
+void PX4API::GoTo(WS_Coord goal, double eps){
+    this->SetTargetLocalPosition(goal.x,goal.y,goal.z);
+    while(!(this->CloseTo(goal.x,goal.y,goal.z,eps))){}
+}
+
+void PX4API::GoTo(float x, float y, float z, double eps){
     this->SetTargetLocalPosition(x,y,z);
-
-    while(!(this->CloseTo(x,y,z,0.5))){}
-
+    while(!(this->CloseTo(x,y,z,eps))){}
 }
 
-
-
-void PX4API::Logs2CSV(const char* filename, vector<bool> mask){
-    this->px4logger->CSV(filename,mask);
-}
 
 
 /*

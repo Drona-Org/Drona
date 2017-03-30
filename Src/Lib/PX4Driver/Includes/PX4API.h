@@ -11,7 +11,7 @@
 
 #include "PX4Communicator.h"
 #include "PX4Logger.h"
-#include "Map.h"
+#include "WorkspaceParser.h"
 
 using namespace std;
 
@@ -20,8 +20,6 @@ class PX4API
 private:
 
     PX4Communicator *px4com;
-    PX4Logger *px4logger;
-
     int systemId;
     int autopilotId;
     int companionId;
@@ -33,9 +31,7 @@ private:
 
 public:
 
-    Map *map;
-
-    PX4API(int simulatorPort, Map *map);
+    PX4API(int simulatorPort);
 
     void SetTargetLocalPosition(float x, float y, float z){ this->px4com->SetTargetLocalPosition(x,y,z); };
     void SetTargetGlobalPosition(int lat, int lon, int alt){ this->px4com->SetTargetGlobalPosition(lat,lon,alt); };
@@ -48,13 +44,8 @@ public:
 
     // High level APIs
     void MotionPrimitive(char motion, int steps);
-    void GoTo(int idx);
-    void GoTo(float x, float y, float z);
-
-    bool StartLogger();
-    bool StopLogger();
-    void Logs2CSV(const char* filename, vector<bool> mask);
-
+    void GoTo(WS_Coord goal, double eps);
+    void GoTo(float x, float y, float z, double eps);
 
     void FollowTrajectory(vector< vector< float > > traj, int rounds, float eps);
     //void Loiter(vector< float > center, float radius, int rounds, float eps, float loitStep);

@@ -54,6 +54,17 @@ bool PX4Logger::Stop(){
     return true;
 }
 
+bool PX4Logger::Reset(){
+
+    this->Stop();
+    this->logs.clear();
+    this->Start();
+
+    return true;
+}
+
+
+
 // Run logger
 void* PX4Logger::LoggerThread(void* args){
 
@@ -72,7 +83,7 @@ void* PX4Logger::LoggerThread(void* args){
 
 // Pring logs in CSV file
 // mask tells what to print (x,y,z)
-bool PX4Logger::CSV(const char* filename,  vector<bool> mask){
+bool PX4Logger::ToCSV(){
 
     if(this->IsOn()){
         //LOG("PX4Logger::WriteCSV Can't write CSV (logger is still running)");
@@ -92,11 +103,11 @@ bool PX4Logger::CSV(const char* filename,  vector<bool> mask){
         myfile<<time_stamp<<",";
 
         // dump x
-        if( mask[0] ){ myfile<<pose->GetLocalPosition().x <<","; }
+        if( logMask[0] ){ myfile<<pose->GetLocalPosition().x <<","; }
         // dump y
-        if( mask[1] ){ myfile<<pose->GetLocalPosition().y <<","; }
+        if( logMask[1] ){ myfile<<pose->GetLocalPosition().y <<","; }
         // dump z
-        if( mask[2] ){ myfile<<pose->GetLocalPosition().z <<","; }
+        if( logMask[2] ){ myfile<<pose->GetLocalPosition().z <<","; }
 
         myfile<<"\n";
     }

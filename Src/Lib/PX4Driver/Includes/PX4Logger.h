@@ -29,7 +29,7 @@ private:
     bool onLine;
     vector<bool> logMask;
 
-    vector< tuple<double,RobotState*> > logs; // (time_stamp, state)
+    vector< tuple<double, RobotState*> > logs; // (time_stamp, state)
 
     static void* LoggerThread(void *args);
 
@@ -38,6 +38,7 @@ public:
     PX4Logger(double freq, char* filename, bool onLine, vector<bool> logMask);
 
     bool Start();
+    bool Reset();
     bool Stop();
 
     bool IsOn(){ return this->on; }
@@ -48,7 +49,7 @@ public:
 
     void UpdateLogs();
 
-    bool CSV(const char* filename, vector<bool> mask);
+    bool ToCSV();
     void writeCSVLine(tuple<double,RobotState*> state);
 
 

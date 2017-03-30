@@ -4,6 +4,7 @@ project(dronaSrcLibPX4Driver)
 
 set(projectName px4driver)
 
+
 #list of all p sources with relative paths
 set(pfiles
     ../PSrc/MavlinkEnums.p
