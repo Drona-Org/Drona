@@ -69,7 +69,8 @@ int main(int argc, char const *argv[])
             continue;
 
         char fileName[1000];
-        sprintf(fileName, "traj_%d_(%d-%d-%d)_(%d-%d-%d).csv", lenOfGoto, start.x, start.y, start.z, gotoLocation.x, gotoLocation.y, gotoLocation.z);
+        //sprintf(fileName, "traj_%d_(%d-%d-%d)_(%d-%d-%d).csv", lenOfGoto, start.x, start.y, start.z, gotoLocation.x, gotoLocation.y, gotoLocation.z);
+        sprintf(fileName, "traj_%i.csv", i);
         PX4Logger *px4logger = new PX4Logger(10, fileName, false, vector<bool>{true, true, true});
         px4logger->Start();
         px4->GoTo(gotoLocation.x, gotoLocation.y, gotoLocation.z, 0.5);
@@ -78,16 +79,17 @@ int main(int argc, char const *argv[])
         //dump logs
         px4logger->ToCSV();
         //dump the positions
-        sprintf(fileName, "traj_%d_(%d-%d-%d)_(%d-%d-%d).text", lenOfGoto, start.x, start.y, start.z, gotoLocation.x, gotoLocation.y, gotoLocation.z);
+        //sprintf(fileName, "traj_%d_(%d-%d-%d)_(%d-%d-%d).text", lenOfGoto, start.x, start.y, start.z, gotoLocation.x, gotoLocation.y, gotoLocation.z);
+        sprintf(fileName, "coord_%i.csv", i);
         ofstream textFile;
         textFile.open (fileName);
-        textFile << start.x << "," << start.y << "," << start.z <<endl;
+        textFile << start.x << "," << start.y << "," << start.z<<",";
         textFile << gotoLocation.x << "," << gotoLocation.y << "," << gotoLocation.z <<endl;
         textFile.close();
         px4logger->logs.clear();
         px4logger->ResetClock();
         free(px4logger);
-        usleep(500000);
+        //usleep(500000);
         i = i + 1;
         start = gotoLocation;
     }
