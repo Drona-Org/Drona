@@ -4,7 +4,7 @@
 subdirs(PFloat32)
 subdirs(PX4Driver)
 #subdirs(SoftwareStack/)
-#subdirs(GazeboWorldGenerator)
+subdirs(GazeboWorldGenerator)
 #subdirs(STLMonitor)
 subdirs(Communication)
 subdirs(WorkspaceParser)
