@@ -8,7 +8,7 @@ subdirs(PX4Driver)
 subdirs(STLMonitor)
 subdirs(Communication)
 subdirs(WorkspaceParser)
-#subdirs(AStarPlanner)
+subdirs(AStarPlanner)
 subdirs(Logger)
 subdirs(STLLib)
 

@@ -96,7 +96,7 @@ typedef struct WorkspaceInfo {
             printf("Error: Invalid coordinate\n");
         }
 
-        g_loc = coord.x * dimension.y_dim * dimension.z_dim + coord.y * dimension.z_dim + coord.z;
+        g_loc = coord.x + coord.y * dimension.x_dim + coord.z * dimension.x_dim* dimension.y_dim;
         return g_loc;
     }
 
@@ -107,9 +107,9 @@ typedef struct WorkspaceInfo {
             printf("Error: Invalid location\n");
         }
 
-        return WS_Coord(loc / (dimension.y_dim * dimension.z_dim),
-                    (loc % (dimension.y_dim * dimension.z_dim)) / dimension.z_dim,
-                    loc % dimension.z_dim);
+        return WS_Coord((loc % (dimension.x_dim * dimension.y_dim)) % dimension.x_dim,
+                    (loc % (dimension.y_dim * dimension.x_dim)) / dimension.x_dim,
+                     loc / (dimension.y_dim * dimension.x_dim));
     }
 
     // Generate list of obstacle indexes

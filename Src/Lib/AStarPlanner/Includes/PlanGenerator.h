@@ -18,6 +18,13 @@ bool GenerateMotionPlanFor(int robotid,
     int* stepsSize
 );
 
+void ConvertToGotos(
+        int seqOfLocations[1000],
+        int stepsSize,
+        int seqOfGotos[1000],
+        int *gotosSize
+);
+
 extern clock_t total_elapsed_clock;
 extern clock_t total_elapsed_clock_ext;
 extern int total_num_calculations;

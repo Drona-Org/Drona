@@ -180,3 +180,43 @@ bool GenerateMotionPlanFor(int robotid,
 
 	return true;
 }
+
+void ConvertToGotos(
+        int seqOfLocations[1000],
+        int stepsSize,
+        int seqOfGotos[1000],
+        int *gotosSize
+)
+{
+    assert(stepsSize >= 2);
+    int currentLocation, nextLocation;
+    int diff;
+    currentLocation = seqOfLocations[0];
+    nextLocation = seqOfLocations[1];
+
+    diff = nextLocation - currentLocation;
+    int i = 0;
+    *gotosSize = 0;
+    while(i < stepsSize - 1)
+    {
+        currentLocation = seqOfLocations[i];
+        nextLocation = seqOfLocations[i+1];
+
+        if(nextLocation - currentLocation == diff)
+        {
+            //goto next location
+            i = i + 1;
+            continue;
+        }
+        else
+        {
+            diff = nextLocation - currentLocation;
+            seqOfGotos[*gotosSize] = currentLocation;
+            *gotosSize = *gotosSize + 1;
+            i = i + 1;
+        }
+    }
+    seqOfGotos[*gotosSize] = nextLocation;
+    *gotosSize = *gotosSize + 1;
+
+}

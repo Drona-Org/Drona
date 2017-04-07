@@ -7,9 +7,10 @@ int main(int argc, char const *argv[])
 {
     WorkspaceInfo* WSInfo = ParseWorkspaceConfig(argv[1]);	//char* pathToWorkspace = "../../Src/Workspaces/Exp2";
 	int count;
-	int* output_seq_of_locations = (int*)malloc(100 * sizeof(int));
+    int* output_seq_of_locations = (int*)malloc(100 * sizeof(int));
 	int output_size = 0;
-
+    int* gotos = (int*)malloc(100 * sizeof(int));
+    int gotosSize = 0;
 	// Testcase: Only static obstacles.
     vector<vector<WS_Coord>> avoidsArr;
 	//GenerateMotionPlanFor(*WSInfo, 4, 113, WSInfo->obstacles.locations, WSInfo->obstacles.size, avoidsArr, 0, output_seq_of_locations, output_size);
@@ -30,13 +31,17 @@ int main(int argc, char const *argv[])
 
     GenerateMotionPlanFor(0, WSInfo, 1, 55, WSInfo->GetObstaclesLocations(), avoidsArr, output_seq_of_locations, &output_size);
 
-	cout << "Trajectory Length = " << output_size << endl;
-	cout << "Trajectory: " << endl;
-	for (count = 0; count < output_size; count++)
-	{
-		cout << output_seq_of_locations[count] << endl;
-	}
-	free(output_seq_of_locations);
-	getchar();
+    cout << "Trajectory Length = " << output_size << endl;
+    cout << "Trajectory: " << endl;
+    for (count = 0; count < output_size; count++)
+    {
+        cout << output_seq_of_locations[count] << endl;
+    }
+
+    ConvertToGotos(output_seq_of_locations, output_size, gotos, &gotosSize);
+    for (count = 0; count < gotosSize; count++)
+    {
+        cout << gotos[count] << endl;
+    }
 	return 0;
 }
