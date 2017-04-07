@@ -29,7 +29,7 @@ int main(int argc, char const *argv[])
 	//AvoidPositions avoidsArr[] = { { { 19, 35, 51, 52 }, 4 } };
         //GenerateMotionPlanFor(*WSInfo, 3, 53, WSInfo->obstacles.locations, WSInfo->obstacles.size, avoidsArr, 1, output_seq_of_locations, output_size);
 
-    GenerateMotionPlanFor(0, WSInfo, 1, 55, WSInfo->GetObstaclesLocations(), avoidsArr, output_seq_of_locations, &output_size);
+    GenerateMotionPlanFor(0, WSInfo, 1, 2345, WSInfo->GetObstaclesLocations(), avoidsArr, output_seq_of_locations, &output_size);
 
     cout << "Trajectory Length = " << output_size << endl;
     cout << "Trajectory: " << endl;
