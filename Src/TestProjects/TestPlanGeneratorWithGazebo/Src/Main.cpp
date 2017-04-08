@@ -42,30 +42,36 @@ int main(int argc, char const *argv[])
     vector<vector<WS_Coord>> avoidsArr;
 
     //Goto (1, 1, 2)
-    WS_Coord destination = WS_Coord(1, 1, 2);
+    vector<WS_Coord> destinations = { WS_Coord(1, 1, 2), WS_Coord(1, 40, 2), WS_Coord(43, 43, 2), WS_Coord(41, 1, 3)};
+
     WS_Coord currentLocation = GazeboToPlanner(WS_Coord(0, 0, 3));
 
-    GenerateMotionPlanFor(0, WSInfo, WSInfo->ConvertCoordToGridLocation(currentLocation), WSInfo->ConvertCoordToGridLocation(destination), WSInfo->GetObstaclesLocations(), avoidsArr, output_seq_of_locations, &output_size);
-
-    cout << "Trajectory Length = " << output_size << endl;
-    cout << "Trajectory: " << endl;
-    for (count = 0; count < output_size; count++)
+    for(int locs = 0; locs < destinations.size(); locs++)
     {
-        cout << output_seq_of_locations[count] << endl;
+        GenerateMotionPlanFor(0, WSInfo, WSInfo->ConvertCoordToGridLocation(currentLocation), WSInfo->ConvertCoordToGridLocation(destinations[locs]), WSInfo->GetObstaclesLocations(), avoidsArr, output_seq_of_locations, &output_size);
+
+        cout << "Trajectory Length = " << output_size << endl;
+        cout << "Trajectory: " << endl;
+        for (count = 0; count < output_size; count++)
+        {
+            cout << output_seq_of_locations[count] << endl;
+        }
+
+        ConvertToGotos(output_seq_of_locations, output_size, gotos, &gotosSize);
+        cout << "Gotos: " << endl;
+        for (count = 0; count < gotosSize; count++)
+        {
+            cout << gotos[count] << endl;
+        }
+
+        for (count = 0; count < gotosSize; count++)
+        {
+            WS_Coord go = PlannerToGazebo(WSInfo->ConvertGridLocationToCoord(gotos[count]));
+            px4->GoTo(go.x,go.y,-go.z, 1);
+        }
+        currentLocation = destinations[locs];
     }
 
-    ConvertToGotos(output_seq_of_locations, output_size, gotos, &gotosSize);
-    cout << "Gotos: " << endl;
-    for (count = 0; count < gotosSize; count++)
-    {
-        cout << gotos[count] << endl;
-    }
-
-    for (count = 0; count < gotosSize; count++)
-    {
-        WS_Coord go = PlannerToGazebo(WSInfo->ConvertGridLocationToCoord(gotos[count]));
-        px4->GoTo(go.x,go.y,-go.z,0.5);
-    }
 
 	return 0;
 }
