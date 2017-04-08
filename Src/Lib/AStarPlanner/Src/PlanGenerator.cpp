@@ -58,6 +58,28 @@ bool GenerateMotionPlanFor(int robotid,
     coord = WSInfo->ConvertGridLocationToCoord(endLocation);
     pos_end = coord;
 
+
+    printf("====================================================\n");
+    printf("Robot %d\n", robotid);
+
+    vector<int> obstList = WSInfo->GetObstaclesLocations();
+    /*cout << "Obstacles:: ";
+    for(int i = 0; i< obstList.size();i++)
+    {
+        cout<< obstList.at(i) << " ";
+    }
+    cout<< endl;*/
+
+    //check that the start and end locations are not in obstacles list
+    for(int i = 0; i< obstList.size();i++)
+    {
+        if(startLocation == obstList[i] || endLocation == obstList[i])
+        {
+            cout << "Start or end location is in the obstacles list";
+            assert(false);
+        }
+    }
+
     for (count = 0; count < obstacleLocations.size(); count++)
 	{
         coord = WSInfo->ConvertGridLocationToCoord(obstacleLocations.at(count));
@@ -106,17 +128,8 @@ bool GenerateMotionPlanFor(int robotid,
 	pthread_mutex_lock(&print_lock);
 #endif
 
-	printf("====================================================\n");
-	printf("Robot %d\n", robotid);
-    vector<int> obstList = WSInfo->GetObstaclesLocations();
-    cout << "Obstacles:: ";
-    for(int i = 0; i< obstList.size();i++)
-    {
-        cout<< obstList.at(i) << " ";
-    }
-    cout<< endl;
 
-	astar.PrintAvoidPositions();
+    astar.PrintAvoidPositions();
 	printf("traj calculation takes %f\n", elapsed_secs);
 
     *stepsSize = path.size();
