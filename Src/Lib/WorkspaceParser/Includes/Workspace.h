@@ -6,15 +6,15 @@
 using namespace std;
 
 typedef struct WS_Dimension {
-	int x_dim;
-	int y_dim;
-	int z_dim;
+    double x_dim;
+    double y_dim;
+    double z_dim;
 } WS_Dimension;
 
 typedef struct WS_Coord {
-	int x;
-	int y;
-	int z;
+    double x;
+    double y;
+    double z;
 
     bool operator==(const WS_Coord& rhs) const {
           return rhs.x == this->x && rhs.y == this->y && rhs.z == this->z;
@@ -36,13 +36,13 @@ typedef struct WS_Coord {
           return rhs.x >= this->x && rhs.y >= this->y && rhs.z >= this->z;
       }
 
-    WS_Coord(int xv, int yv, int zv): x(xv), y(yv), z(zv){}
+    WS_Coord(double xv, double yv, double zv): x(xv), y(yv), z(zv){}
     WS_Coord(): x(0), y(0), z(0){}
     string ToString()
     {
         char buff[1000];
         string ret = "";
-        sprintf(buff, "(%d, %d, %d)", x,y,z);
+        sprintf(buff, "(%f, %f, %f)", x,y,z);
         ret.append(buff);
         return ret;
     }
@@ -86,6 +86,7 @@ typedef struct WorkspaceInfo {
     vector<WS_Box> charging_stations;
     vector<WS_RobotInfo> robots;
 
+    /*
     int ConvertCoordToGridLocation(WS_Coord coord)
     {
         int g_loc;
@@ -128,11 +129,12 @@ typedef struct WorkspaceInfo {
         }
         return locations;
     }
+    */
     string ToString()
     {
         char buff[1000];
         string ret = "";
-        sprintf(buff, "Workspace Dimensions (%d, %d, %d)\n", dimension.x_dim, dimension.y_dim, dimension.z_dim);
+        sprintf(buff, "Workspace Dimensions (%f, %f, %f)\n", dimension.x_dim, dimension.y_dim, dimension.z_dim);
         ret.append(buff);
         sprintf(buff, "Workspace Obstacles ::\n");
         ret.append(buff);

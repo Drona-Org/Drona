@@ -19,7 +19,7 @@ WS_Coord GazeboToPlanner(WS_Coord coord) {
 
 int main(int argc, char const *argv[])
 {
-    /*
+
     PX4API *px4 = new PX4API(SIMULATOR_PORT);
     char filename[] = "traj.csv";
     PX4Logger *px4logger = new PX4Logger(10, filename, true, vector<bool>{true, true, true});
@@ -31,15 +31,27 @@ int main(int argc, char const *argv[])
     usleep(2500000);
     px4->StartAutopilot(0,0,-3); //takeoff
     usleep(5000000);
-    */
+
 
 
     //test OMPL planner
+    vector<WS_Coord> destinations = {
+        WS_Coord(1, 1, 2),
+        WS_Coord(43, 43, 2),
+        WS_Coord(1, 43, 1),
+        WS_Coord(43, 1, 2),
+        WS_Coord(1, 1, 2)
+    };
     OMPLPLanner* planner = new OMPLPLanner(argv[1], PLANNER_RRTSTAR, OBJECTIVE_PATHLENGTH);
-    vector<WS_Coord> path = planner->GeneratePlan(10, WS_Coord(1, 1, 2), WS_Coord(43, 43, 2));
-    for (int count = 0; count < path.size(); count++)
+    for(int i = 0; i< destinations.size()-1; i++)
     {
-        cout << path.at(count).ToString() << endl;
+
+        vector<WS_Coord> path = planner->GeneratePlan(5, destinations.at(i), destinations.at(i+1));
+        for (int count = 0; count < path.size(); count++)
+        {
+            cout << path.at(count).ToString() << endl;
+            px4->GoTo(path.at(count).x, path.at(count).y, -path.at(count).z, 1);
+        }
     }
 	return 0;
 }
