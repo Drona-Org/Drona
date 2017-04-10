@@ -32,7 +32,7 @@ int main(int argc, char const *argv[])
     px4->StartAutopilot(0,0,-3); //takeoff
     usleep(5000000);
 
-
+    px4logger->Start();
 
     //test OMPL planner
     vector<WS_Coord> destinations = {
@@ -53,5 +53,8 @@ int main(int argc, char const *argv[])
             px4->GoTo(path.at(count).x, path.at(count).y, -path.at(count).z, 1);
         }
     }
+    px4logger->Stop();
+    px4logger->ToCSV();
+
 	return 0;
 }
