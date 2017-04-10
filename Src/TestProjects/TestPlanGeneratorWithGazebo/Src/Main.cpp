@@ -34,50 +34,6 @@ int main(int argc, char const *argv[])
     */
 
 
-    /* Test AStar Planner
-     *
-
-    int count;
-    int* output_seq_of_locations = (int*)malloc(100 * sizeof(int));
-	int output_size = 0;
-    int* gotos = (int*)malloc(100 * sizeof(int));
-    int gotosSize = 0;
-	// Testcase: Only static obstacles.
-    vector<vector<WS_Coord>> avoidsArr;
-
-    //Goto (1, 1, 2)
-    vector<WS_Coord> destinations = { WS_Coord(1, 1, 2), WS_Coord(1, 40, 2), WS_Coord(43, 43, 2), WS_Coord(41, 1, 3)};
-
-    WS_Coord currentLocation = GazeboToPlanner(WS_Coord(0, 0, 3));
-
-    for(int locs = 0; locs < destinations.size(); locs++)
-    {
-        GenerateMotionPlanFor(0, WSInfo, WSInfo->ConvertCoordToGridLocation(currentLocation), WSInfo->ConvertCoordToGridLocation(destinations[locs]), WSInfo->GetObstaclesLocations(), avoidsArr, output_seq_of_locations, &output_size);
-
-        cout << "Trajectory Length = " << output_size << endl;
-        cout << "Trajectory: " << endl;
-        for (count = 0; count < output_size; count++)
-        {
-            cout << output_seq_of_locations[count] << endl;
-        }
-
-        ConvertToGotos(output_seq_of_locations, output_size, gotos, &gotosSize);
-        cout << "Gotos: " << endl;
-        for (count = 0; count < gotosSize; count++)
-        {
-            cout << gotos[count] << endl;
-        }
-
-        for (count = 0; count < gotosSize; count++)
-        {
-            WS_Coord go = PlannerToGazebo(WSInfo->ConvertGridLocationToCoord(gotos[count]));
-            px4->GoTo(go.x,go.y,-go.z, 1);
-        }
-        currentLocation = destinations[locs];
-    }
-
-*/
-
     //test OMPL planner
     OMPLPLanner* planner = new OMPLPLanner(argv[1], PLANNER_RRTSTAR, OBJECTIVE_PATHLENGTH);
     vector<WS_Coord> path = planner->GeneratePlan(10, WS_Coord(1, 1, 2), WS_Coord(43, 43, 2));
