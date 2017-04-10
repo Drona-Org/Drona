@@ -8,6 +8,7 @@ include(CMakeFunAndMacros.txt)
 subdirs(Src/TestProjects)
 subdirs(Src/Lib)
 subdirs(Src/Experiments)
+subdirs(Submodule/OMPL)
 
 #Global Include Directories
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Includes/MavlinkHeaders/common)
