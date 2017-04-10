@@ -94,7 +94,7 @@ vector<WS_Coord> OMPLPLanner::GeneratePlan(double runTime,  WS_Coord st, WS_Coor
     // planning in [0,1]x[0,1], a subset of R^2.
     auto space(std::make_shared<ob::RealVectorStateSpace>(3));
 
-    // Set the bounds of space to be in [0,1].
+
     space->setBounds(0.0, WSInfo->dimension.x_dim);
 
     // Construct a space information instance for this state space

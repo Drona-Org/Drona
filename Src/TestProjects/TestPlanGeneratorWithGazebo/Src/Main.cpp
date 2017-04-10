@@ -36,11 +36,11 @@ int main(int argc, char const *argv[])
 
     //test OMPL planner
     vector<WS_Coord> destinations = {
-        WS_Coord(1, 1, 2),
-        WS_Coord(43, 43, 2),
-        WS_Coord(1, 43, 1),
-        WS_Coord(43, 1, 2),
-        WS_Coord(1, 1, 2)
+        WS_Coord(25, 25, 3),
+        WS_Coord(40, 40, 2),
+        WS_Coord(4, 40, 1),
+        WS_Coord(40, 4, 2),
+        WS_Coord(4, 4, 2)
     };
     OMPLPLanner* planner = new OMPLPLanner(argv[1], PLANNER_RRTSTAR, OBJECTIVE_PATHLENGTH);
     for(int i = 0; i< destinations.size()-1; i++)
@@ -49,8 +49,9 @@ int main(int argc, char const *argv[])
         vector<WS_Coord> path = planner->GeneratePlan(5, destinations.at(i), destinations.at(i+1));
         for (int count = 0; count < path.size(); count++)
         {
-            cout << path.at(count).ToString() << endl;
-            px4->GoTo(path.at(count).x, path.at(count).y, -path.at(count).z, 1);
+            WS_Coord shifted = PlannerToGazebo(path.at(count));
+            cout << shifted.ToString() << endl;
+            px4->GoTo(shifted.y, shifted.x, -shifted.z, 1);
         }
     }
     px4logger->Stop();
