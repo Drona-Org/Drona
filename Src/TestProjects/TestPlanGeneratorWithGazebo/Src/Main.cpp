@@ -19,6 +19,7 @@ WS_Coord GazeboToPlanner(WS_Coord coord) {
 
 int main(int argc, char const *argv[])
 {
+    /*
     PX4API *px4 = new PX4API(SIMULATOR_PORT);
     char filename[] = "traj.csv";
     PX4Logger *px4logger = new PX4Logger(10, filename, true, vector<bool>{true, true, true});
@@ -30,10 +31,13 @@ int main(int argc, char const *argv[])
     usleep(2500000);
     px4->StartAutopilot(0,0,-3); //takeoff
     usleep(5000000);
+    */
 
 
-    WorkspaceInfo* WSInfo = ParseWorkspaceConfig(argv[1]);	//char* pathToWorkspace = "../../Src/Workspaces/Exp2";
-	int count;
+    /* Test AStar Planner
+     *
+
+    int count;
     int* output_seq_of_locations = (int*)malloc(100 * sizeof(int));
 	int output_size = 0;
     int* gotos = (int*)malloc(100 * sizeof(int));
@@ -72,6 +76,14 @@ int main(int argc, char const *argv[])
         currentLocation = destinations[locs];
     }
 
+*/
 
+    //test OMPL planner
+    OMPLPLanner* planner = new OMPLPLanner(argv[1], PLANNER_RRTSTAR, OBJECTIVE_PATHLENGTH);
+    vector<WS_Coord> path = planner->GeneratePlan(10, WS_Coord(1, 1, 2), WS_Coord(43, 43, 2));
+    for (int count = 0; count < path.size(); count++)
+    {
+        cout << path.at(count).ToString() << endl;
+    }
 	return 0;
 }

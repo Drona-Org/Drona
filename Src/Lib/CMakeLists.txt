@@ -11,5 +11,7 @@ subdirs(WorkspaceParser)
 subdirs(AStarPlanner)
 subdirs(Logger)
 subdirs(STLLib)
+subdirs(OMPLOptimalPlanner)
+subdirs(/home/ankush/Workspace/ompl/)
 
 

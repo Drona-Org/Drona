@@ -1,6 +1,7 @@
 [submodule "Submodules"]
 	path = Submodules
 	url = https://github.com/mavlink/mavlink.git
+
 [submodule "Submodule/mavlink"]
 	path = Submodule/mavlink
 	url = https://github.com/mavlink/mavlink.git
@@ -8,3 +9,7 @@
 [submodule "Submodule/P"]
 	path = Submodule/P
 	url = https://github.com/p-org/P.git
+
+[submodule "Submodule/OMPL"]
+	path = Submodule/OMPL
+	url = https://github.com/ompl/ompl.git
