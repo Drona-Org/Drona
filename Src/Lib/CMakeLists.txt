@@ -10,7 +10,7 @@ subdirs(Communication)
 subdirs(WorkspaceParser)
 #subdirs(AStarPlanner)
 subdirs(Logger)
-subdirs(STLLib)
+#subdirs(STLLib)
 subdirs(OMPLOptimalPlanner)
 
 

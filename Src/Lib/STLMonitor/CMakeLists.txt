@@ -3,7 +3,7 @@ project(dronaSrcLibBreach)
 
 # Search .cpp in ./src
 FILE(GLOB_RECURSE sources Src/*.cpp)
-FILE(GLOB_RECURSE includes Include/*.h)
+FILE(GLOB_RECURSE includes Includes/*.h)
 
 # Include path
 INCLUDE_DIRECTORIES(includes)

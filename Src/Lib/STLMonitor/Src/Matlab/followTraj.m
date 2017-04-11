@@ -1,7 +1,7 @@
 function [ spec ] = followTraj( vars, goal_pts )
 %FOLLOWTRAJ Follow piece-wise trajectory specification
 
-    eps = 1.08;
+    eps = 0.5;
 
     xi = goal_pts(1,:);
     xg = goal_pts(2,:);
