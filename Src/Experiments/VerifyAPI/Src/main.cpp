@@ -23,81 +23,53 @@ int main(int argc, char const *argv[])
     int numOfExperiments = 1000;
     //sscanf(argv[2], "%d", &numOfExperiments);
 
-    WS_Coord start = WS_Coord(0, 0, -5);
+    WS_Coord start = WS_Coord(0, 0, 5);
     WS_Box box;
-    box.low = WS_Coord(0, 0, -50);
-    box.high = WS_Coord(50, 50, 0);
+    box.low = WS_Coord(0, 0, 0);
+    box.high = WS_Coord(50, 50, 50);
 
-    //set up the experiment
-    for(int lenOfGoto=1; lenOfGoto<3; lenOfGoto++){
+    int i = 0;
 
-        //int lenOfGoto;
-        //sscanf(argv[1], "%d", &lenOfGoto);
+    while(i<numOfExperiments)
+    {
 
-        int i = 0;
+        cout<<"\n\n EXPER "<<i<<"\n\n";
 
-        while(i<numOfExperiments)
-        {
+        WS_Coord gotoLocation = start;
+        srand(time(NULL));
 
-            cout<<"\n\n EXPER "<<i<<"\n\n";
+        gotoLocation.x = rand() % 50;
+        gotoLocation.y = rand() % 50;
+        gotoLocation.z = rand() % 50;
+        //check if the gotolocation is valid
+        if(!box.IsInBox(gotoLocation))
+            continue;
 
-            WS_Coord gotoLocation = start;
-            srand(time(NULL));
-            int direction = rand() % 6;
-            switch (direction) {
-            case 0:
-                gotoLocation.x += lenOfGoto;
-                break;
-            case 1:
-                gotoLocation.y += lenOfGoto;
-                break;
-            case 2:
-                gotoLocation.z += lenOfGoto;
-                break;
-            case 3:
-                gotoLocation.x -= lenOfGoto;
-                break;
-            case 4:
-                gotoLocation.y -= lenOfGoto;
-                break;
-            case 5:
-                gotoLocation.z -= lenOfGoto;
-                break;
-            default:
-                printf("Blah");
-                break;
-            }
+        char fileName[1000];
+        sprintf(fileName, "traj_%d.csv", i);
+        PX4Logger *px4logger = new PX4Logger(10, fileName, false, vector<bool>{true, true, true});
+        px4logger->Start();
+        px4->GoTo(gotoLocation.x, gotoLocation.y, -gotoLocation.z, 0.5);
 
-            //check if the gotolocation is valid
-            if(!box.IsInBox(gotoLocation))
-                continue;
+        px4logger->Stop();
+        //dump logs
+        px4logger->ToCSV();
 
-            char fileName[1000];
-//            //sprintf(fileName, "traj_%d_(%d-%d-%d)_(%d-%d-%d).csv", lenOfGoto, start.x, start.y, start.z, gotoLocation.x, gotoLocation.y, gotoLocation.z);
-            sprintf(fileName, "traj_%d_%d.csv", lenOfGoto,i);
-            PX4Logger *px4logger = new PX4Logger(10, fileName, false, vector<bool>{true, true, true});
-            px4logger->Start();
-            px4->GoTo(gotoLocation.x, gotoLocation.y, gotoLocation.z, 0.5);
+        //compute the length
+        float trajLen = sqrt((start.x - gotoLocation.x)*(start.x - gotoLocation.x) + (start.y - gotoLocation.y)*(start.y - gotoLocation.y) + (start.z - gotoLocation.z)*(start.z - gotoLocation.z));
+        //dump the positions
+        sprintf(fileName, "coord_%d.csv",i);
+        ofstream textFile;
+        textFile.open (fileName);
+        textFile << trajLen << "," << start.x << "," << start.y << "," << start.z<<",";
+        textFile << gotoLocation.x << "," << gotoLocation.y << "," << gotoLocation.z <<endl;
+        textFile.close();
 
-            px4logger->Stop();
-            //dump logs
-            px4logger->ToCSV();
-            //dump the positions
-            //sprintf(fileName, "traj_%d_(%d-%d-%d)_(%d-%d-%d).text", lenOfGoto, start.x, start.y, start.z, gotoLocation.x, gotoLocation.y, gotoLocation.z);
-            sprintf(fileName, "coord_%d_%d.csv",lenOfGoto,i);
-            ofstream textFile;
-            textFile.open (fileName);
-            textFile << start.x << "," << start.y << "," << start.z<<",";
-            textFile << gotoLocation.x << "," << gotoLocation.y << "," << gotoLocation.z <<endl;
-            textFile.close();
-
-            px4logger->logs.clear();
-            px4logger->ResetClock();
-//            free(px4logger);
-//            //usleep(500000);
-            i = i + 1;
-            start = gotoLocation;
-        }
+        px4logger->logs.clear();
+        px4logger->ResetClock();
+        i = i + 1;
+        start = gotoLocation;
     }
+
 }
 
