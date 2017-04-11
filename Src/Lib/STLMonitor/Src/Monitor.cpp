@@ -25,6 +25,7 @@ void Monitor::RobustnessOnLine(const char* STLspec, const char* fileName){
     while(true){
         double *robBouns = this->breach->STLEvalOnLine(STLspec,fileName);
         this->PrintRobustnessBounds(robBouns[1],robBouns[0]);
+
         usleep(50000);
     }
 

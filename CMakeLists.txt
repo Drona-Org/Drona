@@ -25,4 +25,3 @@ INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/STLMonitor/Includes)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/WorkspaceParser/Includes)
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Lib/STLLib/Includes)
 
-

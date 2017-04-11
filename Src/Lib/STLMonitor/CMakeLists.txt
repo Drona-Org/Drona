@@ -1,24 +1,23 @@
 cmake_minimum_required(VERSION 3.0)
 project(dronaSrcLibBreach)
 
-# This is to show files in Qtcreator
-FILE(GLOB_RECURSE src "Src/*.cpp")
-FILE(GLOB_RECURSE includes "Includes/*.h")
+# Search .cpp in ./src
+FILE(GLOB_RECURSE sources Src/*.cpp)
+FILE(GLOB_RECURSE includes Include/*.h)
 
+# Include path
+INCLUDE_DIRECTORIES(includes)
+INCLUDE_DIRECTORIES(/usr/local/MATLAB/R2016b/extern/include)
 
-add_custom_target(headers SOURCES ${includes})
-add_custom_target(sources SOURCES ${src})
+# Build exectuable
+#add_executable(stlmonitor ${sources} ${includes})
+add_library(stlmonitor STATIC ${sources} ${includes})
 
+TARGET_LINK_LIBRARIES(stlmonitor eng mx mat)
 
-set(cfiles
-    OnlineMonitor.cpp
-    BreachAPI.cpp
-    Monitor.cpp
+SET_TARGET_PROPERTIES (
+    stlmonitor
+    PROPERTIES LINKER_LANGUAGE CXX
 )
 
-set(inc_dir
-  ${CMAKE_CURRENT_SOURCE_DIR}/Includes
-)
-
-mex_compile(${CMAKE_CURRENT_SOURCE_DIR}/Src cfiles ${inc_dir})
-
+set (CMAKE_CXX_FLAGS "-Wl,-rpath,/usr/local/MATLAB/R2016b/bin/glnxa64/ -L/usr/local/MATLAB/R2016b/extern/lib")
