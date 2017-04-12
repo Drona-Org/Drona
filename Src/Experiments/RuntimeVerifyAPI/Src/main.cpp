@@ -1,104 +1,39 @@
 #include <iostream>
 #include <vector>
 
-#include "PX4API.h"
-#include "WorkspaceParser.h"
+#include "STLGenerator.h"
 #include "Monitor.h"
 
 using namespace std;
 
-#define SIMULATOR_PORT 14550
-
 int main(int argc, char const *argv[])
 {
-    PX4API *px4 = new PX4API(SIMULATOR_PORT);
+    vector<string> vars = {"x1[t]","x2[t]","x3[t]"};
+    STLGenerator *gen = new STLGenerator(vars);
 
-    usleep(2500000);
-    px4->Arm();
-    usleep(2500000);
-    px4->TakeoffGlobal(5);
-    usleep(5000000);
-    px4->StartAutopilot(0,0,-5);
-    usleep(5000000);
+    vector<double> p = {30,4,-10};
+    vector<double> q = {31,4,-15};
+    vector<double> r = {7,8,9};
 
-    int numOfExperiments = 1000;
-    //sscanf(argv[2], "%d", &numOfExperiments);
+    vector< vector<double> > traj = {p,q,r};
+    vector<double> epss = {0.5,0.5};
 
-    WS_Coord start = WS_Coord(0, 0, -5);
-    WS_Box box;
-    box.low = WS_Coord(0, 0, -50);
-    box.high = WS_Coord(50, 50, 0);
+    string phi = gen->FollowTraj(traj,epss);
+    const char *cphi = phi.c_str();
 
-    //set up the experiment
-    for(int lenOfGoto=1; lenOfGoto<3; lenOfGoto++){
+    char spec[10000];
+    char fileName[500];
 
-        //int lenOfGoto;
-        //sscanf(argv[1], "%d", &lenOfGoto);
+    strcpy(fileName,"/home/tommaso/DronaForPX4/Src/Experiments/VerifyAPI/Logs/traj_0.csv");
 
-        int i = 0;
+    Monitor *monitor = new Monitor();
+    //monitor->RobustnessOnLine(spec,fileName);
 
-        while(i<numOfExperiments)
-        {
+    double *rob = monitor->breach->STLEvalOnLine(spec,fileName);
 
-            cout<<"\n\n EXPER "<<i<<"\n\n";
+    cout<<rob[0]<<"\n";
+    cout<<rob[1]<<"\n";
 
-            WS_Coord gotoLocation = start;
-            srand(time(NULL));
-            int direction = rand() % 6;
-            switch (direction) {
-            case 0:
-                gotoLocation.x += lenOfGoto;
-                break;
-            case 1:
-                gotoLocation.y += lenOfGoto;
-                break;
-            case 2:
-                gotoLocation.z += lenOfGoto;
-                break;
-            case 3:
-                gotoLocation.x -= lenOfGoto;
-                break;
-            case 4:
-                gotoLocation.y -= lenOfGoto;
-                break;
-            case 5:
-                gotoLocation.z -= lenOfGoto;
-                break;
-            default:
-                printf("Blah");
-                break;
-            }
 
-            //check if the gotolocation is valid
-            if(!box.IsInBox(gotoLocation))
-                continue;
-
-            char fileName[1000];
-//            //sprintf(fileName, "traj_%d_(%d-%d-%d)_(%d-%d-%d).csv", lenOfGoto, start.x, start.y, start.z, gotoLocation.x, gotoLocation.y, gotoLocation.z);
-            sprintf(fileName, "traj_%d_%d.csv", lenOfGoto,i);
-            PX4Logger *px4logger = new PX4Logger(10, fileName, false, vector<bool>{true, true, true});
-            px4logger->Start();
-            px4->GoTo(gotoLocation.x, gotoLocation.y, gotoLocation.z, 0.5);
-
-            px4logger->Stop();
-            //dump logs
-            px4logger->ToCSV();
-            //dump the positions
-            //sprintf(fileName, "traj_%d_(%d-%d-%d)_(%d-%d-%d).text", lenOfGoto, start.x, start.y, start.z, gotoLocation.x, gotoLocation.y, gotoLocation.z);
-            sprintf(fileName, "coord_%d_%d.csv",lenOfGoto,i);
-            ofstream textFile;
-            textFile.open (fileName);
-            textFile << start.x << "," << start.y << "," << start.z<<",";
-            textFile << gotoLocation.x << "," << gotoLocation.y << "," << gotoLocation.z <<endl;
-            textFile.close();
-
-            px4logger->logs.clear();
-            px4logger->ResetClock();
-//            free(px4logger);
-//            //usleep(500000);
-            i = i + 1;
-            start = gotoLocation;
-        }
-    }
 }
 

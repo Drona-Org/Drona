@@ -14,7 +14,7 @@ add_executable(runtimeverifyapi Src/main.cpp ${includes})
 
 add_definitions( -DPRT_PLAT_LINUXUSER )
 # Target Communication Libraries
-TARGET_LINK_LIBRARIES(runtimeverifyapi px4driver workspaceparser eng mx mat)
+TARGET_LINK_LIBRARIES(runtimeverifyapi px4driver workspaceparser stlmonitor eng mx mat)
 
 SET_TARGET_PROPERTIES (
     stlmonitor

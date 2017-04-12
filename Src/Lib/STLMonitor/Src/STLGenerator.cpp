@@ -26,6 +26,33 @@ string STLGenerator::Close(vector<double> p, double eps){
     return this->Dist(p) + " < " + this->ToString(eps);
 }
 
+
+string STLGenerator::Tube(vector<double> p, vector<double> q, double eps){
+    return DistFromLine(p,q) + " < " +this->ToString(eps);
+}
+
+
+// Follow a trajectory
+string STLGenerator::FollowTraj(vector< vector<double> > wp, vector< double > epss ){
+
+    string reach_goal = Close(wp[1],epss[0]);
+    string tube = Tube(wp[0],wp[1],epss[0]);
+
+    // case base (two waypoints, one epsilon)
+    if( ( wp.size() == 2 ) && ( epss.size() == 1 ) ){
+
+        return "(" + tube + ") until (" + reach_goal + ")";
+
+    }
+
+    vector< vector<double> > wpp(wp.begin() + 1, wp.end());
+    vector< double > epssp(epss.begin() + 1, epss.end());
+
+    string rec = "( " + reach_goal + ") and (" + FollowTraj(wpp,epssp) + ")";
+    return "(" + tube + ") until ( " + rec + " )";
+}
+
+
 // a - b
 vector<string> STLGenerator::Diff(vector<string> a, vector<string> b){
     vector<string> diff;
