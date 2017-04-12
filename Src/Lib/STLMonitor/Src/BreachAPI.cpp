@@ -76,7 +76,7 @@ double BreachAPI::STLEval(char* spec, char* fileName){
     engEvalString(this->matEng,"trace = trace_csv(:,1:end-1);"); // Drop last useless column
 
     // Initialize system
-    engEvalString(this->matEng,"BrTrace = BreachTraceSystem({'x1','x2','x3'}, trace);");
+    engEvalString(this->matEng,"BrTrace = BreachTraceSystem({'x','y','z'}, trace);");
 
     // Compute robustness
     sprintf(mat_cmd,"rob = BrTrace.GetRobustSat('%s')", spec);
@@ -99,9 +99,9 @@ double* BreachAPI::STLEvalOnLine(const char* spec, const char* fileName){
         return 0;
     }
 
-    char mat_cmd[256];
+    char mat_cmd[10000];
 
-    // Initialize system
+//    // Initialize system
     engEvalString(this->matEng,"system.name = 'Brass';");
     engEvalString(this->matEng,"system.init_state = [0 0 0];");
     sprintf(mat_cmd,"options.phi = '%s';", spec);
@@ -118,16 +118,13 @@ double* BreachAPI::STLEvalOnLine(const char* spec, const char* fileName){
     engEvalString(this->matEng,"traj.time = trace_csv(:,1)';");
     engEvalString(this->matEng,"traj.X = trace_csv(:,2:end-1)';");
 
-    // Compute robustness bounds
+     //Compute robustness bounds
      engEvalString(this->matEng,"rob_bounds = STL_EvalClassicOnline(Sys,phi,P,traj,0);");
 
-     // Get robustness bouns
-     mxArray *result;
-     double *r;
-     result = engGetVariable(this->matEng,"rob_bounds");
-     r = mxGetPr(result);
-
-     return r;
+     //Get robustness bouns
+     mxArray *result = engGetVariable(this->matEng,"rob_bounds");
+     double *res = (double *) mxGetData(result);
+     return res;
 }
 
 

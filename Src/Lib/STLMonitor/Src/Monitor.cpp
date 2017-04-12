@@ -5,7 +5,7 @@ Monitor::Monitor(){
     // Start and initialize Breach
     this->breach = new BreachAPI();
     this->breach->StartMatlabEngine();
-    this->breach->InitBreach("./breach");
+    this->breach->InitBreach("~/breach");
 
     // Robustness thresholds
     this->strong2weakSat = 1;
@@ -23,10 +23,10 @@ double Monitor::Robustness(char* STLspec, char* fileName){
 void Monitor::RobustnessOnLine(const char* STLspec, const char* fileName){
 
     while(true){
-        double *robBouns = this->breach->STLEvalOnLine(STLspec,fileName);
-        this->PrintRobustnessBounds(robBouns[1],robBouns[0]);
+        //double *robBouns = this->breach->STLEvalOnLine(STLspec,fileName);
+        //this->PrintRobustnessBounds(robBouns[1],robBouns[0]);
 
-        usleep(50000);
+        //usleep(50000);
     }
 
 }
