@@ -17,9 +17,31 @@ WS_Coord GazeboToPlanner(WS_Coord coord) {
     return WS_Coord(coord.x + shiftBy.x, coord.y + shiftBy.y, coord.z + shiftBy.z);
 }
 
+vector<WS_Coord> ConvertToSmallGotos(vector<WS_Coord> oldPath) {
+    vector<WS_Coord> newPath;
+    //add the start
+    newPath.push_back(oldPath.at(0));
+    for(int i = 1; i< oldPath.size();i++)
+    {
+        if(oldPath.at(i-1).DistanceFrom(oldPath.at(i)) > 10)
+        {
+            int splitInto = 2;
+            int j = splitInto - 1;
+            while(j > 0)
+            {
+                newPath.push_back(WS_Coord((oldPath.at(i-1).x + oldPath.at(i).x)/(splitInto), (oldPath.at(i-1).y + oldPath.at(i).y)/(splitInto), (oldPath.at(i-1).z + oldPath.at(i).z)/(splitInto)));
+                j--;
+            }
+        }
+        newPath.push_back(oldPath.at(i));
+    }
+
+    return newPath;
+}
+
 int main(int argc, char const *argv[])
 {
-
+    /*
     PX4API *px4 = new PX4API(SIMULATOR_PORT);
     char filename[] = "traj.csv";
     PX4Logger *px4logger = new PX4Logger(10, filename, true, vector<bool>{true, true, true});
@@ -33,7 +55,7 @@ int main(int argc, char const *argv[])
     usleep(5000000);
 
     px4logger->Start();
-
+    */
     //test OMPL planner
     vector<WS_Coord> destinations = {
         WS_Coord(25, 25, 3),
@@ -47,15 +69,18 @@ int main(int argc, char const *argv[])
     {
 
         vector<WS_Coord> path = planner->GeneratePlan(5, destinations.at(i), destinations.at(i+1));
-        for (int count = 0; count < path.size(); count++)
+        //convert the path into goto of length less than 10
+        vector<WS_Coord> pathNew = ConvertToSmallGotos(path);
+        for (int count = 0; count < pathNew.size(); count++)
         {
-            WS_Coord shifted = PlannerToGazebo(path.at(count));
+            WS_Coord shifted = PlannerToGazebo(pathNew.at(count));
             cout << shifted.ToString() << endl;
-            px4->GoTo(shifted.y, shifted.x, -shifted.z, 1);
+            //px4->GoTo(shifted.y, shifted.x, -shifted.z, 1);
         }
     }
+    /*
     px4logger->Stop();
     px4logger->ToCSV();
-
+    */
 	return 0;
 }

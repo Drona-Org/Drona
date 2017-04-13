@@ -2,6 +2,7 @@
 #define DRONA_WORKSPACE_H
 #include <stdio.h>
 #include <vector>
+#include <math.h>
 #include <string>
 using namespace std;
 
@@ -15,6 +16,10 @@ typedef struct WS_Coord {
     double x;
     double y;
     double z;
+
+    double DistanceFrom(WS_Coord other) {
+        return sqrt((x - other.x)*(x - other.x) + (y - other.y)*(y - other.y) + (z - other.z)*(z - other.z));
+    }
 
     bool operator==(const WS_Coord& rhs) const {
           return rhs.x == this->x && rhs.y == this->y && rhs.z == this->z;

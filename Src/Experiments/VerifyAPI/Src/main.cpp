@@ -20,36 +20,39 @@ int main(int argc, char const *argv[])
     px4->StartAutopilot(0,0,-5);
     usleep(5000000);
 
-    int numOfExperiments = 1000;
+    int numOfExperiments = 5000;
     //sscanf(argv[2], "%d", &numOfExperiments);
 
     WS_Coord start = WS_Coord(0, 0, 5);
     WS_Box box;
     box.low = WS_Coord(0, 0, 0);
-    box.high = WS_Coord(50, 50, 50);
+    box.high = WS_Coord(8, 8, 8);
 
     int i = 0;
 
     while(i<numOfExperiments)
     {
 
-        cout<<"\n\n EXPER "<<i<<"\n\n";
 
         WS_Coord gotoLocation = start;
         srand(time(NULL));
 
-        gotoLocation.x = rand() % 50;
-        gotoLocation.y = rand() % 50;
-        gotoLocation.z = rand() % 50;
+        gotoLocation.x = rand() % 10;
+        gotoLocation.y = rand() % 10;
+        gotoLocation.z = rand() % 6 + 2;
         //check if the gotolocation is valid
         if(!box.IsInBox(gotoLocation))
             continue;
+
+        if(gotoLocation == start)
+            continue;
+        cout<<"\n\n EXPER "<<i<<"\n\n";
 
         char fileName[1000];
         sprintf(fileName, "traj_%d.csv", i);
         PX4Logger *px4logger = new PX4Logger(10, fileName, false, vector<bool>{true, true, true});
         px4logger->Start();
-        px4->GoTo(gotoLocation.x, gotoLocation.y, -gotoLocation.z, 0.5);
+        px4->GoTo(gotoLocation.x, gotoLocation.y, -gotoLocation.z, 1);
 
         px4logger->Stop();
         //dump logs
@@ -69,6 +72,8 @@ int main(int argc, char const *argv[])
         px4logger->ResetClock();
         i = i + 1;
         start = gotoLocation;
+
+        usleep(5000000);
     }
 
 }
