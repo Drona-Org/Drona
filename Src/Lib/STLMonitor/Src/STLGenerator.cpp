@@ -6,49 +6,49 @@ STLGenerator::STLGenerator(vector<string> vars){
 }
 
 // Distance of vars from p
-string STLGenerator::Dist(vector<double> p){
+string STLGenerator::Dist(WS_Coord p){
     return Sqrt( SumOfSquares( Diff(this->vars,ToString(p)) ) );
 }
 
 // Distance of vars from line passing throught p and q
-string STLGenerator::DistFromLine(vector<double> p, vector<double> q){
+string STLGenerator::DistFromLine(WS_Coord p, WS_Coord q){
 
     vector<string> subadd;
-    subadd.push_back("abs("  + vars[0] + "-" + ToString(p[0]) + "+ (" + ToString(pow((p[0] - q[0]),2)) + "*(" + ToString(p[0]) + "-" + vars[0] + "))/" + ToString(sqrt(pow(abs(p[0] - q[0]),2) + pow(abs(p[1] - q[1]),2) + pow(abs(p[2] - q[2]),2))) + ")");
-    subadd.push_back("abs("  + vars[1] + "-" + ToString(p[1]) + "+ (" + ToString(pow((p[1] - q[1]),2)) + "*(" + ToString(p[1]) + "-" + vars[1] + "))/" + ToString(sqrt(pow(abs(p[0] - q[0]),2) + pow(abs(p[1] - q[1]),2) + pow(abs(p[2] - q[2]),2))) + ")");
-    subadd.push_back("abs("  + vars[2] + "-" + ToString(p[2]) + "+ (" + ToString(pow((p[2] - q[2]),2)) + "*(" + ToString(p[2]) + "-" + vars[2] + "))/" + ToString(sqrt(pow(abs(p[0] - q[0]),2) + pow(abs(p[1] - q[1]),2) + pow(abs(p[2] - q[2]),2))) + ")");
+    subadd.push_back("abs("  + vars[0] + "-" + ToString(p.x) + "+ (" + ToString(pow((p.x - q.x),2)) + "*(" + ToString(p.x) + "-" + vars[0] + "))/" + ToString(sqrt(pow(abs(p.x - q.x),2) + pow(abs(p.y - q.y),2) + pow(abs(p.z - q.z),2))) + ")");
+    subadd.push_back("abs("  + vars[1] + "-" + ToString(p.y) + "+ (" + ToString(pow((p.y - q.y),2)) + "*(" + ToString(p.y) + "-" + vars[1] + "))/" + ToString(sqrt(pow(abs(p.x - q.x),2) + pow(abs(p.y - q.y),2) + pow(abs(p.z - q.z),2))) + ")");
+    subadd.push_back("abs("  + vars[2] + "-" + ToString(p.z) + "+ (" + ToString(pow((p.z - q.z),2)) + "*(" + ToString(p.z) + "-" + vars[2] + "))/" + ToString(sqrt(pow(abs(p.x - q.x),2) + pow(abs(p.y - q.y),2) + pow(abs(p.z - q.z),2))) + ")");
 
     return Sqrt(SumOfSquares(subadd));
 }
 
 // Epsilon close to p
-string STLGenerator::Close(vector<double> p, double eps){
+string STLGenerator::Close(WS_Coord p, double eps){
     return this->Dist(p) + " < " + this->ToString(eps);
 }
 
 
-string STLGenerator::Tube(vector<double> p, vector<double> q, double eps){
+string STLGenerator::Tube(WS_Coord p, WS_Coord q, double eps){
     return DistFromLine(p,q) + " < " +this->ToString(eps);
 }
 
 
 // Follow a trajectory
-string STLGenerator::FollowTraj(vector< vector<double> > wp, vector< double > epss ){
+string STLGenerator::FollowTraj(vector<WS_Coord> traj, vector< double > epss ){
 
-    string reach_goal = Close(wp[1],epss[0]);
-    string tube = Tube(wp[0],wp[1],epss[0]);
+    string reach_goal = Close(traj[1],epss[0]);
+    string tube = Tube(traj[0],traj[1],epss[0]);
 
     // case base (two waypoints, one epsilon)
-    if( ( wp.size() == 2 ) && ( epss.size() == 1 ) ){
+    if( ( traj.size() == 2 ) && ( epss.size() == 1 ) ){
 
         return "(" + tube + ") until (" + reach_goal + ")";
 
     }
 
-    vector< vector<double> > wpp(wp.begin() + 1, wp.end());
+    vector< WS_Coord > trajp(traj.begin() + 1, traj.end());
     vector< double > epssp(epss.begin() + 1, epss.end());
 
-    string rec = "( " + reach_goal + ") and (" + FollowTraj(wpp,epssp) + ")";
+    string rec = "( " + reach_goal + ") and (" + FollowTraj(trajp,epssp) + ")";
     return "(" + tube + ") until ( " + rec + " )";
 }
 
@@ -85,11 +85,39 @@ string STLGenerator::ToString(double n){
 }
 
 // Convert doubles to strings
-vector<string> STLGenerator::ToString(vector<double> n){
+vector<string> STLGenerator::ToString(WS_Coord n){
     vector<string> str;
-    for(int i=0; i<n.size(); i++){
-        str.push_back(this->ToString(n[i]));
-    }
+    //for(int i=0; i<n.size(); i++){
+    str.push_back(this->ToString(n.x));
+    str.push_back(this->ToString(n.y));
+    str.push_back(this->ToString(n.z));
+    //}
     return str;
+}
+
+
+// Get an epsilon learn using linear regression
+double STLGenerator::GetEpsilon(WS_Coord xInit, WS_Coord xGoal, vector<double> b){
+
+    double vx = xGoal.x - xInit.x;
+    double vy = xGoal.y - xInit.y;
+    double vz = xGoal.z - xInit.z;
+
+    double dist = sqrt(pow((vx),2) + pow((vy),2) + pow((vz),2));
+
+    WS_Coord vdir(vx/dist,vy/dist,vz/dist);
+
+    double eps = b[0] + b[1]*dist + b[2]*vdir.x + b[3]*vdir.y + b[4]*vdir.z;
+    return eps;
+}
+
+// Get epsilons for trajectory learn using linear regression
+vector<double> STLGenerator::GetEpsilon(vector<WS_Coord> traj, vector<double> b){
+
+    vector<double> epss;
+    for(int i=1; i<traj.size(); i++){
+        epss.push_back(this->GetEpsilon(traj[i-1],traj[i],b));
+    }
+    return epss;
 }
 

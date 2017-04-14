@@ -50,16 +50,4 @@ char* Monitor::RobustnessColor(double rob){
                                         return SH_FG_LIGHT_RED;
 }
 
-//// Get an epsilon learn using linear regression
-//double Monitor::GetEpsilon(vector<double> x, vector<double> b){
-
-//    double eps = 0;
-//    for(int i=0; i<x.size(); i++){
-//        eps += x[i]*b[i+1];
-//    }
-//    eps += b[0];    // add constant coeff
-
-//    return eps;
-//}
-
 

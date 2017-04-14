@@ -85,6 +85,7 @@ int main(int argc, char const *argv[])
         vector<WS_Coord> path = planner->GeneratePlan(1, GazeboToPlanner(destinations.at(i)), GazeboToPlanner(destinations.at(i+1)));
         //convert the path into goto of length less than 10
         vector<WS_Coord> pathNew = path;//ConvertToSmallGotos(path);
+
         for (int count = 0; count < pathNew.size(); count++)
         {
             WS_Coord shifted = PlannerToGazebo(pathNew.at(count));

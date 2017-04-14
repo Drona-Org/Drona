@@ -51,7 +51,14 @@ typedef struct WS_Coord {
         ret.append(buff);
         return ret;
     }
-
+    vector<double> ToDouble()
+    {
+        vector<double> v;
+        v.push_back(x);
+        v.push_back(y);
+        v.push_back(z);
+        return v;
+    }
 } WS_Coord;
 
 typedef struct WS_Box {
