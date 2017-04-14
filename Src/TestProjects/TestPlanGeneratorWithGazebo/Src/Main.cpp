@@ -59,37 +59,30 @@ int main(int argc, char const *argv[])
     //test OMPL planner
     vector<WS_Coord> destinations = {
         WS_Coord(0, 0, 3),
-        WS_Coord(6, 16, 4),
-        WS_Coord(15, 15, 6),
-        WS_Coord(17, 5, 6),
-        WS_Coord(8, 0, 2),
-        WS_Coord(0, 0, 10),
-        WS_Coord(-20, 0, 2),
-        WS_Coord(-23, -5, 3),
-        WS_Coord(-20, -13, 2),
-        WS_Coord(-15, -15, 6),
-        WS_Coord(-5, -23, 6),
-        WS_Coord(0, -23, 2),
-        WS_Coord(0, 0, 10),
-        WS_Coord(3, 5, 2),
-        WS_Coord(-3, 14, 6),
-        WS_Coord(-20, 14, 6),
-        WS_Coord(-23, 8, 2),
-        WS_Coord(0, 0, 10),
-        WS_Coord(18, -18, 2),
-        WS_Coord(18, -22, 2),
-        WS_Coord(18, -22, 4),
-        WS_Coord(15, -21, 2),
-        WS_Coord(5, -22, 7),
-        WS_Coord(0, 0, 10),
-
+        WS_Coord(6.9, 13.6, 4),
+        WS_Coord(18.8, 13.3, 6),
+        WS_Coord(18.7, -2.3, 6),
+        WS_Coord(0.69, -2.8, 3),
+        WS_Coord(-20.5, -6, 6),
+        WS_Coord(-21, -16, 4),
+        WS_Coord(-6.8, -22, 4),
+        WS_Coord(1.17, -16.4, 5),
+        WS_Coord(0.69, -2.81, 6),
+        WS_Coord(-5.3, 18.3, 5),
+        WS_Coord(-21.56, 15.12, 4),
+        WS_Coord(-20.52, -0.59, 5),
+        WS_Coord(0.69, -2.81, 6),
+        WS_Coord(18.78, -2.31, 6),
+        WS_Coord(17.72, -22.08, 2),
+        WS_Coord(1.17, -16.4, 5),
+        WS_Coord(0.69, -2.81, 6)
     };
 
     OMPLPLanner* planner = new OMPLPLanner(argv[1], PLANNER_RRTSTAR, OBJECTIVE_PATHLENGTH);
     for(int i = 0; i< destinations.size()-1; i++)
     {
 
-        vector<WS_Coord> path = planner->GeneratePlan(5, GazeboToPlanner(destinations.at(i)), GazeboToPlanner(destinations.at(i+1)));
+        vector<WS_Coord> path = planner->GeneratePlan(1, GazeboToPlanner(destinations.at(i)), GazeboToPlanner(destinations.at(i+1)));
         //convert the path into goto of length less than 10
         vector<WS_Coord> pathNew = path;//ConvertToSmallGotos(path);
         for (int count = 0; count < pathNew.size(); count++)

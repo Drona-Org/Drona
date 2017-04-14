@@ -2,6 +2,7 @@
 #define MONITOR
 
 #include "BreachAPI.h"
+#include "WorkspaceParser.h"
 
 #include <iostream>
 #include <unistd.h>
@@ -27,9 +28,14 @@ private:
 
 public:
     BreachAPI *breach;
+
     Monitor();
     double Robustness(char* STLspec, char* fileName);
     void RobustnessOnLine(const char* STLspec, const char* fileName);
+
+    //double GetEpsilon(WS_Coord xInit, WS_Coord xGoal, vector<double> b);
+
+
 
 };
 #endif // !Monitor
