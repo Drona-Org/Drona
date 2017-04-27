@@ -169,6 +169,17 @@ void PX4API::GoTo(float x, float y, float z, double eps){
     while(!(this->CloseTo(x,y,z,eps))){}
 }
 
+// Follow trajectory
+void PX4API::FollowTrajectory(vector< WS_Coord > traj, float eps){
+
+    if( traj.size() <= 0 ){
+        ERROR("FollowTrajectory: provide at least one way point");
+    }
+
+    for (auto wp = traj.begin(); wp != traj.end();  ++wp ){
+        this->GoTo(*wp,eps);
+    }
+}
 
 
 /*

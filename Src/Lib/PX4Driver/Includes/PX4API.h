@@ -47,7 +47,9 @@ public:
     void GoTo(WS_Coord goal, double eps);
     void GoTo(float x, float y, float z, double eps);
 
-    void FollowTrajectory(vector< vector< float > > traj, int rounds, float eps);
+    void FollowTrajectory(vector< WS_Coord > traj, float eps);
+
+    //void FollowTrajectory(vector< vector< float > > traj, int rounds, float eps);
     //void Loiter(vector< float > center, float radius, int rounds, float eps, float loitStep);
     //void Square(vector< float > corner, float edge, int rounds, float eps);
     bool CloseTo(float x, float y, float z, float eps);
