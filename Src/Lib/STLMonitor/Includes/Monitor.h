@@ -22,8 +22,14 @@ class Monitor
 private:
     double strong2weakSat, sat2unsat, weak2strongUnsat;  // Robustness thresholds
 
+    const char* STLspec;
+    const char* fileName;
+    bool onLineMonitor;
+
     char* RobustnessColor(double rob);
     void PrintRobustnessBounds(double upBound, double lowBound);
+
+    static void* OnLineMonitorThread(void *args);
 
 public:
     BreachAPI *breach;
@@ -31,6 +37,8 @@ public:
     Monitor();
     double Robustness(char* STLspec, char* fileName);
     void RobustnessOnLine(const char* STLspec, const char* fileName);
+    void StartOnLineMonitor(const char* STLspec, const char* fileName);
+    void StopOnLineMonitor();
 
 };
 #endif // !Monitor

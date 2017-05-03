@@ -164,10 +164,12 @@ void PX4API::GoTo(WS_Coord goal, double eps){
     while(!(this->CloseTo(goal.x,goal.y,goal.z,eps))){}
 }
 
+
 void PX4API::GoTo(float x, float y, float z, double eps){
     this->SetTargetLocalPosition(x,y,z);
     while(!(this->CloseTo(x,y,z,eps))){}
 }
+
 
 // Follow trajectory
 void PX4API::FollowTrajectory(vector< WS_Coord > traj, float eps){
@@ -182,42 +184,6 @@ void PX4API::FollowTrajectory(vector< WS_Coord > traj, float eps){
 }
 
 
-/*
-void PX4API::FollowTrajectory(vector< vector< float > > traj, int rounds, float eps){
-
-    if( rounds <= 0 ){
-        ERROR("FollowTrajectory: rounds must be nonnegative");
-    }
-
-    if( traj.size() <= 0 ){
-        ERROR("FollowTrajectory: provide at least one way point");
-        if( traj[0].size() != 3 ){
-            ERROR("FollowTrajectory: waypoints must be 3d arrays");
-        }
-    }
-
-    LOG("Command: Follow trajectory");
-
-    int currentTarget = 0;
-    int currentRound = 0;
-
-    this->px4com->SetLocalPosition(traj[currentTarget][0],traj[currentTarget][1],traj[currentTarget][2]);
-
-    while(true){
-        if( this->CloseTo(traj[currentTarget][0],traj[currentTarget][1],traj[currentTarget][2],eps) ){
-            currentTarget = currentTarget + 1;
-            if(currentTarget >=  traj.size()){
-                currentTarget = 0;
-                currentRound = currentRound + 1;
-                LOG("Round complete");
-                if(currentRound >=  rounds){
-                    return;
-                }
-            }
-            this->px4com->SetLocalPosition(traj[currentTarget][0],traj[currentTarget][1],traj[currentTarget][2]);
-        }
-    }
-}
 
 /*
 

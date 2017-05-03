@@ -1,7 +1,7 @@
-function [ spec ] = followTraj( vars, goal_pts )
+function [ spec ] = followTraj( vars, goal_pts, epss )
 %FOLLOWTRAJ Follow piece-wise trajectory specification
 
-    eps = 0.5;
+    eps = epss(1);
 
     xi = goal_pts(1,:);
     xg = goal_pts(2,:);
@@ -13,7 +13,7 @@ function [ spec ] = followTraj( vars, goal_pts )
     end
     
     in_pipe = char(tube(vars,xi,xg,700,eps));
-    rec = ['( ' char(reach_xg) ' ) and ( ' followTraj( vars, goal_pts(2:end,:)) ' )'];
+    rec = ['( ' char(reach_xg) ' ) and ( ' followTraj( vars, goal_pts(2:end,:),epss(2:end)) ' )'];
     spec = ['(' char(in_pipe) ') until ( ' rec ' ) '];
     
     return
