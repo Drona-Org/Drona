@@ -1,2 +1,0 @@
-/usr/bin/ar cq libcommunication.a  CMakeFiles/communication.dir/src/UdpSocketPort.cpp.o CMakeFiles/communication.dir/src/PX4Communicator.cpp.o
-/usr/bin/ranlib libcommunication.a
