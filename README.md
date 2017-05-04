@@ -1,5 +1,5 @@
 # DronaForPX4
-Drona programming framework for PX4 firmware.
+Drona programming framework.
 
 ## P
 ```sh
