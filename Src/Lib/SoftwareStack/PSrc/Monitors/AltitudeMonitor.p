@@ -1,13 +1,9 @@
-#include "PX4_API.p"
-
-event amm_reached;
-
-machine AltitudeMonitorMachine : AltitudeMonitorInterface {
+machine AltitudeMonitorMachine {
 	var orb : machine;
 	var commander : machine;
-    var targetAlt: float32;
-    var delta: float32;
-    var currentAlt: float32;
+  var targetAlt: float32;
+  var delta: float32;
+  var currentAlt: float32;
 	var isActive: bool;
 	var isFlying: bool;
 	var isLanding: bool;
@@ -23,8 +19,8 @@ machine AltitudeMonitorMachine : AltitudeMonitorInterface {
 			SetMessageInterval(commander, msg_extended_sys_state, 100000, this);
 			SetMessageInterval(commander, msg_local_position_ned, 100000, this);
 
-            Subscribe(orb, (topic = extended_sys_state_topic, sub = this));
-            Subscribe(orb, (topic = local_position_topic, sub = this));
+      Subscribe(orb, (topic = extended_sys_state_topic, sub = this));
+      Subscribe(orb, (topic = local_position_topic, sub = this));
 
 		}
 		on SetTargetAltitude goto MonitorAltitude;

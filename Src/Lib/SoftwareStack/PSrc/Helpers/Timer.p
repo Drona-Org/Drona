@@ -1,73 +1,58 @@
-#include "PX4_API.p"
-#include "TimerInterface.p"
-
-// local event for control transfer within timer
-event timer_init; 
-
 //Functions for interacting with the timer machine
-fun CreateTimer(owner : machine): machine {
-	var timer: machine;
-	timer = new TimerInterface(owner);
-	return timer;
+model fun CreateTimer(owner : ITimerClient): TimerPtr {
+	var m: ITimer;
+	m = new ITimer(owner);
+	return m;
 }
 
-model fun StartTimer(timer : machine, time: int) {
-	send timer, START;
+model fun StartTimer(timer: TimerPtr, time: int) {
+	send timer, eStartTimer, 100;
 }
 
-model fun CancelTimer(timer : machine) {
-	send timer, CANCEL;
-}
-
-fun CancelTimerAndHandleResponse(timer: machine): bool {
-	var timerCanceled: bool;
-	CancelTimer(timer);
+model fun CancelTimer(timer: TimerPtr) {
+	send timer, eCancelTimer;
 	receive {
-		case timer_cancel_success: (payload: machine) 
-		{ 
-			assert(timer == payload);
-			timerCanceled = true; 
-		}
-		case timer_cancel_failure: (payload: machine) 
-		{ 
-			assert(timer == payload);
-			timerCanceled = false; 
+		case eCancelSuccess: (payload: TimerPtr){}
+		case eCancelFailure: (payload: TimerPtr){
+			receive {
+				case eTimeOut: (payload1: TimerPtr){}
+			}
 		}
 	}
-	return timerCanceled;
 }
 
-machine Timer : TimerInterface {
-  var client: machine;
+model Timer : ITimer
+receives eStartTimer, eCancelTimer;
+sends eTimeOut, eCancelSuccess, eCancelFailure;
+{
+	var client: ITimerClient;
 
-  start state Init {
-    entry (payload: machine) {
-      client = payload;
-	  // goto WaitForReq
-      raise timer_init;
-    }
-    on timer_init goto WaitForReq;
-  }
-
-  state WaitForReq {
-    on timer_cancel goto WaitForReq with { 
-      send client, timer_cancel_failure, this;
-    } 
-    on timer_start goto WaitForCancel;
-  }
-
-  state WaitForCancel {
-    ignore timer_start;
-    on null goto WaitForReq with { 
-	  send client, timer_timeout, this; 
+	start state Init {
+		entry (m: ITimerClient) {
+			client = m;
+			goto WaitForReq;
+		}
 	}
-    on timer_cancel goto WaitForReq with {
-      if ($) {
-        send client, timer_cancel_success, this;
-      } else {
-        send client, timer_cancel_failure, this;
-        send client, timer_timeout, this;
-      }
-    }
-  }
+
+	state WaitForReq {
+		on eCancelTimer goto WaitForReq with { 
+			send client, eCancelFailure, this;
+		} 
+		on eStartTimer goto WaitForCancel;
+	}
+
+	state WaitForCancel {
+		ignore eStartTimer;
+		on null goto WaitForReq with { 
+			send client, eTimeOut, this; 
+		}
+		on eCancelTimer goto WaitForReq with {
+			if ($) {
+				send client, eCancelSuccess, this;
+			} else {
+				send client, eCancelFailure, this;
+				send client, eTimeOut, this;
+			}
+		}
+	}
 }
