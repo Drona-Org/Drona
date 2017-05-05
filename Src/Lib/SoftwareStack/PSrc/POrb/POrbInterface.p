@@ -1,8 +1,3 @@
-
-// POrbInterface
-
-#include "POrbTopics.p"
-
 // To subscribe to a particular topic you pass the topic id and the machine you want
 // to receive the messages that are published to that topic.
 type POrbSubMsgType = (topic: Topics, sub: machine);
@@ -12,8 +7,4 @@ event POrbSubscribe: POrbSubMsgType;
 // payload required for that type of event.
 type POrbPubMsgType = (topic: Topics, ev: event, payload: any);
 event POrbPublish: POrbPubMsgType;
-
-type POrbInterface() = {
-	POrbSubscribe, POrbPublish
-};
 
