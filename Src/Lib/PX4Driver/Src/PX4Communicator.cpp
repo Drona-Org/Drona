@@ -37,13 +37,16 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
                      switch (msg.msgid) {
                         case MAVLINK_MSG_ID_HEARTBEAT:{
                             p_mavlink_msg_heartbeat_decode(&msg, &pMessage_heartbeat);
-
-                            LOG("Heart beat received :: ");
+                            LOG("Heart beat received");
                             PrtPrintValue(pMessage_heartbeat);
+                            LOG("\n");
                             break;
                         }
                         case MAVLINK_MSG_ID_LOCAL_POSITION_NED:{
-                            //LOG("Local position received");
+                            LOG("Local position received");
+                            p_mavlink_msg_local_position_ned_decode(&msg, &pMessage_local_position_ned);
+                            PrtPrintValue(pMessage_local_position_ned);
+                            LOG("\n");
                             mavlink_local_position_ned_t curLocPos;
                             mavlink_msg_local_position_ned_decode(&msg, &curLocPos);
                             ROBOTSTATE->UpdateCurrentLocalPosition(curLocPos);

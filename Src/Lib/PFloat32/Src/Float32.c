@@ -18,7 +18,7 @@ PRT_BOOLEAN PRT_FORGN_ISEQUAL_float32_IMPL(PRT_UINT64 frgnVal1, PRT_UINT64 frgnV
 	PRT_LIB_FLOAT32_DATA arg1, arg2;
 	arg1.bits = frgnVal1;
 	arg2.bits = frgnVal2;
-	return arg1.value == arg2.value;
+    return arg1.bits == arg2.bits;
 }
 
 PRT_STRING PRT_FORGN_TOSTRING_float32_IMPL(PRT_UINT64 frgnVal)
@@ -257,7 +257,14 @@ float PrtGetFloat32(PRT_VALUE* value)
 	return 0;
 }
 
-void PrtSetFloat32(PRT_VALUE* frgnVal, float newVal) 
+void PrtSetFloat32(PRT_VALUE* frgnVal, float newVal)
 {
-    frgnVal->valueUnion.frgn->value = newVal;
+    if (frgnVal->discriminator == PRT_VALUE_KIND_FORGN) {
+        PRT_FORGNVALUE *fVal = frgnVal->valueUnion.frgn;
+        (fVal)->typeTag = P_GEND_TYPE_float32.typeUnion.typeTag;
+        ((PRT_LIB_FLOAT32_DATA*)(&(fVal)->value))->value = newVal;
+    }
+    else {
+        PrtAssert(PRT_FALSE, "Cannot convert value to PRT_VALUE_KIND_FORGN");
+    }
 }

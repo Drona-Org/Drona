@@ -17,7 +17,7 @@ void Logger::LogMessage(const char* msg)
     pthread_mutex_lock(&lock);
     fprintf(stdout,"<LOG>");
     fprintf(stdout, "%s", msg);
-    fprintf(stdout, "\n");
+    //fprintf(stdout, "\n");
     pthread_mutex_unlock(&lock);
     fflush(stdout);
 }

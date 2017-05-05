@@ -17,7 +17,8 @@ int main()
     vector< WS_Coord > goals = {WS_Coord(3,3,-3),WS_Coord(-3,7,-3),WS_Coord(0,10,-3),WS_Coord(3,7,-3),WS_Coord(-3,3,-3),WS_Coord(0,0,-3)};
     double eps = 1;
 
-
+    //this is P specific and must be commented out if P is not used.
+    PrtSetForeignTypes(&P_GEND_PROGRAM);
     usleep(2500000);
     px4->Arm();
     usleep(2500000);
