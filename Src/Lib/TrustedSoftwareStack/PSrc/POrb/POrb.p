@@ -1,19 +1,14 @@
 // The POrbMachine implements a pub/sub mechanism so you can have many subscribers 
 // receive messages that are published.
- 
-#include "POrbInterface.p""
 
-event porb_local;
-
-machine POrbMachine : POrbInterface {
+machine POrbMachine {
 	var topicSubscribers: map[Topics, seq[machine]];
 	start state Init
 	{
             entry {
                     InitializeListener(this);
-                    raise porb_local;
+                    goto ReadMessagesAndPublish;
             }
-            on porb_local goto ReadMessagesAndPublish;
 	}
 
 	model fun InitializeListener(payload: machine) {
