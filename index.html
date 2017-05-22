@@ -35,11 +35,36 @@ layout: template1
 <div class="jumbotron">
     <h2><u>Surveillance Application</u></h2>
   <p> 
-  In this video, we ask the drone to survey the town of Utopia.
+  In this video, we ask the drone to survey the city in Gazebo simulator. The points to be visited by the drone are generated randomly.
+  The autonomous drone computes a safe plan from its location to the next survey point and follows the trajectory robustly.
   <br>
   <br>
   </p>
-  <iframe width="640" height="360" src="https://www.youtube.com/embed/Y18sGtk0Roo" frameborder="4" allowfullscreen></iframe>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/at5ZqN_LNn8" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<div class="jumbotron">
+  <h2><u>Online-monitoring during mission</u></h2>
+  <p> 
+  In this video, we ask the drone to survey the city in Gazebo simulator.
+  The autonomous drone computes a safe plan from its location to the next survey point and follows the trajectory robustly.
+  To demonstrate the runtime-monitoring capabilities in Drona, we monitor each trajectory against a specification that the followed trajectory must lie within a tube. The graphs generated during the simulation present the robustness of the trajectory. During the simulation you can notice that for one of the trajectories the robustness becomes (red) negative, indicating that the drone violated the assumption during runtime. 
+  You can also notice that in some cases the robustness becomes orange (close to zero) which can be used as an indication to take pre-emptive steps.
+  <br>
+  <br>
+  </p>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/iZdn6xPSHe4" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<div class="jumbotron">
+  <h2><u>Longer simulation video</u></h2>
+  <p> 
+  In this video, we ask the drone to survey the city in Gazebo simulator. The points to be visited by the drone are generated randomly.
+  The autonomous drone computes a safe plan from its location to the next survey point and follows the trajectory robustly.
+  <br>
+  <br>
+  </p>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/Go4Wg8z2d4g" frameborder="0" allowfullscreen></iframe>
 </div>
 
 <script>
