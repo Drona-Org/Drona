@@ -1,6 +1,3 @@
-#include "PX4_API.p"
-
-
 model fun SendSetHomeCommand(commander: machine, pos: GlobalPositionType, caller : machine)
 {
 	send commander, Command, (caller = caller, confirm = false, cmd = mav_cmd_do_set_home,  a1 = 0, a2 = 0, a3 = 0, a4 = 0, a5 = pos.lat, a6 = pos.lon, a7 = pos.alt);
