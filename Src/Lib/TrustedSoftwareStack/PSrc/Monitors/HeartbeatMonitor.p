@@ -1,9 +1,4 @@
-#include "PX4_API.p"
-#include "TimerInterface.p"
-
-event heartbeat_monitor_local;
-
-machine HeartbeatMonitorMachine : HeartbeatMonitorInterface {
+machine HeartbeatMonitorMachine  {
 	var orb: machine;
 	var commander : machine;
 	var heartbeatTimerV : machine;
@@ -25,9 +20,8 @@ machine HeartbeatMonitorMachine : HeartbeatMonitorInterface {
 			//start timer for monitoring heartbeat message
 			StartTimer(heartbeatTimerV, 10000);
 
-			raise heartbeat_monitor_local;
+			goto MonitorHeartbeat;
 		}
-		on heartbeat_monitor_local goto MonitorHeartbeat;
 	}
 
 	state MonitorHeartbeat {

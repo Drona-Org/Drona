@@ -1,8 +1,4 @@
-#include "PX4_API.p"
-
-event gpshmm_init;
-
-machine GPSHealthMonitorMachine : GPSHealthMonitorInterface {
+machine GPSHealthMonitorMachine {
 	var orb: machine;
 	var commander : machine;
 	var status: GPSHealthType;
@@ -21,9 +17,8 @@ machine GPSHealthMonitorMachine : GPSHealthMonitorInterface {
             Subscribe(orb, (topic = gps_raw_int_topic, sub = this));
             Subscribe(orb, (topic = global_position_topic, sub = this));
 			
-			raise gpshmm_init;
+			goto MonitorGPSLock;
 		}
-		on gpshmm_init goto MonitorGPSLock;
 	}
 
 	state MonitorGPSLock {

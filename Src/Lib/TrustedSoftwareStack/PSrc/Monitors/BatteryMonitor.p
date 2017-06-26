@@ -1,8 +1,6 @@
-#include "PX4_API.p"
 
-event batt_mon_init;
 
-machine BatteryMonitorMachine : BatteryMonitorInterface {
+machine BatteryMonitorMachine{
 	var orb: machine;
 	var commander : machine;
 	var batteryDischarged: bool;
@@ -16,9 +14,8 @@ machine BatteryMonitorMachine : BatteryMonitorInterface {
 
 			//subscribe to the gps status message
 			Subscribe(orb, (topic = battery_status_topic, sub = this));
-			raise batt_mon_init;
+			goto MonitorBatteryLevel;
 		}
-		on batt_mon_init goto MonitorBatteryLevel;
 	}
 
 	state MonitorBatteryLevel {

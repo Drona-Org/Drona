@@ -1,6 +1,3 @@
-#include "PX4_API.p"
-#include "TimerInterface.p"
-
 event cmd_local;
 event cmd_retry; 
 

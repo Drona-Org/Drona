@@ -1,11 +1,3 @@
-
-// These are common P modules used by all the higher level state machines.
-
-#include "..\PFloat32\PFloat32Interface.p"
-#include "..\PMavlinkMsgs\PFiles\P_common_Enums.p"
-#include "..\PMavlinkMsgs\PFiles\P_common_MessageTypes.p"
-
-
 //Type declarations
 type GPSHealthType = 
 (
@@ -157,9 +149,6 @@ event Command : CommandType;
 type CommanderInterface(machine) = {
 	Command, command_ack
 };
-
-#include "POrbInterface.p"
-
 
 // AltitudeMonitorInterface
 

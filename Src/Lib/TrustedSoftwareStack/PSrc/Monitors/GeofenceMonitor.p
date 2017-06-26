@@ -1,6 +1,4 @@
-#include "PX4_API.p"
-
-machine GeofenceMonitorMachine : GeofenceMonitorInterface {
+machine GeofenceMonitorMachine {
 	var orb: machine;
 	var commander : machine;
 	var radius: float32;
