@@ -44,8 +44,8 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
                         }
                         case MAVLINK_MSG_ID_LOCAL_POSITION_NED:{
                             LOG("Local position received");
-                            p_mavlink_msg_local_position_ned_decode(&msg, &pMessage_local_position_ned);
-                            PrtPrintValue(pMessage_local_position_ned);
+                            //p_mavlink_msg_local_position_ned_decode(&msg, &pMessage_local_position_ned);
+                            //PrtPrintValue(pMessage_local_position_ned);
                             LOG("\n");
                             mavlink_local_position_ned_t curLocPos;
                             mavlink_msg_local_position_ned_decode(&msg, &curLocPos);

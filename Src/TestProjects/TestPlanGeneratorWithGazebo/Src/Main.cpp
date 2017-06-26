@@ -61,10 +61,13 @@ int main(int argc, char const *argv[])
         WS_Coord(0, 0, 3),
         WS_Coord(6.9, 13.6, 4),
         WS_Coord(18.8, 13.3, 6),
+        WS_Coord(-5.3, 18.3, 5),
+        WS_Coord(-21.56, 15.12, 4),
         WS_Coord(18.7, -2.3, 6),
         WS_Coord(0.69, -2.8, 3),
         WS_Coord(-20.5, -6, 6),
         WS_Coord(-21, -16, 4),
+        WS_Coord(-21.56, 15.12, 4),
         WS_Coord(-6.8, -22, 4),
         WS_Coord(1.17, -16.4, 5),
         WS_Coord(0.69, -2.81, 6),
@@ -74,8 +77,11 @@ int main(int argc, char const *argv[])
         WS_Coord(0.69, -2.81, 6),
         WS_Coord(18.78, -2.31, 6),
         WS_Coord(17.72, -22.08, 2),
+        WS_Coord(0.69, -2.8, 3),
         WS_Coord(1.17, -16.4, 5),
-        WS_Coord(0.69, -2.81, 6)
+        WS_Coord(0.69, -2.81, 6),
+        WS_Coord(-5.3, 18.3, 5),
+        WS_Coord(-21.56, 15.12, 4),
     };
 
     OMPLPLanner* planner = new OMPLPLanner(argv[1], PLANNER_RRTSTAR, OBJECTIVE_PATHLENGTH);
