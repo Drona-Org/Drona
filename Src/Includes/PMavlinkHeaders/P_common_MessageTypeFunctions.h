@@ -1,9 +1,9 @@
 
 #pragma once
 #include "mavlink.h"
-#include "Float32.h"
 #include "PrtValues.h"
 #include "MavlinkMessageTypes.h"
+
 
 static inline uint16_t p_mavlink_msg_heartbeat_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* heartbeat)
 {
@@ -558,7 +558,7 @@ int count = 0;
 PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_PARAM_VALUE_LEN];
 
-_mav_put_float(buf, 0, (float)PrtGetFloat32(PrtTupleGetNC(param_value, 0)));
+_mav_put_float(buf, 0, (float)PrtPrimGetFloat(PrtTupleGetNC(param_value, 0)));
 _mav_put_uint16_t(buf, 4, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(param_value, 1)));
 _mav_put_uint16_t(buf, 6, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(param_value, 2)));
 
@@ -588,7 +588,7 @@ if(*param_value == NULL)
 {
 *param_value = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_param_value_t);
 
-PrtSetFloat32(PrtTupleGetNC(*param_value, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*param_value, 0), _MAV_RETURN_float(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*param_value, 1), _MAV_RETURN_uint16_t(msg, 4));
 PrtPrimSetInt(PrtTupleGetNC(*param_value, 2), _MAV_RETURN_uint16_t(msg, 6));
 
@@ -608,7 +608,7 @@ PrtPrimSetInt(PrtTupleGetNC(*param_value, 4), _MAV_RETURN_uint8_t(msg, 24));
 else
 {
 
-PrtSetFloat32(PrtTupleGetNC(*param_value, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*param_value, 0), _MAV_RETURN_float(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*param_value, 1), _MAV_RETURN_uint16_t(msg, 4));
 PrtPrimSetInt(PrtTupleGetNC(*param_value, 2), _MAV_RETURN_uint16_t(msg, 6));
 
@@ -634,7 +634,7 @@ int count = 0;
 PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_PARAM_SET_LEN];
 
-_mav_put_float(buf, 0, (float)PrtGetFloat32(PrtTupleGetNC(param_set, 0)));
+_mav_put_float(buf, 0, (float)PrtPrimGetFloat(PrtTupleGetNC(param_set, 0)));
 _mav_put_uint8_t(buf, 4, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(param_set, 1)));
 _mav_put_uint8_t(buf, 5, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(param_set, 2)));
 
@@ -664,7 +664,7 @@ if(*param_set == NULL)
 {
 *param_set = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_param_set_t);
 
-PrtSetFloat32(PrtTupleGetNC(*param_set, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*param_set, 0), _MAV_RETURN_float(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*param_set, 1), _MAV_RETURN_uint8_t(msg, 4));
 PrtPrimSetInt(PrtTupleGetNC(*param_set, 2), _MAV_RETURN_uint8_t(msg, 5));
 
@@ -684,7 +684,7 @@ PrtPrimSetInt(PrtTupleGetNC(*param_set, 4), _MAV_RETURN_uint8_t(msg, 22));
 else
 {
 
-PrtSetFloat32(PrtTupleGetNC(*param_set, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*param_set, 0), _MAV_RETURN_float(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*param_set, 1), _MAV_RETURN_uint8_t(msg, 4));
 PrtPrimSetInt(PrtTupleGetNC(*param_set, 2), _MAV_RETURN_uint8_t(msg, 5));
 
@@ -1139,8 +1139,8 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_SCALED_PRESSURE_LEN];
 
 _mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(scaled_pressure, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(scaled_pressure, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(scaled_pressure, 2)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(scaled_pressure, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(scaled_pressure, 2)));
 _mav_put_int16_t(buf, 12, (int16_t)PrtPrimGetInt(PrtTupleGetNC(scaled_pressure, 3)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SCALED_PRESSURE_LEN);
@@ -1160,8 +1160,8 @@ if(*scaled_pressure == NULL)
 *scaled_pressure = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_scaled_pressure_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*scaled_pressure, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*scaled_pressure, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*scaled_pressure, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*scaled_pressure, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*scaled_pressure, 2), _MAV_RETURN_float(msg, 8));
 PrtPrimSetInt(PrtTupleGetNC(*scaled_pressure, 3), _MAV_RETURN_int16_t(msg, 12));
 
 }
@@ -1169,8 +1169,8 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*scaled_pressure, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*scaled_pressure, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*scaled_pressure, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*scaled_pressure, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*scaled_pressure, 2), _MAV_RETURN_float(msg, 8));
 PrtPrimSetInt(PrtTupleGetNC(*scaled_pressure, 3), _MAV_RETURN_int16_t(msg, 12));
 
 }
@@ -1185,12 +1185,12 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_ATTITUDE_LEN];
 
 _mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(attitude, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(attitude, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(attitude, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(attitude, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(attitude, 4)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(attitude, 5)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(attitude, 6)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude, 5)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude, 6)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ATTITUDE_LEN);
 msg->msgid = MAVLINK_MSG_ID_ATTITUDE;
@@ -1209,24 +1209,24 @@ if(*attitude == NULL)
 *attitude = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_attitude_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*attitude, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*attitude, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*attitude, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*attitude, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*attitude, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*attitude, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*attitude, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude, 6), _MAV_RETURN_float(msg, 24));
 
 }
 else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*attitude, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*attitude, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*attitude, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*attitude, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*attitude, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*attitude, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*attitude, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude, 6), _MAV_RETURN_float(msg, 24));
 
 }
 
@@ -1240,13 +1240,13 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_ATTITUDE_QUATERNION_LEN];
 
 _mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(attitude_quaternion, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(attitude_quaternion, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(attitude_quaternion, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(attitude_quaternion, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(attitude_quaternion, 4)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(attitude_quaternion, 5)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(attitude_quaternion, 6)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(attitude_quaternion, 7)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude_quaternion, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude_quaternion, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude_quaternion, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude_quaternion, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude_quaternion, 5)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude_quaternion, 6)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude_quaternion, 7)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ATTITUDE_QUATERNION_LEN);
 msg->msgid = MAVLINK_MSG_ID_ATTITUDE_QUATERNION;
@@ -1265,26 +1265,26 @@ if(*attitude_quaternion == NULL)
 *attitude_quaternion = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_attitude_quaternion_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*attitude_quaternion, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion, 6), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion, 7), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion, 7), _MAV_RETURN_float(msg, 28));
 
 }
 else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*attitude_quaternion, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion, 6), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion, 7), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion, 7), _MAV_RETURN_float(msg, 28));
 
 }
 
@@ -1298,12 +1298,12 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_LOCAL_POSITION_NED_LEN];
 
 _mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(local_position_ned, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned, 4)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned, 5)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned, 6)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned, 5)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned, 6)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_LOCAL_POSITION_NED_LEN);
 msg->msgid = MAVLINK_MSG_ID_LOCAL_POSITION_NED;
@@ -1322,24 +1322,24 @@ if(*local_position_ned == NULL)
 *local_position_ned = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_local_position_ned_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*local_position_ned, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned, 6), _MAV_RETURN_float(msg, 24));
 
 }
 else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*local_position_ned, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned, 6), _MAV_RETURN_float(msg, 24));
 
 }
 
@@ -1727,13 +1727,13 @@ int count = 0;
 PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_MISSION_ITEM_LEN];
 
-_mav_put_float(buf, 0, (float)PrtGetFloat32(PrtTupleGetNC(mission_item, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(mission_item, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(mission_item, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(mission_item, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(mission_item, 4)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(mission_item, 5)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(mission_item, 6)));
+_mav_put_float(buf, 0, (float)PrtPrimGetFloat(PrtTupleGetNC(mission_item, 0)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(mission_item, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(mission_item, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(mission_item, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(mission_item, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(mission_item, 5)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(mission_item, 6)));
 _mav_put_uint16_t(buf, 28, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(mission_item, 7)));
 _mav_put_uint16_t(buf, 30, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(mission_item, 8)));
 _mav_put_uint8_t(buf, 32, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(mission_item, 9)));
@@ -1758,13 +1758,13 @@ if(*mission_item == NULL)
 {
 *mission_item = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mission_item_t);
 
-PrtSetFloat32(PrtTupleGetNC(*mission_item, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*mission_item, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*mission_item, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*mission_item, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*mission_item, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*mission_item, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*mission_item, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item, 6), _MAV_RETURN_float(msg, 24));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item, 7), _MAV_RETURN_uint16_t(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item, 8), _MAV_RETURN_uint16_t(msg, 30));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item, 9), _MAV_RETURN_uint8_t(msg, 32));
@@ -1777,13 +1777,13 @@ PrtPrimSetInt(PrtTupleGetNC(*mission_item, 13), _MAV_RETURN_uint8_t(msg, 36));
 else
 {
 
-PrtSetFloat32(PrtTupleGetNC(*mission_item, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*mission_item, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*mission_item, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*mission_item, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*mission_item, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*mission_item, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*mission_item, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item, 6), _MAV_RETURN_float(msg, 24));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item, 7), _MAV_RETURN_uint16_t(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item, 8), _MAV_RETURN_uint16_t(msg, 30));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item, 9), _MAV_RETURN_uint8_t(msg, 32));
@@ -2218,10 +2218,10 @@ int count = 0;
 PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_PARAM_MAP_RC_LEN];
 
-_mav_put_float(buf, 0, (float)PrtGetFloat32(PrtTupleGetNC(param_map_rc, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(param_map_rc, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(param_map_rc, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(param_map_rc, 3)));
+_mav_put_float(buf, 0, (float)PrtPrimGetFloat(PrtTupleGetNC(param_map_rc, 0)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(param_map_rc, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(param_map_rc, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(param_map_rc, 3)));
 _mav_put_int16_t(buf, 16, (int16_t)PrtPrimGetInt(PrtTupleGetNC(param_map_rc, 4)));
 _mav_put_uint8_t(buf, 18, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(param_map_rc, 5)));
 _mav_put_uint8_t(buf, 19, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(param_map_rc, 6)));
@@ -2252,10 +2252,10 @@ if(*param_map_rc == NULL)
 {
 *param_map_rc = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_param_map_rc_t);
 
-PrtSetFloat32(PrtTupleGetNC(*param_map_rc, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*param_map_rc, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*param_map_rc, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*param_map_rc, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*param_map_rc, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*param_map_rc, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*param_map_rc, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*param_map_rc, 3), _MAV_RETURN_float(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*param_map_rc, 4), _MAV_RETURN_int16_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*param_map_rc, 5), _MAV_RETURN_uint8_t(msg, 18));
 PrtPrimSetInt(PrtTupleGetNC(*param_map_rc, 6), _MAV_RETURN_uint8_t(msg, 19));
@@ -2276,10 +2276,10 @@ PrtPrimSetInt(PrtTupleGetNC(*param_map_rc, 8), _MAV_RETURN_uint8_t(msg, 36));
 else
 {
 
-PrtSetFloat32(PrtTupleGetNC(*param_map_rc, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*param_map_rc, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*param_map_rc, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*param_map_rc, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*param_map_rc, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*param_map_rc, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*param_map_rc, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*param_map_rc, 3), _MAV_RETURN_float(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*param_map_rc, 4), _MAV_RETURN_int16_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*param_map_rc, 5), _MAV_RETURN_uint8_t(msg, 18));
 PrtPrimSetInt(PrtTupleGetNC(*param_map_rc, 6), _MAV_RETURN_uint8_t(msg, 19));
@@ -2349,12 +2349,12 @@ int count = 0;
 PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_SAFETY_SET_ALLOWED_AREA_LEN];
 
-_mav_put_float(buf, 0, (float)PrtGetFloat32(PrtTupleGetNC(safety_set_allowed_area, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(safety_set_allowed_area, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(safety_set_allowed_area, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(safety_set_allowed_area, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(safety_set_allowed_area, 4)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(safety_set_allowed_area, 5)));
+_mav_put_float(buf, 0, (float)PrtPrimGetFloat(PrtTupleGetNC(safety_set_allowed_area, 0)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(safety_set_allowed_area, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(safety_set_allowed_area, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(safety_set_allowed_area, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(safety_set_allowed_area, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(safety_set_allowed_area, 5)));
 _mav_put_uint8_t(buf, 24, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(safety_set_allowed_area, 6)));
 _mav_put_uint8_t(buf, 25, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(safety_set_allowed_area, 7)));
 _mav_put_uint8_t(buf, 26, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(safety_set_allowed_area, 8)));
@@ -2375,12 +2375,12 @@ if(*safety_set_allowed_area == NULL)
 {
 *safety_set_allowed_area = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_safety_set_allowed_area_t);
 
-PrtSetFloat32(PrtTupleGetNC(*safety_set_allowed_area, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*safety_set_allowed_area, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*safety_set_allowed_area, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*safety_set_allowed_area, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*safety_set_allowed_area, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*safety_set_allowed_area, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_set_allowed_area, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_set_allowed_area, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_set_allowed_area, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_set_allowed_area, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_set_allowed_area, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_set_allowed_area, 5), _MAV_RETURN_float(msg, 20));
 PrtPrimSetInt(PrtTupleGetNC(*safety_set_allowed_area, 6), _MAV_RETURN_uint8_t(msg, 24));
 PrtPrimSetInt(PrtTupleGetNC(*safety_set_allowed_area, 7), _MAV_RETURN_uint8_t(msg, 25));
 PrtPrimSetInt(PrtTupleGetNC(*safety_set_allowed_area, 8), _MAV_RETURN_uint8_t(msg, 26));
@@ -2389,12 +2389,12 @@ PrtPrimSetInt(PrtTupleGetNC(*safety_set_allowed_area, 8), _MAV_RETURN_uint8_t(ms
 else
 {
 
-PrtSetFloat32(PrtTupleGetNC(*safety_set_allowed_area, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*safety_set_allowed_area, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*safety_set_allowed_area, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*safety_set_allowed_area, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*safety_set_allowed_area, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*safety_set_allowed_area, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_set_allowed_area, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_set_allowed_area, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_set_allowed_area, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_set_allowed_area, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_set_allowed_area, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_set_allowed_area, 5), _MAV_RETURN_float(msg, 20));
 PrtPrimSetInt(PrtTupleGetNC(*safety_set_allowed_area, 6), _MAV_RETURN_uint8_t(msg, 24));
 PrtPrimSetInt(PrtTupleGetNC(*safety_set_allowed_area, 7), _MAV_RETURN_uint8_t(msg, 25));
 PrtPrimSetInt(PrtTupleGetNC(*safety_set_allowed_area, 8), _MAV_RETURN_uint8_t(msg, 26));
@@ -2410,12 +2410,12 @@ int count = 0;
 PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_SAFETY_ALLOWED_AREA_LEN];
 
-_mav_put_float(buf, 0, (float)PrtGetFloat32(PrtTupleGetNC(safety_allowed_area, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(safety_allowed_area, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(safety_allowed_area, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(safety_allowed_area, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(safety_allowed_area, 4)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(safety_allowed_area, 5)));
+_mav_put_float(buf, 0, (float)PrtPrimGetFloat(PrtTupleGetNC(safety_allowed_area, 0)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(safety_allowed_area, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(safety_allowed_area, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(safety_allowed_area, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(safety_allowed_area, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(safety_allowed_area, 5)));
 _mav_put_uint8_t(buf, 24, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(safety_allowed_area, 6)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SAFETY_ALLOWED_AREA_LEN);
@@ -2434,24 +2434,24 @@ if(*safety_allowed_area == NULL)
 {
 *safety_allowed_area = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_safety_allowed_area_t);
 
-PrtSetFloat32(PrtTupleGetNC(*safety_allowed_area, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*safety_allowed_area, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*safety_allowed_area, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*safety_allowed_area, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*safety_allowed_area, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*safety_allowed_area, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_allowed_area, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_allowed_area, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_allowed_area, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_allowed_area, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_allowed_area, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_allowed_area, 5), _MAV_RETURN_float(msg, 20));
 PrtPrimSetInt(PrtTupleGetNC(*safety_allowed_area, 6), _MAV_RETURN_uint8_t(msg, 24));
 
 }
 else
 {
 
-PrtSetFloat32(PrtTupleGetNC(*safety_allowed_area, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*safety_allowed_area, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*safety_allowed_area, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*safety_allowed_area, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*safety_allowed_area, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*safety_allowed_area, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_allowed_area, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_allowed_area, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_allowed_area, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_allowed_area, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_allowed_area, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*safety_allowed_area, 5), _MAV_RETURN_float(msg, 20));
 PrtPrimSetInt(PrtTupleGetNC(*safety_allowed_area, 6), _MAV_RETURN_uint8_t(msg, 24));
 
 }
@@ -2472,20 +2472,20 @@ seqVal = PrtTupleGetNC(attitude_quaternion_cov, 1);
 while(count < 4)
 {
     
-_mav_put_float(buf, 8 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 8 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(attitude_quaternion_cov, 2)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(attitude_quaternion_cov, 3)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(attitude_quaternion_cov, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude_quaternion_cov, 2)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude_quaternion_cov, 3)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude_quaternion_cov, 4)));
 
 count = 0;
 seqVal = PrtTupleGetNC(attitude_quaternion_cov, 5);
 while(count < 9)
 {
     
-_mav_put_float(buf, 36 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 36 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
@@ -2514,16 +2514,15 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 8 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 8 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion_cov, 2), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion_cov, 3), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion_cov, 4), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion_cov, 2), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion_cov, 3), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion_cov, 4), _MAV_RETURN_float(msg, 32));
 
 count = 0;
 seqVal = PrtTupleGetNC(*attitude_quaternion_cov, 5);
@@ -2531,8 +2530,7 @@ while(count < 9)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 36 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 36 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
@@ -2550,20 +2548,20 @@ seqVal = PrtTupleGetNC(*attitude_quaternion_cov, 1);
 while(count < 4)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 8 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 8 + count * 4));
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion_cov, 2), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion_cov, 3), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*attitude_quaternion_cov, 4), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion_cov, 2), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion_cov, 3), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_quaternion_cov, 4), _MAV_RETURN_float(msg, 32));
 
 count = 0;
 seqVal = PrtTupleGetNC(*attitude_quaternion_cov, 5);
 while(count < 9)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 36 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 36 + count * 4));
 
     count++;
 }  
@@ -2579,11 +2577,11 @@ int count = 0;
 PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN];
 
-_mav_put_float(buf, 0, (float)PrtGetFloat32(PrtTupleGetNC(nav_controller_output, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(nav_controller_output, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(nav_controller_output, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(nav_controller_output, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(nav_controller_output, 4)));
+_mav_put_float(buf, 0, (float)PrtPrimGetFloat(PrtTupleGetNC(nav_controller_output, 0)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(nav_controller_output, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(nav_controller_output, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(nav_controller_output, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(nav_controller_output, 4)));
 _mav_put_int16_t(buf, 20, (int16_t)PrtPrimGetInt(PrtTupleGetNC(nav_controller_output, 5)));
 _mav_put_int16_t(buf, 22, (int16_t)PrtPrimGetInt(PrtTupleGetNC(nav_controller_output, 6)));
 _mav_put_uint16_t(buf, 24, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(nav_controller_output, 7)));
@@ -2604,11 +2602,11 @@ if(*nav_controller_output == NULL)
 {
 *nav_controller_output = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_nav_controller_output_t);
 
-PrtSetFloat32(PrtTupleGetNC(*nav_controller_output, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*nav_controller_output, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*nav_controller_output, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*nav_controller_output, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*nav_controller_output, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*nav_controller_output, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*nav_controller_output, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*nav_controller_output, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*nav_controller_output, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*nav_controller_output, 4), _MAV_RETURN_float(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*nav_controller_output, 5), _MAV_RETURN_int16_t(msg, 20));
 PrtPrimSetInt(PrtTupleGetNC(*nav_controller_output, 6), _MAV_RETURN_int16_t(msg, 22));
 PrtPrimSetInt(PrtTupleGetNC(*nav_controller_output, 7), _MAV_RETURN_uint16_t(msg, 24));
@@ -2617,11 +2615,11 @@ PrtPrimSetInt(PrtTupleGetNC(*nav_controller_output, 7), _MAV_RETURN_uint16_t(msg
 else
 {
 
-PrtSetFloat32(PrtTupleGetNC(*nav_controller_output, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*nav_controller_output, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*nav_controller_output, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*nav_controller_output, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*nav_controller_output, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*nav_controller_output, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*nav_controller_output, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*nav_controller_output, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*nav_controller_output, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*nav_controller_output, 4), _MAV_RETURN_float(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*nav_controller_output, 5), _MAV_RETURN_int16_t(msg, 20));
 PrtPrimSetInt(PrtTupleGetNC(*nav_controller_output, 6), _MAV_RETURN_int16_t(msg, 22));
 PrtPrimSetInt(PrtTupleGetNC(*nav_controller_output, 7), _MAV_RETURN_uint16_t(msg, 24));
@@ -2642,16 +2640,16 @@ _mav_put_int32_t(buf, 8, (int32_t)PrtPrimGetInt(PrtTupleGetNC(global_position_in
 _mav_put_int32_t(buf, 12, (int32_t)PrtPrimGetInt(PrtTupleGetNC(global_position_int_cov, 2)));
 _mav_put_int32_t(buf, 16, (int32_t)PrtPrimGetInt(PrtTupleGetNC(global_position_int_cov, 3)));
 _mav_put_int32_t(buf, 20, (int32_t)PrtPrimGetInt(PrtTupleGetNC(global_position_int_cov, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(global_position_int_cov, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(global_position_int_cov, 6)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(global_position_int_cov, 7)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(global_position_int_cov, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(global_position_int_cov, 6)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(global_position_int_cov, 7)));
 
 count = 0;
 seqVal = PrtTupleGetNC(global_position_int_cov, 8);
 while(count < 36)
 {
     
-_mav_put_float(buf, 36 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 36 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
@@ -2678,9 +2676,9 @@ PrtPrimSetInt(PrtTupleGetNC(*global_position_int_cov, 1), _MAV_RETURN_int32_t(ms
 PrtPrimSetInt(PrtTupleGetNC(*global_position_int_cov, 2), _MAV_RETURN_int32_t(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*global_position_int_cov, 3), _MAV_RETURN_int32_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*global_position_int_cov, 4), _MAV_RETURN_int32_t(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*global_position_int_cov, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*global_position_int_cov, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*global_position_int_cov, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*global_position_int_cov, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*global_position_int_cov, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*global_position_int_cov, 7), _MAV_RETURN_float(msg, 32));
 
 count = 0;
 seqVal = PrtTupleGetNC(*global_position_int_cov, 8);
@@ -2688,8 +2686,7 @@ while(count < 36)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 36 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 36 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
@@ -2706,16 +2703,16 @@ PrtPrimSetInt(PrtTupleGetNC(*global_position_int_cov, 1), _MAV_RETURN_int32_t(ms
 PrtPrimSetInt(PrtTupleGetNC(*global_position_int_cov, 2), _MAV_RETURN_int32_t(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*global_position_int_cov, 3), _MAV_RETURN_int32_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*global_position_int_cov, 4), _MAV_RETURN_int32_t(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*global_position_int_cov, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*global_position_int_cov, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*global_position_int_cov, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*global_position_int_cov, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*global_position_int_cov, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*global_position_int_cov, 7), _MAV_RETURN_float(msg, 32));
 
 count = 0;
 seqVal = PrtTupleGetNC(*global_position_int_cov, 8);
 while(count < 36)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 36 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 36 + count * 4));
 
     count++;
 }  
@@ -2733,22 +2730,22 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_LOCAL_POSITION_NED_COV_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(local_position_ned_cov, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned_cov, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned_cov, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned_cov, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned_cov, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned_cov, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned_cov, 6)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned_cov, 7)));
-_mav_put_float(buf, 36, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned_cov, 8)));
-_mav_put_float(buf, 40, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned_cov, 9)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned_cov, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned_cov, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned_cov, 3)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned_cov, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned_cov, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned_cov, 6)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned_cov, 7)));
+_mav_put_float(buf, 36, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned_cov, 8)));
+_mav_put_float(buf, 40, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned_cov, 9)));
 
 count = 0;
 seqVal = PrtTupleGetNC(local_position_ned_cov, 10);
 while(count < 45)
 {
     
-_mav_put_float(buf, 44 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 44 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
@@ -2771,15 +2768,15 @@ if(*local_position_ned_cov == NULL)
 *local_position_ned_cov = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_local_position_ned_cov_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*local_position_ned_cov, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 8), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 9), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 9), _MAV_RETURN_float(msg, 40));
 
 count = 0;
 seqVal = PrtTupleGetNC(*local_position_ned_cov, 10);
@@ -2787,8 +2784,7 @@ while(count < 45)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 44 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 44 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
@@ -2801,22 +2797,22 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*local_position_ned_cov, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 8), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_cov, 9), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_cov, 9), _MAV_RETURN_float(msg, 40));
 
 count = 0;
 seqVal = PrtTupleGetNC(*local_position_ned_cov, 10);
 while(count < 45)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 44 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 44 + count * 4));
 
     count++;
 }  
@@ -3138,13 +3134,13 @@ int count = 0;
 PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_MISSION_ITEM_INT_LEN];
 
-_mav_put_float(buf, 0, (float)PrtGetFloat32(PrtTupleGetNC(mission_item_int, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(mission_item_int, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(mission_item_int, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(mission_item_int, 3)));
+_mav_put_float(buf, 0, (float)PrtPrimGetFloat(PrtTupleGetNC(mission_item_int, 0)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(mission_item_int, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(mission_item_int, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(mission_item_int, 3)));
 _mav_put_int32_t(buf, 16, (int32_t)PrtPrimGetInt(PrtTupleGetNC(mission_item_int, 4)));
 _mav_put_int32_t(buf, 20, (int32_t)PrtPrimGetInt(PrtTupleGetNC(mission_item_int, 5)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(mission_item_int, 6)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(mission_item_int, 6)));
 _mav_put_uint16_t(buf, 28, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(mission_item_int, 7)));
 _mav_put_uint16_t(buf, 30, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(mission_item_int, 8)));
 _mav_put_uint8_t(buf, 32, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(mission_item_int, 9)));
@@ -3169,13 +3165,13 @@ if(*mission_item_int == NULL)
 {
 *mission_item_int = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mission_item_int_t);
 
-PrtSetFloat32(PrtTupleGetNC(*mission_item_int, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*mission_item_int, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*mission_item_int, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*mission_item_int, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item_int, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item_int, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item_int, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item_int, 3), _MAV_RETURN_float(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item_int, 4), _MAV_RETURN_int32_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item_int, 5), _MAV_RETURN_int32_t(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*mission_item_int, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item_int, 6), _MAV_RETURN_float(msg, 24));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item_int, 7), _MAV_RETURN_uint16_t(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item_int, 8), _MAV_RETURN_uint16_t(msg, 30));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item_int, 9), _MAV_RETURN_uint8_t(msg, 32));
@@ -3188,13 +3184,13 @@ PrtPrimSetInt(PrtTupleGetNC(*mission_item_int, 13), _MAV_RETURN_uint8_t(msg, 36)
 else
 {
 
-PrtSetFloat32(PrtTupleGetNC(*mission_item_int, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*mission_item_int, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*mission_item_int, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*mission_item_int, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item_int, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item_int, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item_int, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item_int, 3), _MAV_RETURN_float(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item_int, 4), _MAV_RETURN_int32_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item_int, 5), _MAV_RETURN_int32_t(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*mission_item_int, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*mission_item_int, 6), _MAV_RETURN_float(msg, 24));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item_int, 7), _MAV_RETURN_uint16_t(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item_int, 8), _MAV_RETURN_uint16_t(msg, 30));
 PrtPrimSetInt(PrtTupleGetNC(*mission_item_int, 9), _MAV_RETURN_uint8_t(msg, 32));
@@ -3214,10 +3210,10 @@ int count = 0;
 PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_VFR_HUD_LEN];
 
-_mav_put_float(buf, 0, (float)PrtGetFloat32(PrtTupleGetNC(vfr_hud, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(vfr_hud, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(vfr_hud, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(vfr_hud, 3)));
+_mav_put_float(buf, 0, (float)PrtPrimGetFloat(PrtTupleGetNC(vfr_hud, 0)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(vfr_hud, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(vfr_hud, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(vfr_hud, 3)));
 _mav_put_int16_t(buf, 16, (int16_t)PrtPrimGetInt(PrtTupleGetNC(vfr_hud, 4)));
 _mav_put_uint16_t(buf, 18, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(vfr_hud, 5)));
 
@@ -3237,10 +3233,10 @@ if(*vfr_hud == NULL)
 {
 *vfr_hud = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_vfr_hud_t);
 
-PrtSetFloat32(PrtTupleGetNC(*vfr_hud, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*vfr_hud, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*vfr_hud, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*vfr_hud, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*vfr_hud, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*vfr_hud, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*vfr_hud, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*vfr_hud, 3), _MAV_RETURN_float(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*vfr_hud, 4), _MAV_RETURN_int16_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*vfr_hud, 5), _MAV_RETURN_uint16_t(msg, 18));
 
@@ -3248,10 +3244,10 @@ PrtPrimSetInt(PrtTupleGetNC(*vfr_hud, 5), _MAV_RETURN_uint16_t(msg, 18));
 else
 {
 
-PrtSetFloat32(PrtTupleGetNC(*vfr_hud, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*vfr_hud, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*vfr_hud, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*vfr_hud, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*vfr_hud, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*vfr_hud, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*vfr_hud, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*vfr_hud, 3), _MAV_RETURN_float(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*vfr_hud, 4), _MAV_RETURN_int16_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*vfr_hud, 5), _MAV_RETURN_uint16_t(msg, 18));
 
@@ -3266,13 +3262,13 @@ int count = 0;
 PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_COMMAND_INT_LEN];
 
-_mav_put_float(buf, 0, (float)PrtGetFloat32(PrtTupleGetNC(command_int, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(command_int, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(command_int, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(command_int, 3)));
+_mav_put_float(buf, 0, (float)PrtPrimGetFloat(PrtTupleGetNC(command_int, 0)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(command_int, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(command_int, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(command_int, 3)));
 _mav_put_int32_t(buf, 16, (int32_t)PrtPrimGetInt(PrtTupleGetNC(command_int, 4)));
 _mav_put_int32_t(buf, 20, (int32_t)PrtPrimGetInt(PrtTupleGetNC(command_int, 5)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(command_int, 6)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(command_int, 6)));
 _mav_put_uint16_t(buf, 28, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(command_int, 7)));
 _mav_put_uint8_t(buf, 30, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(command_int, 8)));
 _mav_put_uint8_t(buf, 31, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(command_int, 9)));
@@ -3296,13 +3292,13 @@ if(*command_int == NULL)
 {
 *command_int = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_command_int_t);
 
-PrtSetFloat32(PrtTupleGetNC(*command_int, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*command_int, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*command_int, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*command_int, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*command_int, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*command_int, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*command_int, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*command_int, 3), _MAV_RETURN_float(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*command_int, 4), _MAV_RETURN_int32_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*command_int, 5), _MAV_RETURN_int32_t(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*command_int, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*command_int, 6), _MAV_RETURN_float(msg, 24));
 PrtPrimSetInt(PrtTupleGetNC(*command_int, 7), _MAV_RETURN_uint16_t(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*command_int, 8), _MAV_RETURN_uint8_t(msg, 30));
 PrtPrimSetInt(PrtTupleGetNC(*command_int, 9), _MAV_RETURN_uint8_t(msg, 31));
@@ -3314,13 +3310,13 @@ PrtPrimSetInt(PrtTupleGetNC(*command_int, 12), _MAV_RETURN_uint8_t(msg, 34));
 else
 {
 
-PrtSetFloat32(PrtTupleGetNC(*command_int, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*command_int, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*command_int, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*command_int, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*command_int, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*command_int, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*command_int, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*command_int, 3), _MAV_RETURN_float(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*command_int, 4), _MAV_RETURN_int32_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*command_int, 5), _MAV_RETURN_int32_t(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*command_int, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*command_int, 6), _MAV_RETURN_float(msg, 24));
 PrtPrimSetInt(PrtTupleGetNC(*command_int, 7), _MAV_RETURN_uint16_t(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*command_int, 8), _MAV_RETURN_uint8_t(msg, 30));
 PrtPrimSetInt(PrtTupleGetNC(*command_int, 9), _MAV_RETURN_uint8_t(msg, 31));
@@ -3339,13 +3335,13 @@ int count = 0;
 PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_COMMAND_LONG_LEN];
 
-_mav_put_float(buf, 0, (float)PrtGetFloat32(PrtTupleGetNC(command_long, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(command_long, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(command_long, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(command_long, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(command_long, 4)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(command_long, 5)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(command_long, 6)));
+_mav_put_float(buf, 0, (float)PrtPrimGetFloat(PrtTupleGetNC(command_long, 0)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(command_long, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(command_long, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(command_long, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(command_long, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(command_long, 5)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(command_long, 6)));
 _mav_put_uint16_t(buf, 28, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(command_long, 7)));
 _mav_put_uint8_t(buf, 30, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(command_long, 8)));
 _mav_put_uint8_t(buf, 31, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(command_long, 9)));
@@ -3367,13 +3363,13 @@ if(*command_long == NULL)
 {
 *command_long = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_command_long_t);
 
-PrtSetFloat32(PrtTupleGetNC(*command_long, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*command_long, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*command_long, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*command_long, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*command_long, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*command_long, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*command_long, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*command_long, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*command_long, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*command_long, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*command_long, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*command_long, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*command_long, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*command_long, 6), _MAV_RETURN_float(msg, 24));
 PrtPrimSetInt(PrtTupleGetNC(*command_long, 7), _MAV_RETURN_uint16_t(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*command_long, 8), _MAV_RETURN_uint8_t(msg, 30));
 PrtPrimSetInt(PrtTupleGetNC(*command_long, 9), _MAV_RETURN_uint8_t(msg, 31));
@@ -3383,13 +3379,13 @@ PrtPrimSetInt(PrtTupleGetNC(*command_long, 10), _MAV_RETURN_uint8_t(msg, 32));
 else
 {
 
-PrtSetFloat32(PrtTupleGetNC(*command_long, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*command_long, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*command_long, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*command_long, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*command_long, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*command_long, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*command_long, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*command_long, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*command_long, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*command_long, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*command_long, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*command_long, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*command_long, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*command_long, 6), _MAV_RETURN_float(msg, 24));
 PrtPrimSetInt(PrtTupleGetNC(*command_long, 7), _MAV_RETURN_uint16_t(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*command_long, 8), _MAV_RETURN_uint8_t(msg, 30));
 PrtPrimSetInt(PrtTupleGetNC(*command_long, 9), _MAV_RETURN_uint8_t(msg, 31));
@@ -3447,10 +3443,10 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_MANUAL_SETPOINT_LEN];
 
 _mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(manual_setpoint, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(manual_setpoint, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(manual_setpoint, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(manual_setpoint, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(manual_setpoint, 4)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(manual_setpoint, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(manual_setpoint, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(manual_setpoint, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(manual_setpoint, 4)));
 _mav_put_uint8_t(buf, 20, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(manual_setpoint, 5)));
 _mav_put_uint8_t(buf, 21, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(manual_setpoint, 6)));
 
@@ -3471,10 +3467,10 @@ if(*manual_setpoint == NULL)
 *manual_setpoint = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_manual_setpoint_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*manual_setpoint, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*manual_setpoint, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*manual_setpoint, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*manual_setpoint, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*manual_setpoint, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*manual_setpoint, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*manual_setpoint, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*manual_setpoint, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*manual_setpoint, 4), _MAV_RETURN_float(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*manual_setpoint, 5), _MAV_RETURN_uint8_t(msg, 20));
 PrtPrimSetInt(PrtTupleGetNC(*manual_setpoint, 6), _MAV_RETURN_uint8_t(msg, 21));
 
@@ -3483,10 +3479,10 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*manual_setpoint, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*manual_setpoint, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*manual_setpoint, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*manual_setpoint, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*manual_setpoint, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*manual_setpoint, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*manual_setpoint, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*manual_setpoint, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*manual_setpoint, 4), _MAV_RETURN_float(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*manual_setpoint, 5), _MAV_RETURN_uint8_t(msg, 20));
 PrtPrimSetInt(PrtTupleGetNC(*manual_setpoint, 6), _MAV_RETURN_uint8_t(msg, 21));
 
@@ -3508,14 +3504,14 @@ seqVal = PrtTupleGetNC(set_attitude_target, 1);
 while(count < 4)
 {
     
-_mav_put_float(buf, 4 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 4 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(set_attitude_target, 2)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(set_attitude_target, 3)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(set_attitude_target, 4)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(set_attitude_target, 5)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(set_attitude_target, 2)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(set_attitude_target, 3)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(set_attitude_target, 4)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(set_attitude_target, 5)));
 _mav_put_uint8_t(buf, 36, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(set_attitude_target, 6)));
 _mav_put_uint8_t(buf, 37, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(set_attitude_target, 7)));
 _mav_put_uint8_t(buf, 38, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(set_attitude_target, 8)));
@@ -3544,17 +3540,16 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 4 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 4 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*set_attitude_target, 2), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*set_attitude_target, 3), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*set_attitude_target, 4), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*set_attitude_target, 5), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*set_attitude_target, 2), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*set_attitude_target, 3), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*set_attitude_target, 4), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*set_attitude_target, 5), _MAV_RETURN_float(msg, 32));
 PrtPrimSetInt(PrtTupleGetNC(*set_attitude_target, 6), _MAV_RETURN_uint8_t(msg, 36));
 PrtPrimSetInt(PrtTupleGetNC(*set_attitude_target, 7), _MAV_RETURN_uint8_t(msg, 37));
 PrtPrimSetInt(PrtTupleGetNC(*set_attitude_target, 8), _MAV_RETURN_uint8_t(msg, 38));
@@ -3570,14 +3565,14 @@ seqVal = PrtTupleGetNC(*set_attitude_target, 1);
 while(count < 4)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 4 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 4 + count * 4));
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*set_attitude_target, 2), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*set_attitude_target, 3), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*set_attitude_target, 4), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*set_attitude_target, 5), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*set_attitude_target, 2), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*set_attitude_target, 3), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*set_attitude_target, 4), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*set_attitude_target, 5), _MAV_RETURN_float(msg, 32));
 PrtPrimSetInt(PrtTupleGetNC(*set_attitude_target, 6), _MAV_RETURN_uint8_t(msg, 36));
 PrtPrimSetInt(PrtTupleGetNC(*set_attitude_target, 7), _MAV_RETURN_uint8_t(msg, 37));
 PrtPrimSetInt(PrtTupleGetNC(*set_attitude_target, 8), _MAV_RETURN_uint8_t(msg, 38));
@@ -3600,14 +3595,14 @@ seqVal = PrtTupleGetNC(attitude_target, 1);
 while(count < 4)
 {
     
-_mav_put_float(buf, 4 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 4 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(attitude_target, 2)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(attitude_target, 3)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(attitude_target, 4)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(attitude_target, 5)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude_target, 2)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude_target, 3)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude_target, 4)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(attitude_target, 5)));
 _mav_put_uint8_t(buf, 36, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(attitude_target, 6)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ATTITUDE_TARGET_LEN);
@@ -3634,17 +3629,16 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 4 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 4 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*attitude_target, 2), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*attitude_target, 3), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*attitude_target, 4), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*attitude_target, 5), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_target, 2), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_target, 3), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_target, 4), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_target, 5), _MAV_RETURN_float(msg, 32));
 PrtPrimSetInt(PrtTupleGetNC(*attitude_target, 6), _MAV_RETURN_uint8_t(msg, 36));
 
 }
@@ -3658,14 +3652,14 @@ seqVal = PrtTupleGetNC(*attitude_target, 1);
 while(count < 4)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 4 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 4 + count * 4));
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*attitude_target, 2), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*attitude_target, 3), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*attitude_target, 4), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*attitude_target, 5), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_target, 2), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_target, 3), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_target, 4), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*attitude_target, 5), _MAV_RETURN_float(msg, 32));
 PrtPrimSetInt(PrtTupleGetNC(*attitude_target, 6), _MAV_RETURN_uint8_t(msg, 36));
 
 }
@@ -3680,17 +3674,17 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_SET_POSITION_TARGET_LOCAL_NED_LEN];
 
 _mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(set_position_target_local_ned, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_local_ned, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_local_ned, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_local_ned, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_local_ned, 4)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_local_ned, 5)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_local_ned, 6)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_local_ned, 7)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_local_ned, 8)));
-_mav_put_float(buf, 36, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_local_ned, 9)));
-_mav_put_float(buf, 40, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_local_ned, 10)));
-_mav_put_float(buf, 44, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_local_ned, 11)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_local_ned, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_local_ned, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_local_ned, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_local_ned, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_local_ned, 5)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_local_ned, 6)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_local_ned, 7)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_local_ned, 8)));
+_mav_put_float(buf, 36, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_local_ned, 9)));
+_mav_put_float(buf, 40, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_local_ned, 10)));
+_mav_put_float(buf, 44, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_local_ned, 11)));
 _mav_put_uint16_t(buf, 48, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(set_position_target_local_ned, 12)));
 _mav_put_uint8_t(buf, 50, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(set_position_target_local_ned, 13)));
 _mav_put_uint8_t(buf, 51, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(set_position_target_local_ned, 14)));
@@ -3713,17 +3707,17 @@ if(*set_position_target_local_ned == NULL)
 *set_position_target_local_ned = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_set_position_target_local_ned_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_local_ned, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 6), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 7), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 8), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 9), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 10), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 11), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 7), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 8), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 9), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 10), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 11), _MAV_RETURN_float(msg, 44));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_local_ned, 12), _MAV_RETURN_uint16_t(msg, 48));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_local_ned, 13), _MAV_RETURN_uint8_t(msg, 50));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_local_ned, 14), _MAV_RETURN_uint8_t(msg, 51));
@@ -3734,17 +3728,17 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_local_ned, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 6), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 7), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 8), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 9), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 10), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_local_ned, 11), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 7), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 8), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 9), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 10), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_local_ned, 11), _MAV_RETURN_float(msg, 44));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_local_ned, 12), _MAV_RETURN_uint16_t(msg, 48));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_local_ned, 13), _MAV_RETURN_uint8_t(msg, 50));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_local_ned, 14), _MAV_RETURN_uint8_t(msg, 51));
@@ -3762,17 +3756,17 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_POSITION_TARGET_LOCAL_NED_LEN];
 
 _mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(position_target_local_ned, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(position_target_local_ned, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(position_target_local_ned, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(position_target_local_ned, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(position_target_local_ned, 4)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(position_target_local_ned, 5)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(position_target_local_ned, 6)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(position_target_local_ned, 7)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(position_target_local_ned, 8)));
-_mav_put_float(buf, 36, (float)PrtGetFloat32(PrtTupleGetNC(position_target_local_ned, 9)));
-_mav_put_float(buf, 40, (float)PrtGetFloat32(PrtTupleGetNC(position_target_local_ned, 10)));
-_mav_put_float(buf, 44, (float)PrtGetFloat32(PrtTupleGetNC(position_target_local_ned, 11)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_local_ned, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_local_ned, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_local_ned, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_local_ned, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_local_ned, 5)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_local_ned, 6)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_local_ned, 7)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_local_ned, 8)));
+_mav_put_float(buf, 36, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_local_ned, 9)));
+_mav_put_float(buf, 40, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_local_ned, 10)));
+_mav_put_float(buf, 44, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_local_ned, 11)));
 _mav_put_uint16_t(buf, 48, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(position_target_local_ned, 12)));
 _mav_put_uint8_t(buf, 50, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(position_target_local_ned, 13)));
 
@@ -3793,17 +3787,17 @@ if(*position_target_local_ned == NULL)
 *position_target_local_ned = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_position_target_local_ned_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*position_target_local_ned, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 6), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 7), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 8), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 9), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 10), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 11), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 7), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 8), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 9), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 10), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 11), _MAV_RETURN_float(msg, 44));
 PrtPrimSetInt(PrtTupleGetNC(*position_target_local_ned, 12), _MAV_RETURN_uint16_t(msg, 48));
 PrtPrimSetInt(PrtTupleGetNC(*position_target_local_ned, 13), _MAV_RETURN_uint8_t(msg, 50));
 
@@ -3812,17 +3806,17 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*position_target_local_ned, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 6), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 7), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 8), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 9), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 10), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*position_target_local_ned, 11), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 7), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 8), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 9), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 10), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_local_ned, 11), _MAV_RETURN_float(msg, 44));
 PrtPrimSetInt(PrtTupleGetNC(*position_target_local_ned, 12), _MAV_RETURN_uint16_t(msg, 48));
 PrtPrimSetInt(PrtTupleGetNC(*position_target_local_ned, 13), _MAV_RETURN_uint8_t(msg, 50));
 
@@ -3840,15 +3834,15 @@ char buf[MAVLINK_MSG_ID_SET_POSITION_TARGET_GLOBAL_INT_LEN];
 _mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(set_position_target_global_int, 0)));
 _mav_put_int32_t(buf, 4, (int32_t)PrtPrimGetInt(PrtTupleGetNC(set_position_target_global_int, 1)));
 _mav_put_int32_t(buf, 8, (int32_t)PrtPrimGetInt(PrtTupleGetNC(set_position_target_global_int, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_global_int, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_global_int, 4)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_global_int, 5)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_global_int, 6)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_global_int, 7)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_global_int, 8)));
-_mav_put_float(buf, 36, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_global_int, 9)));
-_mav_put_float(buf, 40, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_global_int, 10)));
-_mav_put_float(buf, 44, (float)PrtGetFloat32(PrtTupleGetNC(set_position_target_global_int, 11)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_global_int, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_global_int, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_global_int, 5)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_global_int, 6)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_global_int, 7)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_global_int, 8)));
+_mav_put_float(buf, 36, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_global_int, 9)));
+_mav_put_float(buf, 40, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_global_int, 10)));
+_mav_put_float(buf, 44, (float)PrtPrimGetFloat(PrtTupleGetNC(set_position_target_global_int, 11)));
 _mav_put_uint16_t(buf, 48, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(set_position_target_global_int, 12)));
 _mav_put_uint8_t(buf, 50, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(set_position_target_global_int, 13)));
 _mav_put_uint8_t(buf, 51, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(set_position_target_global_int, 14)));
@@ -3873,15 +3867,15 @@ if(*set_position_target_global_int == NULL)
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_global_int, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_global_int, 1), _MAV_RETURN_int32_t(msg, 4));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_global_int, 2), _MAV_RETURN_int32_t(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 6), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 7), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 8), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 9), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 10), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 11), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 7), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 8), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 9), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 10), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 11), _MAV_RETURN_float(msg, 44));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_global_int, 12), _MAV_RETURN_uint16_t(msg, 48));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_global_int, 13), _MAV_RETURN_uint8_t(msg, 50));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_global_int, 14), _MAV_RETURN_uint8_t(msg, 51));
@@ -3894,15 +3888,15 @@ else
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_global_int, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_global_int, 1), _MAV_RETURN_int32_t(msg, 4));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_global_int, 2), _MAV_RETURN_int32_t(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 6), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 7), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 8), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 9), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 10), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*set_position_target_global_int, 11), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 7), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 8), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 9), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 10), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*set_position_target_global_int, 11), _MAV_RETURN_float(msg, 44));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_global_int, 12), _MAV_RETURN_uint16_t(msg, 48));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_global_int, 13), _MAV_RETURN_uint8_t(msg, 50));
 PrtPrimSetInt(PrtTupleGetNC(*set_position_target_global_int, 14), _MAV_RETURN_uint8_t(msg, 51));
@@ -3922,15 +3916,15 @@ char buf[MAVLINK_MSG_ID_POSITION_TARGET_GLOBAL_INT_LEN];
 _mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(position_target_global_int, 0)));
 _mav_put_int32_t(buf, 4, (int32_t)PrtPrimGetInt(PrtTupleGetNC(position_target_global_int, 1)));
 _mav_put_int32_t(buf, 8, (int32_t)PrtPrimGetInt(PrtTupleGetNC(position_target_global_int, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(position_target_global_int, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(position_target_global_int, 4)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(position_target_global_int, 5)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(position_target_global_int, 6)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(position_target_global_int, 7)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(position_target_global_int, 8)));
-_mav_put_float(buf, 36, (float)PrtGetFloat32(PrtTupleGetNC(position_target_global_int, 9)));
-_mav_put_float(buf, 40, (float)PrtGetFloat32(PrtTupleGetNC(position_target_global_int, 10)));
-_mav_put_float(buf, 44, (float)PrtGetFloat32(PrtTupleGetNC(position_target_global_int, 11)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_global_int, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_global_int, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_global_int, 5)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_global_int, 6)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_global_int, 7)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_global_int, 8)));
+_mav_put_float(buf, 36, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_global_int, 9)));
+_mav_put_float(buf, 40, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_global_int, 10)));
+_mav_put_float(buf, 44, (float)PrtPrimGetFloat(PrtTupleGetNC(position_target_global_int, 11)));
 _mav_put_uint16_t(buf, 48, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(position_target_global_int, 12)));
 _mav_put_uint8_t(buf, 50, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(position_target_global_int, 13)));
 
@@ -3953,15 +3947,15 @@ if(*position_target_global_int == NULL)
 PrtPrimSetInt(PrtTupleGetNC(*position_target_global_int, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*position_target_global_int, 1), _MAV_RETURN_int32_t(msg, 4));
 PrtPrimSetInt(PrtTupleGetNC(*position_target_global_int, 2), _MAV_RETURN_int32_t(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 6), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 7), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 8), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 9), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 10), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 11), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 7), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 8), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 9), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 10), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 11), _MAV_RETURN_float(msg, 44));
 PrtPrimSetInt(PrtTupleGetNC(*position_target_global_int, 12), _MAV_RETURN_uint16_t(msg, 48));
 PrtPrimSetInt(PrtTupleGetNC(*position_target_global_int, 13), _MAV_RETURN_uint8_t(msg, 50));
 
@@ -3972,15 +3966,15 @@ else
 PrtPrimSetInt(PrtTupleGetNC(*position_target_global_int, 0), _MAV_RETURN_uint32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*position_target_global_int, 1), _MAV_RETURN_int32_t(msg, 4));
 PrtPrimSetInt(PrtTupleGetNC(*position_target_global_int, 2), _MAV_RETURN_int32_t(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 6), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 7), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 8), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 9), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 10), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*position_target_global_int, 11), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 7), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 8), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 9), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 10), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*position_target_global_int, 11), _MAV_RETURN_float(msg, 44));
 PrtPrimSetInt(PrtTupleGetNC(*position_target_global_int, 12), _MAV_RETURN_uint16_t(msg, 48));
 PrtPrimSetInt(PrtTupleGetNC(*position_target_global_int, 13), _MAV_RETURN_uint8_t(msg, 50));
 
@@ -3996,12 +3990,12 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET_LEN];
 
 _mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(local_position_ned_system_global_offset, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned_system_global_offset, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned_system_global_offset, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned_system_global_offset, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned_system_global_offset, 4)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned_system_global_offset, 5)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(local_position_ned_system_global_offset, 6)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned_system_global_offset, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned_system_global_offset, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned_system_global_offset, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned_system_global_offset, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned_system_global_offset, 5)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(local_position_ned_system_global_offset, 6)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET_LEN);
 msg->msgid = MAVLINK_MSG_ID_LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET;
@@ -4020,24 +4014,24 @@ if(*local_position_ned_system_global_offset == NULL)
 *local_position_ned_system_global_offset = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_local_position_ned_system_global_offset_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*local_position_ned_system_global_offset, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_system_global_offset, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_system_global_offset, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_system_global_offset, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_system_global_offset, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_system_global_offset, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_system_global_offset, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_system_global_offset, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_system_global_offset, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_system_global_offset, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_system_global_offset, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_system_global_offset, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_system_global_offset, 6), _MAV_RETURN_float(msg, 24));
 
 }
 else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*local_position_ned_system_global_offset, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_system_global_offset, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_system_global_offset, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_system_global_offset, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_system_global_offset, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_system_global_offset, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*local_position_ned_system_global_offset, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_system_global_offset, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_system_global_offset, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_system_global_offset, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_system_global_offset, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_system_global_offset, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*local_position_ned_system_global_offset, 6), _MAV_RETURN_float(msg, 24));
 
 }
 
@@ -4051,12 +4045,12 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_HIL_STATE_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(hil_state, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(hil_state, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(hil_state, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(hil_state, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(hil_state, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(hil_state, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(hil_state, 6)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_state, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_state, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_state, 3)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_state, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_state, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_state, 6)));
 _mav_put_int32_t(buf, 32, (int32_t)PrtPrimGetInt(PrtTupleGetNC(hil_state, 7)));
 _mav_put_int32_t(buf, 36, (int32_t)PrtPrimGetInt(PrtTupleGetNC(hil_state, 8)));
 _mav_put_int32_t(buf, 40, (int32_t)PrtPrimGetInt(PrtTupleGetNC(hil_state, 9)));
@@ -4084,12 +4078,12 @@ if(*hil_state == NULL)
 *hil_state = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_hil_state_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_state, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*hil_state, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*hil_state, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*hil_state, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*hil_state, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*hil_state, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*hil_state, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state, 6), _MAV_RETURN_float(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*hil_state, 7), _MAV_RETURN_int32_t(msg, 32));
 PrtPrimSetInt(PrtTupleGetNC(*hil_state, 8), _MAV_RETURN_int32_t(msg, 36));
 PrtPrimSetInt(PrtTupleGetNC(*hil_state, 9), _MAV_RETURN_int32_t(msg, 40));
@@ -4105,12 +4099,12 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_state, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*hil_state, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*hil_state, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*hil_state, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*hil_state, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*hil_state, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*hil_state, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state, 6), _MAV_RETURN_float(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*hil_state, 7), _MAV_RETURN_int32_t(msg, 32));
 PrtPrimSetInt(PrtTupleGetNC(*hil_state, 8), _MAV_RETURN_int32_t(msg, 36));
 PrtPrimSetInt(PrtTupleGetNC(*hil_state, 9), _MAV_RETURN_int32_t(msg, 40));
@@ -4133,14 +4127,14 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_HIL_CONTROLS_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(hil_controls, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(hil_controls, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(hil_controls, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(hil_controls, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(hil_controls, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(hil_controls, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(hil_controls, 6)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(hil_controls, 7)));
-_mav_put_float(buf, 36, (float)PrtGetFloat32(PrtTupleGetNC(hil_controls, 8)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_controls, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_controls, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_controls, 3)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_controls, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_controls, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_controls, 6)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_controls, 7)));
+_mav_put_float(buf, 36, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_controls, 8)));
 _mav_put_uint8_t(buf, 40, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(hil_controls, 9)));
 _mav_put_uint8_t(buf, 41, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(hil_controls, 10)));
 
@@ -4161,14 +4155,14 @@ if(*hil_controls == NULL)
 *hil_controls = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_hil_controls_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_controls, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 8), _MAV_RETURN_float(msg, 36));
 PrtPrimSetInt(PrtTupleGetNC(*hil_controls, 9), _MAV_RETURN_uint8_t(msg, 40));
 PrtPrimSetInt(PrtTupleGetNC(*hil_controls, 10), _MAV_RETURN_uint8_t(msg, 41));
 
@@ -4177,14 +4171,14 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_controls, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*hil_controls, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_controls, 8), _MAV_RETURN_float(msg, 36));
 PrtPrimSetInt(PrtTupleGetNC(*hil_controls, 9), _MAV_RETURN_uint8_t(msg, 40));
 PrtPrimSetInt(PrtTupleGetNC(*hil_controls, 10), _MAV_RETURN_uint8_t(msg, 41));
 
@@ -4283,7 +4277,7 @@ seqVal = PrtTupleGetNC(hil_actuator_controls, 2);
 while(count < 16)
 {
     
-_mav_put_float(buf, 16 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 16 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
@@ -4314,8 +4308,7 @@ while(count < 16)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 16 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 16 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
@@ -4335,7 +4328,7 @@ seqVal = PrtTupleGetNC(*hil_actuator_controls, 2);
 while(count < 16)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 16 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 16 + count * 4));
 
     count++;
 }  
@@ -4353,9 +4346,9 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_OPTICAL_FLOW_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(optical_flow, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(optical_flow, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(optical_flow, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(optical_flow, 3)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(optical_flow, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(optical_flow, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(optical_flow, 3)));
 _mav_put_int16_t(buf, 20, (int16_t)PrtPrimGetInt(PrtTupleGetNC(optical_flow, 4)));
 _mav_put_int16_t(buf, 22, (int16_t)PrtPrimGetInt(PrtTupleGetNC(optical_flow, 5)));
 _mav_put_uint8_t(buf, 24, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(optical_flow, 6)));
@@ -4378,9 +4371,9 @@ if(*optical_flow == NULL)
 *optical_flow = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_optical_flow_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow, 3), _MAV_RETURN_float(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow, 4), _MAV_RETURN_int16_t(msg, 20));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow, 5), _MAV_RETURN_int16_t(msg, 22));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow, 6), _MAV_RETURN_uint8_t(msg, 24));
@@ -4391,9 +4384,9 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow, 3), _MAV_RETURN_float(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow, 4), _MAV_RETURN_int16_t(msg, 20));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow, 5), _MAV_RETURN_int16_t(msg, 22));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow, 6), _MAV_RETURN_uint8_t(msg, 24));
@@ -4411,12 +4404,12 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_GLOBAL_VISION_POSITION_ESTIMATE_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(global_vision_position_estimate, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(global_vision_position_estimate, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(global_vision_position_estimate, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(global_vision_position_estimate, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(global_vision_position_estimate, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(global_vision_position_estimate, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(global_vision_position_estimate, 6)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(global_vision_position_estimate, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(global_vision_position_estimate, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(global_vision_position_estimate, 3)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(global_vision_position_estimate, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(global_vision_position_estimate, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(global_vision_position_estimate, 6)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_GLOBAL_VISION_POSITION_ESTIMATE_LEN);
 msg->msgid = MAVLINK_MSG_ID_GLOBAL_VISION_POSITION_ESTIMATE;
@@ -4435,24 +4428,24 @@ if(*global_vision_position_estimate == NULL)
 *global_vision_position_estimate = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_global_vision_position_estimate_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*global_vision_position_estimate, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*global_vision_position_estimate, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*global_vision_position_estimate, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*global_vision_position_estimate, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*global_vision_position_estimate, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*global_vision_position_estimate, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*global_vision_position_estimate, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*global_vision_position_estimate, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*global_vision_position_estimate, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*global_vision_position_estimate, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*global_vision_position_estimate, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*global_vision_position_estimate, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*global_vision_position_estimate, 6), _MAV_RETURN_float(msg, 28));
 
 }
 else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*global_vision_position_estimate, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*global_vision_position_estimate, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*global_vision_position_estimate, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*global_vision_position_estimate, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*global_vision_position_estimate, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*global_vision_position_estimate, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*global_vision_position_estimate, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*global_vision_position_estimate, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*global_vision_position_estimate, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*global_vision_position_estimate, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*global_vision_position_estimate, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*global_vision_position_estimate, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*global_vision_position_estimate, 6), _MAV_RETURN_float(msg, 28));
 
 }
 
@@ -4466,12 +4459,12 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_VISION_POSITION_ESTIMATE_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(vision_position_estimate, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(vision_position_estimate, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(vision_position_estimate, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(vision_position_estimate, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(vision_position_estimate, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(vision_position_estimate, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(vision_position_estimate, 6)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(vision_position_estimate, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(vision_position_estimate, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(vision_position_estimate, 3)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(vision_position_estimate, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(vision_position_estimate, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(vision_position_estimate, 6)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_VISION_POSITION_ESTIMATE_LEN);
 msg->msgid = MAVLINK_MSG_ID_VISION_POSITION_ESTIMATE;
@@ -4490,24 +4483,24 @@ if(*vision_position_estimate == NULL)
 *vision_position_estimate = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_vision_position_estimate_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*vision_position_estimate, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*vision_position_estimate, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*vision_position_estimate, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*vision_position_estimate, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*vision_position_estimate, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*vision_position_estimate, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*vision_position_estimate, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_position_estimate, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_position_estimate, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_position_estimate, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_position_estimate, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_position_estimate, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_position_estimate, 6), _MAV_RETURN_float(msg, 28));
 
 }
 else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*vision_position_estimate, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*vision_position_estimate, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*vision_position_estimate, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*vision_position_estimate, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*vision_position_estimate, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*vision_position_estimate, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*vision_position_estimate, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_position_estimate, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_position_estimate, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_position_estimate, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_position_estimate, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_position_estimate, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_position_estimate, 6), _MAV_RETURN_float(msg, 28));
 
 }
 
@@ -4521,9 +4514,9 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_VISION_SPEED_ESTIMATE_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(vision_speed_estimate, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(vision_speed_estimate, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(vision_speed_estimate, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(vision_speed_estimate, 3)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(vision_speed_estimate, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(vision_speed_estimate, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(vision_speed_estimate, 3)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_VISION_SPEED_ESTIMATE_LEN);
 msg->msgid = MAVLINK_MSG_ID_VISION_SPEED_ESTIMATE;
@@ -4542,18 +4535,18 @@ if(*vision_speed_estimate == NULL)
 *vision_speed_estimate = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_vision_speed_estimate_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*vision_speed_estimate, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*vision_speed_estimate, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*vision_speed_estimate, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*vision_speed_estimate, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_speed_estimate, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_speed_estimate, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_speed_estimate, 3), _MAV_RETURN_float(msg, 16));
 
 }
 else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*vision_speed_estimate, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*vision_speed_estimate, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*vision_speed_estimate, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*vision_speed_estimate, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_speed_estimate, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_speed_estimate, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*vision_speed_estimate, 3), _MAV_RETURN_float(msg, 16));
 
 }
 
@@ -4567,12 +4560,12 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_VICON_POSITION_ESTIMATE_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(vicon_position_estimate, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(vicon_position_estimate, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(vicon_position_estimate, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(vicon_position_estimate, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(vicon_position_estimate, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(vicon_position_estimate, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(vicon_position_estimate, 6)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(vicon_position_estimate, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(vicon_position_estimate, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(vicon_position_estimate, 3)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(vicon_position_estimate, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(vicon_position_estimate, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(vicon_position_estimate, 6)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_VICON_POSITION_ESTIMATE_LEN);
 msg->msgid = MAVLINK_MSG_ID_VICON_POSITION_ESTIMATE;
@@ -4591,24 +4584,24 @@ if(*vicon_position_estimate == NULL)
 *vicon_position_estimate = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_vicon_position_estimate_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*vicon_position_estimate, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*vicon_position_estimate, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*vicon_position_estimate, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*vicon_position_estimate, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*vicon_position_estimate, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*vicon_position_estimate, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*vicon_position_estimate, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*vicon_position_estimate, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*vicon_position_estimate, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*vicon_position_estimate, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*vicon_position_estimate, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*vicon_position_estimate, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*vicon_position_estimate, 6), _MAV_RETURN_float(msg, 28));
 
 }
 else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*vicon_position_estimate, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*vicon_position_estimate, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*vicon_position_estimate, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*vicon_position_estimate, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*vicon_position_estimate, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*vicon_position_estimate, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*vicon_position_estimate, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*vicon_position_estimate, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*vicon_position_estimate, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*vicon_position_estimate, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*vicon_position_estimate, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*vicon_position_estimate, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*vicon_position_estimate, 6), _MAV_RETURN_float(msg, 28));
 
 }
 
@@ -4622,19 +4615,19 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_HIGHRES_IMU_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(highres_imu, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(highres_imu, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(highres_imu, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(highres_imu, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(highres_imu, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(highres_imu, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(highres_imu, 6)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(highres_imu, 7)));
-_mav_put_float(buf, 36, (float)PrtGetFloat32(PrtTupleGetNC(highres_imu, 8)));
-_mav_put_float(buf, 40, (float)PrtGetFloat32(PrtTupleGetNC(highres_imu, 9)));
-_mav_put_float(buf, 44, (float)PrtGetFloat32(PrtTupleGetNC(highres_imu, 10)));
-_mav_put_float(buf, 48, (float)PrtGetFloat32(PrtTupleGetNC(highres_imu, 11)));
-_mav_put_float(buf, 52, (float)PrtGetFloat32(PrtTupleGetNC(highres_imu, 12)));
-_mav_put_float(buf, 56, (float)PrtGetFloat32(PrtTupleGetNC(highres_imu, 13)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(highres_imu, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(highres_imu, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(highres_imu, 3)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(highres_imu, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(highres_imu, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(highres_imu, 6)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(highres_imu, 7)));
+_mav_put_float(buf, 36, (float)PrtPrimGetFloat(PrtTupleGetNC(highres_imu, 8)));
+_mav_put_float(buf, 40, (float)PrtPrimGetFloat(PrtTupleGetNC(highres_imu, 9)));
+_mav_put_float(buf, 44, (float)PrtPrimGetFloat(PrtTupleGetNC(highres_imu, 10)));
+_mav_put_float(buf, 48, (float)PrtPrimGetFloat(PrtTupleGetNC(highres_imu, 11)));
+_mav_put_float(buf, 52, (float)PrtPrimGetFloat(PrtTupleGetNC(highres_imu, 12)));
+_mav_put_float(buf, 56, (float)PrtPrimGetFloat(PrtTupleGetNC(highres_imu, 13)));
 _mav_put_uint16_t(buf, 60, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(highres_imu, 14)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_HIGHRES_IMU_LEN);
@@ -4654,19 +4647,19 @@ if(*highres_imu == NULL)
 *highres_imu = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_highres_imu_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*highres_imu, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 8), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 9), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 10), _MAV_RETURN_float(msg, 44));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 11), _MAV_RETURN_float(msg, 48));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 12), _MAV_RETURN_float(msg, 52));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 13), _MAV_RETURN_float(msg, 56));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 9), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 10), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 11), _MAV_RETURN_float(msg, 48));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 12), _MAV_RETURN_float(msg, 52));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 13), _MAV_RETURN_float(msg, 56));
 PrtPrimSetInt(PrtTupleGetNC(*highres_imu, 14), _MAV_RETURN_uint16_t(msg, 60));
 
 }
@@ -4674,19 +4667,19 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*highres_imu, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 8), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 9), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 10), _MAV_RETURN_float(msg, 44));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 11), _MAV_RETURN_float(msg, 48));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 12), _MAV_RETURN_float(msg, 52));
-PrtSetFloat32(PrtTupleGetNC(*highres_imu, 13), _MAV_RETURN_float(msg, 56));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 9), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 10), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 11), _MAV_RETURN_float(msg, 48));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 12), _MAV_RETURN_float(msg, 52));
+PrtPrimSetFloat(PrtTupleGetNC(*highres_imu, 13), _MAV_RETURN_float(msg, 56));
 PrtPrimSetInt(PrtTupleGetNC(*highres_imu, 14), _MAV_RETURN_uint16_t(msg, 60));
 
 }
@@ -4702,13 +4695,13 @@ char buf[MAVLINK_MSG_ID_OPTICAL_FLOW_RAD_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(optical_flow_rad, 0)));
 _mav_put_uint32_t(buf, 8, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(optical_flow_rad, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(optical_flow_rad, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(optical_flow_rad, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(optical_flow_rad, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(optical_flow_rad, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(optical_flow_rad, 6)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(optical_flow_rad, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(optical_flow_rad, 3)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(optical_flow_rad, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(optical_flow_rad, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(optical_flow_rad, 6)));
 _mav_put_uint32_t(buf, 32, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(optical_flow_rad, 7)));
-_mav_put_float(buf, 36, (float)PrtGetFloat32(PrtTupleGetNC(optical_flow_rad, 8)));
+_mav_put_float(buf, 36, (float)PrtPrimGetFloat(PrtTupleGetNC(optical_flow_rad, 8)));
 _mav_put_int16_t(buf, 40, (int16_t)PrtPrimGetInt(PrtTupleGetNC(optical_flow_rad, 9)));
 _mav_put_uint8_t(buf, 42, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(optical_flow_rad, 10)));
 _mav_put_uint8_t(buf, 43, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(optical_flow_rad, 11)));
@@ -4731,13 +4724,13 @@ if(*optical_flow_rad == NULL)
 
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow_rad, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow_rad, 1), _MAV_RETURN_uint32_t(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow_rad, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow_rad, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow_rad, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow_rad, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow_rad, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow_rad, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow_rad, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow_rad, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow_rad, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow_rad, 6), _MAV_RETURN_float(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow_rad, 7), _MAV_RETURN_uint32_t(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow_rad, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow_rad, 8), _MAV_RETURN_float(msg, 36));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow_rad, 9), _MAV_RETURN_int16_t(msg, 40));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow_rad, 10), _MAV_RETURN_uint8_t(msg, 42));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow_rad, 11), _MAV_RETURN_uint8_t(msg, 43));
@@ -4748,13 +4741,13 @@ else
 
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow_rad, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow_rad, 1), _MAV_RETURN_uint32_t(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow_rad, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow_rad, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow_rad, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow_rad, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow_rad, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow_rad, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow_rad, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow_rad, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow_rad, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow_rad, 6), _MAV_RETURN_float(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow_rad, 7), _MAV_RETURN_uint32_t(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*optical_flow_rad, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*optical_flow_rad, 8), _MAV_RETURN_float(msg, 36));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow_rad, 9), _MAV_RETURN_int16_t(msg, 40));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow_rad, 10), _MAV_RETURN_uint8_t(msg, 42));
 PrtPrimSetInt(PrtTupleGetNC(*optical_flow_rad, 11), _MAV_RETURN_uint8_t(msg, 43));
@@ -4771,19 +4764,19 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_HIL_SENSOR_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(hil_sensor, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(hil_sensor, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(hil_sensor, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(hil_sensor, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(hil_sensor, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(hil_sensor, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(hil_sensor, 6)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(hil_sensor, 7)));
-_mav_put_float(buf, 36, (float)PrtGetFloat32(PrtTupleGetNC(hil_sensor, 8)));
-_mav_put_float(buf, 40, (float)PrtGetFloat32(PrtTupleGetNC(hil_sensor, 9)));
-_mav_put_float(buf, 44, (float)PrtGetFloat32(PrtTupleGetNC(hil_sensor, 10)));
-_mav_put_float(buf, 48, (float)PrtGetFloat32(PrtTupleGetNC(hil_sensor, 11)));
-_mav_put_float(buf, 52, (float)PrtGetFloat32(PrtTupleGetNC(hil_sensor, 12)));
-_mav_put_float(buf, 56, (float)PrtGetFloat32(PrtTupleGetNC(hil_sensor, 13)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_sensor, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_sensor, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_sensor, 3)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_sensor, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_sensor, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_sensor, 6)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_sensor, 7)));
+_mav_put_float(buf, 36, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_sensor, 8)));
+_mav_put_float(buf, 40, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_sensor, 9)));
+_mav_put_float(buf, 44, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_sensor, 10)));
+_mav_put_float(buf, 48, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_sensor, 11)));
+_mav_put_float(buf, 52, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_sensor, 12)));
+_mav_put_float(buf, 56, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_sensor, 13)));
 _mav_put_uint32_t(buf, 60, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(hil_sensor, 14)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_HIL_SENSOR_LEN);
@@ -4803,19 +4796,19 @@ if(*hil_sensor == NULL)
 *hil_sensor = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_hil_sensor_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_sensor, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 8), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 9), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 10), _MAV_RETURN_float(msg, 44));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 11), _MAV_RETURN_float(msg, 48));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 12), _MAV_RETURN_float(msg, 52));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 13), _MAV_RETURN_float(msg, 56));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 9), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 10), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 11), _MAV_RETURN_float(msg, 48));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 12), _MAV_RETURN_float(msg, 52));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 13), _MAV_RETURN_float(msg, 56));
 PrtPrimSetInt(PrtTupleGetNC(*hil_sensor, 14), _MAV_RETURN_uint32_t(msg, 60));
 
 }
@@ -4823,19 +4816,19 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_sensor, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 8), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 9), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 10), _MAV_RETURN_float(msg, 44));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 11), _MAV_RETURN_float(msg, 48));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 12), _MAV_RETURN_float(msg, 52));
-PrtSetFloat32(PrtTupleGetNC(*hil_sensor, 13), _MAV_RETURN_float(msg, 56));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 9), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 10), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 11), _MAV_RETURN_float(msg, 48));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 12), _MAV_RETURN_float(msg, 52));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_sensor, 13), _MAV_RETURN_float(msg, 56));
 PrtPrimSetInt(PrtTupleGetNC(*hil_sensor, 14), _MAV_RETURN_uint32_t(msg, 60));
 
 }
@@ -4849,27 +4842,27 @@ int count = 0;
 PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_SIM_STATE_LEN];
 
-_mav_put_float(buf, 0, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 4)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 5)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 6)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 7)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 8)));
-_mav_put_float(buf, 36, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 9)));
-_mav_put_float(buf, 40, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 10)));
-_mav_put_float(buf, 44, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 11)));
-_mav_put_float(buf, 48, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 12)));
-_mav_put_float(buf, 52, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 13)));
-_mav_put_float(buf, 56, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 14)));
-_mav_put_float(buf, 60, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 15)));
-_mav_put_float(buf, 64, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 16)));
-_mav_put_float(buf, 68, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 17)));
-_mav_put_float(buf, 72, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 18)));
-_mav_put_float(buf, 76, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 19)));
-_mav_put_float(buf, 80, (float)PrtGetFloat32(PrtTupleGetNC(sim_state, 20)));
+_mav_put_float(buf, 0, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 0)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 5)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 6)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 7)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 8)));
+_mav_put_float(buf, 36, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 9)));
+_mav_put_float(buf, 40, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 10)));
+_mav_put_float(buf, 44, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 11)));
+_mav_put_float(buf, 48, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 12)));
+_mav_put_float(buf, 52, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 13)));
+_mav_put_float(buf, 56, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 14)));
+_mav_put_float(buf, 60, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 15)));
+_mav_put_float(buf, 64, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 16)));
+_mav_put_float(buf, 68, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 17)));
+_mav_put_float(buf, 72, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 18)));
+_mav_put_float(buf, 76, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 19)));
+_mav_put_float(buf, 80, (float)PrtPrimGetFloat(PrtTupleGetNC(sim_state, 20)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SIM_STATE_LEN);
 msg->msgid = MAVLINK_MSG_ID_SIM_STATE;
@@ -4887,53 +4880,53 @@ if(*sim_state == NULL)
 {
 *sim_state = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_sim_state_t);
 
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 6), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 7), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 8), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 9), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 10), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 11), _MAV_RETURN_float(msg, 44));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 12), _MAV_RETURN_float(msg, 48));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 13), _MAV_RETURN_float(msg, 52));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 14), _MAV_RETURN_float(msg, 56));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 15), _MAV_RETURN_float(msg, 60));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 16), _MAV_RETURN_float(msg, 64));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 17), _MAV_RETURN_float(msg, 68));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 18), _MAV_RETURN_float(msg, 72));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 19), _MAV_RETURN_float(msg, 76));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 20), _MAV_RETURN_float(msg, 80));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 7), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 8), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 9), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 10), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 11), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 12), _MAV_RETURN_float(msg, 48));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 13), _MAV_RETURN_float(msg, 52));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 14), _MAV_RETURN_float(msg, 56));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 15), _MAV_RETURN_float(msg, 60));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 16), _MAV_RETURN_float(msg, 64));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 17), _MAV_RETURN_float(msg, 68));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 18), _MAV_RETURN_float(msg, 72));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 19), _MAV_RETURN_float(msg, 76));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 20), _MAV_RETURN_float(msg, 80));
 
 }
 else
 {
 
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 0), _MAV_RETURN_float(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 5), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 6), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 7), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 8), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 9), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 10), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 11), _MAV_RETURN_float(msg, 44));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 12), _MAV_RETURN_float(msg, 48));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 13), _MAV_RETURN_float(msg, 52));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 14), _MAV_RETURN_float(msg, 56));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 15), _MAV_RETURN_float(msg, 60));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 16), _MAV_RETURN_float(msg, 64));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 17), _MAV_RETURN_float(msg, 68));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 18), _MAV_RETURN_float(msg, 72));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 19), _MAV_RETURN_float(msg, 76));
-PrtSetFloat32(PrtTupleGetNC(*sim_state, 20), _MAV_RETURN_float(msg, 80));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 0), _MAV_RETURN_float(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 6), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 7), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 8), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 9), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 10), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 11), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 12), _MAV_RETURN_float(msg, 48));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 13), _MAV_RETURN_float(msg, 52));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 14), _MAV_RETURN_float(msg, 56));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 15), _MAV_RETURN_float(msg, 60));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 16), _MAV_RETURN_float(msg, 64));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 17), _MAV_RETURN_float(msg, 68));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 18), _MAV_RETURN_float(msg, 72));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 19), _MAV_RETURN_float(msg, 76));
+PrtPrimSetFloat(PrtTupleGetNC(*sim_state, 20), _MAV_RETURN_float(msg, 80));
 
 }
 
@@ -5229,13 +5222,13 @@ char buf[MAVLINK_MSG_ID_HIL_OPTICAL_FLOW_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(hil_optical_flow, 0)));
 _mav_put_uint32_t(buf, 8, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(hil_optical_flow, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(hil_optical_flow, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(hil_optical_flow, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(hil_optical_flow, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(hil_optical_flow, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(hil_optical_flow, 6)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_optical_flow, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_optical_flow, 3)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_optical_flow, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_optical_flow, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_optical_flow, 6)));
 _mav_put_uint32_t(buf, 32, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(hil_optical_flow, 7)));
-_mav_put_float(buf, 36, (float)PrtGetFloat32(PrtTupleGetNC(hil_optical_flow, 8)));
+_mav_put_float(buf, 36, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_optical_flow, 8)));
 _mav_put_int16_t(buf, 40, (int16_t)PrtPrimGetInt(PrtTupleGetNC(hil_optical_flow, 9)));
 _mav_put_uint8_t(buf, 42, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(hil_optical_flow, 10)));
 _mav_put_uint8_t(buf, 43, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(hil_optical_flow, 11)));
@@ -5258,13 +5251,13 @@ if(*hil_optical_flow == NULL)
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_optical_flow, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*hil_optical_flow, 1), _MAV_RETURN_uint32_t(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*hil_optical_flow, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*hil_optical_flow, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*hil_optical_flow, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*hil_optical_flow, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*hil_optical_flow, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_optical_flow, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_optical_flow, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_optical_flow, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_optical_flow, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_optical_flow, 6), _MAV_RETURN_float(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*hil_optical_flow, 7), _MAV_RETURN_uint32_t(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*hil_optical_flow, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_optical_flow, 8), _MAV_RETURN_float(msg, 36));
 PrtPrimSetInt(PrtTupleGetNC(*hil_optical_flow, 9), _MAV_RETURN_int16_t(msg, 40));
 PrtPrimSetInt(PrtTupleGetNC(*hil_optical_flow, 10), _MAV_RETURN_uint8_t(msg, 42));
 PrtPrimSetInt(PrtTupleGetNC(*hil_optical_flow, 11), _MAV_RETURN_uint8_t(msg, 43));
@@ -5275,13 +5268,13 @@ else
 
 PrtPrimSetInt(PrtTupleGetNC(*hil_optical_flow, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*hil_optical_flow, 1), _MAV_RETURN_uint32_t(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*hil_optical_flow, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*hil_optical_flow, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*hil_optical_flow, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*hil_optical_flow, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*hil_optical_flow, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_optical_flow, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_optical_flow, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_optical_flow, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_optical_flow, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_optical_flow, 6), _MAV_RETURN_float(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*hil_optical_flow, 7), _MAV_RETURN_uint32_t(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*hil_optical_flow, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_optical_flow, 8), _MAV_RETURN_float(msg, 36));
 PrtPrimSetInt(PrtTupleGetNC(*hil_optical_flow, 9), _MAV_RETURN_int16_t(msg, 40));
 PrtPrimSetInt(PrtTupleGetNC(*hil_optical_flow, 10), _MAV_RETURN_uint8_t(msg, 42));
 PrtPrimSetInt(PrtTupleGetNC(*hil_optical_flow, 11), _MAV_RETURN_uint8_t(msg, 43));
@@ -5304,13 +5297,13 @@ seqVal = PrtTupleGetNC(hil_state_quaternion, 1);
 while(count < 4)
 {
     
-_mav_put_float(buf, 8 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 8 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(hil_state_quaternion, 2)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(hil_state_quaternion, 3)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(hil_state_quaternion, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_state_quaternion, 2)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_state_quaternion, 3)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(hil_state_quaternion, 4)));
 _mav_put_int32_t(buf, 36, (int32_t)PrtPrimGetInt(PrtTupleGetNC(hil_state_quaternion, 5)));
 _mav_put_int32_t(buf, 40, (int32_t)PrtPrimGetInt(PrtTupleGetNC(hil_state_quaternion, 6)));
 _mav_put_int32_t(buf, 44, (int32_t)PrtPrimGetInt(PrtTupleGetNC(hil_state_quaternion, 7)));
@@ -5347,16 +5340,15 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 8 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 8 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*hil_state_quaternion, 2), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*hil_state_quaternion, 3), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*hil_state_quaternion, 4), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state_quaternion, 2), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state_quaternion, 3), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state_quaternion, 4), _MAV_RETURN_float(msg, 32));
 PrtPrimSetInt(PrtTupleGetNC(*hil_state_quaternion, 5), _MAV_RETURN_int32_t(msg, 36));
 PrtPrimSetInt(PrtTupleGetNC(*hil_state_quaternion, 6), _MAV_RETURN_int32_t(msg, 40));
 PrtPrimSetInt(PrtTupleGetNC(*hil_state_quaternion, 7), _MAV_RETURN_int32_t(msg, 44));
@@ -5380,13 +5372,13 @@ seqVal = PrtTupleGetNC(*hil_state_quaternion, 1);
 while(count < 4)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 8 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 8 + count * 4));
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*hil_state_quaternion, 2), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*hil_state_quaternion, 3), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*hil_state_quaternion, 4), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state_quaternion, 2), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state_quaternion, 3), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*hil_state_quaternion, 4), _MAV_RETURN_float(msg, 32));
 PrtPrimSetInt(PrtTupleGetNC(*hil_state_quaternion, 5), _MAV_RETURN_int32_t(msg, 36));
 PrtPrimSetInt(PrtTupleGetNC(*hil_state_quaternion, 6), _MAV_RETURN_int32_t(msg, 40));
 PrtPrimSetInt(PrtTupleGetNC(*hil_state_quaternion, 7), _MAV_RETURN_int32_t(msg, 44));
@@ -6590,8 +6582,8 @@ char buf[MAVLINK_MSG_ID_TERRAIN_REPORT_LEN];
 
 _mav_put_int32_t(buf, 0, (int32_t)PrtPrimGetInt(PrtTupleGetNC(terrain_report, 0)));
 _mav_put_int32_t(buf, 4, (int32_t)PrtPrimGetInt(PrtTupleGetNC(terrain_report, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(terrain_report, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(terrain_report, 3)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(terrain_report, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(terrain_report, 3)));
 _mav_put_uint16_t(buf, 16, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(terrain_report, 4)));
 _mav_put_uint16_t(buf, 18, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(terrain_report, 5)));
 _mav_put_uint16_t(buf, 20, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(terrain_report, 6)));
@@ -6614,8 +6606,8 @@ if(*terrain_report == NULL)
 
 PrtPrimSetInt(PrtTupleGetNC(*terrain_report, 0), _MAV_RETURN_int32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*terrain_report, 1), _MAV_RETURN_int32_t(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*terrain_report, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*terrain_report, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*terrain_report, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*terrain_report, 3), _MAV_RETURN_float(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*terrain_report, 4), _MAV_RETURN_uint16_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*terrain_report, 5), _MAV_RETURN_uint16_t(msg, 18));
 PrtPrimSetInt(PrtTupleGetNC(*terrain_report, 6), _MAV_RETURN_uint16_t(msg, 20));
@@ -6626,8 +6618,8 @@ else
 
 PrtPrimSetInt(PrtTupleGetNC(*terrain_report, 0), _MAV_RETURN_int32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*terrain_report, 1), _MAV_RETURN_int32_t(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*terrain_report, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*terrain_report, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*terrain_report, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*terrain_report, 3), _MAV_RETURN_float(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*terrain_report, 4), _MAV_RETURN_uint16_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*terrain_report, 5), _MAV_RETURN_uint16_t(msg, 18));
 PrtPrimSetInt(PrtTupleGetNC(*terrain_report, 6), _MAV_RETURN_uint16_t(msg, 20));
@@ -6644,8 +6636,8 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_SCALED_PRESSURE2_LEN];
 
 _mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(scaled_pressure2, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(scaled_pressure2, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(scaled_pressure2, 2)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(scaled_pressure2, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(scaled_pressure2, 2)));
 _mav_put_int16_t(buf, 12, (int16_t)PrtPrimGetInt(PrtTupleGetNC(scaled_pressure2, 3)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SCALED_PRESSURE2_LEN);
@@ -6665,8 +6657,8 @@ if(*scaled_pressure2 == NULL)
 *scaled_pressure2 = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_scaled_pressure2_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*scaled_pressure2, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*scaled_pressure2, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*scaled_pressure2, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*scaled_pressure2, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*scaled_pressure2, 2), _MAV_RETURN_float(msg, 8));
 PrtPrimSetInt(PrtTupleGetNC(*scaled_pressure2, 3), _MAV_RETURN_int16_t(msg, 12));
 
 }
@@ -6674,8 +6666,8 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*scaled_pressure2, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*scaled_pressure2, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*scaled_pressure2, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*scaled_pressure2, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*scaled_pressure2, 2), _MAV_RETURN_float(msg, 8));
 PrtPrimSetInt(PrtTupleGetNC(*scaled_pressure2, 3), _MAV_RETURN_int16_t(msg, 12));
 
 }
@@ -6696,13 +6688,13 @@ seqVal = PrtTupleGetNC(att_pos_mocap, 1);
 while(count < 4)
 {
     
-_mav_put_float(buf, 8 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 8 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(att_pos_mocap, 2)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(att_pos_mocap, 3)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(att_pos_mocap, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(att_pos_mocap, 2)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(att_pos_mocap, 3)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(att_pos_mocap, 4)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ATT_POS_MOCAP_LEN);
 msg->msgid = MAVLINK_MSG_ID_ATT_POS_MOCAP;
@@ -6728,16 +6720,15 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 8 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 8 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*att_pos_mocap, 2), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*att_pos_mocap, 3), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*att_pos_mocap, 4), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*att_pos_mocap, 2), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*att_pos_mocap, 3), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*att_pos_mocap, 4), _MAV_RETURN_float(msg, 32));
 
 }
 else
@@ -6750,13 +6741,13 @@ seqVal = PrtTupleGetNC(*att_pos_mocap, 1);
 while(count < 4)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 8 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 8 + count * 4));
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*att_pos_mocap, 2), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*att_pos_mocap, 3), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*att_pos_mocap, 4), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*att_pos_mocap, 2), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*att_pos_mocap, 3), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*att_pos_mocap, 4), _MAV_RETURN_float(msg, 32));
 
 }
 
@@ -6776,7 +6767,7 @@ seqVal = PrtTupleGetNC(set_actuator_control_target, 1);
 while(count < 8)
 {
     
-_mav_put_float(buf, 8 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 8 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
@@ -6808,8 +6799,7 @@ while(count < 8)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 8 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 8 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
@@ -6830,7 +6820,7 @@ seqVal = PrtTupleGetNC(*set_actuator_control_target, 1);
 while(count < 8)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 8 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 8 + count * 4));
 
     count++;
 }  
@@ -6856,7 +6846,7 @@ seqVal = PrtTupleGetNC(actuator_control_target, 1);
 while(count < 8)
 {
     
-_mav_put_float(buf, 8 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 8 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
@@ -6886,8 +6876,7 @@ while(count < 8)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 8 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 8 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
@@ -6906,7 +6895,7 @@ seqVal = PrtTupleGetNC(*actuator_control_target, 1);
 while(count < 8)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 8 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 8 + count * 4));
 
     count++;
 }  
@@ -6924,12 +6913,12 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_ALTITUDE_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(altitude, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(altitude, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(altitude, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(altitude, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(altitude, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(altitude, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(altitude, 6)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(altitude, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(altitude, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(altitude, 3)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(altitude, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(altitude, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(altitude, 6)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ALTITUDE_LEN);
 msg->msgid = MAVLINK_MSG_ID_ALTITUDE;
@@ -6948,24 +6937,24 @@ if(*altitude == NULL)
 *altitude = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_altitude_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*altitude, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*altitude, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*altitude, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*altitude, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*altitude, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*altitude, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*altitude, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*altitude, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*altitude, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*altitude, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*altitude, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*altitude, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*altitude, 6), _MAV_RETURN_float(msg, 28));
 
 }
 else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*altitude, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*altitude, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*altitude, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*altitude, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*altitude, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*altitude, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*altitude, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*altitude, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*altitude, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*altitude, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*altitude, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*altitude, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*altitude, 6), _MAV_RETURN_float(msg, 28));
 
 }
 
@@ -7082,8 +7071,8 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_SCALED_PRESSURE3_LEN];
 
 _mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(scaled_pressure3, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(scaled_pressure3, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(scaled_pressure3, 2)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(scaled_pressure3, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(scaled_pressure3, 2)));
 _mav_put_int16_t(buf, 12, (int16_t)PrtPrimGetInt(PrtTupleGetNC(scaled_pressure3, 3)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SCALED_PRESSURE3_LEN);
@@ -7103,8 +7092,8 @@ if(*scaled_pressure3 == NULL)
 *scaled_pressure3 = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_scaled_pressure3_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*scaled_pressure3, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*scaled_pressure3, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*scaled_pressure3, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*scaled_pressure3, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*scaled_pressure3, 2), _MAV_RETURN_float(msg, 8));
 PrtPrimSetInt(PrtTupleGetNC(*scaled_pressure3, 3), _MAV_RETURN_int16_t(msg, 12));
 
 }
@@ -7112,8 +7101,8 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*scaled_pressure3, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*scaled_pressure3, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*scaled_pressure3, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*scaled_pressure3, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*scaled_pressure3, 2), _MAV_RETURN_float(msg, 8));
 PrtPrimSetInt(PrtTupleGetNC(*scaled_pressure3, 3), _MAV_RETURN_int16_t(msg, 12));
 
 }
@@ -7131,14 +7120,14 @@ _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(follow_target, 0
 _mav_put_uint64_t(buf, 8, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(follow_target, 1)));
 _mav_put_int32_t(buf, 16, (int32_t)PrtPrimGetInt(PrtTupleGetNC(follow_target, 2)));
 _mav_put_int32_t(buf, 20, (int32_t)PrtPrimGetInt(PrtTupleGetNC(follow_target, 3)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(follow_target, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(follow_target, 4)));
 
 count = 0;
 seqVal = PrtTupleGetNC(follow_target, 5);
 while(count < 3)
 {
     
-_mav_put_float(buf, 28 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 28 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
@@ -7148,7 +7137,7 @@ seqVal = PrtTupleGetNC(follow_target, 6);
 while(count < 3)
 {
     
-_mav_put_float(buf, 40 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 40 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
@@ -7158,7 +7147,7 @@ seqVal = PrtTupleGetNC(follow_target, 7);
 while(count < 4)
 {
     
-_mav_put_float(buf, 52 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 52 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
@@ -7168,7 +7157,7 @@ seqVal = PrtTupleGetNC(follow_target, 8);
 while(count < 3)
 {
     
-_mav_put_float(buf, 68 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 68 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
@@ -7178,7 +7167,7 @@ seqVal = PrtTupleGetNC(follow_target, 9);
 while(count < 3)
 {
     
-_mav_put_float(buf, 80 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 80 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
@@ -7204,7 +7193,7 @@ PrtPrimSetInt(PrtTupleGetNC(*follow_target, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*follow_target, 1), _MAV_RETURN_uint64_t(msg, 8));
 PrtPrimSetInt(PrtTupleGetNC(*follow_target, 2), _MAV_RETURN_int32_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*follow_target, 3), _MAV_RETURN_int32_t(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*follow_target, 4), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*follow_target, 4), _MAV_RETURN_float(msg, 24));
 
 count = 0;
 seqVal = PrtTupleGetNC(*follow_target, 5);
@@ -7212,8 +7201,7 @@ while(count < 3)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 28 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 28 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
@@ -7226,8 +7214,7 @@ while(count < 3)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 40 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 40 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
@@ -7240,8 +7227,7 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 52 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 52 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
@@ -7254,8 +7240,7 @@ while(count < 3)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 68 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 68 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
@@ -7268,8 +7253,7 @@ while(count < 3)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 80 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 80 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
@@ -7285,14 +7269,14 @@ PrtPrimSetInt(PrtTupleGetNC(*follow_target, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*follow_target, 1), _MAV_RETURN_uint64_t(msg, 8));
 PrtPrimSetInt(PrtTupleGetNC(*follow_target, 2), _MAV_RETURN_int32_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*follow_target, 3), _MAV_RETURN_int32_t(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*follow_target, 4), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*follow_target, 4), _MAV_RETURN_float(msg, 24));
 
 count = 0;
 seqVal = PrtTupleGetNC(*follow_target, 5);
 while(count < 3)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 28 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 28 + count * 4));
 
     count++;
 }  
@@ -7302,7 +7286,7 @@ seqVal = PrtTupleGetNC(*follow_target, 6);
 while(count < 3)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 40 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 40 + count * 4));
 
     count++;
 }  
@@ -7312,7 +7296,7 @@ seqVal = PrtTupleGetNC(*follow_target, 7);
 while(count < 4)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 52 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 52 + count * 4));
 
     count++;
 }  
@@ -7322,7 +7306,7 @@ seqVal = PrtTupleGetNC(*follow_target, 8);
 while(count < 3)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 68 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 68 + count * 4));
 
     count++;
 }  
@@ -7332,7 +7316,7 @@ seqVal = PrtTupleGetNC(*follow_target, 9);
 while(count < 3)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 80 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 80 + count * 4));
 
     count++;
 }  
@@ -7350,23 +7334,23 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_CONTROL_SYSTEM_STATE_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(control_system_state, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(control_system_state, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(control_system_state, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(control_system_state, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(control_system_state, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(control_system_state, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(control_system_state, 6)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(control_system_state, 7)));
-_mav_put_float(buf, 36, (float)PrtGetFloat32(PrtTupleGetNC(control_system_state, 8)));
-_mav_put_float(buf, 40, (float)PrtGetFloat32(PrtTupleGetNC(control_system_state, 9)));
-_mav_put_float(buf, 44, (float)PrtGetFloat32(PrtTupleGetNC(control_system_state, 10)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(control_system_state, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(control_system_state, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(control_system_state, 3)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(control_system_state, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(control_system_state, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(control_system_state, 6)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(control_system_state, 7)));
+_mav_put_float(buf, 36, (float)PrtPrimGetFloat(PrtTupleGetNC(control_system_state, 8)));
+_mav_put_float(buf, 40, (float)PrtPrimGetFloat(PrtTupleGetNC(control_system_state, 9)));
+_mav_put_float(buf, 44, (float)PrtPrimGetFloat(PrtTupleGetNC(control_system_state, 10)));
 
 count = 0;
 seqVal = PrtTupleGetNC(control_system_state, 11);
 while(count < 3)
 {
     
-_mav_put_float(buf, 48 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 48 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
@@ -7376,7 +7360,7 @@ seqVal = PrtTupleGetNC(control_system_state, 12);
 while(count < 3)
 {
     
-_mav_put_float(buf, 60 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 60 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
@@ -7386,13 +7370,13 @@ seqVal = PrtTupleGetNC(control_system_state, 13);
 while(count < 4)
 {
     
-_mav_put_float(buf, 72 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 72 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
-_mav_put_float(buf, 88, (float)PrtGetFloat32(PrtTupleGetNC(control_system_state, 14)));
-_mav_put_float(buf, 92, (float)PrtGetFloat32(PrtTupleGetNC(control_system_state, 15)));
-_mav_put_float(buf, 96, (float)PrtGetFloat32(PrtTupleGetNC(control_system_state, 16)));
+_mav_put_float(buf, 88, (float)PrtPrimGetFloat(PrtTupleGetNC(control_system_state, 14)));
+_mav_put_float(buf, 92, (float)PrtPrimGetFloat(PrtTupleGetNC(control_system_state, 15)));
+_mav_put_float(buf, 96, (float)PrtPrimGetFloat(PrtTupleGetNC(control_system_state, 16)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_CONTROL_SYSTEM_STATE_LEN);
 msg->msgid = MAVLINK_MSG_ID_CONTROL_SYSTEM_STATE;
@@ -7411,16 +7395,16 @@ if(*control_system_state == NULL)
 *control_system_state = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_control_system_state_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*control_system_state, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 8), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 9), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 10), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 9), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 10), _MAV_RETURN_float(msg, 44));
 
 count = 0;
 seqVal = PrtTupleGetNC(*control_system_state, 11);
@@ -7428,8 +7412,7 @@ while(count < 3)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 48 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 48 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
@@ -7442,8 +7425,7 @@ while(count < 3)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 60 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 60 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
@@ -7456,39 +7438,38 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 72 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 72 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 14), _MAV_RETURN_float(msg, 88));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 15), _MAV_RETURN_float(msg, 92));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 16), _MAV_RETURN_float(msg, 96));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 14), _MAV_RETURN_float(msg, 88));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 15), _MAV_RETURN_float(msg, 92));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 16), _MAV_RETURN_float(msg, 96));
 
 }
 else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*control_system_state, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 8), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 9), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 10), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 9), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 10), _MAV_RETURN_float(msg, 44));
 
 count = 0;
 seqVal = PrtTupleGetNC(*control_system_state, 11);
 while(count < 3)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 48 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 48 + count * 4));
 
     count++;
 }  
@@ -7498,7 +7479,7 @@ seqVal = PrtTupleGetNC(*control_system_state, 12);
 while(count < 3)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 60 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 60 + count * 4));
 
     count++;
 }  
@@ -7508,13 +7489,13 @@ seqVal = PrtTupleGetNC(*control_system_state, 13);
 while(count < 4)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 72 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 72 + count * 4));
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 14), _MAV_RETURN_float(msg, 88));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 15), _MAV_RETURN_float(msg, 92));
-PrtSetFloat32(PrtTupleGetNC(*control_system_state, 16), _MAV_RETURN_float(msg, 96));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 14), _MAV_RETURN_float(msg, 88));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 15), _MAV_RETURN_float(msg, 92));
+PrtPrimSetFloat(PrtTupleGetNC(*control_system_state, 16), _MAV_RETURN_float(msg, 96));
 
 }
 
@@ -7764,11 +7745,11 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_LANDING_TARGET_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(landing_target, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(landing_target, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(landing_target, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(landing_target, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(landing_target, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(landing_target, 5)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(landing_target, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(landing_target, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(landing_target, 3)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(landing_target, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(landing_target, 5)));
 _mav_put_uint8_t(buf, 28, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(landing_target, 6)));
 _mav_put_uint8_t(buf, 29, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(landing_target, 7)));
 
@@ -7789,11 +7770,11 @@ if(*landing_target == NULL)
 *landing_target = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_landing_target_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*landing_target, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*landing_target, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*landing_target, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*landing_target, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*landing_target, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*landing_target, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*landing_target, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*landing_target, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*landing_target, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*landing_target, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*landing_target, 5), _MAV_RETURN_float(msg, 24));
 PrtPrimSetInt(PrtTupleGetNC(*landing_target, 6), _MAV_RETURN_uint8_t(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*landing_target, 7), _MAV_RETURN_uint8_t(msg, 29));
 
@@ -7802,11 +7783,11 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*landing_target, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*landing_target, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*landing_target, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*landing_target, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*landing_target, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*landing_target, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*landing_target, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*landing_target, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*landing_target, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*landing_target, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*landing_target, 5), _MAV_RETURN_float(msg, 24));
 PrtPrimSetInt(PrtTupleGetNC(*landing_target, 6), _MAV_RETURN_uint8_t(msg, 28));
 PrtPrimSetInt(PrtTupleGetNC(*landing_target, 7), _MAV_RETURN_uint8_t(msg, 29));
 
@@ -7822,14 +7803,14 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_ESTIMATOR_STATUS_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(estimator_status, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(estimator_status, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(estimator_status, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(estimator_status, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(estimator_status, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(estimator_status, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(estimator_status, 6)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(estimator_status, 7)));
-_mav_put_float(buf, 36, (float)PrtGetFloat32(PrtTupleGetNC(estimator_status, 8)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(estimator_status, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(estimator_status, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(estimator_status, 3)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(estimator_status, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(estimator_status, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(estimator_status, 6)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(estimator_status, 7)));
+_mav_put_float(buf, 36, (float)PrtPrimGetFloat(PrtTupleGetNC(estimator_status, 8)));
 _mav_put_uint16_t(buf, 40, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(estimator_status, 9)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ESTIMATOR_STATUS_LEN);
@@ -7849,14 +7830,14 @@ if(*estimator_status == NULL)
 *estimator_status = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_estimator_status_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*estimator_status, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 8), _MAV_RETURN_float(msg, 36));
 PrtPrimSetInt(PrtTupleGetNC(*estimator_status, 9), _MAV_RETURN_uint16_t(msg, 40));
 
 }
@@ -7864,14 +7845,14 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*estimator_status, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*estimator_status, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*estimator_status, 8), _MAV_RETURN_float(msg, 36));
 PrtPrimSetInt(PrtTupleGetNC(*estimator_status, 9), _MAV_RETURN_uint16_t(msg, 40));
 
 }
@@ -7886,14 +7867,14 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_WIND_COV_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(wind_cov, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(wind_cov, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(wind_cov, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(wind_cov, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(wind_cov, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(wind_cov, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(wind_cov, 6)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(wind_cov, 7)));
-_mav_put_float(buf, 36, (float)PrtGetFloat32(PrtTupleGetNC(wind_cov, 8)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(wind_cov, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(wind_cov, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(wind_cov, 3)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(wind_cov, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(wind_cov, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(wind_cov, 6)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(wind_cov, 7)));
+_mav_put_float(buf, 36, (float)PrtPrimGetFloat(PrtTupleGetNC(wind_cov, 8)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_WIND_COV_LEN);
 msg->msgid = MAVLINK_MSG_ID_WIND_COV;
@@ -7912,28 +7893,28 @@ if(*wind_cov == NULL)
 *wind_cov = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_wind_cov_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*wind_cov, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 8), _MAV_RETURN_float(msg, 36));
 
 }
 else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*wind_cov, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 3), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*wind_cov, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*wind_cov, 8), _MAV_RETURN_float(msg, 36));
 
 }
 
@@ -7950,15 +7931,15 @@ _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(gps_input, 0)));
 _mav_put_uint32_t(buf, 8, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(gps_input, 1)));
 _mav_put_int32_t(buf, 12, (int32_t)PrtPrimGetInt(PrtTupleGetNC(gps_input, 2)));
 _mav_put_int32_t(buf, 16, (int32_t)PrtPrimGetInt(PrtTupleGetNC(gps_input, 3)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(gps_input, 4)));
-_mav_put_float(buf, 24, (float)PrtGetFloat32(PrtTupleGetNC(gps_input, 5)));
-_mav_put_float(buf, 28, (float)PrtGetFloat32(PrtTupleGetNC(gps_input, 6)));
-_mav_put_float(buf, 32, (float)PrtGetFloat32(PrtTupleGetNC(gps_input, 7)));
-_mav_put_float(buf, 36, (float)PrtGetFloat32(PrtTupleGetNC(gps_input, 8)));
-_mav_put_float(buf, 40, (float)PrtGetFloat32(PrtTupleGetNC(gps_input, 9)));
-_mav_put_float(buf, 44, (float)PrtGetFloat32(PrtTupleGetNC(gps_input, 10)));
-_mav_put_float(buf, 48, (float)PrtGetFloat32(PrtTupleGetNC(gps_input, 11)));
-_mav_put_float(buf, 52, (float)PrtGetFloat32(PrtTupleGetNC(gps_input, 12)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(gps_input, 4)));
+_mav_put_float(buf, 24, (float)PrtPrimGetFloat(PrtTupleGetNC(gps_input, 5)));
+_mav_put_float(buf, 28, (float)PrtPrimGetFloat(PrtTupleGetNC(gps_input, 6)));
+_mav_put_float(buf, 32, (float)PrtPrimGetFloat(PrtTupleGetNC(gps_input, 7)));
+_mav_put_float(buf, 36, (float)PrtPrimGetFloat(PrtTupleGetNC(gps_input, 8)));
+_mav_put_float(buf, 40, (float)PrtPrimGetFloat(PrtTupleGetNC(gps_input, 9)));
+_mav_put_float(buf, 44, (float)PrtPrimGetFloat(PrtTupleGetNC(gps_input, 10)));
+_mav_put_float(buf, 48, (float)PrtPrimGetFloat(PrtTupleGetNC(gps_input, 11)));
+_mav_put_float(buf, 52, (float)PrtPrimGetFloat(PrtTupleGetNC(gps_input, 12)));
 _mav_put_uint16_t(buf, 56, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(gps_input, 13)));
 _mav_put_uint16_t(buf, 58, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(gps_input, 14)));
 _mav_put_uint8_t(buf, 60, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(gps_input, 15)));
@@ -7985,15 +7966,15 @@ PrtPrimSetInt(PrtTupleGetNC(*gps_input, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*gps_input, 1), _MAV_RETURN_uint32_t(msg, 8));
 PrtPrimSetInt(PrtTupleGetNC(*gps_input, 2), _MAV_RETURN_int32_t(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*gps_input, 3), _MAV_RETURN_int32_t(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 8), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 9), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 10), _MAV_RETURN_float(msg, 44));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 11), _MAV_RETURN_float(msg, 48));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 12), _MAV_RETURN_float(msg, 52));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 9), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 10), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 11), _MAV_RETURN_float(msg, 48));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 12), _MAV_RETURN_float(msg, 52));
 PrtPrimSetInt(PrtTupleGetNC(*gps_input, 13), _MAV_RETURN_uint16_t(msg, 56));
 PrtPrimSetInt(PrtTupleGetNC(*gps_input, 14), _MAV_RETURN_uint16_t(msg, 58));
 PrtPrimSetInt(PrtTupleGetNC(*gps_input, 15), _MAV_RETURN_uint8_t(msg, 60));
@@ -8008,15 +7989,15 @@ PrtPrimSetInt(PrtTupleGetNC(*gps_input, 0), _MAV_RETURN_uint64_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*gps_input, 1), _MAV_RETURN_uint32_t(msg, 8));
 PrtPrimSetInt(PrtTupleGetNC(*gps_input, 2), _MAV_RETURN_int32_t(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*gps_input, 3), _MAV_RETURN_int32_t(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 4), _MAV_RETURN_float(msg, 20));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 5), _MAV_RETURN_float(msg, 24));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 6), _MAV_RETURN_float(msg, 28));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 7), _MAV_RETURN_float(msg, 32));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 8), _MAV_RETURN_float(msg, 36));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 9), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 10), _MAV_RETURN_float(msg, 44));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 11), _MAV_RETURN_float(msg, 48));
-PrtSetFloat32(PrtTupleGetNC(*gps_input, 12), _MAV_RETURN_float(msg, 52));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 4), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 5), _MAV_RETURN_float(msg, 24));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 6), _MAV_RETURN_float(msg, 28));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 7), _MAV_RETURN_float(msg, 32));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 8), _MAV_RETURN_float(msg, 36));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 9), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 10), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 11), _MAV_RETURN_float(msg, 48));
+PrtPrimSetFloat(PrtTupleGetNC(*gps_input, 12), _MAV_RETURN_float(msg, 52));
 PrtPrimSetInt(PrtTupleGetNC(*gps_input, 13), _MAV_RETURN_uint16_t(msg, 56));
 PrtPrimSetInt(PrtTupleGetNC(*gps_input, 14), _MAV_RETURN_uint16_t(msg, 58));
 PrtPrimSetInt(PrtTupleGetNC(*gps_input, 15), _MAV_RETURN_uint8_t(msg, 60));
@@ -8211,9 +8192,9 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_VIBRATION_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(vibration, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(vibration, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(vibration, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(vibration, 3)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(vibration, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(vibration, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(vibration, 3)));
 _mav_put_uint32_t(buf, 20, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(vibration, 4)));
 _mav_put_uint32_t(buf, 24, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(vibration, 5)));
 _mav_put_uint32_t(buf, 28, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(vibration, 6)));
@@ -8235,9 +8216,9 @@ if(*vibration == NULL)
 *vibration = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_vibration_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*vibration, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*vibration, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*vibration, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*vibration, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*vibration, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*vibration, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*vibration, 3), _MAV_RETURN_float(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*vibration, 4), _MAV_RETURN_uint32_t(msg, 20));
 PrtPrimSetInt(PrtTupleGetNC(*vibration, 5), _MAV_RETURN_uint32_t(msg, 24));
 PrtPrimSetInt(PrtTupleGetNC(*vibration, 6), _MAV_RETURN_uint32_t(msg, 28));
@@ -8247,9 +8228,9 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*vibration, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*vibration, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*vibration, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*vibration, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*vibration, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*vibration, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*vibration, 3), _MAV_RETURN_float(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*vibration, 4), _MAV_RETURN_uint32_t(msg, 20));
 PrtPrimSetInt(PrtTupleGetNC(*vibration, 5), _MAV_RETURN_uint32_t(msg, 24));
 PrtPrimSetInt(PrtTupleGetNC(*vibration, 6), _MAV_RETURN_uint32_t(msg, 28));
@@ -8268,22 +8249,22 @@ char buf[MAVLINK_MSG_ID_HOME_POSITION_LEN];
 _mav_put_int32_t(buf, 0, (int32_t)PrtPrimGetInt(PrtTupleGetNC(home_position, 0)));
 _mav_put_int32_t(buf, 4, (int32_t)PrtPrimGetInt(PrtTupleGetNC(home_position, 1)));
 _mav_put_int32_t(buf, 8, (int32_t)PrtPrimGetInt(PrtTupleGetNC(home_position, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(home_position, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(home_position, 4)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(home_position, 5)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(home_position, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(home_position, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(home_position, 5)));
 
 count = 0;
 seqVal = PrtTupleGetNC(home_position, 6);
 while(count < 4)
 {
     
-_mav_put_float(buf, 24 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 24 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
-_mav_put_float(buf, 40, (float)PrtGetFloat32(PrtTupleGetNC(home_position, 7)));
-_mav_put_float(buf, 44, (float)PrtGetFloat32(PrtTupleGetNC(home_position, 8)));
-_mav_put_float(buf, 48, (float)PrtGetFloat32(PrtTupleGetNC(home_position, 9)));
+_mav_put_float(buf, 40, (float)PrtPrimGetFloat(PrtTupleGetNC(home_position, 7)));
+_mav_put_float(buf, 44, (float)PrtPrimGetFloat(PrtTupleGetNC(home_position, 8)));
+_mav_put_float(buf, 48, (float)PrtPrimGetFloat(PrtTupleGetNC(home_position, 9)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_HOME_POSITION_LEN);
 msg->msgid = MAVLINK_MSG_ID_HOME_POSITION;
@@ -8304,9 +8285,9 @@ if(*home_position == NULL)
 PrtPrimSetInt(PrtTupleGetNC(*home_position, 0), _MAV_RETURN_int32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*home_position, 1), _MAV_RETURN_int32_t(msg, 4));
 PrtPrimSetInt(PrtTupleGetNC(*home_position, 2), _MAV_RETURN_int32_t(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*home_position, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*home_position, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*home_position, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*home_position, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*home_position, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*home_position, 5), _MAV_RETURN_float(msg, 20));
 
 count = 0;
 seqVal = PrtTupleGetNC(*home_position, 6);
@@ -8314,16 +8295,15 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 24 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 24 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*home_position, 7), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*home_position, 8), _MAV_RETURN_float(msg, 44));
-PrtSetFloat32(PrtTupleGetNC(*home_position, 9), _MAV_RETURN_float(msg, 48));
+PrtPrimSetFloat(PrtTupleGetNC(*home_position, 7), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*home_position, 8), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*home_position, 9), _MAV_RETURN_float(msg, 48));
 
 }
 else
@@ -8332,22 +8312,22 @@ else
 PrtPrimSetInt(PrtTupleGetNC(*home_position, 0), _MAV_RETURN_int32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*home_position, 1), _MAV_RETURN_int32_t(msg, 4));
 PrtPrimSetInt(PrtTupleGetNC(*home_position, 2), _MAV_RETURN_int32_t(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*home_position, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*home_position, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*home_position, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*home_position, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*home_position, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*home_position, 5), _MAV_RETURN_float(msg, 20));
 
 count = 0;
 seqVal = PrtTupleGetNC(*home_position, 6);
 while(count < 4)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 24 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 24 + count * 4));
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*home_position, 7), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*home_position, 8), _MAV_RETURN_float(msg, 44));
-PrtSetFloat32(PrtTupleGetNC(*home_position, 9), _MAV_RETURN_float(msg, 48));
+PrtPrimSetFloat(PrtTupleGetNC(*home_position, 7), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*home_position, 8), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*home_position, 9), _MAV_RETURN_float(msg, 48));
 
 }
 
@@ -8363,22 +8343,22 @@ char buf[MAVLINK_MSG_ID_SET_HOME_POSITION_LEN];
 _mav_put_int32_t(buf, 0, (int32_t)PrtPrimGetInt(PrtTupleGetNC(set_home_position, 0)));
 _mav_put_int32_t(buf, 4, (int32_t)PrtPrimGetInt(PrtTupleGetNC(set_home_position, 1)));
 _mav_put_int32_t(buf, 8, (int32_t)PrtPrimGetInt(PrtTupleGetNC(set_home_position, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(set_home_position, 3)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(set_home_position, 4)));
-_mav_put_float(buf, 20, (float)PrtGetFloat32(PrtTupleGetNC(set_home_position, 5)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(set_home_position, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(set_home_position, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(set_home_position, 5)));
 
 count = 0;
 seqVal = PrtTupleGetNC(set_home_position, 6);
 while(count < 4)
 {
     
-_mav_put_float(buf, 24 + count * 4, (float)PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));
+_mav_put_float(buf, 24 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
 
     count++;
 }  
-_mav_put_float(buf, 40, (float)PrtGetFloat32(PrtTupleGetNC(set_home_position, 7)));
-_mav_put_float(buf, 44, (float)PrtGetFloat32(PrtTupleGetNC(set_home_position, 8)));
-_mav_put_float(buf, 48, (float)PrtGetFloat32(PrtTupleGetNC(set_home_position, 9)));
+_mav_put_float(buf, 40, (float)PrtPrimGetFloat(PrtTupleGetNC(set_home_position, 7)));
+_mav_put_float(buf, 44, (float)PrtPrimGetFloat(PrtTupleGetNC(set_home_position, 8)));
+_mav_put_float(buf, 48, (float)PrtPrimGetFloat(PrtTupleGetNC(set_home_position, 9)));
 _mav_put_uint8_t(buf, 52, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(set_home_position, 10)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SET_HOME_POSITION_LEN);
@@ -8400,9 +8380,9 @@ if(*set_home_position == NULL)
 PrtPrimSetInt(PrtTupleGetNC(*set_home_position, 0), _MAV_RETURN_int32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*set_home_position, 1), _MAV_RETURN_int32_t(msg, 4));
 PrtPrimSetInt(PrtTupleGetNC(*set_home_position, 2), _MAV_RETURN_int32_t(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*set_home_position, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*set_home_position, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*set_home_position, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*set_home_position, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*set_home_position, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*set_home_position, 5), _MAV_RETURN_float(msg, 20));
 
 count = 0;
 seqVal = PrtTupleGetNC(*set_home_position, 6);
@@ -8410,16 +8390,15 @@ while(count < 4)
 {
     
 
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_float(msg, 24 + count * 4));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 24 + count * 4));
 
 PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*set_home_position, 7), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*set_home_position, 8), _MAV_RETURN_float(msg, 44));
-PrtSetFloat32(PrtTupleGetNC(*set_home_position, 9), _MAV_RETURN_float(msg, 48));
+PrtPrimSetFloat(PrtTupleGetNC(*set_home_position, 7), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*set_home_position, 8), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*set_home_position, 9), _MAV_RETURN_float(msg, 48));
 PrtPrimSetInt(PrtTupleGetNC(*set_home_position, 10), _MAV_RETURN_uint8_t(msg, 52));
 
 }
@@ -8429,22 +8408,22 @@ else
 PrtPrimSetInt(PrtTupleGetNC(*set_home_position, 0), _MAV_RETURN_int32_t(msg, 0));
 PrtPrimSetInt(PrtTupleGetNC(*set_home_position, 1), _MAV_RETURN_int32_t(msg, 4));
 PrtPrimSetInt(PrtTupleGetNC(*set_home_position, 2), _MAV_RETURN_int32_t(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*set_home_position, 3), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*set_home_position, 4), _MAV_RETURN_float(msg, 16));
-PrtSetFloat32(PrtTupleGetNC(*set_home_position, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetFloat(PrtTupleGetNC(*set_home_position, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*set_home_position, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*set_home_position, 5), _MAV_RETURN_float(msg, 20));
 
 count = 0;
 seqVal = PrtTupleGetNC(*set_home_position, 6);
 while(count < 4)
 {
     
-PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 24 + count * 4));
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 24 + count * 4));
 
     count++;
 }  
-PrtSetFloat32(PrtTupleGetNC(*set_home_position, 7), _MAV_RETURN_float(msg, 40));
-PrtSetFloat32(PrtTupleGetNC(*set_home_position, 8), _MAV_RETURN_float(msg, 44));
-PrtSetFloat32(PrtTupleGetNC(*set_home_position, 9), _MAV_RETURN_float(msg, 48));
+PrtPrimSetFloat(PrtTupleGetNC(*set_home_position, 7), _MAV_RETURN_float(msg, 40));
+PrtPrimSetFloat(PrtTupleGetNC(*set_home_position, 8), _MAV_RETURN_float(msg, 44));
+PrtPrimSetFloat(PrtTupleGetNC(*set_home_position, 9), _MAV_RETURN_float(msg, 48));
 PrtPrimSetInt(PrtTupleGetNC(*set_home_position, 10), _MAV_RETURN_uint8_t(msg, 52));
 
 }
@@ -8639,9 +8618,9 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_COLLISION_LEN];
 
 _mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(collision, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(collision, 1)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(collision, 2)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(collision, 3)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(collision, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(collision, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(collision, 3)));
 _mav_put_uint8_t(buf, 16, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(collision, 4)));
 _mav_put_uint8_t(buf, 17, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(collision, 5)));
 _mav_put_uint8_t(buf, 18, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(collision, 6)));
@@ -8663,9 +8642,9 @@ if(*collision == NULL)
 *collision = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_collision_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*collision, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*collision, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*collision, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*collision, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*collision, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*collision, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*collision, 3), _MAV_RETURN_float(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*collision, 4), _MAV_RETURN_uint8_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*collision, 5), _MAV_RETURN_uint8_t(msg, 17));
 PrtPrimSetInt(PrtTupleGetNC(*collision, 6), _MAV_RETURN_uint8_t(msg, 18));
@@ -8675,9 +8654,9 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*collision, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*collision, 1), _MAV_RETURN_float(msg, 4));
-PrtSetFloat32(PrtTupleGetNC(*collision, 2), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*collision, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*collision, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*collision, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*collision, 3), _MAV_RETURN_float(msg, 12));
 PrtPrimSetInt(PrtTupleGetNC(*collision, 4), _MAV_RETURN_uint8_t(msg, 16));
 PrtPrimSetInt(PrtTupleGetNC(*collision, 5), _MAV_RETURN_uint8_t(msg, 17));
 PrtPrimSetInt(PrtTupleGetNC(*collision, 6), _MAV_RETURN_uint8_t(msg, 18));
@@ -8843,9 +8822,9 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_DEBUG_VECT_LEN];
 
 _mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(debug_vect, 0)));
-_mav_put_float(buf, 8, (float)PrtGetFloat32(PrtTupleGetNC(debug_vect, 1)));
-_mav_put_float(buf, 12, (float)PrtGetFloat32(PrtTupleGetNC(debug_vect, 2)));
-_mav_put_float(buf, 16, (float)PrtGetFloat32(PrtTupleGetNC(debug_vect, 3)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(debug_vect, 1)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(debug_vect, 2)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(debug_vect, 3)));
 
 count = 0;
 seqVal = PrtTupleGetNC(debug_vect, 4);
@@ -8873,9 +8852,9 @@ if(*debug_vect == NULL)
 *debug_vect = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_debug_vect_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*debug_vect, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*debug_vect, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*debug_vect, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*debug_vect, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*debug_vect, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*debug_vect, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*debug_vect, 3), _MAV_RETURN_float(msg, 16));
 
 count = 0;
 seqVal = PrtTupleGetNC(*debug_vect, 4);
@@ -8893,9 +8872,9 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*debug_vect, 0), _MAV_RETURN_uint64_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*debug_vect, 1), _MAV_RETURN_float(msg, 8));
-PrtSetFloat32(PrtTupleGetNC(*debug_vect, 2), _MAV_RETURN_float(msg, 12));
-PrtSetFloat32(PrtTupleGetNC(*debug_vect, 3), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*debug_vect, 1), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*debug_vect, 2), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*debug_vect, 3), _MAV_RETURN_float(msg, 16));
 
 count = 0;
 seqVal = PrtTupleGetNC(*debug_vect, 4);
@@ -8919,7 +8898,7 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_NAMED_VALUE_FLOAT_LEN];
 
 _mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(named_value_float, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(named_value_float, 1)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(named_value_float, 1)));
 
 count = 0;
 seqVal = PrtTupleGetNC(named_value_float, 2);
@@ -8947,7 +8926,7 @@ if(*named_value_float == NULL)
 *named_value_float = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_named_value_float_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*named_value_float, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*named_value_float, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*named_value_float, 1), _MAV_RETURN_float(msg, 4));
 
 count = 0;
 seqVal = PrtTupleGetNC(*named_value_float, 2);
@@ -8965,7 +8944,7 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*named_value_float, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*named_value_float, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*named_value_float, 1), _MAV_RETURN_float(msg, 4));
 
 count = 0;
 seqVal = PrtTupleGetNC(*named_value_float, 2);
@@ -9126,7 +9105,7 @@ PRT_VALUE* seqVal;
 char buf[MAVLINK_MSG_ID_DEBUG_LEN];
 
 _mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(debug, 0)));
-_mav_put_float(buf, 4, (float)PrtGetFloat32(PrtTupleGetNC(debug, 1)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(debug, 1)));
 _mav_put_uint8_t(buf, 8, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(debug, 2)));
 
 memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_DEBUG_LEN);
@@ -9146,7 +9125,7 @@ if(*debug == NULL)
 *debug = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_debug_t);
 
 PrtPrimSetInt(PrtTupleGetNC(*debug, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*debug, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*debug, 1), _MAV_RETURN_float(msg, 4));
 PrtPrimSetInt(PrtTupleGetNC(*debug, 2), _MAV_RETURN_uint8_t(msg, 8));
 
 }
@@ -9154,9 +9133,847 @@ else
 {
 
 PrtPrimSetInt(PrtTupleGetNC(*debug, 0), _MAV_RETURN_uint32_t(msg, 0));
-PrtSetFloat32(PrtTupleGetNC(*debug, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*debug, 1), _MAV_RETURN_float(msg, 4));
 PrtPrimSetInt(PrtTupleGetNC(*debug, 2), _MAV_RETURN_uint8_t(msg, 8));
 
 }
 
 }         
+
+
+static inline uint16_t p_mavlink_msg_button_change_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* button_change)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_BUTTON_CHANGE_LEN];
+
+_mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(button_change, 0)));
+_mav_put_uint32_t(buf, 4, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(button_change, 1)));
+_mav_put_uint8_t(buf, 8, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(button_change, 2)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_BUTTON_CHANGE_LEN);
+msg->msgid = MAVLINK_MSG_ID_BUTTON_CHANGE;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_BUTTON_CHANGE_MIN_LEN, MAVLINK_MSG_ID_BUTTON_CHANGE_LEN, MAVLINK_MSG_ID_BUTTON_CHANGE_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_button_change_decode(const mavlink_message_t* msg, PRT_VALUE** button_change)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*button_change == NULL)
+{
+*button_change = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_button_change_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*button_change, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*button_change, 1), _MAV_RETURN_uint32_t(msg, 4));
+PrtPrimSetInt(PrtTupleGetNC(*button_change, 2), _MAV_RETURN_uint8_t(msg, 8));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*button_change, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*button_change, 1), _MAV_RETURN_uint32_t(msg, 4));
+PrtPrimSetInt(PrtTupleGetNC(*button_change, 2), _MAV_RETURN_uint8_t(msg, 8));
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_play_tune_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* play_tune)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_PLAY_TUNE_LEN];
+
+_mav_put_uint8_t(buf, 0, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(play_tune, 0)));
+_mav_put_uint8_t(buf, 1, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(play_tune, 1)));
+
+count = 0;
+seqVal = PrtTupleGetNC(play_tune, 2);
+while(count < 30)
+{
+    _mav_put_char(buf, 2 + count * 1, (char)PrtPrimGetInt(PrtSeqGetNCIntIndex(seqVal, count)));
+
+    count++;
+}  
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_PLAY_TUNE_LEN);
+msg->msgid = MAVLINK_MSG_ID_PLAY_TUNE;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_PLAY_TUNE_MIN_LEN, MAVLINK_MSG_ID_PLAY_TUNE_LEN, MAVLINK_MSG_ID_PLAY_TUNE_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_play_tune_decode(const mavlink_message_t* msg, PRT_VALUE** play_tune)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*play_tune == NULL)
+{
+*play_tune = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_play_tune_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*play_tune, 0), _MAV_RETURN_uint8_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*play_tune, 1), _MAV_RETURN_uint8_t(msg, 1));
+
+count = 0;
+seqVal = PrtTupleGetNC(*play_tune, 2);
+while(count < 30)
+{
+    
+tmpVal = PrtMkIntValue(_MAV_RETURN_char(msg, 2 + count * 1));
+PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
+
+    count++;
+}  
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*play_tune, 0), _MAV_RETURN_uint8_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*play_tune, 1), _MAV_RETURN_uint8_t(msg, 1));
+
+count = 0;
+seqVal = PrtTupleGetNC(*play_tune, 2);
+while(count < 30)
+{
+    
+PrtPrimSetInt(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_char(msg, 2 + count * 1));
+
+    count++;
+}  
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_camera_information_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* camera_information)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_CAMERA_INFORMATION_LEN];
+
+_mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(camera_information, 0)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(camera_information, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(camera_information, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(camera_information, 3)));
+_mav_put_uint16_t(buf, 16, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(camera_information, 4)));
+_mav_put_uint16_t(buf, 18, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(camera_information, 5)));
+_mav_put_uint8_t(buf, 20, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_information, 6)));
+
+count = 0;
+seqVal = PrtTupleGetNC(camera_information, 7);
+while(count < 32)
+{
+    _mav_put_uint8_t(buf, 21 + count * 1, (uint8_t)PrtPrimGetInt(PrtSeqGetNCIntIndex(seqVal, count)));
+
+    count++;
+}  
+
+count = 0;
+seqVal = PrtTupleGetNC(camera_information, 8);
+while(count < 32)
+{
+    _mav_put_uint8_t(buf, 53 + count * 1, (uint8_t)PrtPrimGetInt(PrtSeqGetNCIntIndex(seqVal, count)));
+
+    count++;
+}  
+_mav_put_uint8_t(buf, 85, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_information, 9)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_CAMERA_INFORMATION_LEN);
+msg->msgid = MAVLINK_MSG_ID_CAMERA_INFORMATION;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_CAMERA_INFORMATION_MIN_LEN, MAVLINK_MSG_ID_CAMERA_INFORMATION_LEN, MAVLINK_MSG_ID_CAMERA_INFORMATION_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_camera_information_decode(const mavlink_message_t* msg, PRT_VALUE** camera_information)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*camera_information == NULL)
+{
+*camera_information = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_camera_information_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_information, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_information, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_information, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 4), _MAV_RETURN_uint16_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 5), _MAV_RETURN_uint16_t(msg, 18));
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 6), _MAV_RETURN_uint8_t(msg, 20));
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_information, 7);
+while(count < 32)
+{
+    
+tmpVal = PrtMkIntValue(_MAV_RETURN_uint8_t(msg, 21 + count * 1));
+PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
+
+    count++;
+}  
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_information, 8);
+while(count < 32)
+{
+    
+tmpVal = PrtMkIntValue(_MAV_RETURN_uint8_t(msg, 53 + count * 1));
+PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
+
+    count++;
+}  
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 9), _MAV_RETURN_uint8_t(msg, 85));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_information, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_information, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_information, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 4), _MAV_RETURN_uint16_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 5), _MAV_RETURN_uint16_t(msg, 18));
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 6), _MAV_RETURN_uint8_t(msg, 20));
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_information, 7);
+while(count < 32)
+{
+    
+PrtPrimSetInt(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_uint8_t(msg, 21 + count * 1));
+
+    count++;
+}  
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_information, 8);
+while(count < 32)
+{
+    
+PrtPrimSetInt(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_uint8_t(msg, 53 + count * 1));
+
+    count++;
+}  
+PrtPrimSetInt(PrtTupleGetNC(*camera_information, 9), _MAV_RETURN_uint8_t(msg, 85));
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_camera_settings_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* camera_settings)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_CAMERA_SETTINGS_LEN];
+
+_mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 0)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(camera_settings, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(camera_settings, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(camera_settings, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(camera_settings, 4)));
+_mav_put_uint8_t(buf, 20, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 5)));
+_mav_put_uint8_t(buf, 21, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 6)));
+_mav_put_uint8_t(buf, 22, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 7)));
+_mav_put_uint8_t(buf, 23, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 8)));
+_mav_put_uint8_t(buf, 24, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 9)));
+_mav_put_uint8_t(buf, 25, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 10)));
+_mav_put_uint8_t(buf, 26, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 11)));
+_mav_put_uint8_t(buf, 27, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_settings, 12)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_CAMERA_SETTINGS_LEN);
+msg->msgid = MAVLINK_MSG_ID_CAMERA_SETTINGS;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_CAMERA_SETTINGS_MIN_LEN, MAVLINK_MSG_ID_CAMERA_SETTINGS_LEN, MAVLINK_MSG_ID_CAMERA_SETTINGS_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_camera_settings_decode(const mavlink_message_t* msg, PRT_VALUE** camera_settings)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*camera_settings == NULL)
+{
+*camera_settings = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_camera_settings_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_settings, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_settings, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_settings, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_settings, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 5), _MAV_RETURN_uint8_t(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 6), _MAV_RETURN_uint8_t(msg, 21));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 7), _MAV_RETURN_uint8_t(msg, 22));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 8), _MAV_RETURN_uint8_t(msg, 23));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 9), _MAV_RETURN_uint8_t(msg, 24));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 10), _MAV_RETURN_uint8_t(msg, 25));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 11), _MAV_RETURN_uint8_t(msg, 26));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 12), _MAV_RETURN_uint8_t(msg, 27));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_settings, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_settings, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_settings, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_settings, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 5), _MAV_RETURN_uint8_t(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 6), _MAV_RETURN_uint8_t(msg, 21));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 7), _MAV_RETURN_uint8_t(msg, 22));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 8), _MAV_RETURN_uint8_t(msg, 23));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 9), _MAV_RETURN_uint8_t(msg, 24));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 10), _MAV_RETURN_uint8_t(msg, 25));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 11), _MAV_RETURN_uint8_t(msg, 26));
+PrtPrimSetInt(PrtTupleGetNC(*camera_settings, 12), _MAV_RETURN_uint8_t(msg, 27));
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_storage_information_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* storage_information)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_STORAGE_INFORMATION_LEN];
+
+_mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(storage_information, 0)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(storage_information, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(storage_information, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(storage_information, 3)));
+_mav_put_float(buf, 16, (float)PrtPrimGetFloat(PrtTupleGetNC(storage_information, 4)));
+_mav_put_float(buf, 20, (float)PrtPrimGetFloat(PrtTupleGetNC(storage_information, 5)));
+_mav_put_uint8_t(buf, 24, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(storage_information, 6)));
+_mav_put_uint8_t(buf, 25, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(storage_information, 7)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_STORAGE_INFORMATION_LEN);
+msg->msgid = MAVLINK_MSG_ID_STORAGE_INFORMATION;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_STORAGE_INFORMATION_MIN_LEN, MAVLINK_MSG_ID_STORAGE_INFORMATION_LEN, MAVLINK_MSG_ID_STORAGE_INFORMATION_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_storage_information_decode(const mavlink_message_t* msg, PRT_VALUE** storage_information)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*storage_information == NULL)
+{
+*storage_information = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_storage_information_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*storage_information, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*storage_information, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*storage_information, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*storage_information, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*storage_information, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*storage_information, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*storage_information, 6), _MAV_RETURN_uint8_t(msg, 24));
+PrtPrimSetInt(PrtTupleGetNC(*storage_information, 7), _MAV_RETURN_uint8_t(msg, 25));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*storage_information, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*storage_information, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*storage_information, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*storage_information, 3), _MAV_RETURN_float(msg, 12));
+PrtPrimSetFloat(PrtTupleGetNC(*storage_information, 4), _MAV_RETURN_float(msg, 16));
+PrtPrimSetFloat(PrtTupleGetNC(*storage_information, 5), _MAV_RETURN_float(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*storage_information, 6), _MAV_RETURN_uint8_t(msg, 24));
+PrtPrimSetInt(PrtTupleGetNC(*storage_information, 7), _MAV_RETURN_uint8_t(msg, 25));
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_camera_capture_status_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* camera_capture_status)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS_LEN];
+
+_mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 0)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(camera_capture_status, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(camera_capture_status, 2)));
+_mav_put_uint16_t(buf, 12, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 3)));
+_mav_put_uint16_t(buf, 14, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 4)));
+_mav_put_uint16_t(buf, 16, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 5)));
+_mav_put_uint16_t(buf, 18, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 6)));
+_mav_put_uint8_t(buf, 20, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 7)));
+_mav_put_uint8_t(buf, 21, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 8)));
+_mav_put_uint8_t(buf, 22, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_capture_status, 9)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS_LEN);
+msg->msgid = MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS_MIN_LEN, MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS_LEN, MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_camera_capture_status_decode(const mavlink_message_t* msg, PRT_VALUE** camera_capture_status)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*camera_capture_status == NULL)
+{
+*camera_capture_status = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_camera_capture_status_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_capture_status, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_capture_status, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 3), _MAV_RETURN_uint16_t(msg, 12));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 4), _MAV_RETURN_uint16_t(msg, 14));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 5), _MAV_RETURN_uint16_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 6), _MAV_RETURN_uint16_t(msg, 18));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 7), _MAV_RETURN_uint8_t(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 8), _MAV_RETURN_uint8_t(msg, 21));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 9), _MAV_RETURN_uint8_t(msg, 22));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_capture_status, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*camera_capture_status, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 3), _MAV_RETURN_uint16_t(msg, 12));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 4), _MAV_RETURN_uint16_t(msg, 14));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 5), _MAV_RETURN_uint16_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 6), _MAV_RETURN_uint16_t(msg, 18));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 7), _MAV_RETURN_uint8_t(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 8), _MAV_RETURN_uint8_t(msg, 21));
+PrtPrimSetInt(PrtTupleGetNC(*camera_capture_status, 9), _MAV_RETURN_uint8_t(msg, 22));
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_camera_image_captured_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* camera_image_captured)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN];
+
+_mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(camera_image_captured, 0)));
+_mav_put_uint32_t(buf, 8, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(camera_image_captured, 1)));
+_mav_put_int32_t(buf, 12, (int32_t)PrtPrimGetInt(PrtTupleGetNC(camera_image_captured, 2)));
+_mav_put_int32_t(buf, 16, (int32_t)PrtPrimGetInt(PrtTupleGetNC(camera_image_captured, 3)));
+_mav_put_int32_t(buf, 20, (int32_t)PrtPrimGetInt(PrtTupleGetNC(camera_image_captured, 4)));
+_mav_put_int32_t(buf, 24, (int32_t)PrtPrimGetInt(PrtTupleGetNC(camera_image_captured, 5)));
+
+count = 0;
+seqVal = PrtTupleGetNC(camera_image_captured, 6);
+while(count < 4)
+{
+    
+_mav_put_float(buf, 28 + count * 4, (float)PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));
+
+    count++;
+}  
+_mav_put_uint8_t(buf, 44, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(camera_image_captured, 7)));
+
+count = 0;
+seqVal = PrtTupleGetNC(camera_image_captured, 8);
+while(count < 210)
+{
+    _mav_put_char(buf, 45 + count * 1, (char)PrtPrimGetInt(PrtSeqGetNCIntIndex(seqVal, count)));
+
+    count++;
+}  
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN);
+msg->msgid = MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_MIN_LEN, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_LEN, MAVLINK_MSG_ID_CAMERA_IMAGE_CAPTURED_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_camera_image_captured_decode(const mavlink_message_t* msg, PRT_VALUE** camera_image_captured)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*camera_image_captured == NULL)
+{
+*camera_image_captured = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_camera_image_captured_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 0), _MAV_RETURN_uint64_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 1), _MAV_RETURN_uint32_t(msg, 8));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 2), _MAV_RETURN_int32_t(msg, 12));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 3), _MAV_RETURN_int32_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 4), _MAV_RETURN_int32_t(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 5), _MAV_RETURN_int32_t(msg, 24));
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_image_captured, 6);
+while(count < 4)
+{
+    
+
+tmpVal = PrtMkFloatValue(_MAV_RETURN_float(msg, 28 + count * 4));
+
+PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
+
+    count++;
+}  
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 7), _MAV_RETURN_uint8_t(msg, 44));
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_image_captured, 8);
+while(count < 210)
+{
+    
+tmpVal = PrtMkIntValue(_MAV_RETURN_char(msg, 45 + count * 1));
+PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
+
+    count++;
+}  
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 0), _MAV_RETURN_uint64_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 1), _MAV_RETURN_uint32_t(msg, 8));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 2), _MAV_RETURN_int32_t(msg, 12));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 3), _MAV_RETURN_int32_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 4), _MAV_RETURN_int32_t(msg, 20));
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 5), _MAV_RETURN_int32_t(msg, 24));
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_image_captured, 6);
+while(count < 4)
+{
+    
+PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_float(msg, 28 + count * 4));
+
+    count++;
+}  
+PrtPrimSetInt(PrtTupleGetNC(*camera_image_captured, 7), _MAV_RETURN_uint8_t(msg, 44));
+
+count = 0;
+seqVal = PrtTupleGetNC(*camera_image_captured, 8);
+while(count < 210)
+{
+    
+PrtPrimSetInt(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_char(msg, 45 + count * 1));
+
+    count++;
+}  
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_flight_information_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* flight_information)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_FLIGHT_INFORMATION_LEN];
+
+_mav_put_uint64_t(buf, 0, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(flight_information, 0)));
+_mav_put_uint64_t(buf, 8, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(flight_information, 1)));
+_mav_put_uint64_t(buf, 16, (uint64_t)PrtPrimGetInt(PrtTupleGetNC(flight_information, 2)));
+_mav_put_uint32_t(buf, 24, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(flight_information, 3)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_FLIGHT_INFORMATION_LEN);
+msg->msgid = MAVLINK_MSG_ID_FLIGHT_INFORMATION;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_FLIGHT_INFORMATION_MIN_LEN, MAVLINK_MSG_ID_FLIGHT_INFORMATION_LEN, MAVLINK_MSG_ID_FLIGHT_INFORMATION_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_flight_information_decode(const mavlink_message_t* msg, PRT_VALUE** flight_information)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*flight_information == NULL)
+{
+*flight_information = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_flight_information_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 0), _MAV_RETURN_uint64_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 1), _MAV_RETURN_uint64_t(msg, 8));
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 2), _MAV_RETURN_uint64_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 3), _MAV_RETURN_uint32_t(msg, 24));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 0), _MAV_RETURN_uint64_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 1), _MAV_RETURN_uint64_t(msg, 8));
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 2), _MAV_RETURN_uint64_t(msg, 16));
+PrtPrimSetInt(PrtTupleGetNC(*flight_information, 3), _MAV_RETURN_uint32_t(msg, 24));
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_mount_orientation_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* mount_orientation)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_MOUNT_ORIENTATION_LEN];
+
+_mav_put_uint32_t(buf, 0, (uint32_t)PrtPrimGetInt(PrtTupleGetNC(mount_orientation, 0)));
+_mav_put_float(buf, 4, (float)PrtPrimGetFloat(PrtTupleGetNC(mount_orientation, 1)));
+_mav_put_float(buf, 8, (float)PrtPrimGetFloat(PrtTupleGetNC(mount_orientation, 2)));
+_mav_put_float(buf, 12, (float)PrtPrimGetFloat(PrtTupleGetNC(mount_orientation, 3)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_MOUNT_ORIENTATION_LEN);
+msg->msgid = MAVLINK_MSG_ID_MOUNT_ORIENTATION;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_MOUNT_ORIENTATION_MIN_LEN, MAVLINK_MSG_ID_MOUNT_ORIENTATION_LEN, MAVLINK_MSG_ID_MOUNT_ORIENTATION_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_mount_orientation_decode(const mavlink_message_t* msg, PRT_VALUE** mount_orientation)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*mount_orientation == NULL)
+{
+*mount_orientation = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_mount_orientation_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*mount_orientation, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*mount_orientation, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*mount_orientation, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*mount_orientation, 3), _MAV_RETURN_float(msg, 12));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*mount_orientation, 0), _MAV_RETURN_uint32_t(msg, 0));
+PrtPrimSetFloat(PrtTupleGetNC(*mount_orientation, 1), _MAV_RETURN_float(msg, 4));
+PrtPrimSetFloat(PrtTupleGetNC(*mount_orientation, 2), _MAV_RETURN_float(msg, 8));
+PrtPrimSetFloat(PrtTupleGetNC(*mount_orientation, 3), _MAV_RETURN_float(msg, 12));
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_logging_data_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* logging_data)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_LOGGING_DATA_LEN];
+
+_mav_put_uint16_t(buf, 0, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(logging_data, 0)));
+_mav_put_uint8_t(buf, 2, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data, 1)));
+_mav_put_uint8_t(buf, 3, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data, 2)));
+_mav_put_uint8_t(buf, 4, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data, 3)));
+_mav_put_uint8_t(buf, 5, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data, 4)));
+
+count = 0;
+seqVal = PrtTupleGetNC(logging_data, 5);
+while(count < 249)
+{
+    _mav_put_uint8_t(buf, 6 + count * 1, (uint8_t)PrtPrimGetInt(PrtSeqGetNCIntIndex(seqVal, count)));
+
+    count++;
+}  
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_LOGGING_DATA_LEN);
+msg->msgid = MAVLINK_MSG_ID_LOGGING_DATA;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_LOGGING_DATA_MIN_LEN, MAVLINK_MSG_ID_LOGGING_DATA_LEN, MAVLINK_MSG_ID_LOGGING_DATA_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_logging_data_decode(const mavlink_message_t* msg, PRT_VALUE** logging_data)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*logging_data == NULL)
+{
+*logging_data = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_logging_data_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 0), _MAV_RETURN_uint16_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 1), _MAV_RETURN_uint8_t(msg, 2));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 2), _MAV_RETURN_uint8_t(msg, 3));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 3), _MAV_RETURN_uint8_t(msg, 4));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 4), _MAV_RETURN_uint8_t(msg, 5));
+
+count = 0;
+seqVal = PrtTupleGetNC(*logging_data, 5);
+while(count < 249)
+{
+    
+tmpVal = PrtMkIntValue(_MAV_RETURN_uint8_t(msg, 6 + count * 1));
+PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
+
+    count++;
+}  
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 0), _MAV_RETURN_uint16_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 1), _MAV_RETURN_uint8_t(msg, 2));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 2), _MAV_RETURN_uint8_t(msg, 3));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 3), _MAV_RETURN_uint8_t(msg, 4));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data, 4), _MAV_RETURN_uint8_t(msg, 5));
+
+count = 0;
+seqVal = PrtTupleGetNC(*logging_data, 5);
+while(count < 249)
+{
+    
+PrtPrimSetInt(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_uint8_t(msg, 6 + count * 1));
+
+    count++;
+}  
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_logging_data_acked_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* logging_data_acked)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_LOGGING_DATA_ACKED_LEN];
+
+_mav_put_uint16_t(buf, 0, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(logging_data_acked, 0)));
+_mav_put_uint8_t(buf, 2, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data_acked, 1)));
+_mav_put_uint8_t(buf, 3, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data_acked, 2)));
+_mav_put_uint8_t(buf, 4, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data_acked, 3)));
+_mav_put_uint8_t(buf, 5, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_data_acked, 4)));
+
+count = 0;
+seqVal = PrtTupleGetNC(logging_data_acked, 5);
+while(count < 249)
+{
+    _mav_put_uint8_t(buf, 6 + count * 1, (uint8_t)PrtPrimGetInt(PrtSeqGetNCIntIndex(seqVal, count)));
+
+    count++;
+}  
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_LOGGING_DATA_ACKED_LEN);
+msg->msgid = MAVLINK_MSG_ID_LOGGING_DATA_ACKED;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_LOGGING_DATA_ACKED_MIN_LEN, MAVLINK_MSG_ID_LOGGING_DATA_ACKED_LEN, MAVLINK_MSG_ID_LOGGING_DATA_ACKED_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_logging_data_acked_decode(const mavlink_message_t* msg, PRT_VALUE** logging_data_acked)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*logging_data_acked == NULL)
+{
+*logging_data_acked = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_logging_data_acked_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 0), _MAV_RETURN_uint16_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 1), _MAV_RETURN_uint8_t(msg, 2));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 2), _MAV_RETURN_uint8_t(msg, 3));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 3), _MAV_RETURN_uint8_t(msg, 4));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 4), _MAV_RETURN_uint8_t(msg, 5));
+
+count = 0;
+seqVal = PrtTupleGetNC(*logging_data_acked, 5);
+while(count < 249)
+{
+    
+tmpVal = PrtMkIntValue(_MAV_RETURN_uint8_t(msg, 6 + count * 1));
+PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);
+
+    count++;
+}  
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 0), _MAV_RETURN_uint16_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 1), _MAV_RETURN_uint8_t(msg, 2));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 2), _MAV_RETURN_uint8_t(msg, 3));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 3), _MAV_RETURN_uint8_t(msg, 4));
+PrtPrimSetInt(PrtTupleGetNC(*logging_data_acked, 4), _MAV_RETURN_uint8_t(msg, 5));
+
+count = 0;
+seqVal = PrtTupleGetNC(*logging_data_acked, 5);
+while(count < 249)
+{
+    
+PrtPrimSetInt(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_uint8_t(msg, 6 + count * 1));
+
+    count++;
+}  
+
+}
+
+}         
+
+
+static inline uint16_t p_mavlink_msg_logging_ack_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, PRT_VALUE* logging_ack)
+{
+int count = 0;
+PRT_VALUE* seqVal;
+char buf[MAVLINK_MSG_ID_LOGGING_ACK_LEN];
+
+_mav_put_uint16_t(buf, 0, (uint16_t)PrtPrimGetInt(PrtTupleGetNC(logging_ack, 0)));
+_mav_put_uint8_t(buf, 2, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_ack, 1)));
+_mav_put_uint8_t(buf, 3, (uint8_t)PrtPrimGetInt(PrtTupleGetNC(logging_ack, 2)));
+
+memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_LOGGING_ACK_LEN);
+msg->msgid = MAVLINK_MSG_ID_LOGGING_ACK;
+return mavlink_finalize_message(msg, system_id, component_id, MAVLINK_MSG_ID_LOGGING_ACK_MIN_LEN, MAVLINK_MSG_ID_LOGGING_ACK_LEN, MAVLINK_MSG_ID_LOGGING_ACK_CRC);
+
+}          
+
+
+static inline void p_mavlink_msg_logging_ack_decode(const mavlink_message_t* msg, PRT_VALUE** logging_ack)
+{
+PRT_VALUE* tmpVal;
+PRT_VALUE* seqVal;
+int count = 0;
+if(*logging_ack == NULL)
+{
+*logging_ack = PrtMkDefaultValue(&P_GEND_TYPE_mavlink_logging_ack_t);
+
+PrtPrimSetInt(PrtTupleGetNC(*logging_ack, 0), _MAV_RETURN_uint16_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*logging_ack, 1), _MAV_RETURN_uint8_t(msg, 2));
+PrtPrimSetInt(PrtTupleGetNC(*logging_ack, 2), _MAV_RETURN_uint8_t(msg, 3));
+
+}
+else
+{
+
+PrtPrimSetInt(PrtTupleGetNC(*logging_ack, 0), _MAV_RETURN_uint16_t(msg, 0));
+PrtPrimSetInt(PrtTupleGetNC(*logging_ack, 1), _MAV_RETURN_uint8_t(msg, 2));
+PrtPrimSetInt(PrtTupleGetNC(*logging_ack, 2), _MAV_RETURN_uint8_t(msg, 3));
+
+}
+
+}         
+

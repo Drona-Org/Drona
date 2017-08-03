@@ -1,14 +1,11 @@
 cmake_minimum_required(VERSION 3.0)
 project(drona)
 
-#include the cmake functions and macros
-include(CMakeFunAndMacros.txt)
-
 ## Projects
-subdirs(Src/TestProjects)
-subdirs(Src/Lib)
-subdirs(Src/Experiments)
-subdirs(Submodule/OMPL)
+#subdirs(Src/TestProjects)
+#subdirs(Src/Lib)
+#subdirs(Src/Experiments)
+#subdirs(Submodule/OMPL)
 
 #Global Include Directories
 INCLUDE_DIRECTORIES(${drona_SOURCE_DIR}/Src/Includes/MavlinkHeaders/common)

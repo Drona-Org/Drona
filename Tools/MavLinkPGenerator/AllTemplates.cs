@@ -75,25 +75,24 @@ else
         //2: ctype
         //3: offset
         public static string UpdateFloat32Val =
-        @"PrtSetFloat32(PrtTupleGetNC(*{0}, {1}), _MAV_RETURN_{2}(msg, {3}));" + "\n";
+        @"PrtPrimSetFloat(PrtTupleGetNC(*{0}, {1}), _MAV_RETURN_{2}(msg, {3}));" + "\n";
         //0: message name lower
         //1: field index
         //2: ctype
         //3: offset
         public static string UpdateFloat64Val =
-        @"PrtSetFloat64(PrtTupleGetNC(*{0}, {1}), _MAV_RETURN_{2}(msg, {3}));" + "\n";
+        @"PrtPrimSetFloat(PrtTupleGetNC(*{0}, {1}), _MAV_RETURN_{2}(msg, {3}));" + "\n";
         //0: ctype
         //1: offset
         public static string createPrimIntVal = @"tmpVal = PrtMkIntValue(_MAV_RETURN_{0}(msg, {1}));" + "\n";
         //0: ctype
         //1: offset
         public static string createFloat32Val = @"
-tmpVal = PrtMkDefaultValue(&P_GEND_TYPE_float32);
-PrtSetFloat32(tmpVal, _MAV_RETURN_{0}(msg, {1}));
+tmpVal = PrtMkFloatValue(_MAV_RETURN_{0}(msg, {1}));
 " + "\n";
         //0: ctype
         //1: offset
-        public static string createFloat64Val = @"tmpVal = PrtMkFloat64Value(_MAV_RETURN_{0}(msg, {1}));" + "\n";
+        public static string createFloat64Val = @"tmpVal = PrtMkFloatValue(_MAV_RETURN_{0}(msg, {1}));" + "\n";
 
         public static string InsertInSeq = @"PrtSeqInsertExIntIndex(seqVal, count, tmpVal, PRT_FALSE);" + "\n";
 
@@ -104,11 +103,11 @@ PrtSetFloat32(tmpVal, _MAV_RETURN_{0}(msg, {1}));
         //0: ctype
         //1: offset
         public static string UpdateFloat32InSeq =
-        @"PrtSetFloat32(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_{0}(msg, {1}));" + "\n";
+        @"PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_{0}(msg, {1}));" + "\n";
         //0: ctype
         //1: offset
         public static string UpdateFloat64InSeq =
-        @"PrtSetFloat64(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_{0}(msg, {1}));" + "\n";
+        @"PrtPrimSetFloat(PrtSeqGetNCIntIndex(seqVal, count), _MAV_RETURN_{0}(msg, {1}));" + "\n";
 
         //0: array_length
         //1: statements
@@ -129,18 +128,18 @@ while(count < {0})
         //2: message field index
         //3: message name
         public static string getIntFormat = @"_mav_put_{0}(buf, {1}, ({0})PrtPrimGetInt(PrtTupleGetNC({3}, {2})));" + "\n";
-        public static string getFloat32Format = @"_mav_put_{0}(buf, {1}, ({0})PrtGetFloat32(PrtTupleGetNC({3}, {2})));" + "\n";
-        public static string getFloat64Format = @"_mav_put_{0}(buf, {1}, ({0})PrtGetFloat64(PrtTupleGetNC({3}, {2})));" + "\n";
+        public static string getFloat32Format = @"_mav_put_{0}(buf, {1}, ({0})PrtPrimGetFloat(PrtTupleGetNC({3}, {2})));" + "\n";
+        public static string getFloat64Format = @"_mav_put_{0}(buf, {1}, ({0})PrtPrimGetFloat(PrtTupleGetNC({3}, {2})));" + "\n";
         public static string getIntInSeqFormat = @"_mav_put_{0}(buf, {1}, ({0})PrtPrimGetInt(PrtSeqGetNCIntIndex(seqVal, count)));" + "\n";
-        public static string getFloat32InSeqFormat = @"_mav_put_{0}(buf, {1}, ({0})PrtGetFloat32(PrtSeqGetNCIntIndex(seqVal, count)));" + "\n";
-        public static string getFloat64InSeqFormat = @"_mav_put_{0}(buf, {1}, ({0})PrtGetFloat64(PrtSeqGetNCIntIndex(seqVal, count)));" + "\n";
+        public static string getFloat32InSeqFormat = @"_mav_put_{0}(buf, {1}, ({0})PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));" + "\n";
+        public static string getFloat64InSeqFormat = @"_mav_put_{0}(buf, {1}, ({0})PrtPrimGetFloat(PrtSeqGetNCIntIndex(seqVal, count)));" + "\n";
 
         //hearder
         public static string headers = @"
 #pragma once
 #include ""mavlink.h""
-#include ""Float32.h""
 #include ""PrtValues.h""
+#include ""MavlinkMessageTypes.h""
 ";
     }
 }

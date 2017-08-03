@@ -400,11 +400,11 @@ namespace PTypeGenerator
                 }
                 else if (field.type == "float")
                 {
-                    field.ptype = "float32";
+                    field.ptype = "float";
                 }
                 else if (field.type == "double")
                 {
-                    field.ptype = "float64";
+                    field.ptype = "float";
                 }
                 else if (field.type.Contains("["))
                 {
@@ -419,11 +419,11 @@ namespace PTypeGenerator
                     }
                     else if (field.type == "float")
                     {
-                        field.ptype = "seq[float32]";
+                        field.ptype = "seq[float]";
                     }
                     else if (field.type == "double")
                     {
-                        field.ptype = "seq[float64]";
+                        field.ptype = "seq[float]";
                     }
                 }
 

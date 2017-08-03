@@ -1,4 +1,3 @@
-include "../../PFloat32/PSrc/PFloat32.p"
 
 /*The heartbeat message shows that a system is present and responding. The type of the MAV and Autopilot hardware allow the receiving system to treat further messages from this system appropriate (e.g. by laying out the user interface based on the autopilot).*/
 type mavlink_heartbeat_t =
@@ -82,7 +81,7 @@ _key : seq[int]  /*key*/
 
 );
 
-/*THIS INTERFACE IS Dfloat32EPRECATED. USE COMMAND_LONG with MAV_CMD_DO_SET_MODE INSTEAD. Set the system mode, as defined by enum MAV_MODE. There is no target component id as the mode is by definition for the overall aircraft, not only for one component.*/
+/*THIS INTERFACE IS DEPRECATED. USE COMMAND_LONG with MAV_CMD_DO_SET_MODE INSTEAD. Set the system mode, as defined by enum MAV_MODE. There is no target component id as the mode is by definition for the overall aircraft, not only for one component.*/
 type mavlink_set_mode_t =
 (
 
@@ -116,7 +115,7 @@ _target_component : int  /*Component ID*/
 type mavlink_param_value_t =
 (
 
-_param_value : float32,  /*Onboard parameter value*/
+_param_value : float,  /*Onboard parameter value*/
 _param_count : int,  /*Total number of onboard parameters*/
 _param_index : int,  /*Index of this onboard parameter*/
 _param_id : seq[int],  /*Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string*/
@@ -128,7 +127,7 @@ _param_type : int  /*Onboard parameter type: see the MAV_PARAM_TYPE enum for sup
 type mavlink_param_set_t =
 (
 
-_param_value : float32,  /*Onboard parameter value*/
+_param_value : float,  /*Onboard parameter value*/
 _target_system : int,  /*System ID*/
 _target_component : int,  /*Component ID*/
 _param_id : seq[int],  /*Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string*/
@@ -218,8 +217,8 @@ type mavlink_scaled_pressure_t =
 (
 
 _time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
-_press_abs : float32,  /*Absolute pressure (hectopascal)*/
-_press_diff : float32,  /*Differential pressure 1 (hectopascal)*/
+_press_abs : float,  /*Absolute pressure (hectopascal)*/
+_press_diff : float,  /*Differential pressure 1 (hectopascal)*/
 _temperature : int  /*Temperature measurement (0.01 degrees celsius)*/
 
 );
@@ -229,12 +228,12 @@ type mavlink_attitude_t =
 (
 
 _time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
-_roll : float32,  /*Roll angle (rad, -pi..+pi)*/
-_pitch : float32,  /*Pitch angle (rad, -pi..+pi)*/
-_yaw : float32,  /*Yaw angle (rad, -pi..+pi)*/
-_rollspeed : float32,  /*Roll angular speed (rad/s)*/
-_pitchspeed : float32,  /*Pitch angular speed (rad/s)*/
-_yawspeed : float32  /*Yaw angular speed (rad/s)*/
+_roll : float,  /*Roll angle (rad, -pi..+pi)*/
+_pitch : float,  /*Pitch angle (rad, -pi..+pi)*/
+_yaw : float,  /*Yaw angle (rad, -pi..+pi)*/
+_rollspeed : float,  /*Roll angular speed (rad/s)*/
+_pitchspeed : float,  /*Pitch angular speed (rad/s)*/
+_yawspeed : float  /*Yaw angular speed (rad/s)*/
 
 );
 
@@ -243,13 +242,13 @@ type mavlink_attitude_quaternion_t =
 (
 
 _time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
-_q1 : float32,  /*Quaternion component 1, w (1 in null-rotation)*/
-_q2 : float32,  /*Quaternion component 2, x (0 in null-rotation)*/
-_q3 : float32,  /*Quaternion component 3, y (0 in null-rotation)*/
-_q4 : float32,  /*Quaternion component 4, z (0 in null-rotation)*/
-_rollspeed : float32,  /*Roll angular speed (rad/s)*/
-_pitchspeed : float32,  /*Pitch angular speed (rad/s)*/
-_yawspeed : float32  /*Yaw angular speed (rad/s)*/
+_q1 : float,  /*Quaternion component 1, w (1 in null-rotation)*/
+_q2 : float,  /*Quaternion component 2, x (0 in null-rotation)*/
+_q3 : float,  /*Quaternion component 3, y (0 in null-rotation)*/
+_q4 : float,  /*Quaternion component 4, z (0 in null-rotation)*/
+_rollspeed : float,  /*Roll angular speed (rad/s)*/
+_pitchspeed : float,  /*Pitch angular speed (rad/s)*/
+_yawspeed : float  /*Yaw angular speed (rad/s)*/
 
 );
 
@@ -258,12 +257,12 @@ type mavlink_local_position_ned_t =
 (
 
 _time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
-_x : float32,  /*X Position*/
-_y : float32,  /*Y Position*/
-_z : float32,  /*Z Position*/
-_vx : float32,  /*X Speed*/
-_vy : float32,  /*Y Speed*/
-_vz : float32  /*Z Speed*/
+_x : float,  /*X Position*/
+_y : float,  /*Y Position*/
+_z : float,  /*Z Position*/
+_vx : float,  /*X Speed*/
+_vy : float,  /*Y Speed*/
+_vz : float  /*Z Speed*/
 
 );
 
@@ -372,13 +371,13 @@ _target_component : int  /*Component ID*/
 type mavlink_mission_item_t =
 (
 
-_param1 : float32,  /*PARAM1, see MAV_CMD enum*/
-_param2 : float32,  /*PARAM2, see MAV_CMD enum*/
-_param3 : float32,  /*PARAM3, see MAV_CMD enum*/
-_param4 : float32,  /*PARAM4, see MAV_CMD enum*/
-_x : float32,  /*PARAM5 / local: x position, global: latitude*/
-_y : float32,  /*PARAM6 / y position: global: longitude*/
-_z : float32,  /*PARAM7 / z position: global: altitude (relative or absolute, depending on frame.*/
+_param1 : float,  /*PARAM1, see MAV_CMD enum*/
+_param2 : float,  /*PARAM2, see MAV_CMD enum*/
+_param3 : float,  /*PARAM3, see MAV_CMD enum*/
+_param4 : float,  /*PARAM4, see MAV_CMD enum*/
+_x : float,  /*PARAM5 / local: x position, global: latitude*/
+_y : float,  /*PARAM6 / y position: global: longitude*/
+_z : float,  /*PARAM7 / z position: global: altitude (relative or absolute, depending on frame.*/
 _seq : int,  /*Sequence*/
 _command : int,  /*The scheduled action for the MISSION. see MAV_CMD in common.xml MAVLink specs*/
 _target_system : int,  /*System ID*/
@@ -488,10 +487,10 @@ _altitude : int  /*Altitude (AMSL), in meters * 1000 (positive for up)*/
 type mavlink_param_map_rc_t =
 (
 
-_param_value0 : float32,  /*Initial parameter value*/
-_scale : float32,  /*Scale, maps the RC range [-1, 1] to a parameter value*/
-_param_value_min : float32,  /*Minimum param value. The protocol does not define if this overwrites an onboard minimum value. (Depends on implementation)*/
-_param_value_max : float32,  /*Maximum param value. The protocol does not define if this overwrites an onboard maximum value. (Depends on implementation)*/
+_param_value0 : float,  /*Initial parameter value*/
+_scale : float,  /*Scale, maps the RC range [-1, 1] to a parameter value*/
+_param_value_min : float,  /*Minimum param value. The protocol does not define if this overwrites an onboard minimum value. (Depends on implementation)*/
+_param_value_max : float,  /*Maximum param value. The protocol does not define if this overwrites an onboard maximum value. (Depends on implementation)*/
 _param_index : int,  /*Parameter index. Send -1 to use the param ID field as identifier (else the param id will be ignored), send -2 to disable any existing map for this rc_channel_index.*/
 _target_system : int,  /*System ID*/
 _target_component : int,  /*Component ID*/
@@ -514,12 +513,12 @@ _target_component : int  /*Component ID*/
 type mavlink_safety_set_allowed_area_t =
 (
 
-_p1x : float32,  /*x position 1 / Latitude 1*/
-_p1y : float32,  /*y position 1 / Longitude 1*/
-_p1z : float32,  /*z position 1 / Altitude 1*/
-_p2x : float32,  /*x position 2 / Latitude 2*/
-_p2y : float32,  /*y position 2 / Longitude 2*/
-_p2z : float32,  /*z position 2 / Altitude 2*/
+_p1x : float,  /*x position 1 / Latitude 1*/
+_p1y : float,  /*y position 1 / Longitude 1*/
+_p1z : float,  /*z position 1 / Altitude 1*/
+_p2x : float,  /*x position 2 / Latitude 2*/
+_p2y : float,  /*y position 2 / Longitude 2*/
+_p2z : float,  /*z position 2 / Altitude 2*/
 _target_system : int,  /*System ID*/
 _target_component : int,  /*Component ID*/
 _frame : int  /*Coordinate frame, as defined by MAV_FRAME enum in mavlink_types.h. Can be either global, GPS, right-handed with Z axis up or local, right handed, Z axis down.*/
@@ -530,12 +529,12 @@ _frame : int  /*Coordinate frame, as defined by MAV_FRAME enum in mavlink_types.
 type mavlink_safety_allowed_area_t =
 (
 
-_p1x : float32,  /*x position 1 / Latitude 1*/
-_p1y : float32,  /*y position 1 / Longitude 1*/
-_p1z : float32,  /*z position 1 / Altitude 1*/
-_p2x : float32,  /*x position 2 / Latitude 2*/
-_p2y : float32,  /*y position 2 / Longitude 2*/
-_p2z : float32,  /*z position 2 / Altitude 2*/
+_p1x : float,  /*x position 1 / Latitude 1*/
+_p1y : float,  /*y position 1 / Longitude 1*/
+_p1z : float,  /*z position 1 / Altitude 1*/
+_p2x : float,  /*x position 2 / Latitude 2*/
+_p2y : float,  /*y position 2 / Longitude 2*/
+_p2z : float,  /*z position 2 / Altitude 2*/
 _frame : int  /*Coordinate frame, as defined by MAV_FRAME enum in mavlink_types.h. Can be either global, GPS, right-handed with Z axis up or local, right handed, Z axis down.*/
 
 );
@@ -545,11 +544,11 @@ type mavlink_attitude_quaternion_cov_t =
 (
 
 _time_usec : int,  /*Timestamp (microseconds since system boot or since UNIX epoch)*/
-_q : seq[float32],  /*Quaternion components, w, x, y, z (1 0 0 0 is the null-rotation)*/
-_rollspeed : float32,  /*Roll angular speed (rad/s)*/
-_pitchspeed : float32,  /*Pitch angular speed (rad/s)*/
-_yawspeed : float32,  /*Yaw angular speed (rad/s)*/
-_covariance : seq[float32]  /*Attitude covariance*/
+_q : seq[float],  /*Quaternion components, w, x, y, z (1 0 0 0 is the null-rotation)*/
+_rollspeed : float,  /*Roll angular speed (rad/s)*/
+_pitchspeed : float,  /*Pitch angular speed (rad/s)*/
+_yawspeed : float,  /*Yaw angular speed (rad/s)*/
+_covariance : seq[float]  /*Attitude covariance*/
 
 );
 
@@ -557,11 +556,11 @@ _covariance : seq[float32]  /*Attitude covariance*/
 type mavlink_nav_controller_output_t =
 (
 
-_nav_roll : float32,  /*Current desired roll in degrees*/
-_nav_pitch : float32,  /*Current desired pitch in degrees*/
-_alt_error : float32,  /*Current altitude error in meters*/
-_aspd_error : float32,  /*Current airspeed error in meters/second*/
-_xtrack_error : float32,  /*Current crosstrack error on x-y plane in meters*/
+_nav_roll : float,  /*Current desired roll in degrees*/
+_nav_pitch : float,  /*Current desired pitch in degrees*/
+_alt_error : float,  /*Current altitude error in meters*/
+_aspd_error : float,  /*Current airspeed error in meters/second*/
+_xtrack_error : float,  /*Current crosstrack error on x-y plane in meters*/
 _nav_bearing : int,  /*Current desired heading in degrees*/
 _target_bearing : int,  /*Bearing to current MISSION/target in degrees*/
 _wp_dist : int  /*Distance to active MISSION in meters*/
@@ -577,10 +576,10 @@ _lat : int,  /*Latitude, expressed as degrees * 1E7*/
 _lon : int,  /*Longitude, expressed as degrees * 1E7*/
 _alt : int,  /*Altitude in meters, expressed as * 1000 (millimeters), above MSL*/
 _relative_alt : int,  /*Altitude above ground in meters, expressed as * 1000 (millimeters)*/
-_vx : float32,  /*Ground X Speed (Latitude), expressed as m/s*/
-_vy : float32,  /*Ground Y Speed (Longitude), expressed as m/s*/
-_vz : float32,  /*Ground Z Speed (Altitude), expressed as m/s*/
-_covariance : seq[float32],  /*Covariance matrix (first six entries are the first ROW, next six entries are the second row, etc.)*/
+_vx : float,  /*Ground X Speed (Latitude), expressed as m/s*/
+_vy : float,  /*Ground Y Speed (Longitude), expressed as m/s*/
+_vz : float,  /*Ground Z Speed (Altitude), expressed as m/s*/
+_covariance : seq[float],  /*Covariance matrix (first six entries are the first ROW, next six entries are the second row, etc.)*/
 _estimator_type : int  /*Class id of the estimator this estimate originated from.*/
 
 );
@@ -590,16 +589,16 @@ type mavlink_local_position_ned_cov_t =
 (
 
 _time_usec : int,  /*Timestamp (microseconds since system boot or since UNIX epoch)*/
-_x : float32,  /*X Position*/
-_y : float32,  /*Y Position*/
-_z : float32,  /*Z Position*/
-_vx : float32,  /*X Speed (m/s)*/
-_vy : float32,  /*Y Speed (m/s)*/
-_vz : float32,  /*Z Speed (m/s)*/
-_ax : float32,  /*X Acceleration (m/s^2)*/
-_ay : float32,  /*Y Acceleration (m/s^2)*/
-_az : float32,  /*Z Acceleration (m/s^2)*/
-_covariance : seq[float32],  /*Covariance matrix upper right triangular (first nine entries are the first ROW, next eight entries are the second row, etc.)*/
+_x : float,  /*X Position*/
+_y : float,  /*Y Position*/
+_z : float,  /*Z Position*/
+_vx : float,  /*X Speed (m/s)*/
+_vy : float,  /*Y Speed (m/s)*/
+_vz : float,  /*Z Speed (m/s)*/
+_ax : float,  /*X Acceleration (m/s^2)*/
+_ay : float,  /*Y Acceleration (m/s^2)*/
+_az : float,  /*Z Acceleration (m/s^2)*/
+_covariance : seq[float],  /*Covariance matrix upper right triangular (first nine entries are the first ROW, next eight entries are the second row, etc.)*/
 _estimator_type : int  /*Class id of the estimator this estimate originated from.*/
 
 );
@@ -689,13 +688,13 @@ _target_component : int  /*Component ID*/
 type mavlink_mission_item_int_t =
 (
 
-_param1 : float32,  /*PARAM1, see MAV_CMD enum*/
-_param2 : float32,  /*PARAM2, see MAV_CMD enum*/
-_param3 : float32,  /*PARAM3, see MAV_CMD enum*/
-_param4 : float32,  /*PARAM4, see MAV_CMD enum*/
+_param1 : float,  /*PARAM1, see MAV_CMD enum*/
+_param2 : float,  /*PARAM2, see MAV_CMD enum*/
+_param3 : float,  /*PARAM3, see MAV_CMD enum*/
+_param4 : float,  /*PARAM4, see MAV_CMD enum*/
 _x : int,  /*PARAM5 / local: x position in meters * 1e4, global: latitude in degrees * 10^7*/
 _y : int,  /*PARAM6 / y position: local: x position in meters * 1e4, global: longitude in degrees *10^7*/
-_z : float32,  /*PARAM7 / z position: global: altitude in meters (relative or absolute, depending on frame.*/
+_z : float,  /*PARAM7 / z position: global: altitude in meters (relative or absolute, depending on frame.*/
 _seq : int,  /*Waypoint ID (sequence number). Starts at zero. Increases monotonically for each waypoint, no gaps in the sequence (0,1,2,3,4).*/
 _command : int,  /*The scheduled action for the MISSION. see MAV_CMD in common.xml MAVLink specs*/
 _target_system : int,  /*System ID*/
@@ -710,10 +709,10 @@ _autocontinue : int  /*autocontinue to next wp*/
 type mavlink_vfr_hud_t =
 (
 
-_airspeed : float32,  /*Current airspeed in m/s*/
-_groundspeed : float32,  /*Current ground speed in m/s*/
-_alt : float32,  /*Current altitude (MSL), in meters*/
-_climb : float32,  /*Current climb rate in meters/second*/
+_airspeed : float,  /*Current airspeed in m/s*/
+_groundspeed : float,  /*Current ground speed in m/s*/
+_alt : float,  /*Current altitude (MSL), in meters*/
+_climb : float,  /*Current climb rate in meters/second*/
 _heading : int,  /*Current heading in degrees, in compass units (0..360, 0=north)*/
 _throttle : int  /*Current throttle setting in integer percent, 0 to 100*/
 
@@ -723,13 +722,13 @@ _throttle : int  /*Current throttle setting in integer percent, 0 to 100*/
 type mavlink_command_int_t =
 (
 
-_param1 : float32,  /*PARAM1, see MAV_CMD enum*/
-_param2 : float32,  /*PARAM2, see MAV_CMD enum*/
-_param3 : float32,  /*PARAM3, see MAV_CMD enum*/
-_param4 : float32,  /*PARAM4, see MAV_CMD enum*/
+_param1 : float,  /*PARAM1, see MAV_CMD enum*/
+_param2 : float,  /*PARAM2, see MAV_CMD enum*/
+_param3 : float,  /*PARAM3, see MAV_CMD enum*/
+_param4 : float,  /*PARAM4, see MAV_CMD enum*/
 _x : int,  /*PARAM5 / local: x position in meters * 1e4, global: latitude in degrees * 10^7*/
 _y : int,  /*PARAM6 / local: y position in meters * 1e4, global: longitude in degrees * 10^7*/
-_z : float32,  /*PARAM7 / z position: global: altitude in meters (relative or absolute, depending on frame.*/
+_z : float,  /*PARAM7 / z position: global: altitude in meters (relative or absolute, depending on frame.*/
 _command : int,  /*The scheduled action for the mission item. see MAV_CMD in common.xml MAVLink specs*/
 _target_system : int,  /*System ID*/
 _target_component : int,  /*Component ID*/
@@ -743,13 +742,13 @@ _autocontinue : int  /*autocontinue to next wp*/
 type mavlink_command_long_t =
 (
 
-_param1 : float32,  /*Parameter 1, as defined by MAV_CMD enum.*/
-_param2 : float32,  /*Parameter 2, as defined by MAV_CMD enum.*/
-_param3 : float32,  /*Parameter 3, as defined by MAV_CMD enum.*/
-_param4 : float32,  /*Parameter 4, as defined by MAV_CMD enum.*/
-_param5 : float32,  /*Parameter 5, as defined by MAV_CMD enum.*/
-_param6 : float32,  /*Parameter 6, as defined by MAV_CMD enum.*/
-_param7 : float32,  /*Parameter 7, as defined by MAV_CMD enum.*/
+_param1 : float,  /*Parameter 1, as defined by MAV_CMD enum.*/
+_param2 : float,  /*Parameter 2, as defined by MAV_CMD enum.*/
+_param3 : float,  /*Parameter 3, as defined by MAV_CMD enum.*/
+_param4 : float,  /*Parameter 4, as defined by MAV_CMD enum.*/
+_param5 : float,  /*Parameter 5, as defined by MAV_CMD enum.*/
+_param6 : float,  /*Parameter 6, as defined by MAV_CMD enum.*/
+_param7 : float,  /*Parameter 7, as defined by MAV_CMD enum.*/
 _command : int,  /*Command ID, as defined by MAV_CMD enum.*/
 _target_system : int,  /*System which should execute the command*/
 _target_component : int,  /*Component which should execute the command, 0 for all components*/
@@ -771,10 +770,10 @@ type mavlink_manual_setpoint_t =
 (
 
 _time_boot_ms : int,  /*Timestamp in milliseconds since system boot*/
-_roll : float32,  /*Desired roll rate in radians per second*/
-_pitch : float32,  /*Desired pitch rate in radians per second*/
-_yaw : float32,  /*Desired yaw rate in radians per second*/
-_thrust : float32,  /*Collective thrust, normalized to 0 .. 1*/
+_roll : float,  /*Desired roll rate in radians per second*/
+_pitch : float,  /*Desired pitch rate in radians per second*/
+_yaw : float,  /*Desired yaw rate in radians per second*/
+_thrust : float,  /*Collective thrust, normalized to 0 .. 1*/
 _mode_switch : int,  /*Flight mode switch position, 0.. 255*/
 _manual_override_switch : int  /*Override mode switch position, 0.. 255*/
 
@@ -785,11 +784,11 @@ type mavlink_set_attitude_target_t =
 (
 
 _time_boot_ms : int,  /*Timestamp in milliseconds since system boot*/
-_q : seq[float32],  /*Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)*/
-_body_roll_rate : float32,  /*Body roll rate in radians per second*/
-_body_pitch_rate : float32,  /*Body roll rate in radians per second*/
-_body_yaw_rate : float32,  /*Body roll rate in radians per second*/
-_thrust : float32,  /*Collective thrust, normalized to 0 .. 1 (-1 .. 1 for vehicles capable of reverse trust)*/
+_q : seq[float],  /*Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)*/
+_body_roll_rate : float,  /*Body roll rate in radians per second*/
+_body_pitch_rate : float,  /*Body roll rate in radians per second*/
+_body_yaw_rate : float,  /*Body roll rate in radians per second*/
+_thrust : float,  /*Collective thrust, normalized to 0 .. 1 (-1 .. 1 for vehicles capable of reverse trust)*/
 _target_system : int,  /*System ID*/
 _target_component : int,  /*Component ID*/
 _type_mask : int  /*Mappings: If any of these bits are set, the corresponding input should be ignored: bit 1: body roll rate, bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 6: reserved, bit 7: throttle, bit 8: attitude*/
@@ -801,11 +800,11 @@ type mavlink_attitude_target_t =
 (
 
 _time_boot_ms : int,  /*Timestamp in milliseconds since system boot*/
-_q : seq[float32],  /*Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)*/
-_body_roll_rate : float32,  /*Body roll rate in radians per second*/
-_body_pitch_rate : float32,  /*Body roll rate in radians per second*/
-_body_yaw_rate : float32,  /*Body roll rate in radians per second*/
-_thrust : float32,  /*Collective thrust, normalized to 0 .. 1 (-1 .. 1 for vehicles capable of reverse trust)*/
+_q : seq[float],  /*Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)*/
+_body_roll_rate : float,  /*Body roll rate in radians per second*/
+_body_pitch_rate : float,  /*Body roll rate in radians per second*/
+_body_yaw_rate : float,  /*Body roll rate in radians per second*/
+_thrust : float,  /*Collective thrust, normalized to 0 .. 1 (-1 .. 1 for vehicles capable of reverse trust)*/
 _type_mask : int  /*Mappings: If any of these bits are set, the corresponding input should be ignored: bit 1: body roll rate, bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 7: reserved, bit 8: attitude*/
 
 );
@@ -815,17 +814,17 @@ type mavlink_set_position_target_local_ned_t =
 (
 
 _time_boot_ms : int,  /*Timestamp in milliseconds since system boot*/
-_x : float32,  /*X Position in NED frame in meters*/
-_y : float32,  /*Y Position in NED frame in meters*/
-_z : float32,  /*Z Position in NED frame in meters (note, altitude is negative in NED)*/
-_vx : float32,  /*X velocity in NED frame in meter / s*/
-_vy : float32,  /*Y velocity in NED frame in meter / s*/
-_vz : float32,  /*Z velocity in NED frame in meter / s*/
-_afx : float32,  /*X acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
-_afy : float32,  /*Y acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
-_afz : float32,  /*Z acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
-_yaw : float32,  /*yaw setpoint in rad*/
-_yaw_rate : float32,  /*yaw rate setpoint in rad/s*/
+_x : float,  /*X Position in NED frame in meters*/
+_y : float,  /*Y Position in NED frame in meters*/
+_z : float,  /*Z Position in NED frame in meters (note, altitude is negative in NED)*/
+_vx : float,  /*X velocity in NED frame in meter / s*/
+_vy : float,  /*Y velocity in NED frame in meter / s*/
+_vz : float,  /*Z velocity in NED frame in meter / s*/
+_afx : float,  /*X acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
+_afy : float,  /*Y acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
+_afz : float,  /*Z acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
+_yaw : float,  /*yaw setpoint in rad*/
+_yaw_rate : float,  /*yaw rate setpoint in rad/s*/
 _type_mask : int,  /*Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint, bit 11: yaw, bit 12: yaw rate*/
 _target_system : int,  /*System ID*/
 _target_component : int,  /*Component ID*/
@@ -838,17 +837,17 @@ type mavlink_position_target_local_ned_t =
 (
 
 _time_boot_ms : int,  /*Timestamp in milliseconds since system boot*/
-_x : float32,  /*X Position in NED frame in meters*/
-_y : float32,  /*Y Position in NED frame in meters*/
-_z : float32,  /*Z Position in NED frame in meters (note, altitude is negative in NED)*/
-_vx : float32,  /*X velocity in NED frame in meter / s*/
-_vy : float32,  /*Y velocity in NED frame in meter / s*/
-_vz : float32,  /*Z velocity in NED frame in meter / s*/
-_afx : float32,  /*X acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
-_afy : float32,  /*Y acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
-_afz : float32,  /*Z acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
-_yaw : float32,  /*yaw setpoint in rad*/
-_yaw_rate : float32,  /*yaw rate setpoint in rad/s*/
+_x : float,  /*X Position in NED frame in meters*/
+_y : float,  /*Y Position in NED frame in meters*/
+_z : float,  /*Z Position in NED frame in meters (note, altitude is negative in NED)*/
+_vx : float,  /*X velocity in NED frame in meter / s*/
+_vy : float,  /*Y velocity in NED frame in meter / s*/
+_vz : float,  /*Z velocity in NED frame in meter / s*/
+_afx : float,  /*X acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
+_afy : float,  /*Y acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
+_afz : float,  /*Z acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
+_yaw : float,  /*yaw setpoint in rad*/
+_yaw_rate : float,  /*yaw rate setpoint in rad/s*/
 _type_mask : int,  /*Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint, bit 11: yaw, bit 12: yaw rate*/
 _coordinate_frame : int  /*Valid options are: MAV_FRAME_LOCAL_NED = 1, MAV_FRAME_LOCAL_OFFSET_NED = 7, MAV_FRAME_BODY_NED = 8, MAV_FRAME_BODY_OFFSET_NED = 9*/
 
@@ -861,15 +860,15 @@ type mavlink_set_position_target_global_int_t =
 _time_boot_ms : int,  /*Timestamp in milliseconds since system boot. The rationale for the timestamp in the setpoint is to allow the system to compensate for the transport delay of the setpoint. This allows the system to compensate processing latency.*/
 _lat_int : int,  /*X Position in WGS84 frame in 1e7 * meters*/
 _lon_int : int,  /*Y Position in WGS84 frame in 1e7 * meters*/
-_alt : float32,  /*Altitude in meters in AMSL altitude, not WGS84 if absolute or relative, above terrain if GLOBAL_TERRAIN_ALT_INT*/
-_vx : float32,  /*X velocity in NED frame in meter / s*/
-_vy : float32,  /*Y velocity in NED frame in meter / s*/
-_vz : float32,  /*Z velocity in NED frame in meter / s*/
-_afx : float32,  /*X acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
-_afy : float32,  /*Y acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
-_afz : float32,  /*Z acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
-_yaw : float32,  /*yaw setpoint in rad*/
-_yaw_rate : float32,  /*yaw rate setpoint in rad/s*/
+_alt : float,  /*Altitude in meters in AMSL altitude, not WGS84 if absolute or relative, above terrain if GLOBAL_TERRAIN_ALT_INT*/
+_vx : float,  /*X velocity in NED frame in meter / s*/
+_vy : float,  /*Y velocity in NED frame in meter / s*/
+_vz : float,  /*Z velocity in NED frame in meter / s*/
+_afx : float,  /*X acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
+_afy : float,  /*Y acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
+_afz : float,  /*Z acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
+_yaw : float,  /*yaw setpoint in rad*/
+_yaw_rate : float,  /*yaw rate setpoint in rad/s*/
 _type_mask : int,  /*Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint, bit 11: yaw, bit 12: yaw rate*/
 _target_system : int,  /*System ID*/
 _target_component : int,  /*Component ID*/
@@ -884,15 +883,15 @@ type mavlink_position_target_global_int_t =
 _time_boot_ms : int,  /*Timestamp in milliseconds since system boot. The rationale for the timestamp in the setpoint is to allow the system to compensate for the transport delay of the setpoint. This allows the system to compensate processing latency.*/
 _lat_int : int,  /*X Position in WGS84 frame in 1e7 * meters*/
 _lon_int : int,  /*Y Position in WGS84 frame in 1e7 * meters*/
-_alt : float32,  /*Altitude in meters in AMSL altitude, not WGS84 if absolute or relative, above terrain if GLOBAL_TERRAIN_ALT_INT*/
-_vx : float32,  /*X velocity in NED frame in meter / s*/
-_vy : float32,  /*Y velocity in NED frame in meter / s*/
-_vz : float32,  /*Z velocity in NED frame in meter / s*/
-_afx : float32,  /*X acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
-_afy : float32,  /*Y acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
-_afz : float32,  /*Z acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
-_yaw : float32,  /*yaw setpoint in rad*/
-_yaw_rate : float32,  /*yaw rate setpoint in rad/s*/
+_alt : float,  /*Altitude in meters in AMSL altitude, not WGS84 if absolute or relative, above terrain if GLOBAL_TERRAIN_ALT_INT*/
+_vx : float,  /*X velocity in NED frame in meter / s*/
+_vy : float,  /*Y velocity in NED frame in meter / s*/
+_vz : float,  /*Z velocity in NED frame in meter / s*/
+_afx : float,  /*X acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
+_afy : float,  /*Y acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
+_afz : float,  /*Z acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N*/
+_yaw : float,  /*yaw setpoint in rad*/
+_yaw_rate : float,  /*yaw rate setpoint in rad/s*/
 _type_mask : int,  /*Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint, bit 11: yaw, bit 12: yaw rate*/
 _coordinate_frame : int  /*Valid options are: MAV_FRAME_GLOBAL_INT = 5, MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6, MAV_FRAME_GLOBAL_TERRAIN_ALT_INT = 11*/
 
@@ -903,12 +902,12 @@ type mavlink_local_position_ned_system_global_offset_t =
 (
 
 _time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
-_x : float32,  /*X Position*/
-_y : float32,  /*Y Position*/
-_z : float32,  /*Z Position*/
-_roll : float32,  /*Roll*/
-_pitch : float32,  /*Pitch*/
-_yaw : float32  /*Yaw*/
+_x : float,  /*X Position*/
+_y : float,  /*Y Position*/
+_z : float,  /*Z Position*/
+_roll : float,  /*Roll*/
+_pitch : float,  /*Pitch*/
+_yaw : float  /*Yaw*/
 
 );
 
@@ -917,12 +916,12 @@ type mavlink_hil_state_t =
 (
 
 _time_usec : int,  /*Timestamp (microseconds since UNIX epoch or microseconds since system boot)*/
-_roll : float32,  /*Roll angle (rad)*/
-_pitch : float32,  /*Pitch angle (rad)*/
-_yaw : float32,  /*Yaw angle (rad)*/
-_rollspeed : float32,  /*Body frame roll / phi angular speed (rad/s)*/
-_pitchspeed : float32,  /*Body frame pitch / theta angular speed (rad/s)*/
-_yawspeed : float32,  /*Body frame yaw / psi angular speed (rad/s)*/
+_roll : float,  /*Roll angle (rad)*/
+_pitch : float,  /*Pitch angle (rad)*/
+_yaw : float,  /*Yaw angle (rad)*/
+_rollspeed : float,  /*Body frame roll / phi angular speed (rad/s)*/
+_pitchspeed : float,  /*Body frame pitch / theta angular speed (rad/s)*/
+_yawspeed : float,  /*Body frame yaw / psi angular speed (rad/s)*/
 _lat : int,  /*Latitude, expressed as * 1E7*/
 _lon : int,  /*Longitude, expressed as * 1E7*/
 _alt : int,  /*Altitude in meters, expressed as * 1000 (millimeters)*/
@@ -940,14 +939,14 @@ type mavlink_hil_controls_t =
 (
 
 _time_usec : int,  /*Timestamp (microseconds since UNIX epoch or microseconds since system boot)*/
-_roll_ailerons : float32,  /*Control output -1 .. 1*/
-_pitch_elevator : float32,  /*Control output -1 .. 1*/
-_yaw_rudder : float32,  /*Control output -1 .. 1*/
-_throttle : float32,  /*Throttle 0 .. 1*/
-_aux1 : float32,  /*Aux 1, -1 .. 1*/
-_aux2 : float32,  /*Aux 2, -1 .. 1*/
-_aux3 : float32,  /*Aux 3, -1 .. 1*/
-_aux4 : float32,  /*Aux 4, -1 .. 1*/
+_roll_ailerons : float,  /*Control output -1 .. 1*/
+_pitch_elevator : float,  /*Control output -1 .. 1*/
+_yaw_rudder : float,  /*Control output -1 .. 1*/
+_throttle : float,  /*Throttle 0 .. 1*/
+_aux1 : float,  /*Aux 1, -1 .. 1*/
+_aux2 : float,  /*Aux 2, -1 .. 1*/
+_aux3 : float,  /*Aux 3, -1 .. 1*/
+_aux4 : float,  /*Aux 4, -1 .. 1*/
 _mode : int,  /*System mode (MAV_MODE)*/
 _nav_mode : int  /*Navigation mode (MAV_NAV_MODE)*/
 
@@ -980,7 +979,7 @@ type mavlink_hil_actuator_controls_t =
 
 _time_usec : int,  /*Timestamp (microseconds since UNIX epoch or microseconds since system boot)*/
 _flags : int,  /*Flags as bitfield, reserved for future use.*/
-_controls : seq[float32],  /*Control outputs -1 .. 1. Channel assignment depends on the simulated hardware.*/
+_controls : seq[float],  /*Control outputs -1 .. 1. Channel assignment depends on the simulated hardware.*/
 _mode : int  /*System mode (MAV_MODE), includes arming state.*/
 
 );
@@ -990,9 +989,9 @@ type mavlink_optical_flow_t =
 (
 
 _time_usec : int,  /*Timestamp (UNIX)*/
-_flow_comp_m_x : float32,  /*Flow in meters in x-sensor direction, angular-speed compensated*/
-_flow_comp_m_y : float32,  /*Flow in meters in y-sensor direction, angular-speed compensated*/
-_ground_distance : float32,  /*Ground distance in meters. Positive value: distance known. Negative value: Unknown distance*/
+_flow_comp_m_x : float,  /*Flow in meters in x-sensor direction, angular-speed compensated*/
+_flow_comp_m_y : float,  /*Flow in meters in y-sensor direction, angular-speed compensated*/
+_ground_distance : float,  /*Ground distance in meters. Positive value: distance known. Negative value: Unknown distance*/
 _flow_x : int,  /*Flow in pixels * 10 in x-sensor direction (dezi-pixels)*/
 _flow_y : int,  /*Flow in pixels * 10 in y-sensor direction (dezi-pixels)*/
 _sensor_id : int,  /*Sensor ID*/
@@ -1005,12 +1004,12 @@ type mavlink_global_vision_position_estimate_t =
 (
 
 _usec : int,  /*Timestamp (microseconds, synced to UNIX time or since system boot)*/
-_x : float32,  /*Global X position*/
-_y : float32,  /*Global Y position*/
-_z : float32,  /*Global Z position*/
-_roll : float32,  /*Roll angle in rad*/
-_pitch : float32,  /*Pitch angle in rad*/
-_yaw : float32  /*Yaw angle in rad*/
+_x : float,  /*Global X position*/
+_y : float,  /*Global Y position*/
+_z : float,  /*Global Z position*/
+_roll : float,  /*Roll angle in rad*/
+_pitch : float,  /*Pitch angle in rad*/
+_yaw : float  /*Yaw angle in rad*/
 
 );
 
@@ -1019,12 +1018,12 @@ type mavlink_vision_position_estimate_t =
 (
 
 _usec : int,  /*Timestamp (microseconds, synced to UNIX time or since system boot)*/
-_x : float32,  /*Global X position*/
-_y : float32,  /*Global Y position*/
-_z : float32,  /*Global Z position*/
-_roll : float32,  /*Roll angle in rad*/
-_pitch : float32,  /*Pitch angle in rad*/
-_yaw : float32  /*Yaw angle in rad*/
+_x : float,  /*Global X position*/
+_y : float,  /*Global Y position*/
+_z : float,  /*Global Z position*/
+_roll : float,  /*Roll angle in rad*/
+_pitch : float,  /*Pitch angle in rad*/
+_yaw : float  /*Yaw angle in rad*/
 
 );
 
@@ -1033,9 +1032,9 @@ type mavlink_vision_speed_estimate_t =
 (
 
 _usec : int,  /*Timestamp (microseconds, synced to UNIX time or since system boot)*/
-_x : float32,  /*Global X speed*/
-_y : float32,  /*Global Y speed*/
-_z : float32  /*Global Z speed*/
+_x : float,  /*Global X speed*/
+_y : float,  /*Global Y speed*/
+_z : float  /*Global Z speed*/
 
 );
 
@@ -1044,12 +1043,12 @@ type mavlink_vicon_position_estimate_t =
 (
 
 _usec : int,  /*Timestamp (microseconds, synced to UNIX time or since system boot)*/
-_x : float32,  /*Global X position*/
-_y : float32,  /*Global Y position*/
-_z : float32,  /*Global Z position*/
-_roll : float32,  /*Roll angle in rad*/
-_pitch : float32,  /*Pitch angle in rad*/
-_yaw : float32  /*Yaw angle in rad*/
+_x : float,  /*Global X position*/
+_y : float,  /*Global Y position*/
+_z : float,  /*Global Z position*/
+_roll : float,  /*Roll angle in rad*/
+_pitch : float,  /*Pitch angle in rad*/
+_yaw : float  /*Yaw angle in rad*/
 
 );
 
@@ -1058,19 +1057,19 @@ type mavlink_highres_imu_t =
 (
 
 _time_usec : int,  /*Timestamp (microseconds, synced to UNIX time or since system boot)*/
-_xacc : float32,  /*X acceleration (m/s^2)*/
-_yacc : float32,  /*Y acceleration (m/s^2)*/
-_zacc : float32,  /*Z acceleration (m/s^2)*/
-_xgyro : float32,  /*Angular speed around X axis (rad / sec)*/
-_ygyro : float32,  /*Angular speed around Y axis (rad / sec)*/
-_zgyro : float32,  /*Angular speed around Z axis (rad / sec)*/
-_xmag : float32,  /*X Magnetic field (Gauss)*/
-_ymag : float32,  /*Y Magnetic field (Gauss)*/
-_zmag : float32,  /*Z Magnetic field (Gauss)*/
-_abs_pressure : float32,  /*Absolute pressure in millibar*/
-_diff_pressure : float32,  /*Differential pressure in millibar*/
-_pressure_alt : float32,  /*Altitude calculated from pressure*/
-_temperature : float32,  /*Temperature in degrees celsius*/
+_xacc : float,  /*X acceleration (m/s^2)*/
+_yacc : float,  /*Y acceleration (m/s^2)*/
+_zacc : float,  /*Z acceleration (m/s^2)*/
+_xgyro : float,  /*Angular speed around X axis (rad / sec)*/
+_ygyro : float,  /*Angular speed around Y axis (rad / sec)*/
+_zgyro : float,  /*Angular speed around Z axis (rad / sec)*/
+_xmag : float,  /*X Magnetic field (Gauss)*/
+_ymag : float,  /*Y Magnetic field (Gauss)*/
+_zmag : float,  /*Z Magnetic field (Gauss)*/
+_abs_pressure : float,  /*Absolute pressure in millibar*/
+_diff_pressure : float,  /*Differential pressure in millibar*/
+_pressure_alt : float,  /*Altitude calculated from pressure*/
+_temperature : float,  /*Temperature in degrees celsius*/
 _fields_updated : int  /*Bitmask for fields that have updated since last message, bit 0 = xacc, bit 12: temperature*/
 
 );
@@ -1081,13 +1080,13 @@ type mavlink_optical_flow_rad_t =
 
 _time_usec : int,  /*Timestamp (microseconds, synced to UNIX time or since system boot)*/
 _integration_time_us : int,  /*Integration time in microseconds. Divide integrated_x and integrated_y by the integration time to obtain average flow. The integration time also indicates the.*/
-_integrated_x : float32,  /*Flow in radians around X axis (Sensor RH rotation about the X axis induces a positive flow. Sensor linear motion along the positive Y axis induces a negative flow.)*/
-_integrated_y : float32,  /*Flow in radians around Y axis (Sensor RH rotation about the Y axis induces a positive flow. Sensor linear motion along the positive X axis induces a positive flow.)*/
-_integrated_xgyro : float32,  /*RH rotation around X axis (rad)*/
-_integrated_ygyro : float32,  /*RH rotation around Y axis (rad)*/
-_integrated_zgyro : float32,  /*RH rotation around Z axis (rad)*/
+_integrated_x : float,  /*Flow in radians around X axis (Sensor RH rotation about the X axis induces a positive flow. Sensor linear motion along the positive Y axis induces a negative flow.)*/
+_integrated_y : float,  /*Flow in radians around Y axis (Sensor RH rotation about the Y axis induces a positive flow. Sensor linear motion along the positive X axis induces a positive flow.)*/
+_integrated_xgyro : float,  /*RH rotation around X axis (rad)*/
+_integrated_ygyro : float,  /*RH rotation around Y axis (rad)*/
+_integrated_zgyro : float,  /*RH rotation around Z axis (rad)*/
 _time_delta_distance_us : int,  /*Time in microseconds since the distance was sampled.*/
-_distance : float32,  /*Distance to the center of the flow field in meters. Positive value (including zero): distance known. Negative value: Unknown distance.*/
+_distance : float,  /*Distance to the center of the flow field in meters. Positive value (including zero): distance known. Negative value: Unknown distance.*/
 _temperature : int,  /*Temperature * 100 in centi-degrees Celsius*/
 _sensor_id : int,  /*Sensor ID*/
 _quality : int  /*Optical flow quality / confidence. 0: no valid flow, 255: maximum quality*/
@@ -1099,19 +1098,19 @@ type mavlink_hil_sensor_t =
 (
 
 _time_usec : int,  /*Timestamp (microseconds, synced to UNIX time or since system boot)*/
-_xacc : float32,  /*X acceleration (m/s^2)*/
-_yacc : float32,  /*Y acceleration (m/s^2)*/
-_zacc : float32,  /*Z acceleration (m/s^2)*/
-_xgyro : float32,  /*Angular speed around X axis in body frame (rad / sec)*/
-_ygyro : float32,  /*Angular speed around Y axis in body frame (rad / sec)*/
-_zgyro : float32,  /*Angular speed around Z axis in body frame (rad / sec)*/
-_xmag : float32,  /*X Magnetic field (Gauss)*/
-_ymag : float32,  /*Y Magnetic field (Gauss)*/
-_zmag : float32,  /*Z Magnetic field (Gauss)*/
-_abs_pressure : float32,  /*Absolute pressure in millibar*/
-_diff_pressure : float32,  /*Differential pressure (airspeed) in millibar*/
-_pressure_alt : float32,  /*Altitude calculated from pressure*/
-_temperature : float32,  /*Temperature in degrees celsius*/
+_xacc : float,  /*X acceleration (m/s^2)*/
+_yacc : float,  /*Y acceleration (m/s^2)*/
+_zacc : float,  /*Z acceleration (m/s^2)*/
+_xgyro : float,  /*Angular speed around X axis in body frame (rad / sec)*/
+_ygyro : float,  /*Angular speed around Y axis in body frame (rad / sec)*/
+_zgyro : float,  /*Angular speed around Z axis in body frame (rad / sec)*/
+_xmag : float,  /*X Magnetic field (Gauss)*/
+_ymag : float,  /*Y Magnetic field (Gauss)*/
+_zmag : float,  /*Z Magnetic field (Gauss)*/
+_abs_pressure : float,  /*Absolute pressure in millibar*/
+_diff_pressure : float,  /*Differential pressure (airspeed) in millibar*/
+_pressure_alt : float,  /*Altitude calculated from pressure*/
+_temperature : float,  /*Temperature in degrees celsius*/
 _fields_updated : int  /*Bitmask for fields that have updated since last message, bit 0 = xacc, bit 12: temperature, bit 31: full reset of attitude/position/velocities/etc was performed in sim.*/
 
 );
@@ -1120,27 +1119,27 @@ _fields_updated : int  /*Bitmask for fields that have updated since last message
 type mavlink_sim_state_t =
 (
 
-_q1 : float32,  /*True attitude quaternion component 1, w (1 in null-rotation)*/
-_q2 : float32,  /*True attitude quaternion component 2, x (0 in null-rotation)*/
-_q3 : float32,  /*True attitude quaternion component 3, y (0 in null-rotation)*/
-_q4 : float32,  /*True attitude quaternion component 4, z (0 in null-rotation)*/
-_roll : float32,  /*Attitude roll expressed as Euler angles, not recommended except for human-readable outputs*/
-_pitch : float32,  /*Attitude pitch expressed as Euler angles, not recommended except for human-readable outputs*/
-_yaw : float32,  /*Attitude yaw expressed as Euler angles, not recommended except for human-readable outputs*/
-_xacc : float32,  /*X acceleration m/s/s*/
-_yacc : float32,  /*Y acceleration m/s/s*/
-_zacc : float32,  /*Z acceleration m/s/s*/
-_xgyro : float32,  /*Angular speed around X axis rad/s*/
-_ygyro : float32,  /*Angular speed around Y axis rad/s*/
-_zgyro : float32,  /*Angular speed around Z axis rad/s*/
-_lat : float32,  /*Latitude in degrees*/
-_lon : float32,  /*Longitude in degrees*/
-_alt : float32,  /*Altitude in meters*/
-_std_dev_horz : float32,  /*Horizontal position standard deviation*/
-_std_dev_vert : float32,  /*Vertical position standard deviation*/
-_vn : float32,  /*True velocity in m/s in NORTH direction in earth-fixed NED frame*/
-_ve : float32,  /*True velocity in m/s in EAST direction in earth-fixed NED frame*/
-_vd : float32  /*True velocity in m/s in DOWN direction in earth-fixed NED frame*/
+_q1 : float,  /*True attitude quaternion component 1, w (1 in null-rotation)*/
+_q2 : float,  /*True attitude quaternion component 2, x (0 in null-rotation)*/
+_q3 : float,  /*True attitude quaternion component 3, y (0 in null-rotation)*/
+_q4 : float,  /*True attitude quaternion component 4, z (0 in null-rotation)*/
+_roll : float,  /*Attitude roll expressed as Euler angles, not recommended except for human-readable outputs*/
+_pitch : float,  /*Attitude pitch expressed as Euler angles, not recommended except for human-readable outputs*/
+_yaw : float,  /*Attitude yaw expressed as Euler angles, not recommended except for human-readable outputs*/
+_xacc : float,  /*X acceleration m/s/s*/
+_yacc : float,  /*Y acceleration m/s/s*/
+_zacc : float,  /*Z acceleration m/s/s*/
+_xgyro : float,  /*Angular speed around X axis rad/s*/
+_ygyro : float,  /*Angular speed around Y axis rad/s*/
+_zgyro : float,  /*Angular speed around Z axis rad/s*/
+_lat : float,  /*Latitude in degrees*/
+_lon : float,  /*Longitude in degrees*/
+_alt : float,  /*Altitude in meters*/
+_std_dev_horz : float,  /*Horizontal position standard deviation*/
+_std_dev_vert : float,  /*Vertical position standard deviation*/
+_vn : float,  /*True velocity in m/s in NORTH direction in earth-fixed NED frame*/
+_ve : float,  /*True velocity in m/s in EAST direction in earth-fixed NED frame*/
+_vd : float  /*True velocity in m/s in DOWN direction in earth-fixed NED frame*/
 
 );
 
@@ -1214,13 +1213,13 @@ type mavlink_hil_optical_flow_t =
 
 _time_usec : int,  /*Timestamp (microseconds, synced to UNIX time or since system boot)*/
 _integration_time_us : int,  /*Integration time in microseconds. Divide integrated_x and integrated_y by the integration time to obtain average flow. The integration time also indicates the.*/
-_integrated_x : float32,  /*Flow in radians around X axis (Sensor RH rotation about the X axis induces a positive flow. Sensor linear motion along the positive Y axis induces a negative flow.)*/
-_integrated_y : float32,  /*Flow in radians around Y axis (Sensor RH rotation about the Y axis induces a positive flow. Sensor linear motion along the positive X axis induces a positive flow.)*/
-_integrated_xgyro : float32,  /*RH rotation around X axis (rad)*/
-_integrated_ygyro : float32,  /*RH rotation around Y axis (rad)*/
-_integrated_zgyro : float32,  /*RH rotation around Z axis (rad)*/
+_integrated_x : float,  /*Flow in radians around X axis (Sensor RH rotation about the X axis induces a positive flow. Sensor linear motion along the positive Y axis induces a negative flow.)*/
+_integrated_y : float,  /*Flow in radians around Y axis (Sensor RH rotation about the Y axis induces a positive flow. Sensor linear motion along the positive X axis induces a positive flow.)*/
+_integrated_xgyro : float,  /*RH rotation around X axis (rad)*/
+_integrated_ygyro : float,  /*RH rotation around Y axis (rad)*/
+_integrated_zgyro : float,  /*RH rotation around Z axis (rad)*/
 _time_delta_distance_us : int,  /*Time in microseconds since the distance was sampled.*/
-_distance : float32,  /*Distance to the center of the flow field in meters. Positive value (including zero): distance known. Negative value: Unknown distance.*/
+_distance : float,  /*Distance to the center of the flow field in meters. Positive value (including zero): distance known. Negative value: Unknown distance.*/
 _temperature : int,  /*Temperature * 100 in centi-degrees Celsius*/
 _sensor_id : int,  /*Sensor ID*/
 _quality : int  /*Optical flow quality / confidence. 0: no valid flow, 255: maximum quality*/
@@ -1232,10 +1231,10 @@ type mavlink_hil_state_quaternion_t =
 (
 
 _time_usec : int,  /*Timestamp (microseconds since UNIX epoch or microseconds since system boot)*/
-_attitude_quaternion : seq[float32],  /*Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation)*/
-_rollspeed : float32,  /*Body frame roll / phi angular speed (rad/s)*/
-_pitchspeed : float32,  /*Body frame pitch / theta angular speed (rad/s)*/
-_yawspeed : float32,  /*Body frame yaw / psi angular speed (rad/s)*/
+_attitude_quaternion : seq[float],  /*Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation)*/
+_rollspeed : float,  /*Body frame roll / phi angular speed (rad/s)*/
+_pitchspeed : float,  /*Body frame pitch / theta angular speed (rad/s)*/
+_yawspeed : float,  /*Body frame yaw / psi angular speed (rad/s)*/
 _lat : int,  /*Latitude, expressed as * 1E7*/
 _lon : int,  /*Longitude, expressed as * 1E7*/
 _alt : int,  /*Altitude in meters, expressed as * 1000 (millimeters)*/
@@ -1517,8 +1516,8 @@ type mavlink_terrain_report_t =
 
 _lat : int,  /*Latitude (degrees *10^7)*/
 _lon : int,  /*Longitude (degrees *10^7)*/
-_terrain_height : float32,  /*Terrain height in meters AMSL*/
-_current_height : float32,  /*Current vehicle height above lat/lon terrain height (meters)*/
+_terrain_height : float,  /*Terrain height in meters AMSL*/
+_current_height : float,  /*Current vehicle height above lat/lon terrain height (meters)*/
 _spacing : int,  /*grid spacing (zero if terrain at this location unavailable)*/
 _pending : int,  /*Number of 4x4 terrain blocks waiting to be received or read from disk*/
 _loaded : int  /*Number of 4x4 terrain blocks in memory*/
@@ -1530,8 +1529,8 @@ type mavlink_scaled_pressure2_t =
 (
 
 _time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
-_press_abs : float32,  /*Absolute pressure (hectopascal)*/
-_press_diff : float32,  /*Differential pressure 1 (hectopascal)*/
+_press_abs : float,  /*Absolute pressure (hectopascal)*/
+_press_diff : float,  /*Differential pressure 1 (hectopascal)*/
 _temperature : int  /*Temperature measurement (0.01 degrees celsius)*/
 
 );
@@ -1541,10 +1540,10 @@ type mavlink_att_pos_mocap_t =
 (
 
 _time_usec : int,  /*Timestamp (micros since boot or Unix epoch)*/
-_q : seq[float32],  /*Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)*/
-_x : float32,  /*X position in meters (NED)*/
-_y : float32,  /*Y position in meters (NED)*/
-_z : float32  /*Z position in meters (NED)*/
+_q : seq[float],  /*Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)*/
+_x : float,  /*X position in meters (NED)*/
+_y : float,  /*Y position in meters (NED)*/
+_z : float  /*Z position in meters (NED)*/
 
 );
 
@@ -1553,7 +1552,7 @@ type mavlink_set_actuator_control_target_t =
 (
 
 _time_usec : int,  /*Timestamp (micros since boot or Unix epoch)*/
-_controls : seq[float32],  /*Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0): (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through mixer to repurpose them as generic outputs.*/
+_controls : seq[float],  /*Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0): (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through mixer to repurpose them as generic outputs.*/
 _group_mlx : int,  /*Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use this field to difference between instances.*/
 _target_system : int,  /*System ID*/
 _target_component : int  /*Component ID*/
@@ -1565,7 +1564,7 @@ type mavlink_actuator_control_target_t =
 (
 
 _time_usec : int,  /*Timestamp (micros since boot or Unix epoch)*/
-_controls : seq[float32],  /*Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0): (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through mixer to repurpose them as generic outputs.*/
+_controls : seq[float],  /*Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0): (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through mixer to repurpose them as generic outputs.*/
 _group_mlx : int  /*Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use this field to difference between instances.*/
 
 );
@@ -1575,12 +1574,12 @@ type mavlink_altitude_t =
 (
 
 _time_usec : int,  /*Timestamp (micros since boot or Unix epoch)*/
-_altitude_monotonic : float32,  /*This altitude measure is initialized on system boot and monotonic (it is never reset, but represents the local altitude change). The only guarantee on this field is that it will never be reset and is consistent within a flight. The recommended value for this field is the uncorrected barometric altitude at boot time. This altitude will also drift and vary between flights.*/
-_altitude_amsl : float32,  /*This altitude measure is strictly above mean sea level and might be non-monotonic (it might reset on events like GPS lock or when a new QNH value is set). It should be the altitude to which global altitude waypoints are compared to. Note that it is *not* the GPS altitude, however, most GPS modules already output AMSL by default and not the WGS84 altitude.*/
-_altitude_local : float32,  /*This is the local altitude in the local coordinate frame. It is not the altitude above home, but in reference to the coordinate origin (0, 0, 0). It is up-positive.*/
-_altitude_relative : float32,  /*This is the altitude above the home position. It resets on each change of the current home position.*/
-_altitude_terrain : float32,  /*This is the altitude above terrain. It might be fed by a terrain database or an altimeter. Values smaller than -1000 should be interpreted as unknown.*/
-_bottom_clearance : float32  /*This is not the altitude, but the clear space below the system according to the fused clearance estimate. It generally should max out at the maximum range of e.g. the laser altimeter. It is generally a moving target. A negative value indicates no measurement available.*/
+_altitude_monotonic : float,  /*This altitude measure is initialized on system boot and monotonic (it is never reset, but represents the local altitude change). The only guarantee on this field is that it will never be reset and is consistent within a flight. The recommended value for this field is the uncorrected barometric altitude at boot time. This altitude will also drift and vary between flights.*/
+_altitude_amsl : float,  /*This altitude measure is strictly above mean sea level and might be non-monotonic (it might reset on events like GPS lock or when a new QNH value is set). It should be the altitude to which global altitude waypoints are compared to. Note that it is *not* the GPS altitude, however, most GPS modules already output AMSL by default and not the WGS84 altitude.*/
+_altitude_local : float,  /*This is the local altitude in the local coordinate frame. It is not the altitude above home, but in reference to the coordinate origin (0, 0, 0). It is up-positive.*/
+_altitude_relative : float,  /*This is the altitude above the home position. It resets on each change of the current home position.*/
+_altitude_terrain : float,  /*This is the altitude above terrain. It might be fed by a terrain database or an altimeter. Values smaller than -1000 should be interpreted as unknown.*/
+_bottom_clearance : float  /*This is not the altitude, but the clear space below the system according to the fused clearance estimate. It generally should max out at the maximum range of e.g. the laser altimeter. It is generally a moving target. A negative value indicates no measurement available.*/
 
 );
 
@@ -1601,8 +1600,8 @@ type mavlink_scaled_pressure3_t =
 (
 
 _time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
-_press_abs : float32,  /*Absolute pressure (hectopascal)*/
-_press_diff : float32,  /*Differential pressure 1 (hectopascal)*/
+_press_abs : float,  /*Absolute pressure (hectopascal)*/
+_press_diff : float,  /*Differential pressure 1 (hectopascal)*/
 _temperature : int  /*Temperature measurement (0.01 degrees celsius)*/
 
 );
@@ -1615,12 +1614,12 @@ _timestamp : int,  /*Timestamp in milliseconds since system boot*/
 _custom_state : int,  /*button states or switches of a tracker device*/
 _lat : int,  /*Latitude (WGS84), in degrees * 1E7*/
 _lon : int,  /*Longitude (WGS84), in degrees * 1E7*/
-_alt : float32,  /*AMSL, in meters*/
-_vel : seq[float32],  /*target velocity (0,0,0) for unknown*/
-_acc : seq[float32],  /*linear target acceleration (0,0,0) for unknown*/
-_attitude_q : seq[float32],  /*(1 0 0 0 for unknown)*/
-_rates : seq[float32],  /*(0 0 0 for unknown)*/
-_position_cov : seq[float32],  /*eph epv*/
+_alt : float,  /*AMSL, in meters*/
+_vel : seq[float],  /*target velocity (0,0,0) for unknown*/
+_acc : seq[float],  /*linear target acceleration (0,0,0) for unknown*/
+_attitude_q : seq[float],  /*(1 0 0 0 for unknown)*/
+_rates : seq[float],  /*(0 0 0 for unknown)*/
+_position_cov : seq[float],  /*eph epv*/
 _est_capabilities : int  /*bit positions for tracker reporting capabilities (POS = 0, VEL = 1, ACCEL = 2, ATT + RATES = 3)*/
 
 );
@@ -1630,22 +1629,22 @@ type mavlink_control_system_state_t =
 (
 
 _time_usec : int,  /*Timestamp (micros since boot or Unix epoch)*/
-_x_acc : float32,  /*X acceleration in body frame*/
-_y_acc : float32,  /*Y acceleration in body frame*/
-_z_acc : float32,  /*Z acceleration in body frame*/
-_x_vel : float32,  /*X velocity in body frame*/
-_y_vel : float32,  /*Y velocity in body frame*/
-_z_vel : float32,  /*Z velocity in body frame*/
-_x_pos : float32,  /*X position in local frame*/
-_y_pos : float32,  /*Y position in local frame*/
-_z_pos : float32,  /*Z position in local frame*/
-_airspeed : float32,  /*Airspeed, set to -1 if unknown*/
-_vel_variance : seq[float32],  /*Variance of body velocity estimate*/
-_pos_variance : seq[float32],  /*Variance in local position*/
-_q : seq[float32],  /*The attitude, represented as Quaternion*/
-_roll_rate : float32,  /*Angular rate in roll axis*/
-_pitch_rate : float32,  /*Angular rate in pitch axis*/
-_yaw_rate : float32  /*Angular rate in yaw axis*/
+_x_acc : float,  /*X acceleration in body frame*/
+_y_acc : float,  /*Y acceleration in body frame*/
+_z_acc : float,  /*Z acceleration in body frame*/
+_x_vel : float,  /*X velocity in body frame*/
+_y_vel : float,  /*Y velocity in body frame*/
+_z_vel : float,  /*Z velocity in body frame*/
+_x_pos : float,  /*X position in local frame*/
+_y_pos : float,  /*Y position in local frame*/
+_z_pos : float,  /*Z position in local frame*/
+_airspeed : float,  /*Airspeed, set to -1 if unknown*/
+_vel_variance : seq[float],  /*Variance of body velocity estimate*/
+_pos_variance : seq[float],  /*Variance in local position*/
+_q : seq[float],  /*The attitude, represented as Quaternion*/
+_roll_rate : float,  /*Angular rate in roll axis*/
+_pitch_rate : float,  /*Angular rate in pitch axis*/
+_yaw_rate : float  /*Angular rate in yaw axis*/
 
 );
 
@@ -1688,11 +1687,11 @@ type mavlink_landing_target_t =
 (
 
 _time_usec : int,  /*Timestamp (micros since boot or Unix epoch)*/
-_angle_x : float32,  /*X-axis angular offset (in radians) of the target from the center of the image*/
-_angle_y : float32,  /*Y-axis angular offset (in radians) of the target from the center of the image*/
-_distance : float32,  /*Distance to the target from the vehicle in meters*/
-_size_x : float32,  /*Size in radians of target along x-axis*/
-_size_y : float32,  /*Size in radians of target along y-axis*/
+_angle_x : float,  /*X-axis angular offset (in radians) of the target from the center of the image*/
+_angle_y : float,  /*Y-axis angular offset (in radians) of the target from the center of the image*/
+_distance : float,  /*Distance to the target from the vehicle in meters*/
+_size_x : float,  /*Size in radians of target along x-axis*/
+_size_y : float,  /*Size in radians of target along y-axis*/
 _target_num : int,  /*The ID of the target if multiple targets are present*/
 _frame : int  /*MAV_FRAME enum specifying the whether the following feilds are earth-frame, body-frame, etc.*/
 
@@ -1703,14 +1702,14 @@ type mavlink_estimator_status_t =
 (
 
 _time_usec : int,  /*Timestamp (micros since boot or Unix epoch)*/
-_vel_ratio : float32,  /*Velocity innovation test ratio*/
-_pos_horiz_ratio : float32,  /*Horizontal position innovation test ratio*/
-_pos_vert_ratio : float32,  /*Vertical position innovation test ratio*/
-_mag_ratio : float32,  /*Magnetometer innovation test ratio*/
-_hagl_ratio : float32,  /*Height above terrain innovation test ratio*/
-_tas_ratio : float32,  /*True airspeed innovation test ratio*/
-_pos_horiz_accuracy : float32,  /*Horizontal position 1-STD accuracy relative to the EKF local origin (m)*/
-_pos_vert_accuracy : float32,  /*Vertical position 1-STD accuracy relative to the EKF local origin (m)*/
+_vel_ratio : float,  /*Velocity innovation test ratio*/
+_pos_horiz_ratio : float,  /*Horizontal position innovation test ratio*/
+_pos_vert_ratio : float,  /*Vertical position innovation test ratio*/
+_mag_ratio : float,  /*Magnetometer innovation test ratio*/
+_hagl_ratio : float,  /*Height above terrain innovation test ratio*/
+_tas_ratio : float,  /*True airspeed innovation test ratio*/
+_pos_horiz_accuracy : float,  /*Horizontal position 1-STD accuracy relative to the EKF local origin (m)*/
+_pos_vert_accuracy : float,  /*Vertical position 1-STD accuracy relative to the EKF local origin (m)*/
 _flags : int  /*Integer bitmask indicating which EKF outputs are valid. See definition for ESTIMATOR_STATUS_FLAGS.*/
 
 );
@@ -1720,14 +1719,14 @@ type mavlink_wind_cov_t =
 (
 
 _time_usec : int,  /*Timestamp (micros since boot or Unix epoch)*/
-_wind_x : float32,  /*Wind in X (NED) direction in m/s*/
-_wind_y : float32,  /*Wind in Y (NED) direction in m/s*/
-_wind_z : float32,  /*Wind in Z (NED) direction in m/s*/
-_var_horiz : float32,  /*Variability of the wind in XY. RMS of a 1 Hz lowpassed wind estimate.*/
-_var_vert : float32,  /*Variability of the wind in Z. RMS of a 1 Hz lowpassed wind estimate.*/
-_wind_alt : float32,  /*AMSL altitude (m) this measurement was taken at*/
-_horiz_accuracy : float32,  /*Horizontal speed 1-STD accuracy*/
-_vert_accuracy : float32  /*Vertical speed 1-STD accuracy*/
+_wind_x : float,  /*Wind in X (NED) direction in m/s*/
+_wind_y : float,  /*Wind in Y (NED) direction in m/s*/
+_wind_z : float,  /*Wind in Z (NED) direction in m/s*/
+_var_horiz : float,  /*Variability of the wind in XY. RMS of a 1 Hz lowpassed wind estimate.*/
+_var_vert : float,  /*Variability of the wind in Z. RMS of a 1 Hz lowpassed wind estimate.*/
+_wind_alt : float,  /*AMSL altitude (m) this measurement was taken at*/
+_horiz_accuracy : float,  /*Horizontal speed 1-STD accuracy*/
+_vert_accuracy : float  /*Vertical speed 1-STD accuracy*/
 
 );
 
@@ -1739,15 +1738,15 @@ _time_usec : int,  /*Timestamp (micros since boot or Unix epoch)*/
 _time_week_ms : int,  /*GPS time (milliseconds from start of GPS week)*/
 _lat : int,  /*Latitude (WGS84), in degrees * 1E7*/
 _lon : int,  /*Longitude (WGS84), in degrees * 1E7*/
-_alt : float32,  /*Altitude (AMSL, not WGS84), in m (positive for up)*/
-_hdop : float32,  /*GPS HDOP horizontal dilution of position in m*/
-_vdop : float32,  /*GPS VDOP vertical dilution of position in m*/
-_vn : float32,  /*GPS velocity in m/s in NORTH direction in earth-fixed NED frame*/
-_ve : float32,  /*GPS velocity in m/s in EAST direction in earth-fixed NED frame*/
-_vd : float32,  /*GPS velocity in m/s in DOWN direction in earth-fixed NED frame*/
-_speed_accuracy : float32,  /*GPS speed accuracy in m/s*/
-_horiz_accuracy : float32,  /*GPS horizontal accuracy in m*/
-_vert_accuracy : float32,  /*GPS vertical accuracy in m*/
+_alt : float,  /*Altitude (AMSL, not WGS84), in m (positive for up)*/
+_hdop : float,  /*GPS HDOP horizontal dilution of position in m*/
+_vdop : float,  /*GPS VDOP vertical dilution of position in m*/
+_vn : float,  /*GPS velocity in m/s in NORTH direction in earth-fixed NED frame*/
+_ve : float,  /*GPS velocity in m/s in EAST direction in earth-fixed NED frame*/
+_vd : float,  /*GPS velocity in m/s in DOWN direction in earth-fixed NED frame*/
+_speed_accuracy : float,  /*GPS speed accuracy in m/s*/
+_horiz_accuracy : float,  /*GPS horizontal accuracy in m*/
+_vert_accuracy : float,  /*GPS vertical accuracy in m*/
 _ignore_flags : int,  /*Flags indicating which fields to ignore (see GPS_INPUT_IGNORE_FLAGS enum).  All other fields must be provided.*/
 _time_week : int,  /*GPS week number*/
 _gps_id : int,  /*ID of the GPS for multiple GPS inputs*/
@@ -1802,9 +1801,9 @@ type mavlink_vibration_t =
 (
 
 _time_usec : int,  /*Timestamp (micros since boot or Unix epoch)*/
-_vibration_x : float32,  /*Vibration levels on X-axis*/
-_vibration_y : float32,  /*Vibration levels on Y-axis*/
-_vibration_z : float32,  /*Vibration levels on Z-axis*/
+_vibration_x : float,  /*Vibration levels on X-axis*/
+_vibration_y : float,  /*Vibration levels on Y-axis*/
+_vibration_z : float,  /*Vibration levels on Z-axis*/
 _clipping_0 : int,  /*first accelerometer clipping count*/
 _clipping_1 : int,  /*second accelerometer clipping count*/
 _clipping_2 : int  /*third accelerometer clipping count*/
@@ -1818,13 +1817,13 @@ type mavlink_home_position_t =
 _latitude : int,  /*Latitude (WGS84), in degrees * 1E7*/
 _longitude : int,  /*Longitude (WGS84, in degrees * 1E7*/
 _altitude : int,  /*Altitude (AMSL), in meters * 1000 (positive for up)*/
-_x : float32,  /*Local X position of this position in the local coordinate frame*/
-_y : float32,  /*Local Y position of this position in the local coordinate frame*/
-_z : float32,  /*Local Z position of this position in the local coordinate frame*/
-_q : seq[float32],  /*World to surface normal and heading transformation of the takeoff position. Used to indicate the heading and slope of the ground*/
-_approach_x : float32,  /*Local X position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.*/
-_approach_y : float32,  /*Local Y position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.*/
-_approach_z : float32  /*Local Z position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.*/
+_x : float,  /*Local X position of this position in the local coordinate frame*/
+_y : float,  /*Local Y position of this position in the local coordinate frame*/
+_z : float,  /*Local Z position of this position in the local coordinate frame*/
+_q : seq[float],  /*World to surface normal and heading transformation of the takeoff position. Used to indicate the heading and slope of the ground*/
+_approach_x : float,  /*Local X position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.*/
+_approach_y : float,  /*Local Y position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.*/
+_approach_z : float  /*Local Z position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.*/
 
 );
 
@@ -1835,13 +1834,13 @@ type mavlink_set_home_position_t =
 _latitude : int,  /*Latitude (WGS84), in degrees * 1E7*/
 _longitude : int,  /*Longitude (WGS84, in degrees * 1E7*/
 _altitude : int,  /*Altitude (AMSL), in meters * 1000 (positive for up)*/
-_x : float32,  /*Local X position of this position in the local coordinate frame*/
-_y : float32,  /*Local Y position of this position in the local coordinate frame*/
-_z : float32,  /*Local Z position of this position in the local coordinate frame*/
-_q : seq[float32],  /*World to surface normal and heading transformation of the takeoff position. Used to indicate the heading and slope of the ground*/
-_approach_x : float32,  /*Local X position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.*/
-_approach_y : float32,  /*Local Y position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.*/
-_approach_z : float32,  /*Local Z position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.*/
+_x : float,  /*Local X position of this position in the local coordinate frame*/
+_y : float,  /*Local Y position of this position in the local coordinate frame*/
+_z : float,  /*Local Z position of this position in the local coordinate frame*/
+_q : seq[float],  /*World to surface normal and heading transformation of the takeoff position. Used to indicate the heading and slope of the ground*/
+_approach_x : float,  /*Local X position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.*/
+_approach_y : float,  /*Local Y position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.*/
+_approach_z : float,  /*Local Z position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.*/
 _target_system : int  /*System ID.*/
 
 );
@@ -1889,9 +1888,9 @@ type mavlink_collision_t =
 (
 
 _id : int,  /*Unique identifier, domain based on src field*/
-_time_to_minimum_delta : float32,  /*Estimated time until collision occurs (seconds)*/
-_altitude_minimum_delta : float32,  /*Closest vertical distance in meters between vehicle and object*/
-_horizontal_minimum_delta : float32,  /*Closest horizontal distance in meteres between vehicle and object*/
+_time_to_minimum_delta : float,  /*Estimated time until collision occurs (seconds)*/
+_altitude_minimum_delta : float,  /*Closest vertical distance in meters between vehicle and object*/
+_horizontal_minimum_delta : float,  /*Closest horizontal distance in meteres between vehicle and object*/
 _src : int,  /*Collision data source*/
 _action : int,  /*Action that is being taken to avoid this collision*/
 _threat_level : int  /*How concerned the aircraft is about this collision*/
@@ -1926,9 +1925,9 @@ type mavlink_debug_vect_t =
 (
 
 _time_usec : int,  /*Timestamp*/
-_x : float32,  /*x*/
-_y : float32,  /*y*/
-_z : float32,  /*z*/
+_x : float,  /*x*/
+_y : float,  /*y*/
+_z : float,  /*z*/
 _name : seq[int]  /*Name*/
 
 );
@@ -1938,7 +1937,7 @@ type mavlink_named_value_float_t =
 (
 
 _time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
-_value : float32,  /*Floating point value*/
+_value : float,  /*Floating point value*/
 _name : seq[int]  /*Name of the debug variable*/
 
 );
@@ -1967,8 +1966,170 @@ type mavlink_debug_t =
 (
 
 _time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
-_value : float32,  /*DEBUG value*/
+_value : float,  /*DEBUG value*/
 _ind : int  /*index of debug variable*/
 
 );
 
+/*Report button state change*/
+type mavlink_button_change_t =
+(
+
+_time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
+_last_change_ms : int,  /*Time of last change of button state*/
+_state : int  /*Bitmap state of buttons*/
+
+);
+
+/*Control vehicle tone generation (buzzer)*/
+type mavlink_play_tune_t =
+(
+
+_target_system : int,  /*System ID*/
+_target_component : int,  /*Component ID*/
+_tune : seq[int]  /*tune in board specific format*/
+
+);
+
+/*WIP: Information about a camera*/
+type mavlink_camera_information_t =
+(
+
+_time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
+_focal_length : float,  /*Focal length in mm*/
+_sensor_size_h : float,  /*Image sensor size horizontal in mm*/
+_sensor_size_v : float,  /*Image sensor size vertical in mm*/
+_resolution_h : int,  /*Image resolution in pixels horizontal*/
+_resolution_v : int,  /*Image resolution in pixels vertical*/
+_camera_id : int,  /*Camera ID if there are multiple*/
+_vendor_name : seq[int],  /*Name of the camera vendor*/
+_model_name : seq[int],  /*Name of the camera model*/
+_lense_id : int  /*Reserved for a lense ID*/
+
+);
+
+/*WIP: Settings of a camera, can be requested using MAV_CMD_REQUEST_CAMERA_SETTINGS and written using MAV_CMD_SET_CAMERA_SETTINGS*/
+type mavlink_camera_settings_t =
+(
+
+_time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
+_aperture : float,  /*Aperture is 1/value*/
+_shutter_speed : float,  /*Shutter speed in s*/
+_iso_sensitivity : float,  /*ISO sensitivity*/
+_white_balance : float,  /*Color temperature in K*/
+_camera_id : int,  /*Camera ID if there are multiple*/
+_aperture_locked : int,  /*Aperture locked (0: auto, 1: locked)*/
+_shutter_speed_locked : int,  /*Shutter speed locked (0: auto, 1: locked)*/
+_iso_sensitivity_locked : int,  /*ISO sensitivity locked (0: auto, 1: locked)*/
+_white_balance_locked : int,  /*Color temperature locked (0: auto, 1: locked)*/
+_mode_id : int,  /*Reserved for a camera mode ID*/
+_color_mode_id : int,  /*Reserved for a color mode ID*/
+_image_format_id : int  /*Reserved for image format ID*/
+
+);
+
+/*WIP: Information about a storage medium*/
+type mavlink_storage_information_t =
+(
+
+_time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
+_total_capacity : float,  /*Total capacity in MiB*/
+_used_capacity : float,  /*Used capacity in MiB*/
+_available_capacity : float,  /*Available capacity in MiB*/
+_read_speed : float,  /*Read speed in MiB/s*/
+_write_speed : float,  /*Write speed in MiB/s*/
+_storage_id : int,  /*Storage ID if there are multiple*/
+_status : int  /*Status of storage (0 not available, 1 unformatted, 2 formatted)*/
+
+);
+
+/*WIP: Information about the status of a capture*/
+type mavlink_camera_capture_status_t =
+(
+
+_time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
+_image_interval : float,  /*Image capture interval in seconds*/
+_video_framerate : float,  /*Video frame rate in Hz*/
+_image_resolution_h : int,  /*Image resolution in pixels horizontal*/
+_image_resolution_v : int,  /*Image resolution in pixels vertical*/
+_video_resolution_h : int,  /*Video resolution in pixels horizontal*/
+_video_resolution_v : int,  /*Video resolution in pixels vertical*/
+_camera_id : int,  /*Camera ID if there are multiple*/
+_image_status : int,  /*Current status of image capturing (0: not running, 1: interval capture in progress)*/
+_video_status : int  /*Current status of video capturing (0: not running, 1: capture in progress)*/
+
+);
+
+/*WIP: Information about a captured image*/
+type mavlink_camera_image_captured_t =
+(
+
+_time_utc : int,  /*Timestamp (microseconds since UNIX epoch) in UTC. 0 for unknown.*/
+_time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
+_lat : int,  /*Latitude, expressed as degrees * 1E7 where image was taken*/
+_lon : int,  /*Longitude, expressed as degrees * 1E7 where capture was taken*/
+_alt : int,  /*Altitude in meters, expressed as * 1E3 (AMSL, not WGS84) where image was taken*/
+_relative_alt : int,  /*Altitude above ground in meters, expressed as * 1E3 where image was taken*/
+_q : seq[float],  /*Quaternion of camera orientation (w, x, y, z order, zero-rotation is 0, 0, 0, 0)*/
+_camera_id : int,  /*Camera ID if there are multiple*/
+_file_path : seq[int]  /*File path of image taken.*/
+
+);
+
+/*WIP: Information about flight since last arming*/
+type mavlink_flight_information_t =
+(
+
+_arming_time_utc : int,  /*Timestamp at arming (microseconds since UNIX epoch) in UTC, 0 for unknown*/
+_takeoff_time_utc : int,  /*Timestamp at takeoff (microseconds since UNIX epoch) in UTC, 0 for unknown*/
+_flight_uuid : int,  /*Universally unique identifier (UUID) of flight, should correspond to name of logfiles*/
+_time_boot_ms : int  /*Timestamp (milliseconds since system boot)*/
+
+);
+
+/*WIP: Orientation of a mount*/
+type mavlink_mount_orientation_t =
+(
+
+_time_boot_ms : int,  /*Timestamp (milliseconds since system boot)*/
+_roll : float,  /*Roll in degrees*/
+_pitch : float,  /*Pitch in degrees*/
+_yaw : float  /*Yaw in degrees*/
+
+);
+
+/*A message containing logged data (see also MAV_CMD_LOGGING_START)*/
+type mavlink_logging_data_t =
+(
+
+_sequence : int,  /*sequence number (can wrap)*/
+_target_system : int,  /*system ID of the target*/
+_target_component : int,  /*component ID of the target*/
+_length : int,  /*data length*/
+_first_message_offset : int,  /*offset into data where first message starts. This can be used for recovery, when a previous message got lost (set to 255 if no start exists).*/
+_data : seq[int]  /*logged data*/
+
+);
+
+/*A message containing logged data which requires a LOGGING_ACK to be sent back*/
+type mavlink_logging_data_acked_t =
+(
+
+_sequence : int,  /*sequence number (can wrap)*/
+_target_system : int,  /*system ID of the target*/
+_target_component : int,  /*component ID of the target*/
+_length : int,  /*data length*/
+_first_message_offset : int,  /*offset into data where first message starts. This can be used for recovery, when a previous message got lost (set to 255 if no start exists).*/
+_data : seq[int]  /*logged data*/
+
+);
+
+/*An ack for a LOGGING_DATA_ACKED message*/
+type mavlink_logging_ack_t =
+(
+
+_sequence : int,  /*sequence number (must match the one in LOGGING_DATA_ACKED)*/
+_target_system : int,  /*system ID of the target*/
+_target_component : int  /*component ID of the target*/
+
+);
