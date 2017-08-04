@@ -13,8 +13,7 @@
 #include <time.h>
 #include <sys/time.h>
 #include "RobotState.h"
-#include "MavlinkMessageTypes.h"
-#include "MavlinkEnums.h"
+#include "PMavlinkMessages.h"
 #include "P_common_MessageTypeFunctions.h"
 using namespace std;
 

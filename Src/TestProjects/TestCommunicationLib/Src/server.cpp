@@ -18,7 +18,6 @@ int main()
     double eps = 1;
 
     //this is P specific and must be commented out if P is not used.
-    PrtSetForeignTypes(&P_GEND_PROGRAM);
     usleep(2500000);
     px4->Arm();
     usleep(2500000);

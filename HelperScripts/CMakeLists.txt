@@ -13,9 +13,9 @@ set(P_LIB_INCLUDE_PATH ${P_BUILT_LIB_PATH}/include)
 set(P_LIB_LINK_PATH ${P_BUILT_LIB_PATH}/lib)
 
 # Initializing the P Runtime Library
-if (NOT (TARGET PRuntime))
-    add_library(PRuntime SHARED IMPORTED)
-    set_target_properties(PRuntime PROPERTIES IMPORTED_LOCATION ${P_LIB_LINK_PATH}/libPrt_shared.so)
+if (NOT (TARGET pruntime))
+    add_library(pruntime SHARED IMPORTED)
+    set_target_properties(pruntime PROPERTIES IMPORTED_LOCATION ${P_LIB_LINK_PATH}/libPrt_shared.so)
     add_definitions( -DPRT_PLAT_LINUXUSER ) # currently ros only supports *nix/OSX
 endif()
 
@@ -26,24 +26,35 @@ Message(STATUS ">|> Found P at ${P_BUILD_PATH}")
 endif()
 
 
-function (PBUILD depName solutionFile type)
+function (PBUILD depName solutionFile type workingdirectory)
     if(NOT EXISTS ${solutionFile})
         Message(SEND_ERROR ">|> solution ${solutionFile} not found")
     endif()
-    if(${type} STREQUAL "C")
+    if(${type} STREQUAL "c")
         Message(STATUS ">|> Generating C code for solution ${solutionFile}")
-    elseif(${type} EQUAL "C#")
+    elseif(${type} EQUAL "c#")
         Message(STATUS ">|> Generating C# code for solution ${solutionFile}")
     else()
         Message(SEND_ERROR ">|> incorrect parameter for generation ${type}")
     endif()
-
-    set(workingDirectory get_filename_component(DIRECTORY ${solutionFile}))
     ADD_CUSTOM_TARGET(
             ${depName} ALL
             COMMENT "Building P ${solutionFile}..."
             COMMAND mono ${P_BUILD_PATH} /sln:${solutionFile} /generate:${type}
-            #WORKING_DIRECTORY ${workingDirectory}
+            WORKING_DIRECTORY ${workingdirectory}
     )
 endfunction(PBUILD)
 
+##########################################################################
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+if(COMPILER_SUPPORTS_CXX11)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+elseif(COMPILER_SUPPORTS_CXX0X)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+else()
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+endif()
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")

@@ -1,2 +1,3 @@
-#include Lib directory
+#include directory
 subdirs(Lib)
+subdirs(TestProjects)
