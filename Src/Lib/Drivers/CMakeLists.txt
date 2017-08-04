@@ -1,5 +1,5 @@
 ## Include all the lib projects ##
-subdirs(Drivers)
+subdirs(PX4Driver)
 
 
 
