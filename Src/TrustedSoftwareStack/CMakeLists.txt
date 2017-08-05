@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
-project(dronaSrcLibSoftwareStack)
+project(dronaSrcTrustedSoftwareStack)
 
 
-set(projectName dronasoftwarestack)
+set(projectName trustedsoftwarestack)
 
 #list of all p sources with relative paths
 set(pfiles
@@ -18,9 +18,6 @@ set(formulafiles
 ## Generic compilation script for P code
 ########################################
 
-p_compile(${projectName} pfiles)
-p_link(${projectName} formulafiles)
-p_add_linker_dependencies(${projectName} pfiles)
 
 ## Declare the output
 ## Declare the output
@@ -34,8 +31,6 @@ add_library(${projectName} SHARED
   ${${projectName}_psources}
   ${${projectName}_includes}
 )
-
-add_dependencies(${projectName} linker_${projectName})
 
 set_property(TARGET ${projectName} PROPERTY C_STANDARD 99)
 

@@ -242,7 +242,7 @@ void PX4API::Square(vector< float > corner, float edge, int rounds, float eps){
 
 */
 
-// Check if drone is eps-close to (x,y,x)
+
 bool PX4API::CloseTo(float x, float y, float z, float eps){
 
     mavlink_local_position_ned_t act_pos = ROBOTSTATE->GetLocalPosition();
