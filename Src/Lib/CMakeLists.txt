@@ -2,4 +2,5 @@
 subdirs(Drivers)
 subdirs(Loggers/ConsoleLogger)
 subdirs(WorkspaceRelated/WorkspaceParser)
+subdirs(ExternalMotionPlanners/OMPLOptimalPlanner)
 
