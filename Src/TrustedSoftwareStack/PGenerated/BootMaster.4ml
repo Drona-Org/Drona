@@ -8,16 +8,16 @@ model BootMaster_4ml_LinkModel of PLink at "/home/ankush/Workspace/Drona/Submodu
   MachineReceives("BootMaster", ALL),
   MachineProtoDecl("POrbMachine", BaseType(NULL)),
   EventDecl("POrbSubscribe", NIL, NmdTupType(NmdTupTypeField("topic", NameType("Topics")), NmdTupType(NmdTupTypeField("sub", BaseType(MACHINE)), NIL)), IdList(1, IdList("/home/ankush/Workspace/Drona/Src/TrustedSoftwareStack/PSrc/POrb/POrbHeader.p", NIL))),
-  FunProtoDecl("Subscribe", NmdTupType(NmdTupTypeField("orb", BaseType(MACHINE)), NmdTupType(NmdTupTypeField("payload", NmdTupType(NmdTupTypeField("topic", NameType("Topics")), NmdTupType(NmdTupTypeField("sub", BaseType(MACHINE)), NIL))), NIL)), NIL),
+  EventDecl("POrbPublish", NIL, NmdTupType(NmdTupTypeField("topic", NameType("Topics")), NmdTupType(NmdTupTypeField("ev", BaseType(EVENT)), NmdTupType(NmdTupTypeField("payload", AnyType(NIL)), NIL))), IdList(3, IdList("/home/ankush/Workspace/Drona/Src/TrustedSoftwareStack/PSrc/POrb/POrbHeader.p", NIL))),
   PermEmbeddedInEvent("POrbSubscribe", "POrbPublish"),
   PermEmbeddedInEvent("POrbSubscribe", "POrbSubscribe"),
-  EventDecl("POrbPublish", NIL, NmdTupType(NmdTupTypeField("topic", NameType("Topics")), NmdTupType(NmdTupTypeField("ev", BaseType(EVENT)), NmdTupType(NmdTupTypeField("payload", AnyType(NIL)), NIL))), IdList(3, IdList("/home/ankush/Workspace/Drona/Src/TrustedSoftwareStack/PSrc/POrb/POrbHeader.p", NIL))),
-  PermEmbeddedInEvent("POrbPublish", "POrbSubscribe"),
+  FunProtoDecl("Subscribe", NmdTupType(NmdTupTypeField("orb", BaseType(MACHINE)), NmdTupType(NmdTupTypeField("payload", NmdTupType(NmdTupTypeField("topic", NameType("Topics")), NmdTupType(NmdTupTypeField("sub", BaseType(MACHINE)), NIL))), NIL)), NIL),
   PermEmbeddedInEvent("POrbPublish", "POrbPublish"),
+  PermEmbeddedInEvent("POrbPublish", "POrbSubscribe"),
   FunProtoDecl("Publish", NmdTupType(NmdTupTypeField("orb", BaseType(MACHINE)), NmdTupType(NmdTupTypeField("payload", NmdTupType(NmdTupTypeField("topic", NameType("Topics")), NmdTupType(NmdTupTypeField("ev", BaseType(EVENT)), NmdTupType(NmdTupTypeField("payload", AnyType(NIL)), NIL)))), NIL)), NIL),
   EventSet("P_GEND_EVENTSET", NIL),
-  MachineCreatesM("BootMaster", "POrbMachine"),
+  MachineProtoDecl("BootMaster", BaseType(NULL)),
   MachineDecl("BootMaster", BaseType(NULL), IdList(4, IdList("/home/ankush/Workspace/Drona/Src/TrustedSoftwareStack/PSrc/BootMaster.p", NIL))),
-  MachineProtoDecl("BootMaster", BaseType(NULL)).
+  MachineCreatesM("BootMaster", "POrbMachine").
 }
 

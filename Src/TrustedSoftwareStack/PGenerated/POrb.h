@@ -28,12 +28,13 @@
       P_FUN_POrbMachine_ANON2 = 5,
       P_FUN_POrbMachine_ANON3 = 7,
       P_FUN_POrbMachine_ANON4 = 9,
-      _P_FUNS_POrbMachine_COUNT = 10,
       P_FUN_POrbMachine_ANON5 = 11,
+      _P_FUNS_POrbMachine_COUNT = 11,
       P_FUN_POrbMachine_ANON6 = 13,
       P_FUN_POrbMachine_ANON7 = 15,
       P_FUN_POrbMachine_Broadcast = 17,
-      P_FUN_POrbMachine_IsSubscribed = 19
+      P_FUN_POrbMachine_InitializeDisPatchListener = 19,
+      P_FUN_POrbMachine_IsSubscribed = 21
     };
 
     enum P_STATES_POrbMachine
@@ -75,6 +76,8 @@
       _Topics_COUNT = 21
     };
 
+    PRT_VALUE *P_FUN_POrbMachine_InitializeDisPatchListener_FOREIGN(PRT_MACHINEINST *context, PRT_VALUE **payload);
+
     extern PRT_EVENTDECL P_EVENT_POrbPublish_STRUCT;
     extern PRT_EVENTDECL P_EVENT_POrbSubscribe_STRUCT;
     extern PRT_EVENTDECL _P_EVENT_HALT_STRUCT;
@@ -92,6 +95,7 @@
     extern PRT_FUNDECL P_FUN_POrbMachine_ANON6_STRUCT;
     extern PRT_FUNDECL P_FUN_POrbMachine_ANON7_STRUCT;
     extern PRT_FUNDECL P_FUN_POrbMachine_Broadcast_STRUCT;
+    extern PRT_FUNDECL P_FUN_POrbMachine_InitializeDisPatchListener_STRUCT;
     extern PRT_FUNDECL P_FUN_POrbMachine_IsSubscribed_STRUCT;
     extern PRT_FUNDECL P_FUN_Publish_STRUCT;
     extern PRT_FUNDECL P_FUN_Subscribe_STRUCT;

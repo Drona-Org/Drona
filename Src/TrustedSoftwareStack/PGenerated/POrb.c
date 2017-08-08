@@ -465,12 +465,23 @@
         P_STATE_POrbMachine_ReadMessagesAndPublish,
         &_P_EVENT_NULL_STRUCT,
         P_STATE_POrbMachine_ReadMessagesAndPublish,
-        &P_FUN_POrbMachine_ANON6_STRUCT,
+        &P_FUN_POrbMachine_ANON5_STRUCT,
         0U,
         NULL
     }
   };
   PRT_VALUE *P_FUN_POrbMachine_Broadcast_IMPL(PRT_MACHINEINST *context);
+
+  PRT_VALUE *P_FUN_POrbMachine_InitializeDisPatchListener_IMPL(PRT_MACHINEINST *context)
+  {
+    PRT_MACHINEINST_PRIV *p_tmp_mach_priv = (PRT_MACHINEINST_PRIV *)context;
+    PRT_FUNSTACK_INFO p_tmp_frame;
+    PRT_VALUE *retVal;
+    PrtPopFrame(p_tmp_mach_priv, &p_tmp_frame);
+    retVal = P_FUN_POrbMachine_InitializeDisPatchListener_FOREIGN(context, &p_tmp_frame.locals[0U]);
+    PrtFreeLocals(p_tmp_mach_priv, &p_tmp_frame);
+    return retVal;
+  }
 
   PRT_VALUE *P_FUN_POrbMachine_IsSubscribed_IMPL(PRT_MACHINEINST *context);
 
@@ -484,7 +495,7 @@
     {
         P_STATE_POrbMachine_ReadMessagesAndPublish,
         &P_EVENT_POrbPublish_STRUCT,
-        &P_FUN_POrbMachine_ANON1_STRUCT,
+        &P_FUN_POrbMachine_ANON0_STRUCT,
         0U,
         NULL
     },
@@ -618,24 +629,6 @@
   static PRT_VALUE *P_FUN_POrbMachine_ANON0_IMPL(PRT_MACHINEINST *context)
   {
     {
-      PRT_FUNSTACK_INFO p_tmp_frame;
-      PRT_MACHINEINST_PRIV *p_tmp_mach_priv;
-      PRT_VALUE *p_tmp_ret;
-      p_tmp_mach_priv = (PRT_MACHINEINST_PRIV *)context;
-      p_tmp_ret = NULL;
-      PrtPopFrame(p_tmp_mach_priv, &p_tmp_frame);
-      PrtGoto(p_tmp_mach_priv, P_STATE_POrbMachine_ReadMessagesAndPublish, 0U);
-      goto P_EXIT_FUN;
-      goto P_EXIT_FUN;
-      P_EXIT_FUN:
-      PrtFreeLocals(p_tmp_mach_priv, &p_tmp_frame);
-      return p_tmp_ret;
-    }
-  }
-
-  static PRT_VALUE *P_FUN_POrbMachine_ANON1_IMPL(PRT_MACHINEINST *context)
-  {
-    {
       PRT_BOOLEAN p_tmp_bool;
       PRT_FUNSTACK_INFO p_tmp_frame;
       PRT_MACHINEINST_PRIV *p_tmp_mach_priv;
@@ -653,15 +646,15 @@
       p_tmp_mach_priv = (PRT_MACHINEINST_PRIV *)context;
       p_tmp_ret = NULL;
       PrtPopFrame(p_tmp_mach_priv, &p_tmp_frame);
-      if (p_tmp_frame.returnTo == 0U)
+      if (p_tmp_frame.returnTo == 1U)
       {
-        goto L0;
+        goto L1;
       }
       if (P_BOOL_EXPR(P_EXPR_3(PrtMkBoolValue(PrtMapExists(p_tmp_expr_1, p_tmp_expr_2)), PRT_TRUE, PrtTupleGetNC(p_tmp_expr_0, 0), PRT_FALSE, p_tmp_mach_priv->varValues[P_VAR_POrbMachine_topicSubscribers], PRT_FALSE, p_tmp_frame.locals[0U], PRT_FALSE), PRT_TRUE))
       {
         P_EXPR_8(P_SEQ(PrtPushNewFrame(p_tmp_mach_priv, PRT_FALSE, P_FUN_POrbMachine_Broadcast, PRT_FUN_PARAM_CLONE, p_tmp_expr_7, PRT_FUN_PARAM_CLONE, p_tmp_expr_5, PRT_FUN_PARAM_CLONE, p_tmp_expr_6), NULL), PRT_FALSE, PrtMapGetNC(p_tmp_expr_3, p_tmp_expr_4), PRT_FALSE, PrtTupleGetNC(p_tmp_expr_2, 2), PRT_FALSE, PrtTupleGetNC(p_tmp_expr_1, 1), PRT_FALSE, PrtTupleGetNC(p_tmp_expr_0, 0), PRT_FALSE, p_tmp_mach_priv->varValues[P_VAR_POrbMachine_topicSubscribers], PRT_FALSE, p_tmp_frame.locals[0U], PRT_FALSE, p_tmp_frame.locals[0U], PRT_FALSE, p_tmp_frame.locals[0U], PRT_FALSE);
-        L0:
-        p_tmp_funstmt_ret = PrtWrapFunStmt(&p_tmp_frame, 0U, p_tmp_mach_priv, P_FUN_POrbMachine_Broadcast);
+        L1:
+        p_tmp_funstmt_ret = PrtWrapFunStmt(&p_tmp_frame, 1U, p_tmp_mach_priv, P_FUN_POrbMachine_Broadcast);
         if (p_tmp_mach_priv->receive != NULL)
         {
           return p_tmp_funstmt_ret;
@@ -675,6 +668,22 @@
           PrtFreeValue(p_tmp_funstmt_ret);
         }
       }
+      goto P_EXIT_FUN;
+      P_EXIT_FUN:
+      PrtFreeLocals(p_tmp_mach_priv, &p_tmp_frame);
+      return p_tmp_ret;
+    }
+  }
+
+  static PRT_VALUE *P_FUN_POrbMachine_ANON1_IMPL(PRT_MACHINEINST *context)
+  {
+    {
+      PRT_FUNSTACK_INFO p_tmp_frame;
+      PRT_MACHINEINST_PRIV *p_tmp_mach_priv;
+      PRT_VALUE *p_tmp_ret;
+      p_tmp_mach_priv = (PRT_MACHINEINST_PRIV *)context;
+      p_tmp_ret = NULL;
+      PrtPopFrame(p_tmp_mach_priv, &p_tmp_frame);
       goto P_EXIT_FUN;
       P_EXIT_FUN:
       PrtFreeLocals(p_tmp_mach_priv, &p_tmp_frame);
@@ -751,10 +760,34 @@
     {
       PRT_FUNSTACK_INFO p_tmp_frame;
       PRT_MACHINEINST_PRIV *p_tmp_mach_priv;
+      PRT_VALUE *p_tmp_expr_0;
+      PRT_VALUE *p_tmp_expr_1;
+      PRT_VALUE *p_tmp_funstmt_ret;
       PRT_VALUE *p_tmp_ret;
       p_tmp_mach_priv = (PRT_MACHINEINST_PRIV *)context;
       p_tmp_ret = NULL;
       PrtPopFrame(p_tmp_mach_priv, &p_tmp_frame);
+      if (p_tmp_frame.returnTo == 0U)
+      {
+        goto L0;
+      }
+      P_EXPR_1(P_SEQ(PrtPushNewFrame(p_tmp_mach_priv, PRT_FALSE, P_FUN_POrbMachine_InitializeDisPatchListener, PRT_FUN_PARAM_CLONE, p_tmp_expr_0), NULL), PRT_FALSE, p_tmp_mach_priv->id, PRT_FALSE);
+      L0:
+      p_tmp_funstmt_ret = PrtWrapFunStmt(&p_tmp_frame, 0U, p_tmp_mach_priv, P_FUN_POrbMachine_InitializeDisPatchListener);
+      if (p_tmp_mach_priv->receive != NULL)
+      {
+        return p_tmp_funstmt_ret;
+      }
+      if (p_tmp_mach_priv->lastOperation != ReturnStatement)
+      {
+        goto P_EXIT_FUN;
+      }
+      if (p_tmp_funstmt_ret != NULL)
+      {
+        PrtFreeValue(p_tmp_funstmt_ret);
+      }
+      PrtGoto(p_tmp_mach_priv, P_STATE_POrbMachine_ReadMessagesAndPublish, 0U);
+      goto P_EXIT_FUN;
       goto P_EXIT_FUN;
       P_EXIT_FUN:
       PrtFreeLocals(p_tmp_mach_priv, &p_tmp_frame);
@@ -819,6 +852,7 @@
     &P_FUN_POrbMachine_ANON6_STRUCT,
     &P_FUN_POrbMachine_ANON7_STRUCT,
     &P_FUN_POrbMachine_Broadcast_STRUCT,
+    &P_FUN_POrbMachine_InitializeDisPatchListener_STRUCT,
     &P_FUN_POrbMachine_IsSubscribed_STRUCT
   };
   PRT_FUNDECL P_FUN_POrbMachine_ANON0_STRUCT = 
@@ -829,7 +863,7 @@
     1U,
     1U,
     1U,
-    &P_GEND_TYPE_5,
+    &P_GEND_TYPE_13,
     NULL,
     0U,
     NULL,
@@ -844,7 +878,7 @@
     1U,
     1U,
     1U,
-    &P_GEND_TYPE_13,
+    &P_GEND_TYPE_5,
     NULL,
     0U,
     NULL,
@@ -956,6 +990,21 @@
     0U,
     NULL
   };
+  PRT_FUNDECL P_FUN_POrbMachine_InitializeDisPatchListener_STRUCT = 
+  {
+    0U,
+    "InitializeDisPatchListener",
+    &P_FUN_POrbMachine_InitializeDisPatchListener_IMPL,
+    1U,
+    1U,
+    0U,
+    NULL,
+    NULL,
+    0U,
+    NULL,
+    0U,
+    NULL
+  };
   PRT_FUNDECL P_FUN_POrbMachine_IsSubscribed_STRUCT = 
   {
     0U,
@@ -1013,8 +1062,8 @@
         &P_GEND_EVENTSET,
         NULL,
         NULL,
-        &P_FUN_POrbMachine_ANON0_STRUCT,
-        &P_FUN_POrbMachine_ANON3_STRUCT,
+        &P_FUN_POrbMachine_ANON6_STRUCT,
+        &P_FUN_POrbMachine_ANON2_STRUCT,
         0U,
         NULL
     },
@@ -1028,8 +1077,8 @@
         &P_GEND_EVENTSET_POrbSubscribe_POrbPublish,
         P_GEND_TRANS_POrbMachine_ReadMessagesAndPublish,
         P_GEND_DOS_POrbMachine_ReadMessagesAndPublish,
+        &P_FUN_POrbMachine_ANON3_STRUCT,
         &P_FUN_POrbMachine_ANON4_STRUCT,
-        &P_FUN_POrbMachine_ANON5_STRUCT,
         0U,
         NULL
     }
@@ -1040,7 +1089,7 @@
     "POrbMachine",
     1,
     2,
-    10,
+    11,
     4294967295,
     P_STATE_POrbMachine_Init,
     P_GEND_VARS_POrbMachine,
