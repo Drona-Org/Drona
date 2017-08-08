@@ -9,7 +9,6 @@ include(HelperScripts/CMakeLists.txt)
 subdirs(Src)
 subdirs(Submodule/OMPL)
 
-
 ##########################################################################
 # Common header files used across project
 ##########################################################################

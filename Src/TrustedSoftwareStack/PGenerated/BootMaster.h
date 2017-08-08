@@ -35,7 +35,6 @@
     extern PRT_FUNDECL P_FUN_BootMaster_ANON1_STRUCT;
     extern PRT_FUNDECL P_FUN_BootMaster_ANON2_STRUCT;
     extern PRT_FUNDECL P_FUN_IGNORE_PUSH_STRUCT;
-    extern PRT_FUNDECL P_FUN_InitializeListener_STRUCT;
     extern PRT_FUNDECL P_FUN_Publish_STRUCT;
     extern PRT_FUNDECL P_FUN_Subscribe_STRUCT;
     extern PRT_MACHINEDECL P_MACHINE_BootMaster_STRUCT;
@@ -46,7 +45,6 @@
     extern PRT_TYPE P_GEND_TYPE_Topics;
     extern PRT_UINT32 P_EVENT_POrbPublish;
     extern PRT_UINT32 P_EVENT_POrbSubscribe;
-    extern PRT_UINT32 P_FUN_InitializeListener;
     extern PRT_UINT32 P_FUN_Publish;
     extern PRT_UINT32 P_FUN_Subscribe;
     extern PRT_UINT32 P_IORM_BootMaster;

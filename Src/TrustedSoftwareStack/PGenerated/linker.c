@@ -47,6 +47,10 @@
   {
     0x0CU
   };
+  PRT_UINT32 P_GEND_EVENTSET_2[] = 
+  {
+    0x1U
+  };
   PRT_EVENTSETDECL P_GEND_EVENTSETS[] = 
   {
     
@@ -56,6 +60,10 @@
     
     {
         P_GEND_EVENTSET_1
+    },
+    
+    {
+        P_GEND_EVENTSET_2
     }
   };
   PRT_EVENTSETDECL P_GEND_EVENTSET = 
@@ -65,6 +73,10 @@
   PRT_EVENTSETDECL P_GEND_EVENTSET_POrbSubscribe_POrbPublish = 
   {
     P_GEND_EVENTSET_1
+  };
+  PRT_EVENTSETDECL P_GEND_EVENTSET_null = 
+  {
+    P_GEND_EVENTSET_2
   };
   PRT_FUNDECL P_FUN_IGNORE_PUSH_STRUCT = 
   {
@@ -122,7 +134,7 @@
   PRT_PROGRAMDECL P_GEND_PROGRAM = 
   {
     4U,
-    2U,
+    3U,
     2U,
     3U,
     0U,

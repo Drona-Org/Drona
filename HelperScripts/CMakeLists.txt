@@ -12,11 +12,11 @@ set(P_BUILT_LIB_PATH ${CMAKE_SOURCE_DIR}/Submodule/P/Bld/Drops/PrtUser)
 set(P_LIB_INCLUDE_PATH ${P_BUILT_LIB_PATH}/include)
 set(P_LIB_LINK_PATH ${P_BUILT_LIB_PATH}/lib)
 
-# Initializing the P Runtime Library
+## Initializing the P Runtime Library
 if (NOT (TARGET pruntime))
     add_library(pruntime SHARED IMPORTED)
     set_target_properties(pruntime PROPERTIES IMPORTED_LOCATION ${P_LIB_LINK_PATH}/libPrt_shared.so)
-    add_definitions( -DPRT_PLAT_LINUXUSER ) # currently ros only supports *nix/OSX
+    add_definitions( -DPRT_PLAT_LINUXUSER )
 endif()
 
 if(NOT EXISTS ${P_BUILD_PATH})

@@ -9,13 +9,13 @@ machine POrbMachine
 	start state Init
 	{
             entry {
-                    InitializeListener(this);
+                    //InitializeListener(this);
                     goto ReadMessagesAndPublish;
             }
 	} 
 
         //initialize the listener and start pumping events.
-        fun InitializeListener(payload: machine);
+        //fun InitializeListener(payload: machine);
 
 	fun Broadcast(machines: seq[machine], ev: event, payload: any){
             var index: int;
@@ -64,6 +64,7 @@ machine POrbMachine
                             topicSubscribers[payload.topic] += (0, payload.sub);
                     }
             }
+            on null goto ReadMessagesAndPublish;
 	}
 
 }

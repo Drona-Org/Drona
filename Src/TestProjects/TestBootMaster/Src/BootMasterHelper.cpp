@@ -43,8 +43,31 @@ void Log(PRT_STEP step, PRT_MACHINESTATE *senderState, PRT_MACHINEINST *receiver
     PrtPrintStep(step, senderState, receiver, event, payload);
 }
 
-static PRT_BOOLEAN cooperative = PRT_FALSE;
-static int threads = 1;
+
+long threadsRunning = 0;
+pthread_mutex_t threadsRunning_mutex;
+
+void
+decrement_threadsRunning()
+{
+        pthread_mutex_lock(&threadsRunning_mutex);
+    threadsRunning = threadsRunning - 1;
+        pthread_mutex_unlock(&threadsRunning_mutex);
+}
+
+long
+get_threadsRunning()
+{
+    long c;
+
+    pthread_mutex_lock(&threadsRunning_mutex);
+        c = threadsRunning;
+    pthread_mutex_unlock(&threadsRunning_mutex);
+    return (c);
+}
+
+static PRT_BOOLEAN cooperative = PRT_TRUE;
+static int threads = 2;
 
 // todo: make tester useful for performance testing also, not finished yet...
 static PRT_BOOLEAN perf = PRT_FALSE;
@@ -52,7 +75,6 @@ static long steps = 0;
 static long startTime = 0;
 static long perfEndTime = 0;
 static const char* parg = NULL;
-static const char* workspaceConfig;
 
 
 
@@ -94,7 +116,7 @@ static PRT_BOOLEAN ParseCommandLine(int argc, char *argv[])
             {
                 if (i + 1 < argc)
                 {
-                    workspaceConfig = argv[++i];
+                    //workspaceConfig = argv[++i];
                 }
             }
             else if (strcasecmp(arg + 1, "arg") == 0)
@@ -172,6 +194,7 @@ static void RunToIdle(void* process)
             break;
         }
     }
+    decrement_threadsRunning();
 }
 
 
@@ -185,7 +208,7 @@ int main(int argc, char *argv[])
     }
 
     printf("Press any key to start simulation\n");
-    getchar();
+    //getchar();
 
     PRT_DBG_START_MEM_BALANCED_REGION
     {
@@ -193,6 +216,7 @@ int main(int argc, char *argv[])
         PRT_GUID processGuid;
         PRT_VALUE *payload;
 
+        PrtInitialize(&P_GEND_PROGRAM);
         //Initialize the workspace
         processGuid.data1 = 1;
         processGuid.data2 = 0;
@@ -215,7 +239,7 @@ int main(int argc, char *argv[])
 
         PrtUpdateAssertFn(MyAssert);
 
-        PrtMkMachine(process, P_MACHINE_BootMaster, 1, payload);
+        PrtMkMachine(process, P_MACHINE_BootMaster, 1, PRT_FUN_PARAM_CLONE, payload);
 
         if (cooperative)
         {
@@ -234,12 +258,10 @@ typedef void *(*start_routine) (void *);
             pthread_t tid[threads];
             for (int i = 0; i < threads; i++)
             {
+                threadsRunning++;
                 pthread_create(&tid[i], NULL, (start_routine)RunToIdle, (void*)process);
             }
-            for (int i = 0; i < threads; i++)
-            {
-                pthread_join(tid[i], NULL);
-            }
+            while(get_threadsRunning() != 0);
 #else
 #error Invalid Platform
 #endif
