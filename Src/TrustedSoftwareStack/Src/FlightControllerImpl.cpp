@@ -1,15 +1,14 @@
-#include "POrbMavlink.h"
 #include <malloc.h>
 #include <linker.h>
 #include "BootMaster.h"
 #include "PrtUser.h"
 #include "PrtLinuxUserConfig.h"
-#include "Geo.h"
 #include "PMavlinkMessages.h"
 #include "P_common_MessageTypeFunctions.h"
 
 extern "C"
 {
+    /*
 	PRT_VALUE *P_FUN_SendHeartbeat_FOREIGN(PRT_MACHINEINST *context)
 	{
 		POrbMavlink::SendHeartbeat();
@@ -39,5 +38,6 @@ extern "C"
 		POrbMavlink::ready = true;
 		return NULL;
 	}
+    */
 
 }

@@ -1,6 +1,5 @@
 #include "POrb.h"
 #include "linker.h"
-#include "POrbMavlink.h"
 
 extern PRT_PROCESS* MAIN_APPLICATION_PROCESS;
 
