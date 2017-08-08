@@ -65,25 +65,11 @@ fun SetMessageInterval(commander: machine, msg_stream: mavlink_messages, interva
 }
 
 
-model fun SendHeartbeat()
+fun SendHeartbeat()
 {
 }
 
-model fun GetSystemTime() : int
-{
-	return 0;
-}
+fun GetSystemTime() : int;
 
-fun Publish(orb: machine, payload: POrbPubMsgType)
-{
-	sealwithRTC();
-	send orb, POrbPublish, payload;
-}
 
-fun Subscribe(orb:machine, payload: POrbSubMsgType) 
-{
-	sealwithRTC();
-	send orb, POrbSubscribe, payload;
-	unsealwithRTC();
-}
 

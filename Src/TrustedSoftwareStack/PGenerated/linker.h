@@ -1,0 +1,13 @@
+
+  #ifndef P_LINKER_H
+    #define P_LINKER_H
+    #include "POrb.h"
+    #include "BootMaster.h"
+    #ifdef __cplusplus
+      extern "C"{
+    #endif
+    #ifdef __cplusplus
+      }
+    #endif
+  #endif
+  

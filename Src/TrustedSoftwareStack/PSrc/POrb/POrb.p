@@ -1,7 +1,11 @@
 // The POrbMachine implements a pub/sub mechanism so you can have many subscribers 
 // receive messages that are published.
 
-machine POrbMachine {
+//initialize the listener and start pumping events.
+fun InitializeListener(payload: machine);
+
+machine POrbMachine
+{
 	var topicSubscribers: map[Topics, seq[machine]];
 	start state Init
 	{
@@ -9,11 +13,7 @@ machine POrbMachine {
                     InitializeListener(this);
                     goto ReadMessagesAndPublish;
             }
-	}
-
-	model fun InitializeListener(payload: machine) {
-		//initialize the listener and start pumping events.
-	}
+	} 
 
 	fun Broadcast(machines: seq[machine], ev: event, payload: any){
             var index: int;

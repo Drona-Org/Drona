@@ -1,8 +1,17 @@
-<PSolution name= "PMavlinkMessages">
-  <PProject name= "PMavlinkMessages" outputdir="./PGenerated">
+<PSolution name= "TrustedSoftwareStack">
+  <PProject name= "POrb" outputdir="./PGenerated">
     <Source>
-      <Include>./PSrc/MavlinkEnums.p</Include>
-      <Include>./PSrc/MavlinkMessageTypes.p</Include>
+      <Include>./PSrc/POrb/POrb.p</Include>
+      <Include>./PSrc/POrb/POrbHeader.p</Include>
     </Source>
+  </PProject>
+    <PProject name= "BootMaster" outputdir="./PGenerated">
+    <Source>
+      <Include>./PSrc/BootMaster.p</Include>
+    </Source>
+    <Link>
+      <Include>./PSrc/TempLink.p</Include>
+    </Link>
+    <Depends>POrb</Depends>
   </PProject>
 </PSolution>
