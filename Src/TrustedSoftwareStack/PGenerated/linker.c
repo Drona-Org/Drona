@@ -2,9 +2,8 @@
   #include "linker.h"
   PRT_UINT32 P_EVENT_POrbPublish = 2;
   PRT_UINT32 P_EVENT_POrbSubscribe = 3;
-  PRT_UINT32 P_FUN_InitializeListener = 2;
-  PRT_UINT32 P_FUN_Publish = 4;
-  PRT_UINT32 P_FUN_Subscribe = 6;
+  PRT_UINT32 P_FUN_Publish = 2;
+  PRT_UINT32 P_FUN_Subscribe = 4;
   PRT_UINT32 P_IORM_BootMaster = 0;
   PRT_UINT32 P_IORM_POrbMachine = 1;
   PRT_UINT32 P_MACHINE_BootMaster = 0;
@@ -15,7 +14,7 @@
   PRT_UINT32 _P_EVENT_HALT = 1;
   PRT_UINT32 _P_EVENT_NULL = 0;
   PRT_UINT32 _P_FOREIGN_TYPES_COUNT = 0;
-  PRT_UINT32 _P_FUNS_COUNT = 4;
+  PRT_UINT32 _P_FUNS_COUNT = 3;
   PRT_UINT32 _P_FUN_PUSH_OR_IGN = 0;
   PRT_UINT32 _P_IORM_COUNT = 2;
   PRT_UINT32 _P_MACHINES_COUNT = 2;
@@ -107,7 +106,6 @@
   PRT_FUNDECL *P_GEND_FUNS[] = 
   {
     &P_FUN_IGNORE_PUSH_STRUCT,
-    &P_FUN_InitializeListener_STRUCT,
     &P_FUN_Publish_STRUCT,
     &P_FUN_Subscribe_STRUCT
   };
@@ -126,7 +124,7 @@
     4U,
     2U,
     2U,
-    4U,
+    3U,
     0U,
     P_GEND_EVENTS,
     P_GEND_EVENTSETS,

@@ -28,11 +28,12 @@
       P_FUN_POrbMachine_ANON2 = 5,
       P_FUN_POrbMachine_ANON3 = 7,
       P_FUN_POrbMachine_ANON4 = 9,
-      _P_FUNS_POrbMachine_COUNT = 9,
+      _P_FUNS_POrbMachine_COUNT = 10,
       P_FUN_POrbMachine_ANON5 = 11,
       P_FUN_POrbMachine_ANON6 = 13,
       P_FUN_POrbMachine_Broadcast = 15,
-      P_FUN_POrbMachine_IsSubscribed = 17
+      P_FUN_POrbMachine_InitializeListener = 17,
+      P_FUN_POrbMachine_IsSubscribed = 19
     };
 
     enum P_STATES_POrbMachine
@@ -74,7 +75,7 @@
       _Topics_COUNT = 21
     };
 
-    PRT_VALUE *P_FUN_InitializeListener_FOREIGN(PRT_MACHINEINST *context, PRT_VALUE **payload);
+    PRT_VALUE *P_FUN_POrbMachine_InitializeListener_FOREIGN(PRT_MACHINEINST *context, PRT_VALUE **payload);
 
     extern PRT_EVENTDECL P_EVENT_POrbPublish_STRUCT;
     extern PRT_EVENTDECL P_EVENT_POrbSubscribe_STRUCT;
@@ -83,7 +84,6 @@
     extern PRT_EVENTSETDECL P_GEND_EVENTSET;
     extern PRT_EVENTSETDECL P_GEND_EVENTSET_POrbSubscribe_POrbPublish;
     extern PRT_FUNDECL P_FUN_IGNORE_PUSH_STRUCT;
-    extern PRT_FUNDECL P_FUN_InitializeListener_STRUCT;
     extern PRT_FUNDECL P_FUN_POrbMachine_ANON0_STRUCT;
     extern PRT_FUNDECL P_FUN_POrbMachine_ANON1_STRUCT;
     extern PRT_FUNDECL P_FUN_POrbMachine_ANON2_STRUCT;
@@ -92,6 +92,7 @@
     extern PRT_FUNDECL P_FUN_POrbMachine_ANON5_STRUCT;
     extern PRT_FUNDECL P_FUN_POrbMachine_ANON6_STRUCT;
     extern PRT_FUNDECL P_FUN_POrbMachine_Broadcast_STRUCT;
+    extern PRT_FUNDECL P_FUN_POrbMachine_InitializeListener_STRUCT;
     extern PRT_FUNDECL P_FUN_POrbMachine_IsSubscribed_STRUCT;
     extern PRT_FUNDECL P_FUN_Publish_STRUCT;
     extern PRT_FUNDECL P_FUN_Subscribe_STRUCT;
@@ -102,7 +103,6 @@
     extern PRT_TYPE P_GEND_TYPE_Topics;
     extern PRT_UINT32 P_EVENT_POrbPublish;
     extern PRT_UINT32 P_EVENT_POrbSubscribe;
-    extern PRT_UINT32 P_FUN_InitializeListener;
     extern PRT_UINT32 P_FUN_Publish;
     extern PRT_UINT32 P_FUN_Subscribe;
     extern PRT_UINT32 P_IORM_POrbMachine;

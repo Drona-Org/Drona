@@ -14,6 +14,8 @@ add_executable(testbootmaster ${sources} ${includes})
 # Include path
 target_include_directories(testbootmaster PRIVATE
 Includes
+${dronaSrcTrustedSoftwareStack_SOURCE_DIR}/Includes
+${dronaSrcTrustedSoftwareStack_SOURCE_DIR}/PGenerated
 )
 
 # Target Communication Libraries

@@ -458,18 +458,18 @@
         NULL
     }
   };
-  PRT_VALUE *P_FUN_InitializeListener_IMPL(PRT_MACHINEINST *context)
+  PRT_VALUE *P_FUN_POrbMachine_Broadcast_IMPL(PRT_MACHINEINST *context);
+
+  PRT_VALUE *P_FUN_POrbMachine_InitializeListener_IMPL(PRT_MACHINEINST *context)
   {
     PRT_MACHINEINST_PRIV *p_tmp_mach_priv = (PRT_MACHINEINST_PRIV *)context;
     PRT_FUNSTACK_INFO p_tmp_frame;
     PRT_VALUE *retVal;
     PrtPopFrame(p_tmp_mach_priv, &p_tmp_frame);
-    retVal = P_FUN_InitializeListener_FOREIGN(context, &p_tmp_frame.locals[0U]);
+    retVal = P_FUN_POrbMachine_InitializeListener_FOREIGN(context, &p_tmp_frame.locals[0U]);
     PrtFreeLocals(p_tmp_mach_priv, &p_tmp_frame);
     return retVal;
   }
-
-  PRT_VALUE *P_FUN_POrbMachine_Broadcast_IMPL(PRT_MACHINEINST *context);
 
   PRT_VALUE *P_FUN_POrbMachine_IsSubscribed_IMPL(PRT_MACHINEINST *context);
 
@@ -743,9 +743,9 @@
       {
         goto L0;
       }
-      P_EXPR_1(P_SEQ(PrtPushNewFrame(p_tmp_mach_priv, PRT_FALSE, P_FUN_InitializeListener, PRT_FUN_PARAM_CLONE, p_tmp_expr_0), NULL), PRT_FALSE, p_tmp_mach_priv->id, PRT_FALSE);
+      P_EXPR_1(P_SEQ(PrtPushNewFrame(p_tmp_mach_priv, PRT_FALSE, P_FUN_POrbMachine_InitializeListener, PRT_FUN_PARAM_CLONE, p_tmp_expr_0), NULL), PRT_FALSE, p_tmp_mach_priv->id, PRT_FALSE);
       L0:
-      p_tmp_funstmt_ret = PrtWrapFunStmt(&p_tmp_frame, 0U, p_tmp_mach_priv, P_FUN_InitializeListener);
+      p_tmp_funstmt_ret = PrtWrapFunStmt(&p_tmp_frame, 0U, p_tmp_mach_priv, P_FUN_POrbMachine_InitializeListener);
       if (p_tmp_mach_priv->receive != NULL)
       {
         return p_tmp_funstmt_ret;
@@ -823,22 +823,8 @@
     &P_FUN_POrbMachine_ANON5_STRUCT,
     &P_FUN_POrbMachine_ANON6_STRUCT,
     &P_FUN_POrbMachine_Broadcast_STRUCT,
+    &P_FUN_POrbMachine_InitializeListener_STRUCT,
     &P_FUN_POrbMachine_IsSubscribed_STRUCT
-  };
-  PRT_FUNDECL P_FUN_InitializeListener_STRUCT = 
-  {
-    0U,
-    "InitializeListener",
-    &P_FUN_InitializeListener_IMPL,
-    1U,
-    1U,
-    0U,
-    NULL,
-    NULL,
-    0U,
-    NULL,
-    0U,
-    NULL
   };
   PRT_FUNDECL P_FUN_POrbMachine_ANON0_STRUCT = 
   {
@@ -960,6 +946,21 @@
     0U,
     NULL
   };
+  PRT_FUNDECL P_FUN_POrbMachine_InitializeListener_STRUCT = 
+  {
+    0U,
+    "InitializeListener",
+    &P_FUN_POrbMachine_InitializeListener_IMPL,
+    1U,
+    1U,
+    0U,
+    NULL,
+    NULL,
+    0U,
+    NULL,
+    0U,
+    NULL
+  };
   PRT_FUNDECL P_FUN_POrbMachine_IsSubscribed_STRUCT = 
   {
     0U,
@@ -1044,7 +1045,7 @@
     "POrbMachine",
     1,
     2,
-    9,
+    10,
     4294967295,
     P_STATE_POrbMachine_Init,
     P_GEND_VARS_POrbMachine,
