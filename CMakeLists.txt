@@ -7,7 +7,7 @@ include(HelperScripts/CMakeLists.txt)
 
 #include Src directory
 subdirs(Src)
-
+subdirs(Submodule/OMPL)
 
 
 ##########################################################################
