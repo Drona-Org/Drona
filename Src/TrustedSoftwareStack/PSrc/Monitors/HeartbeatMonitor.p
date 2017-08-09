@@ -8,7 +8,7 @@ machine HeartbeatMonitorMachine  {
 		    
 			orb = payload.orb;		
 
-			heartbeatTimerV = CreateTimer(this to ITimer);
+			heartbeatTimerV = CreateTimer(this to ITimerClient);
 			
 			//subscribe to the heartbeat message
 			Subscribe(orb, (topic = heartbeat_topic, sub = this));

@@ -42,5 +42,6 @@
     </Link>
     <Depends>POrb</Depends>
     <Depends>PX4API</Depends>
+    <Depends>Monitors</Depends>
   </PProject>
 </PSolution>

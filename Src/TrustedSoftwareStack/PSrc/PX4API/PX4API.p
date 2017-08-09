@@ -49,7 +49,7 @@ event vehicle_loitering assume 100 : bool;
 event vehicle_crashed  assume 100 : bool;
 
 
-type HelperMachinesType = (orb:machine, commander: machine);
+type HelperMachinesType = (orb:machine);
 
 // target location is in local coordinates
 type TargetLocationType = (
