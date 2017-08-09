@@ -15,11 +15,14 @@
 
 using namespace std;
 
+extern class PX4API* PX4Driv;
+extern PRT_PROCESS* MAIN_P_PROCESS;
+
 class PX4API
 {
 private:
 
-    PX4Communicator *px4com;
+
     int systemId;
     int autopilotId;
     int companionId;
@@ -30,7 +33,7 @@ private:
     bool ToggleOffBoard(bool on);
 
 public:
-
+    PX4Communicator *px4com;
     PX4API(int simulatorPort);
 
     void SetTargetLocalPosition(float x, float y, float z){ this->px4com->SetTargetLocalPosition(x,y,z); };

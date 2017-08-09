@@ -2,6 +2,8 @@
 #include <cstring>
 using namespace std;
 
+PRT_PROCESS* MAIN_P_PROCESS;
+
 void ErrorHandler(PRT_STATUS status, PRT_MACHINEINST *ptr)
 {
     if (status == PRT_STATUS_ASSERT)
@@ -67,7 +69,7 @@ get_threadsRunning()
 }
 
 static PRT_BOOLEAN cooperative = PRT_TRUE;
-static int threads = 2;
+static int threads = 20;
 
 // todo: make tester useful for performance testing also, not finished yet...
 static PRT_BOOLEAN perf = PRT_FALSE;
@@ -191,7 +193,7 @@ static void RunToIdle(void* process)
     {
         if (PRT_STEP_IDLE == PrtStepProcess((PRT_PROCESS*)process))
         {
-            break;
+            //break;
         }
     }
     decrement_threadsRunning();
@@ -212,7 +214,6 @@ int main(int argc, char *argv[])
 
     PRT_DBG_START_MEM_BALANCED_REGION
     {
-        PRT_PROCESS *process;
         PRT_GUID processGuid;
         PRT_VALUE *payload;
 
@@ -222,10 +223,10 @@ int main(int argc, char *argv[])
         processGuid.data2 = 0;
         processGuid.data3 = 0;
         processGuid.data4 = 0;
-        process = PrtStartProcess(processGuid, &P_GEND_PROGRAM, ErrorHandler, Log);
+        MAIN_P_PROCESS = PrtStartProcess(processGuid, &P_GEND_PROGRAM, ErrorHandler, Log);
         if (cooperative)
         {
-            PrtSetSchedulingPolicy(process, PRT_SCHEDULINGPOLICY_COOPERATIVE);
+            PrtSetSchedulingPolicy(MAIN_P_PROCESS, PRT_SCHEDULINGPOLICY_COOPERATIVE);
         }
         if (parg == NULL)
         {
@@ -239,7 +240,7 @@ int main(int argc, char *argv[])
 
         PrtUpdateAssertFn(MyAssert);
 
-        PrtMkMachine(process, P_MACHINE_BootMaster, 1, PRT_FUN_PARAM_CLONE, payload);
+        PrtMkMachine(MAIN_P_PROCESS, P_MACHINE_BootMaster, 1, PRT_FUN_PARAM_CLONE, payload);
 
         if (cooperative)
         {
@@ -249,7 +250,7 @@ int main(int argc, char *argv[])
             for (int i = 0; i < threads; i++)
             {
                 DWORD threadId;
-                threadsArr[i] = CreateThread(NULL, 16000, (LPTHREAD_START_ROUTINE)RunToIdle, process, 0, &threadId);
+                threadsArr[i] = CreateThread(NULL, 16000, (LPTHREAD_START_ROUTINE)RunToIdle, MAIN_P_PROCESS, 0, &threadId);
             }
             WaitForMultipleObjects(threads, threadsArr, TRUE, INFINITE);
             PrtFree(threadsArr);
@@ -259,7 +260,7 @@ typedef void *(*start_routine) (void *);
             for (int i = 0; i < threads; i++)
             {
                 threadsRunning++;
-                pthread_create(&tid[i], NULL, (start_routine)RunToIdle, (void*)process);
+                pthread_create(&tid[i], NULL, (start_routine)RunToIdle, (void*)MAIN_P_PROCESS);
             }
             while(get_threadsRunning() != 0);
 #else
@@ -267,7 +268,7 @@ typedef void *(*start_routine) (void *);
 #endif
         }
         PrtFreeValue(payload);
-        PrtStopProcess(process);
+        PrtStopProcess(MAIN_P_PROCESS);
     }
     PRT_DBG_END_MEM_BALANCED_REGION
 

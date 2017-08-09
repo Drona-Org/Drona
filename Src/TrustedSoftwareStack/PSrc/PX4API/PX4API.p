@@ -53,20 +53,20 @@ type HelperMachinesType = (orb:machine, commander: machine);
 
 // target location is in local coordinates
 type TargetLocationType = (
-    speed: float32,
-	x: float32, 
-	y: float32, 
-	z: float32,
-	yaw: float32 
+    speed: float,
+	x: float, 
+	y: float, 
+	z: float,
+	yaw: float 
 );
 
 
 type global_position_t =
 (
-	lat : float32,  /*Latitude, expressed as degrees */
-	lon : float32,  /*Longitude, expressed as degrees */
-	alt : float32,  /*Altitude in meters */
-	yaw : float32   /*Vehicle heading (yaw angle) in degrees */
+	lat : float,  /*Latitude, expressed as degrees */
+	lon : float,  /*Longitude, expressed as degrees */
+	alt : float,  /*Altitude in meters */
+	yaw : float   /*Vehicle heading (yaw angle) in degrees */
 ); 
 
 
@@ -99,7 +99,7 @@ enum PX4_CUSTOM_SUB_MODE_AUTO {
 	PX4_CUSTOM_SUB_MODE_AUTO_FOLLOW_TARGET = 8
 }
 
-type LocalPositionType = (x: float32, y: float32, z:float32);
+type LocalPositionType = (x: float, y: float, z:float);
 type GlobalPositionType = (timestamp: int, lat: int, lon: int, alt:int);
 
 
@@ -118,7 +118,7 @@ type VehicleStateType = (
 	armed: bool
 	);
    
-
+/*
 extern fun SendSetHomeCommand(commander: machine, pos: GlobalPositionType, caller : machine);
 extern fun LocalToGlobal(local: mavlink_local_position_ned_t) : global_position_t;
 extern fun ReturnToLaunch(commander: machine, caller : machine);
@@ -132,7 +132,7 @@ extern fun SendHeartbeat();
 extern fun GetSystemTime() : int;
 extern fun Publish(orb: machine, payload: POrbPubMsgType);
 extern fun Subscribe(orb:machine, payload: POrbSubMsgType);
-
+*/
 
 event CommandSucceeded: int;
 event CommandFailed: int;
@@ -155,8 +155,8 @@ type CommanderInterface(machine) = {
 // You send this message to set a target altitude, when the altitude is reached, the altitude_reached_topic
 // is published on the orb.
 type TargetAltitudeInfoType = (
-	target: float32, // relative to HomeAlt (e.g. 0 means landed back home)
-	delta: float32
+	target: float, // relative to HomeAlt (e.g. 0 means landed back home)
+	delta: float
 );
 
 event SetTargetAltitude: TargetAltitudeInfoType;
@@ -176,7 +176,7 @@ type BatteryMonitorInterface(HelperMachinesType) = {
 // geofence monitor interface
 
 // argument is the geofence radius.
-event SetGeofenceRadius: (home: LocalPositionType, radius: float32);
+event SetGeofenceRadius: (home: LocalPositionType, radius: float);
 
 type GeofenceMonitorInterface (HelperMachinesType) = {
 	SetGeofenceRadius, local_position
@@ -201,7 +201,7 @@ type HeartbeatMonitorInterface (HelperMachinesType) = {
 
 event mission_arm;
 event mission_disarm ;
-event mission_takeoff : float32;
+event mission_takeoff : float;
 event mission_goto : TargetLocationType; 
 event mission_land;
 event mission_loitering;

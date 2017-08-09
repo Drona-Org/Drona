@@ -15,6 +15,8 @@
 #include "RobotState.h"
 #include "PMavlinkMessages.h"
 #include "P_common_MessageTypeFunctions.h"
+#include "POrb.h"
+#include "PX4API.h"
 using namespace std;
 
 #define MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION     0b0000110111111000
@@ -37,8 +39,9 @@ private:
     bool isAutoPilot;
 
     mavlink_set_position_target_local_ned_t targetSetpoint;
-    static void* DispatchMavLinkMessages(void* ptr);
 
+    static void* DispatchMavLinkMessages(void* ptr);
+    static void SendToPOrb(PRT_INT32 topic, PRT_INT32 px4_event, PRT_VALUE* px4_payload);
     static void* WriteSetPointThread(void *args);
 
     static void SendHeartBeat(Port* server);
@@ -48,7 +51,7 @@ public:
     //UdpCommunicationSocket *udpcomm;
 
     Port *comm;
-
+    static PRT_MACHINEINST* POrbMachine;
     PX4Communicator(int simulatorPort);
 
     // Setpoint routines
@@ -64,4 +67,6 @@ public:
 
 
 };
+
+
 #endif // !PX4COMMUNICATOR_H

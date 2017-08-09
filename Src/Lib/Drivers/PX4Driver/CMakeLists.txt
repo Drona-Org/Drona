@@ -49,7 +49,7 @@ ${${projectName}_INCLUDE})
 
 #include specific files
 target_include_directories(${projectName} PRIVATE
-
+${dronaSrcTrustedSoftwareStack_SOURCE_DIR}/PGenerated
 )
 
 target_link_libraries(${projectName}

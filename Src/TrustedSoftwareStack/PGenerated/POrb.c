@@ -458,18 +458,6 @@
         NULL
     }
   };
-  PRT_TRANSDECL P_GEND_TRANS_POrbMachine_ReadMessagesAndPublish[] = 
-  {
-    
-    {
-        P_STATE_POrbMachine_ReadMessagesAndPublish,
-        &_P_EVENT_NULL_STRUCT,
-        P_STATE_POrbMachine_ReadMessagesAndPublish,
-        &P_FUN_POrbMachine_ANON5_STRUCT,
-        0U,
-        NULL
-    }
-  };
   PRT_VALUE *P_FUN_POrbMachine_Broadcast_IMPL(PRT_MACHINEINST *context);
 
   PRT_VALUE *P_FUN_POrbMachine_InitializeDisPatchListener_IMPL(PRT_MACHINEINST *context)
@@ -503,7 +491,7 @@
     {
         P_STATE_POrbMachine_ReadMessagesAndPublish,
         &P_EVENT_POrbSubscribe_STRUCT,
-        &P_FUN_POrbMachine_ANON7_STRUCT,
+        &P_FUN_POrbMachine_ANON6_STRUCT,
         0U,
         NULL
     }
@@ -744,22 +732,6 @@
     {
       PRT_FUNSTACK_INFO p_tmp_frame;
       PRT_MACHINEINST_PRIV *p_tmp_mach_priv;
-      PRT_VALUE *p_tmp_ret;
-      p_tmp_mach_priv = (PRT_MACHINEINST_PRIV *)context;
-      p_tmp_ret = NULL;
-      PrtPopFrame(p_tmp_mach_priv, &p_tmp_frame);
-      goto P_EXIT_FUN;
-      P_EXIT_FUN:
-      PrtFreeLocals(p_tmp_mach_priv, &p_tmp_frame);
-      return p_tmp_ret;
-    }
-  }
-
-  static PRT_VALUE *P_FUN_POrbMachine_ANON6_IMPL(PRT_MACHINEINST *context)
-  {
-    {
-      PRT_FUNSTACK_INFO p_tmp_frame;
-      PRT_MACHINEINST_PRIV *p_tmp_mach_priv;
       PRT_VALUE *p_tmp_expr_0;
       PRT_VALUE *p_tmp_expr_1;
       PRT_VALUE *p_tmp_funstmt_ret;
@@ -795,7 +767,7 @@
     }
   }
 
-  static PRT_VALUE *P_FUN_POrbMachine_ANON7_IMPL(PRT_MACHINEINST *context)
+  static PRT_VALUE *P_FUN_POrbMachine_ANON6_IMPL(PRT_MACHINEINST *context)
   {
     {
       PRT_BOOLEAN p_tmp_bool;
@@ -850,7 +822,6 @@
     &P_FUN_POrbMachine_ANON4_STRUCT,
     &P_FUN_POrbMachine_ANON5_STRUCT,
     &P_FUN_POrbMachine_ANON6_STRUCT,
-    &P_FUN_POrbMachine_ANON7_STRUCT,
     &P_FUN_POrbMachine_Broadcast_STRUCT,
     &P_FUN_POrbMachine_InitializeDisPatchListener_STRUCT,
     &P_FUN_POrbMachine_IsSubscribed_STRUCT
@@ -951,21 +922,6 @@
     NULL,
     &P_FUN_POrbMachine_ANON6_IMPL,
     1U,
-    1U,
-    1U,
-    &P_GEND_TYPE_5,
-    NULL,
-    0U,
-    NULL,
-    0U,
-    NULL
-  };
-  PRT_FUNDECL P_FUN_POrbMachine_ANON7_STRUCT = 
-  {
-    0U,
-    NULL,
-    &P_FUN_POrbMachine_ANON7_IMPL,
-    1U,
     2U,
     1U,
     &P_GEND_TYPE_11,
@@ -1062,7 +1018,7 @@
         &P_GEND_EVENTSET,
         NULL,
         NULL,
-        &P_FUN_POrbMachine_ANON6_STRUCT,
+        &P_FUN_POrbMachine_ANON5_STRUCT,
         &P_FUN_POrbMachine_ANON2_STRUCT,
         0U,
         NULL
@@ -1070,12 +1026,12 @@
     
     {
         "ReadMessagesAndPublish",
-        1,
+        0,
         2,
         &P_GEND_EVENTSET,
-        &P_GEND_EVENTSET_null,
+        &P_GEND_EVENTSET,
         &P_GEND_EVENTSET_POrbSubscribe_POrbPublish,
-        P_GEND_TRANS_POrbMachine_ReadMessagesAndPublish,
+        NULL,
         P_GEND_DOS_POrbMachine_ReadMessagesAndPublish,
         &P_FUN_POrbMachine_ANON3_STRUCT,
         &P_FUN_POrbMachine_ANON4_STRUCT,
@@ -1089,7 +1045,7 @@
     "POrbMachine",
     1,
     2,
-    11,
+    10,
     4294967295,
     P_STATE_POrbMachine_Init,
     P_GEND_VARS_POrbMachine,

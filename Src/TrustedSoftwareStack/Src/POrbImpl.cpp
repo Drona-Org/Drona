@@ -1,15 +1,24 @@
 #include "POrb.h"
 #include "linker.h"
+#include <iostream>
+#include "PX4Driver.h"
+#include "WorkspaceParser.h"
+using namespace std;
 
-extern PRT_PROCESS* MAIN_APPLICATION_PROCESS;
+#define SIMULATOR_PORT 14550
+
+//Declare the PX4 driver variable
+PX4API* PX4Driv = NULL;
+
 
 extern "C" {
 
     PRT_VALUE *P_FUN_POrbMachine_InitializeDisPatchListener_FOREIGN(PRT_MACHINEINST *context, PRT_VALUE **payload)
 	{
-		//initialize the dispatcher
-        //POrbMavlink::POrbMasterMachine = PrtGetMachine(MAIN_APPLICATION_PROCESS, payload);
-		return NULL;
+        //initialized the PX4
+        PX4Driv = new PX4API(SIMULATOR_PORT);
+        PX4Communicator::POrbMachine = PrtGetMachine(MAIN_P_PROCESS, *payload);
+        return NULL;
 	}
 }
 

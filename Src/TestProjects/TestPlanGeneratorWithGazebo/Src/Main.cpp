@@ -17,27 +17,6 @@ WS_Coord GazeboToPlanner(WS_Coord coord) {
     return WS_Coord(coord.x + shiftBy.x, coord.y + shiftBy.y, coord.z + shiftBy.z);
 }
 
-vector<WS_Coord> ConvertToSmallGotos(vector<WS_Coord> oldPath) {
-    vector<WS_Coord> newPath;
-    //add the start
-    newPath.push_back(oldPath.at(0));
-    for(int i = 1; i< oldPath.size();i++)
-    {
-        if(oldPath.at(i-1).DistanceFrom(oldPath.at(i)) > 10)
-        {
-            int splitInto = 2;
-            int j = splitInto - 1;
-            while(j > 0)
-            {
-                newPath.push_back(WS_Coord((oldPath.at(i-1).x + oldPath.at(i).x)/(splitInto), (oldPath.at(i-1).y + oldPath.at(i).y)/(splitInto), (oldPath.at(i-1).z + oldPath.at(i).z)/(splitInto)));
-                j--;
-            }
-        }
-        newPath.push_back(oldPath.at(i));
-    }
-
-    return newPath;
-}
 
 int main(int argc, char const *argv[])
 {

@@ -61,7 +61,7 @@ machine POrbMachine
                             topicSubscribers[payload.topic] += (0, payload.sub);
                     }
             }
-            on null goto ReadMessagesAndPublish;
+            //on null goto ReadMessagesAndPublish;
 	}
 
 }
