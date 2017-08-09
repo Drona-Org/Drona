@@ -15,8 +15,8 @@
 #include "RobotState.h"
 #include "PMavlinkMessages.h"
 #include "P_common_MessageTypeFunctions.h"
-#include "POrb.h"
-#include "PX4API.h"
+//#include "POrb.h"
+//#include "PX4API.h"
 using namespace std;
 
 #define MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_POSITION     0b0000110111111000

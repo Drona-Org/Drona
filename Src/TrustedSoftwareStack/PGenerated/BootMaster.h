@@ -3,6 +3,7 @@
     #define P_BOOTMASTER_H_
     #include "POrb.h"
     #include "PX4API.h"
+    #include "Monitors.h"
     #include "PrtUser.h"
     #include "PrtExecution.h"
     #ifdef __cplusplus
@@ -40,6 +41,11 @@
     extern PRT_EVENTDECL P_EVENT_battery_recharged_STRUCT;
     extern PRT_EVENTDECL P_EVENT_battery_status_STRUCT;
     extern PRT_EVENTDECL P_EVENT_command_ack_STRUCT;
+    extern PRT_EVENTDECL P_EVENT_eCancelFailure_STRUCT;
+    extern PRT_EVENTDECL P_EVENT_eCancelSuccess_STRUCT;
+    extern PRT_EVENTDECL P_EVENT_eCancelTimer_STRUCT;
+    extern PRT_EVENTDECL P_EVENT_eStartTimer_STRUCT;
+    extern PRT_EVENTDECL P_EVENT_eTimeOut_STRUCT;
     extern PRT_EVENTDECL P_EVENT_extended_sys_state_STRUCT;
     extern PRT_EVENTDECL P_EVENT_geofence_reached_STRUCT;
     extern PRT_EVENTDECL P_EVENT_global_position_STRUCT;
@@ -68,11 +74,17 @@
     extern PRT_FUNDECL P_FUN_BootMaster_ANON0_STRUCT;
     extern PRT_FUNDECL P_FUN_BootMaster_ANON1_STRUCT;
     extern PRT_FUNDECL P_FUN_BootMaster_ANON2_STRUCT;
+    extern PRT_FUNDECL P_FUN_CancelTimer_STRUCT;
+    extern PRT_FUNDECL P_FUN_CreateTimer_STRUCT;
     extern PRT_FUNDECL P_FUN_IGNORE_PUSH_STRUCT;
     extern PRT_FUNDECL P_FUN_Publish_STRUCT;
+    extern PRT_FUNDECL P_FUN_StartTimer_STRUCT;
     extern PRT_FUNDECL P_FUN_Subscribe_STRUCT;
     extern PRT_MACHINEDECL P_MACHINE_BootMaster_STRUCT;
+    extern PRT_MACHINEDECL P_MACHINE_GeofenceMonitorMachine_STRUCT;
+    extern PRT_MACHINEDECL P_MACHINE_HeartbeatMonitorMachine_STRUCT;
     extern PRT_MACHINEDECL P_MACHINE_POrbMachine_STRUCT;
+    extern PRT_MACHINEDECL P_MACHINE_Timer_STRUCT;
     extern PRT_PROGRAMDECL P_GEND_PROGRAM;
     extern PRT_TYPE P_GEND_TYPE_AltitudeMonitorInterface;
     extern PRT_TYPE P_GEND_TYPE_BatteryMonitorInterface;
@@ -86,6 +98,8 @@
     extern PRT_TYPE P_GEND_TYPE_HeartbeatMonitorInterface;
     extern PRT_TYPE P_GEND_TYPE_HeartbeatStatusType;
     extern PRT_TYPE P_GEND_TYPE_HelperMachinesType;
+    extern PRT_TYPE P_GEND_TYPE_ITimer;
+    extern PRT_TYPE P_GEND_TYPE_ITimerClient;
     extern PRT_TYPE P_GEND_TYPE_LocalPositionType;
     extern PRT_TYPE P_GEND_TYPE_POrbPubMsgType;
     extern PRT_TYPE P_GEND_TYPE_POrbSubMsgType;
@@ -156,6 +170,11 @@
     extern PRT_UINT32 P_EVENT_battery_recharged;
     extern PRT_UINT32 P_EVENT_battery_status;
     extern PRT_UINT32 P_EVENT_command_ack;
+    extern PRT_UINT32 P_EVENT_eCancelFailure;
+    extern PRT_UINT32 P_EVENT_eCancelSuccess;
+    extern PRT_UINT32 P_EVENT_eCancelTimer;
+    extern PRT_UINT32 P_EVENT_eStartTimer;
+    extern PRT_UINT32 P_EVENT_eTimeOut;
     extern PRT_UINT32 P_EVENT_extended_sys_state;
     extern PRT_UINT32 P_EVENT_geofence_reached;
     extern PRT_UINT32 P_EVENT_global_position;
@@ -178,7 +197,10 @@
     extern PRT_UINT32 P_EVENT_vehicle_landed;
     extern PRT_UINT32 P_EVENT_vehicle_loitering;
     extern PRT_UINT32 P_EVENT_vehicle_ready;
+    extern PRT_UINT32 P_FUN_CancelTimer;
+    extern PRT_UINT32 P_FUN_CreateTimer;
     extern PRT_UINT32 P_FUN_Publish;
+    extern PRT_UINT32 P_FUN_StartTimer;
     extern PRT_UINT32 P_FUN_Subscribe;
     extern PRT_UINT32 P_IORM_AltitudeMonitorInterface;
     extern PRT_UINT32 P_IORM_BatteryMonitorInterface;
@@ -187,10 +209,18 @@
     extern PRT_UINT32 P_IORM_FlightControllerInterface;
     extern PRT_UINT32 P_IORM_GPSHealthMonitorInterface;
     extern PRT_UINT32 P_IORM_GeofenceMonitorInterface;
+    extern PRT_UINT32 P_IORM_GeofenceMonitorMachine;
     extern PRT_UINT32 P_IORM_HeartbeatMonitorInterface;
+    extern PRT_UINT32 P_IORM_HeartbeatMonitorMachine;
+    extern PRT_UINT32 P_IORM_ITimer;
+    extern PRT_UINT32 P_IORM_ITimerClient;
     extern PRT_UINT32 P_IORM_POrbMachine;
+    extern PRT_UINT32 P_IORM_Timer;
     extern PRT_UINT32 P_MACHINE_BootMaster;
+    extern PRT_UINT32 P_MACHINE_GeofenceMonitorMachine;
+    extern PRT_UINT32 P_MACHINE_HeartbeatMonitorMachine;
     extern PRT_UINT32 P_MACHINE_POrbMachine;
+    extern PRT_UINT32 P_MACHINE_Timer;
     extern PRT_UINT32 _P_EVENT_HALT;
     extern PRT_UINT32 _P_EVENT_NULL;
     extern PRT_VALUE P_GEND_VALUE_EVENT_Command;
@@ -208,6 +238,11 @@
     extern PRT_VALUE P_GEND_VALUE_EVENT_battery_recharged;
     extern PRT_VALUE P_GEND_VALUE_EVENT_battery_status;
     extern PRT_VALUE P_GEND_VALUE_EVENT_command_ack;
+    extern PRT_VALUE P_GEND_VALUE_EVENT_eCancelFailure;
+    extern PRT_VALUE P_GEND_VALUE_EVENT_eCancelSuccess;
+    extern PRT_VALUE P_GEND_VALUE_EVENT_eCancelTimer;
+    extern PRT_VALUE P_GEND_VALUE_EVENT_eStartTimer;
+    extern PRT_VALUE P_GEND_VALUE_EVENT_eTimeOut;
     extern PRT_VALUE P_GEND_VALUE_EVENT_extended_sys_state;
     extern PRT_VALUE P_GEND_VALUE_EVENT_geofence_reached;
     extern PRT_VALUE P_GEND_VALUE_EVENT_global_position;

@@ -2,6 +2,8 @@
   #include "BootMaster.h"
   #define P_SEQ
   #define P_BOOL_EXPR(x0, f0) P_SEQ(p_tmp_expr_0 = (x0), p_tmp_bool = PrtPrimGetBool(p_tmp_expr_0), ((f0) ? PrtFreeValue(p_tmp_expr_0) : 0U), p_tmp_bool)
+  #define P_EXPR_2(x2, f2, x1, f1, x0, f0) P_SEQ(p_tmp_expr_0 = (x0), p_tmp_expr_1 = (x1), p_tmp_expr_2 = (x2), ((f0) ? PrtFreeValue(p_tmp_expr_0) : 0U), ((f1) ? PrtFreeValue(p_tmp_expr_1) : 0U), p_tmp_expr_2)
+  #define P_TUPLE_0(t, x0) P_SEQ(p_tmp_tuple = PrtMkDefaultValue(t), PrtTupleSet(p_tmp_tuple, 0U, (x0)), p_tmp_tuple)
   static PRT_TYPE P_GEND_TYPE_0 = 
   {
     PRT_KIND_BOOL,
@@ -40,6 +42,28 @@
     
     {
         NULL
+    }
+  };
+  static PRT_STRING P_GEND_TYPE_NMDTUP_NARR_5[] = 
+  {
+    "pOrb"
+  };
+  static PRT_TYPE *P_GEND_TYPE_NMDTUP_TARR_5[] = 
+  {
+    &P_GEND_TYPE_3
+  };
+  static PRT_NMDTUPTYPE P_GEND_TYPE_NMDTUP_5 = 
+  {
+    1,
+    P_GEND_TYPE_NMDTUP_NARR_5,
+    P_GEND_TYPE_NMDTUP_TARR_5
+  };
+  static PRT_TYPE P_GEND_TYPE_5 = 
+  {
+    PRT_KIND_NMDTUP,
+    
+    {
+        (PRT_MAPTYPE *)&P_GEND_TYPE_NMDTUP_5
     }
   };
   static PRT_VALUE P_GEND_VALUE_0 = 
@@ -5815,16 +5839,10 @@
     {
       PRT_FUNSTACK_INFO p_tmp_frame;
       PRT_MACHINEINST_PRIV *p_tmp_mach_priv;
-      PRT_VALUE *p_tmp_funstmt_ret;
       PRT_VALUE *p_tmp_ret;
       p_tmp_mach_priv = (PRT_MACHINEINST_PRIV *)context;
       p_tmp_ret = NULL;
       PrtPopFrame(p_tmp_mach_priv, &p_tmp_frame);
-      p_tmp_funstmt_ret = PrtCloneValue(PrtMkInterfaceOrMachine(context, P_IORM_POrbMachine, 0U)->id);
-      if (p_tmp_funstmt_ret != NULL)
-      {
-        PrtFreeValue(p_tmp_funstmt_ret);
-      }
       goto P_EXIT_FUN;
       P_EXIT_FUN:
       PrtFreeLocals(p_tmp_mach_priv, &p_tmp_frame);
@@ -5853,10 +5871,27 @@
     {
       PRT_FUNSTACK_INFO p_tmp_frame;
       PRT_MACHINEINST_PRIV *p_tmp_mach_priv;
+      PRT_VALUE *p_tmp_expr_0;
+      PRT_VALUE *p_tmp_expr_1;
+      PRT_VALUE *p_tmp_expr_2;
+      PRT_VALUE *p_tmp_funstmt_ret;
       PRT_VALUE *p_tmp_ret;
+      PRT_VALUE *p_tmp_tuple;
       p_tmp_mach_priv = (PRT_MACHINEINST_PRIV *)context;
       p_tmp_ret = NULL;
       PrtPopFrame(p_tmp_mach_priv, &p_tmp_frame);
+      p_tmp_funstmt_ret = PrtCloneValue(PrtMkInterfaceOrMachine(context, P_IORM_POrbMachine, 0U)->id);
+      PrtSetLocalVarEx(p_tmp_frame.locals, 1U, p_tmp_funstmt_ret, PRT_FALSE);
+      P_EXPR_2(P_SEQ(p_tmp_funstmt_ret = PrtCloneValue(PrtMkInterfaceOrMachine(context, P_IORM_HeartbeatMonitorMachine, 1U, PRT_FUN_PARAM_CLONE, p_tmp_expr_1)->id), NULL), PRT_FALSE, P_TUPLE_0(&P_GEND_TYPE_HelperMachinesType, p_tmp_expr_0), PRT_TRUE, p_tmp_frame.locals[1U], PRT_FALSE);
+      if (p_tmp_funstmt_ret != NULL)
+      {
+        PrtFreeValue(p_tmp_funstmt_ret);
+      }
+      P_EXPR_2(P_SEQ(p_tmp_funstmt_ret = PrtCloneValue(PrtMkInterfaceOrMachine(context, P_IORM_GeofenceMonitorMachine, 1U, PRT_FUN_PARAM_CLONE, p_tmp_expr_1)->id), NULL), PRT_FALSE, P_TUPLE_0(&P_GEND_TYPE_HelperMachinesType, p_tmp_expr_0), PRT_TRUE, p_tmp_frame.locals[1U], PRT_FALSE);
+      if (p_tmp_funstmt_ret != NULL)
+      {
+        PrtFreeValue(p_tmp_funstmt_ret);
+      }
       goto P_EXIT_FUN;
       P_EXIT_FUN:
       PrtFreeLocals(p_tmp_mach_priv, &p_tmp_frame);
@@ -5906,10 +5941,10 @@
     NULL,
     &P_FUN_BootMaster_ANON2_IMPL,
     1U,
-    1U,
+    2U,
     1U,
     &P_GEND_TYPE_4,
-    NULL,
+    &P_GEND_TYPE_5,
     0U,
     NULL,
     0U,
@@ -5927,8 +5962,8 @@
         &P_GEND_EVENTSET,
         NULL,
         NULL,
-        &P_FUN_BootMaster_ANON0_STRUCT,
         &P_FUN_BootMaster_ANON2_STRUCT,
+        &P_FUN_BootMaster_ANON1_STRUCT,
         0U,
         NULL
     }

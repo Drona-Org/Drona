@@ -43,5 +43,6 @@
     <Depends>POrb</Depends>
     <Depends>PX4API</Depends>
     <Depends>Monitors</Depends>
+    <Depends>Timer</Depends>
   </PProject>
 </PSolution>

@@ -134,14 +134,14 @@ vector<WS_Coord> OMPLPLanner::GeneratePlan(double runTime,  WS_Coord st, WS_Coor
     if (solved)
     {
         // Output the length of the path found
-        std::cout
+        /*std::cout
             << optimizingPlanner->getName()
             << " found a solution of length "
             << pdef->getSolutionPath()->length()
             << " with an optimization objective value of "
             << pdef->getSolutionPath()->cost(pdef->getOptimizationObjective()) << std::endl;
             std::static_pointer_cast<og::PathGeometric>(pdef->getSolutionPath())->
-                printAsMatrix(std::cout);
+                printAsMatrix(std::cout);*/
         og::PathGeometric* path = pdef->getSolutionPath()->as<og::PathGeometric>();
         vector<WS_Coord> pathseq;
         for(int i = 0; i< path->getStateCount();i++)

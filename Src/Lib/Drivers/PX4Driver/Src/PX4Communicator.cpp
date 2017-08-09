@@ -2,24 +2,24 @@
 
 PRT_MACHINEINST* PX4ModelMachine = NULL;
 PRT_MACHINEINST* PX4Communicator::POrbMachine = NULL;
-void PX4Communicator::SendToPOrb(PRT_INT32 topic, PRT_INT32 px4_event, PRT_VALUE* px4_payload)
-{
-    if (PX4Communicator::POrbMachine != NULL)
-    {
-        static PRT_VALUE* eventName = PrtMkEventValue(P_EVENT_POrbPublish);
-        PRT_VALUE* ev_val = PrtMkEventValue(px4_event);
-        PRT_VALUE* topic_val = PrtMkIntValue(topic);
-        PRT_VALUE* pay_val = PrtMkDefaultValue(&P_GEND_TYPE_POrbPubMsgType);
-        PrtTupleSetEx(pay_val, 0, topic_val, PRT_FALSE);
-        PrtTupleSetEx(pay_val, 1, ev_val, PRT_FALSE);
-        PrtTupleSetEx(pay_val, 2, px4_payload, PRT_TRUE);
-        PrtSend(NULL, PX4Communicator::POrbMachine, eventName, 1, PRT_FUN_PARAM_MOVE, &pay_val);
+//void PX4Communicator::SendToPOrb(PRT_INT32 topic, PRT_INT32 px4_event, PRT_VALUE* px4_payload)
+//{
+//    if (PX4Communicator::POrbMachine != NULL)
+//    {
+//        static PRT_VALUE* eventName = PrtMkEventValue(P_EVENT_POrbPublish);
+//        PRT_VALUE* ev_val = PrtMkEventValue(px4_event);
+//        PRT_VALUE* topic_val = PrtMkIntValue(topic);
+//        PRT_VALUE* pay_val = PrtMkDefaultValue(&P_GEND_TYPE_POrbPubMsgType);
+//        PrtTupleSetEx(pay_val, 0, topic_val, PRT_FALSE);
+//        PrtTupleSetEx(pay_val, 1, ev_val, PRT_FALSE);
+//        PrtTupleSetEx(pay_val, 2, px4_payload, PRT_TRUE);
+//        PrtSend(NULL, PX4Communicator::POrbMachine, eventName, 1, PRT_FUN_PARAM_MOVE, &pay_val);
 
-        // this allows timers to fire on this thread, otherwise the mavlink channel keeps us so busy
-        // there is no time for the timers.
-        usleep(10);
-    }
-}
+//        // this allows timers to fire on this thread, otherwise the mavlink channel keeps us so busy
+//        // there is no time for the timers.
+//        usleep(10);
+//    }
+//}
 
 void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
 
@@ -59,11 +59,11 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
                         case MAVLINK_MSG_ID_HEARTBEAT:{
                             p_mavlink_msg_heartbeat_decode(&msg, &pMessage_heartbeat);
                             LOG("Heart beat received\n");
-                            SendToPOrb(Topics_heartbeat_topic, P_EVENT_heartbeat, pMessage_heartbeat);
+                            //SendToPOrb(Topics_heartbeat_topic, P_EVENT_heartbeat, pMessage_heartbeat);
                             break;
                         }
                         case MAVLINK_MSG_ID_LOCAL_POSITION_NED:{
-                            LOG("Local position received\n");
+                            //LOG("Local position received\n");
                             mavlink_local_position_ned_t curLocPos;
                             mavlink_msg_local_position_ned_decode(&msg, &curLocPos);
                             ROBOTSTATE->UpdateCurrentLocalPosition(curLocPos);
@@ -75,7 +75,7 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
                                 float zValue = PrtPrimGetFloat(zAxis);
                                 PrtPrimSetFloat(zAxis, -zValue);
                             }
-                            SendToPOrb(Topics_local_position_topic, P_EVENT_local_position, pMessage_local_position_ned);
+                            //SendToPOrb(Topics_local_position_topic, P_EVENT_local_position, pMessage_local_position_ned);
                             break;
                         }
                         case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:{

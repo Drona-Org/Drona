@@ -42,7 +42,7 @@ void ErrorHandler(PRT_STATUS status, PRT_MACHINEINST *ptr)
 
 void Log(PRT_STEP step, PRT_MACHINESTATE *senderState, PRT_MACHINEINST *receiver, PRT_VALUE* event, PRT_VALUE* payload)
 {
-    PrtPrintStep(step, senderState, receiver, event, payload);
+    //PrtPrintStep(step, senderState, receiver, event, payload);
 }
 
 

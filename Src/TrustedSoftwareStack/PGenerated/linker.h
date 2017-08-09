@@ -3,6 +3,8 @@
     #define P_LINKER_H
     #include "POrb.h"
     #include "PX4API.h"
+    #include "Monitors.h"
+    #include "Timer.h"
     #include "BootMaster.h"
     #ifdef __cplusplus
       extern "C"{
