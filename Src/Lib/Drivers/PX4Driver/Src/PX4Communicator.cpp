@@ -58,7 +58,7 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
                      switch (msg.msgid) {
                         case MAVLINK_MSG_ID_HEARTBEAT:{
                             p_mavlink_msg_heartbeat_decode(&msg, &pMessage_heartbeat);
-                            LOG("Heart beat received\n");
+                            //LOG("Heart beat received\n");
                             //SendToPOrb(Topics_heartbeat_topic, P_EVENT_heartbeat, pMessage_heartbeat);
                             break;
                         }
@@ -235,7 +235,7 @@ void PX4Communicator::SetTargetLocalPosition(float x, float y, float z){
     this->targetSetpoint = sp;
 
     char buff[100];
-    sprintf(buff,"Command: Set position (x %f, y %f, z %f)", sp.x, sp.y, sp.z);
+    sprintf(buff,"Command: GOTO (x %f, y %f, z %f)", sp.x, sp.y, sp.z);
     LOG(buff);
 }
 

@@ -15,7 +15,7 @@ PX4API::PX4API(int simulatorPort){
 bool PX4API::Arm(){
 
     if(this->armed){
-        LOG("PX4API::Arm already armed");
+        LOG("PX4API::Drone already armed");
         return false;
     }
 
@@ -33,7 +33,7 @@ bool PX4API::Arm(){
     this->px4com->WriteMessage(msg);
     this->armed = true;
 
-    LOG("PX4API::Arm armed");
+    LOG("PX4API::Drone Armed");
     return true;
 
 }
@@ -167,7 +167,10 @@ void PX4API::GoTo(WS_Coord goal, double eps){
 
 void PX4API::GoTo(float x, float y, float z, double eps){
     this->SetTargetLocalPosition(x,y,z);
-    while(!(this->CloseTo(x,y,z,eps))){}
+    std::time_t start = std::time(NULL);
+
+
+    while(!(this->CloseTo(x,y,z,eps))){ if(std::difftime(std::time(NULL), start)> 7) break; }
 }
 
 

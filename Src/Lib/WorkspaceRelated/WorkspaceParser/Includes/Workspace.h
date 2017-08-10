@@ -68,7 +68,8 @@ typedef struct WS_Box {
     bool IsInBox(WS_Coord point) {
         return low <= point && high >= point;
     }
-
+    WS_Box(WS_Coord l, WS_Coord h): low(l), high(h){}
+    WS_Box(): low(WS_Coord(0, 0, 0)), high(WS_Coord(0, 0, 0)) {}
     string ToString(){
         char buff[1000];
         string ret = "";
