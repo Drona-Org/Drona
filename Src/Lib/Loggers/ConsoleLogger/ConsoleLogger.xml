@@ -1,0 +1,8 @@
+<PSolution name= "PMavlinkMessages">
+  <PProject name= "PMavlinkMessages" outputdir="./PGenerated">
+    <Source>
+      <Include>./PSrc/MavlinkEnums.p</Include>
+      <Include>./PSrc/MavlinkMessageTypes.p</Include>
+    </Source>
+  </PProject>
+</PSolution>

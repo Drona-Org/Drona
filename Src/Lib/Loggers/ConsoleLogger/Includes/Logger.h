@@ -5,29 +5,51 @@
 #include<stdio.h>
 #include<string>
 #include <iostream>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <string.h>
+#include <unistd.h>
+#include <iostream>
+#include <sstream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 using namespace std;
 
 
 
-#define LOG(msg) GlobalLogger->LogMessage(msg)
-#define ERROR(msg) GlobalLogger->LogError(msg)
-#define DEBUG_LOG(msg) GlobalLogger->DebugLog(msg)
+#define LOG(msg) InfoLogger->LogMessage(msg)
+#define ERROR(msg) ErrorLogger->LogError(msg)
+#define MAVLOG(msg) MavlinkLogger->LogMessage(msg);
+#define PLOG(msg) PLogger->LogMessage(msg);
+#define PERROR(msg) PLogger->LogError(msg);
 
 class Logger
 {
 
     pthread_mutex_t lock;
+    FILE* logconsole;
+    void InitLogger();
 public:
     Logger()
     {
         pthread_mutex_init(&lock, NULL);
+        InitLogger();
     }
+
     //print error message
-    void LogError(const char* msg);
-    void LogMessage(const char* msg);
-    void DebugLog(const char* msg);
+    void LogError(string msg);
+    void LogMessage(string msg);
+
 
 };
-extern Logger* GlobalLogger;
 
+extern Logger* ErrorLogger;
+extern Logger* InfoLogger;
+extern Logger* MavlinkLogger;
+extern Logger* PLogger;
+extern void InitializeLogger();
 #endif

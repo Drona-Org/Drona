@@ -58,7 +58,7 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
                      switch (msg.msgid) {
                         case MAVLINK_MSG_ID_HEARTBEAT:{
                             p_mavlink_msg_heartbeat_decode(&msg, &pMessage_heartbeat);
-                            //LOG("Heart beat received\n");
+                            MAVLOG("Heart beat received : " + (string)PrtToStringValue(pMessage_heartbeat));
                             //SendToPOrb(Topics_heartbeat_topic, P_EVENT_heartbeat, pMessage_heartbeat);
                             break;
                         }
@@ -75,6 +75,7 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
                                 float zValue = PrtPrimGetFloat(zAxis);
                                 PrtPrimSetFloat(zAxis, -zValue);
                             }
+                            MAVLOG("Local Position NED:" + (string)PrtToStringValue(pMessage_local_position_ned));
                             //SendToPOrb(Topics_local_position_topic, P_EVENT_local_position, pMessage_local_position_ned);
                             break;
                         }

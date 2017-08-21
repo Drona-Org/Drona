@@ -60,7 +60,7 @@ static void StopAutoPilot(void* px4arg)
 
 int main(int argc, char const *argv[])
 {
-
+    InitializeLogger();
     PX4API *px4 = new PX4API(SIMULATOR_PORT);
     char filename[] = "traj.csv";
     PX4Logger *px4logger = new PX4Logger(10, filename, true, vector<bool>{true, true, true});
