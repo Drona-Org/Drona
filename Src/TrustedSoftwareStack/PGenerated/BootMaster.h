@@ -4,6 +4,7 @@
     #include "POrb.h"
     #include "PX4API.h"
     #include "Monitors.h"
+    #include "Timer.h"
     #include "PrtUser.h"
     #include "PrtExecution.h"
     #ifdef __cplusplus
@@ -107,6 +108,7 @@
     extern PRT_TYPE P_GEND_TYPE_PX4_CUSTOM_SUB_MODE_AUTO;
     extern PRT_TYPE P_GEND_TYPE_TargetAltitudeInfoType;
     extern PRT_TYPE P_GEND_TYPE_TargetLocationType;
+    extern PRT_TYPE P_GEND_TYPE_TimerPtr;
     extern PRT_TYPE P_GEND_TYPE_Topics;
     extern PRT_TYPE P_GEND_TYPE_VEHICLE_MODE_FLAG;
     extern PRT_TYPE P_GEND_TYPE_VehicleStateType;

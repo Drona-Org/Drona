@@ -63,7 +63,7 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
                             break;
                         }
                         case MAVLINK_MSG_ID_LOCAL_POSITION_NED:{
-                            //LOG("Local position received\n");
+                            LOG("Local position received\n");
                             mavlink_local_position_ned_t curLocPos;
                             mavlink_msg_local_position_ned_decode(&msg, &curLocPos);
                             ROBOTSTATE->UpdateCurrentLocalPosition(curLocPos);

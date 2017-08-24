@@ -13,13 +13,14 @@ set(projectName clogger)
 FILE(GLOB_RECURSE ${projectName}_psources PSrc/*)
 FILE(GLOB_RECURSE ${projectName}_csources Src/*)
 FILE(GLOB_RECURSE ${projectName}_gsources PGenerated/*.c)
-
+FILE(GLOB_RECURSE ${projectName}_headers ./Includes/*.h)
 
 
 add_library(${projectName} SHARED
   ${${projectName}_gsources}
   ${${projectName}_csources}
   ${${projectName}_psources}
+  ${${projectName}_headers}
 )
 
 set (${projectName}_INCLUDE

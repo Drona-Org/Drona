@@ -12,6 +12,24 @@ PX4API::PX4API(int simulatorPort){
 
 }
 
+bool PX4API::SendFakePosition()
+{
+    mavlink_att_pos_mocap_t mocap_position = {0};
+    mocap_position.time_usec = 0;
+    mocap_position.x = 1;
+    mocap_position.y = 1;
+    mocap_position.z = 1;
+    mocap_position.q[0] = 1;
+
+    mavlink_message_t msg;
+    mavlink_msg_att_pos_mocap_encode(this->systemId + 1, this->autopilotId + 1, &msg, &mocap_position);
+
+    this->px4com->WriteMessage(msg);
+
+    LOG("PX4API::Mocap Position");
+    return true;
+}
+
 bool PX4API::Arm(){
 
     if(this->armed){

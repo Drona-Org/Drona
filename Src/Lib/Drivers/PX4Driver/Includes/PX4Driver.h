@@ -38,7 +38,7 @@ public:
 
     void SetTargetLocalPosition(float x, float y, float z){ this->px4com->SetTargetLocalPosition(x,y,z); };
     void SetTargetGlobalPosition(int lat, int lon, int alt){ this->px4com->SetTargetGlobalPosition(lat,lon,alt); };
-
+    bool SendFakePosition();
     bool Arm();
     void TakeoffGlobal(float alt);
 

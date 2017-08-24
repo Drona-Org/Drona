@@ -67,10 +67,12 @@ int main(int argc, char const *argv[])
     double eps = 1;
 
 
-    usleep(2500000);
+    /*usleep(2500000);
     px4->Arm();
-    usleep(2500000);
-    px4->StartAutopilot(0,0,-3); //takeoff
+    usleep(2500000);*/
+
+    while(true){px4->SendFakePosition();}
+/*    px4->StartAutopilot(0,0,-3); //takeoff
     usleep(5000000);
 
     px4logger->Start();
@@ -78,7 +80,7 @@ int main(int argc, char const *argv[])
     //test OMPL planner
     vector<WS_Coord> destinations = {
         WS_Coord(0, 0, 3),
-        WS_Coord(2, 2, 4),
+        WS_Coord(2, 2, 4)/*,
         WS_Coord(4, 4, 6),
         WS_Coord(-1.17, -6.4, 5),
         WS_Coord(15, 16, 5),
@@ -113,6 +115,6 @@ int main(int argc, char const *argv[])
 
     px4logger->Stop();
     px4logger->ToCSV();
-
+    */
 	return 0;
 }
