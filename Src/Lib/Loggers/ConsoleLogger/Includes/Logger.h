@@ -32,7 +32,7 @@ class Logger
 
     pthread_mutex_t lock;
     FILE* logconsole;
-    void InitLogger();
+
 public:
     Logger()
     {
@@ -43,6 +43,7 @@ public:
     //print error message
     void LogError(string msg);
     void LogMessage(string msg);
+    void InitLogger();
 
 
 };
