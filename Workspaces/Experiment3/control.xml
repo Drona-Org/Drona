@@ -1,18 +1,14 @@
 <?xml version="1.0" ?>
 <configuration>
-<dimension x="50.000000" y="50.000000" z="50.000000"/>
+<dimension x="5.000000" y="4.000000" z="3.000000"/>
 <robots>
 <robot id="0">
-<start x="0" y="0" z="0"/>
-</robot>
-<robot id="1">
-<start x="30" y="0" z="0"/>
-</robot>
-<robot id="2">
-<start x="30" y="30" z="0"/>
+<start x="0.5" y="2.5" z="2"/>
 </robot>
 </robots>
 <obstacles>
+	<box><low x="1.2000" y="1.2000" z="3.000000" /><high x="2.2" y="3.2" z="3.00000" /></box>
+	<box><low x="3.2000" y="1.2000" z="3.000000" /><high x="4.2" y="3.2" z="3.00000" /></box>
 </obstacles>
 <charging_stations>
 </charging_stations>

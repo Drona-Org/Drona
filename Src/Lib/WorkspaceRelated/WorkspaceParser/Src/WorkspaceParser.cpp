@@ -21,7 +21,7 @@ WS_Coord ParseXMLCoord(const XMLNode* node)
 	const XMLElement *e = node->ToElement();
 	if(!e)
 		throw std::runtime_error("Not a valid coordinate element");
-    return WS_Coord(e->IntAttribute("x"), e->IntAttribute("y"), e->IntAttribute("z"));
+    return WS_Coord(e->FloatAttribute("x"), e->FloatAttribute("y"), e->FloatAttribute("z"));
 }
 
 WS_Box ParseXMLBox(const XMLNode* node)
