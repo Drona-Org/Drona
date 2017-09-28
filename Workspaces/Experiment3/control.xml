@@ -7,8 +7,8 @@
 </robot>
 </robots>
 <obstacles>
-	<box><low x="0.8000" y="0.8000" z="3.000000" /><high x="2.2" y="3.2" z="3.00000" /></box>
-	<box><low x="2.8000" y="0.8000" z="3.000000" /><high x="4.2" y="3.2" z="3.00000" /></box>
+	<box><low x="0.8000" y="0.8000" z="0.000000" /><high x="2.2" y="3.2" z="3.00000" /></box>
+	<box><low x="2.8000" y="0.8000" z="0.000000" /><high x="4.2" y="3.2" z="3.00000" /></box>
 </obstacles>
 <charging_stations>
 </charging_stations>
