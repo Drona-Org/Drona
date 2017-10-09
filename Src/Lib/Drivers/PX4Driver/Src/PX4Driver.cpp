@@ -14,15 +14,17 @@ PX4API::PX4API(int simulatorPort){
 
 bool PX4API::SendFakePosition()
 {
+    static int x = 22;
     mavlink_att_pos_mocap_t mocap_position = {0};
     mocap_position.time_usec = 0;
     mocap_position.x = 1;
     mocap_position.y = 1;
-    mocap_position.z = 1;
+    mocap_position.z = -1;
     mocap_position.q[0] = 1;
 
     mavlink_message_t msg;
-    mavlink_msg_att_pos_mocap_encode(this->systemId + 1, this->autopilotId + 1, &msg, &mocap_position);
+    //ATT_POS_MOCAP(this->systemId, this->autopilotId, &msg, &mocap_position);
+    mavlink_msg_att_pos_mocap_encode(this->systemId, this->autopilotId, &msg, &mocap_position);
 
     this->px4com->WriteMessage(msg);
 
@@ -89,7 +91,8 @@ bool PX4API::StartAutopilot(float x, float y, float z){
         return false;
     }
 
-    this->SetTargetLocalPosition(x,y,z);
+    //this->SetTargetLocalPosition(x,y,z);
+    this->SetTargetLocalVelocity(x,y,z);
     this->px4com->WriteSetpoint();
 
     if( !this->ToggleOffBoard(true) ){
@@ -178,17 +181,28 @@ void PX4API::MotionPrimitive(char motion, int steps){
 
 // GoTo a workspace coordinate with precitions eps
 void PX4API::GoTo(WS_Coord goal, double eps){
-    this->SetTargetLocalPosition(goal.x,goal.y,goal.z);
+//    this->SetTargetLocalPosition(goal.x,goal.y,goal.z);
+    this->SetTargetLocalVelocity(goal.x,goal.y,goal.z);
     while(!(this->CloseTo(goal.x,goal.y,goal.z,eps))){}
 }
 
 
 void PX4API::GoTo(float x, float y, float z, double eps){
-    this->SetTargetLocalPosition(x,y,z);
+//    this->SetTargetLocalPosition(x,y,z);
+    this->SetTargetLocalVelocity(x,y,z);
     std::time_t start = std::time(NULL);
 
-
+// Specify which CloseTo Function (position or velocity )
     while(!(this->CloseTo(x,y,z,eps))){ if(std::difftime(std::time(NULL), start)> 7) break; }
+}
+
+void PX4API::GoToVelocity(float x, float y, float z, double eps){
+//    this->SetTargetLocalPosition(x,y,z);
+    this->SetTargetLocalVelocity(x,y,z);
+    std::time_t start = std::time(NULL);
+
+// Specify which CloseTo Function (position or velocity )
+    while(!(this->CloseToVelocity(x,y,z,eps))){ if(std::difftime(std::time(NULL), start)> 7) break; }
 }
 
 
@@ -266,12 +280,26 @@ void PX4API::Square(vector< float > corner, float edge, int rounds, float eps){
 // Check if drone is eps-close to (x,y,x)
 bool PX4API::CloseTo(float x, float y, float z, float eps){
 
+//    mavlink_local_position_ned_t act_pos = ROBOTSTATE->GetLocalPosition();
     mavlink_local_position_ned_t act_pos = ROBOTSTATE->GetLocalPosition();
-
+    //position
     float dx = x - act_pos.x;
     float dy = y - act_pos.y;
     float dz = z - act_pos.z;
     float dist = sqrt( pow(dx,2) + pow(dy,2) + pow(dz,2) );
+
+    return (dist < eps);
+
+// Check if drone is eps-close to (x,y,x)
+bool PX4API::CloseToVelocity(float x, float y, float z, float eps){
+
+    mavlink_local_position_ned_t act_pos = ROBOTSTATE->GetLocalPosition();
+    //velocity
+    float dx = x - act_pos.vx;
+    float dy = y - act_pos.vy;
+    float dz = z - act_pos.vz;
+    float dist = sqrt( pow(dx,2) + pow(dy,2) + pow(dz,2) );
+//    float diff = dx + dy + dz;
 
     return (dist < eps);
 }

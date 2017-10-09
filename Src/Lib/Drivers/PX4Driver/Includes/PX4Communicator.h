@@ -56,6 +56,7 @@ public:
 
     // Setpoint routines
     void SetTargetLocalPosition(float x, float y, float z);
+    void SetTargetLocalVelocity(float x, float y, float z);
     void SetTargetGlobalPosition(int lat, int lon, int alt);
 
     int WriteMessage(mavlink_message_t msg);

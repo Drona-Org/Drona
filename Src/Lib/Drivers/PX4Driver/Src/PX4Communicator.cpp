@@ -81,6 +81,7 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
                         }
                         case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:{
                             mavlink_global_position_int_t curGlobPos;
+
                             mavlink_msg_global_position_int_decode(&msg, &curGlobPos);
                             ROBOTSTATE->UpdateCurrentGlobalPosition(curGlobPos);
                             break;
@@ -91,6 +92,27 @@ void* PX4Communicator::DispatchMavLinkMessages(void* ptr) {
                             mavlink_msg_radio_status_decode(&msg, &radioStatus);
                             ROBOTSTATE->UpdateRadioStatus(radioStatus);
                             break;
+                        }
+
+                         // new case for velocity
+                        case MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_VELOCITY: {
+                            LOG("Local position received\n");
+                            mavlink_local_position_ned_t curLocPos;
+                            mavlink_msg_local_position_ned_decode(&msg, &curLocPos);
+                            ROBOTSTATE->UpdateCurrentLocalPosition(curLocPos);
+
+                            p_mavlink_msg_local_position_ned_decode(&msg, &pMessage_local_position_ned);
+                            {
+                             // reverse the z units so positive numbers go upwards.
+                                PRT_VALUE* zAxis = PrtTupleGetNC(pMessage_local_position_ned, 3);
+                                float zValue = PrtPrimGetFloat(zAxis);
+                                PrtPrimSetFloat(zAxis, -zValue);
+                            }
+
+                            break;
+
+
+
                         }
                         default:{
                             break;
@@ -237,6 +259,26 @@ void PX4Communicator::SetTargetLocalPosition(float x, float y, float z){
 
     char buff[100];
     sprintf(buff,"Command: GOTO (x %f, y %f, z %f)", sp.x, sp.y, sp.z);
+    LOG(buff);
+}
+
+//Set target position
+void PX4Communicator::SetTargetLocalVelocity(float vx, float vy, float vz){
+
+    mavlink_set_position_target_local_ned_t sp;
+
+    sp.time_boot_ms = 0;
+    sp.type_mask = MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_VELOCITY & MAVLINK_MSG_SET_POSITION_TARGET_LOCAL_NED_YAW_ANGLE;
+    sp.coordinate_frame = MAV_FRAME_LOCAL_NED;
+    sp.vx = vx;
+    sp.vy = vy;
+    sp.vz = vz;
+    sp.yaw = 0;
+
+    this->targetSetpoint = sp;
+
+    char buff[100];
+    sprintf(buff,"Command: GOTO (x %f, y %f, z %f)", sp.vx, sp.vy, sp.vz);
     LOG(buff);
 }
 
