@@ -184,11 +184,12 @@ void PX4API::GoTo(WS_Coord goal, double eps){
 
 
 void PX4API::GoTo(float x, float y, float z, double eps){
+    exitGoto = false;
     this->SetTargetLocalPosition(x,y,z);
     std::time_t start = std::time(NULL);
 
 
-    while(!(this->CloseTo(x,y,z,eps))){ if(std::difftime(std::time(NULL), start)> 7) break; }
+    while(!(this->CloseTo(x,y,z,eps)) && !exitGoto){ if(std::difftime(std::time(NULL), start)> 5) break; }
 }
 
 

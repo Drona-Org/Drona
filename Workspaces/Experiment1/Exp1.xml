@@ -1,16 +1,12 @@
 <?xml version="1.0" ?>
 <configuration>
-	<dimension x="20" y="20" z="10"/>
+	<dimension x="50" y="50" z="50"/>
 	<robots>
 		<robot id="0">
 			<start x="10" y="10" z="1"/>
 		</robot>
 	</robots>
 	<obstacles>
-		<box>
-			<low  x="0" y="3" z="0" />
-			<high x="1" y="4" z="2" />
-	  	</box>
 	</obstacles>
 	<charging_stations>
 		<box>
