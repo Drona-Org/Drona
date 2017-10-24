@@ -17,19 +17,85 @@ layout: template1
   <br>
   <br>
   <a class="btn btn-lg btn-primary" href="https://github.com/Drona-Org/Drona" role="button">View Drona Source on Github &raquo;</a>
-  <a class="btn btn-lg btn-info" href="https://github.com/Drona-Org/Drona/wiki/Drona-Software-Stack" role="button">View Drona Software Stack Info Wiki &raquo;</a>
+  <a class="btn btn-lg btn-info" href="https://github.com/Drona-Org/Drona-DMR/wiki/Drona-Software-Stack" role="button">View Drona Software Stack Info Wiki &raquo;</a>
 </div>
 
 <div class="jumbotron">
     <h2><u>Framework Demo</u></h2>
-	<p> 
-	In this video, we provide an overview of how the framework can be used for interacting with <a href="https://github.com/PX4/Firmware">PX4</a> firmware.
-	We show how the programming language <a href="https://github.com/p-org/P">P</a> can be used to program a simple drone software stack and drive a drone in <a href = "https://pixhawk.org/dev/hil/jmavsim">jMavSim</a> simulator.
-	The generated trace during simulation is visualized live in a state-machine visualization tool DGML.
-	<br>
-	<br>
-	</p>
-	<iframe width="640" height="360" src="https://www.youtube.com/embed/ZzLoNbMGhg4" frameborder="4" allowfullscreen></iframe>
+  <p> 
+  In this video, we provide an overview of how the framework can be used for interacting with <a href="https://github.com/PX4/Firmware">PX4</a> firmware.
+  We show how the programming language <a href="https://github.com/p-org/P">P</a> can be used to program a simple drone software stack and drive a drone in <a href = "https://pixhawk.org/dev/hil/jmavsim">jMavSim</a> simulator.
+  The generated trace during simulation is visualized live in a state-machine visualization tool DGML.
+  <br>
+  <br>
+  </p>
+  <iframe width="640" height="360" src="https://www.youtube.com/embed/ZzLoNbMGhg4" frameborder="4" allowfullscreen></iframe>
+</div>
+
+<div class="jumbotron">
+    <h2><u>Runtime Assurance for Safe Exploration</u></h2>
+  <p> 
+  In this video, the drone is performing safe exploration with runtime assurance. 
+  The advanced controller (AC) is a motion planner that is optimized to perform the exploration optimally with some metrics.
+  The AC tries to drive the drone too close to the wall in some cases as the wall is not known to the AC. 
+  The Decision module (DM) continuous monitors the drone surroundings and detects whenever there is a wall too close to the drone.
+  In the case of potential danger the DM switches to a safe controller (SC). 
+  The SC brings the drone from its current position to the middle of the workspace. 
+  Once the drone is in the middle of the workspace, the DM returns control back to the AC that starts exploring again.
+  </p>
+  <video width="480" height="432" controls>
+      <source src="Videos/SafeExploration_1.mp4" type="video/mp4">
+      Your browser is unable to display this MP4 video.
+      Try <a href="Videos/SafeExploration_1.mp4">downloading</a> it.
+</video>
+</div>
+
+<div class="jumbotron">
+    <h2><u>Battery Safety</u></h2>
+  <p> 
+  There are static obstacles in the workspace and 6 numbered white cards.
+  The white card numbered 0 is the battery charging point.
+  The white cards numbered 1-5 are surveillance points. For sake of this experiment we put a contrainst that the battery of the drone runs out after visiting 3 surveillance locations.
+  Note that in experiment, the drone always returns back to the charging point 0 before it visits 4th surveillance point.
+  In some cases, it returns back to charging point even before visiting 3 surveillance locations to charge the battery.
+  </p>
+  <video width="480" height="432" controls>
+      <source src="Videos/BatterySafety.mp4" type="video/mp4">
+      Your browser is unable to display this MP4 video.
+      Try <a href="Videos/BatterySafety.mp4">downloading</a> it.
+</video>
+</div>
+
+<div class="jumbotron">
+    <h2><u>Multi Robot Mail Delivery System</u></h2>
+  <p> 
+  In this experiment, Drona is used for programming a multi-robot system for mail-delivery appliation.
+  There are static obstacles in the workspace and 6 numbered white cards.
+  The white card numbered 0 is the mail pick-up location.
+  The white cards numbered 1-5 are the delivery points. 
+  The drones first goto the mail pick-up location 0 and then drop the mail to the destination location (1-5) without colliding with other drones.
+  They also coordinate with each other to give way to other drones so that they can finish their mission.
+  </p>
+  <video width="480" height="432" controls>
+      <source src="Videos/3Robots.mp4" type="video/mp4">
+      Your browser is unable to display this MP4 video.
+      Try <a href="Videos/3Robots.mp4">downloading</a> it.
+</video>
+</div>
+
+<div class="jumbotron">
+  <h2><u>Runtime Assurance during mission</u></h2>
+  <p> 
+  In this video, we ask the drone to survey the city in Gazebo simulator.
+  The autonomous drone computes a safe plan from its location to the next survey point and follows the trajectory robustly.
+  To demonstrate the runtime-assurance capabilities in Drona, we monitor each trajectory against a specification that the followed trajectory must lie within a tube. 
+  The graphs generated during the simulation present the closeness of the trajectory to the boundary of the tube. 
+  During the simulation you can notice that for one of the trajectories the rgraph becomes red, indicating that the drone is close to going outside the safe region during runtime and the SC should take over. 
+  You can also notice that in some cases the robustness becomes orange (almost) which can be used as an indication to take pre-emptive steps and the drone is in switching condition region.
+  <br>
+  <br>
+  </p>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/iZdn6xPSHe4" frameborder="0" allowfullscreen></iframe>
 </div>
 
 <div class="jumbotron">
@@ -43,18 +109,6 @@ layout: template1
   <iframe width="560" height="315" src="https://www.youtube.com/embed/at5ZqN_LNn8" frameborder="0" allowfullscreen></iframe>
 </div>
 
-<div class="jumbotron">
-  <h2><u>Online-monitoring during mission</u></h2>
-  <p> 
-  In this video, we ask the drone to survey the city in Gazebo simulator.
-  The autonomous drone computes a safe plan from its location to the next survey point and follows the trajectory robustly.
-  To demonstrate the runtime-monitoring capabilities in Drona, we monitor each trajectory against a specification that the followed trajectory must lie within a tube. The graphs generated during the simulation present the robustness of the trajectory. During the simulation you can notice that for one of the trajectories the robustness becomes (red) negative, indicating that the drone violated the assumption during runtime. 
-  You can also notice that in some cases the robustness becomes orange (close to zero) which can be used as an indication to take pre-emptive steps.
-  <br>
-  <br>
-  </p>
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/iZdn6xPSHe4" frameborder="0" allowfullscreen></iframe>
-</div>
 
 <div class="jumbotron">
   <h2><u>Longer simulation video</u></h2>
