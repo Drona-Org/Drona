@@ -52,7 +52,7 @@ tr:nth-child(even) {
     <td>MIT</td>
   </tr>
   <tr>
-    <td>Tommaso Dreossi (<a href="mailto:tommaso@berkeley.edu">Contact</a>)</td>
+    <td>Tommaso Dreossi</td>
     <td>University Of California, Berkeley</td>
   </tr>
 </table>
