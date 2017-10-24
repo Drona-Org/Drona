@@ -33,15 +33,26 @@ tr:nth-child(even) {
     <td>University Of California, Berkeley</td>
   </tr>
   <tr>
-    <td>Tommaso Dreossi (<a href="mailto:tommaso@berkeley.edu">Contact</a>)</td>
-    <td>University Of California, Berkeley</td>
-  </tr>
-  <tr>
     <td>Shaz Qadeer</td>
     <td>Microsoft Research, Redmond</td>
   </tr>
   <tr>
     <td>Prof. Sanjit Seshia</td>
+    <td>University Of California, Berkeley</td>
+  </tr>
+</table>
+<h3>Past Members</h3>
+<table>
+  <tr>
+    <td>Indranil Saha</td>
+    <td>Indian Institute Of Technology, Kanpur</td>
+  </tr>
+    <tr>
+    <td>Jianqiao Yang</td>
+    <td>MIT</td>
+  </tr>
+  <tr>
+    <td>Tommaso Dreossi (<a href="mailto:tommaso@berkeley.edu">Contact</a>)</td>
     <td>University Of California, Berkeley</td>
   </tr>
 </table>
