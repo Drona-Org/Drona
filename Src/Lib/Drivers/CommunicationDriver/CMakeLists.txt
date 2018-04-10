@@ -11,7 +11,7 @@ file(GLOB_RECURSE includes Includes/*.h)
 add_library(communication STATIC ${sources} ${includes})
 
 # Include path
-target_include_directories(communication PRIVATE
+target_include_directories(communication PUBLIC
 Includes
 ${dronaSrcLibLoggersConsoleLogger_SOURCE_DIR}/Includes
 )
