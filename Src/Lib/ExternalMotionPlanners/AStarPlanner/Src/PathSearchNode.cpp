@@ -35,7 +35,7 @@ bool PathSearchNode::IsGoal( PathSearchNode &nodeGoal , void* _context)
 
 bool isBlocked(WS_Coord pos, int timestep, int ***obsmap, vector< vector<WS_Coord> > avoidTrajs)
 {
-  if(obsmap[pos.x][pos.y][pos.z] == 1) {
+  if(obsmap[(int)pos.x][(int)pos.y][(int)pos.z] == 1) {
     return true;
   }
   for(int i=0; i < avoidTrajs.size(); i++)

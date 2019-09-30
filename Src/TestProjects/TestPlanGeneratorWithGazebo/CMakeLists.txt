@@ -10,11 +10,11 @@ add_definitions(-DPRT_PLAT_LINUXUSER )
 
 
 # Build exectuable
-add_executable(testplangazebo ${sources} ${includes})
+add_executable(testplangazebo ${sources} ${includes} ~/Documents/Drona/Src/Lib/ExternalMotionPlanners/OMPLOptimalPlanner/Includes/PlanGenerator.h)
 # Include path
 target_include_directories(testplangazebo PUBLIC
 Includes
-${drona_SOURCE_DIR}/Src/Lib/OMPLOptimalPlanner/Includes
+~/Documents/Drona/Src/Lib/ExternalMotionPlanners/OMPLOptimalPlanner/Includes
 ${dronaSrcLibOMPLPlanner_SOURCE_DIR}/Includes
 )
 

@@ -53,14 +53,14 @@ void CAstar::SetObstacleMap(WS_Dimension dimension, RobotPosition_Vector obstacl
 {
 	unsigned int count, count1, count2, count3;
 
-	obsmap = new int**[dimension.x_dim];
+	obsmap = new int**[(int)dimension.x_dim];
 
 	for (count = 0; count < dimension.x_dim; count++)
 	{
-		obsmap[count] = new int*[dimension.y_dim];
+		obsmap[count] = new int*[(int)dimension.y_dim];
 		for (count1 = 0; count1 < dimension.y_dim; count1++)
 		{
-			obsmap[count][count1] = new int[dimension.z_dim];
+			obsmap[count][count1] = new int[(int)dimension.z_dim];
 		}
 	}
 
@@ -77,7 +77,7 @@ void CAstar::SetObstacleMap(WS_Dimension dimension, RobotPosition_Vector obstacl
 
 	for (count = 0; count < obstacles.size(); count++)
 	{
-		obsmap[obstacles[count].x][obstacles[count].y][obstacles[count].z] = 1;
+		obsmap[(int)obstacles[count].x][(int)obstacles[count].y][(int)obstacles[count].z] = 1;
 	}
 }
 
@@ -175,7 +175,7 @@ void CAstar::printTrajectory(int ***map,  RobotPosition_Vector path)
 	cout << "Path Size = " << path.size() << endl;
 	for (count1 = 0; count1 < path.size(); count1++)
 	{
-		map[path[count1].x][path[count1].y][path[count1].z] = 2;
+		map[(int)path[count1].x][(int)path[count1].y][(int)path[count1].z] = 2;
 	}
 
 	/* exporting robot path on file */

@@ -99,7 +99,7 @@ typedef struct WorkspaceInfo {
     vector<WS_Box> charging_stations;
     vector<WS_RobotInfo> robots;
 
-    /*
+    
     int ConvertCoordToGridLocation(WS_Coord coord)
     {
         int g_loc;
@@ -121,8 +121,8 @@ typedef struct WorkspaceInfo {
             printf("Error: Invalid location\n");
         }
 
-        return WS_Coord((loc % (dimension.x_dim * dimension.y_dim)) % dimension.x_dim,
-                    (loc % (dimension.y_dim * dimension.x_dim)) / dimension.x_dim,
+        return WS_Coord((loc % (int)(dimension.x_dim * dimension.y_dim)) % (int)dimension.x_dim,
+                    (loc % (int)(dimension.y_dim * dimension.x_dim)) / dimension.x_dim,
                      loc / (dimension.y_dim * dimension.x_dim));
     }
 
@@ -142,7 +142,7 @@ typedef struct WorkspaceInfo {
         }
         return locations;
     }
-    */
+    
     string ToString()
     {
         char buff[1000];
