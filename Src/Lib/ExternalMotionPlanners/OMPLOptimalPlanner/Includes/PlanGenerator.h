@@ -60,7 +60,7 @@
 // For std::make_shared
 #include <memory>
 #include <vector>
-#include <WorkspaceParser.h>
+#include "WorkspaceParser.h"
 #include <fstream>
 
 namespace ob = ompl::base;
@@ -73,7 +73,7 @@ namespace og = ompl::geometric;
 
 #include <vector>
 #include <time.h>
-#include <WorkspaceParser.h>
+#include "WorkspaceParser.h"
 
 using namespace std;
 
