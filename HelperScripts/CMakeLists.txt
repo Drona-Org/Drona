@@ -6,8 +6,8 @@ SET(CMAKE_VERBOSE_MAKEFILE true)
 ###########################################################################
 
 ## Compile P source
-set(P_COMPILER_PATH ${CMAKE_SOURCE_DIR}/Submodule/P/Bld/Drops/Release/x64/Binaries/Pc.exe)
-set(P_BUILD_PATH ${CMAKE_SOURCE_DIR}/Submodule/P/Bld/Drops/Release/x64/Binaries/PBuild.exe)
+set(P_COMPILER_PATH ~/Documents/Drona/Submodule/P/Bld/Drops/Release/Binaries/Pc.dll)
+# set(P_BUILD_PATH ${CMAKE_SOURCE_DIR}/Submodule/P/Bld/Drops/Release/x64/Binaries/PBuild.exe)
 set(P_BUILT_LIB_PATH ${CMAKE_SOURCE_DIR}/Submodule/P/Bld/Drops/PrtUser)
 set(P_LIB_INCLUDE_PATH ${P_BUILT_LIB_PATH}/include)
 set(P_LIB_LINK_PATH ${P_BUILT_LIB_PATH}/lib)
@@ -19,11 +19,11 @@ if (NOT (TARGET pruntime))
     add_definitions( -DPRT_PLAT_LINUXUSER )
 endif()
 
-if(NOT EXISTS ${P_BUILD_PATH})
-Message(FATAL_ERROR ">|> ${P_BUILD_PATH} not found. Build P")
-else()
-Message(STATUS ">|> Found P at ${P_BUILD_PATH}")
-endif()
+# if(NOT EXISTS ${P_BUILD_PATH})
+# Message(FATAL_ERROR ">|> ${P_BUILD_PATH} not found. Build P")
+# else()
+# Message(STATUS ">|> Found P at ${P_BUILD_PATH}")
+# endif()
 
 
 function (PBUILD depName solutionFile type workingdirectory)
@@ -40,7 +40,7 @@ function (PBUILD depName solutionFile type workingdirectory)
     ADD_CUSTOM_TARGET(
             ${depName} ALL
             COMMENT "Building P ${solutionFile}..."
-            COMMAND mono ${P_BUILD_PATH} /sln:${solutionFile} /generate:${type}
+            COMMAND dotnet ${P_COMPILER_PATH} ${solutionFile} /generate:${type}
             WORKING_DIRECTORY ${workingdirectory}
     )
 endfunction(PBUILD)

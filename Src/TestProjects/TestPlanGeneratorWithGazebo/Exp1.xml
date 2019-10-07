@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<configuration>
+	<dimension x="20" y="20" z="10"/>
+	<robots>
+		<robot id="0">
+			<start x="10" y="10" z="1"/>
+		</robot>
+	</robots>
+	<obstacles>
+		<box>
+			<low  x="0" y="3" z="0" />
+			<high x="1" y="4" z="2" />
+	  	</box>
+	</obstacles>
+	<charging_stations>
+		<box>
+			<low  x="4" y="13" z="0" />
+			<high x="5" y="15" z="1" />
+		</box>
+	</charging_stations>
+</configuration>

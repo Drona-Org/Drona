@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.0)
 project(dronaSrcLibDriversPX4Driver)
+include(~/Documents/Drona/HelperScripts/CMakeLists.txt ~/Documents/Drona/Src/Lib/Drivers/PX4Driver)
+include_directories(~/Documents/Drona/Src/Lib/Drivers/PX4Driver)
 
 
 set(projectName px4driver)
-PBUILD(dep_${projectName} ${CMAKE_CURRENT_SOURCE_DIR}/PMavlinkMessages.xml "c" ${CMAKE_CURRENT_SOURCE_DIR})
+PBUILD(dep_${projectName} /home/sumukh/Documents/Drona/Src/Lib/Drivers/PX4Driver/PMavlinkMessages.xml "c" ~/Documents/Drona/Src/Lib/Drivers/PX4Driver)
 
 
 

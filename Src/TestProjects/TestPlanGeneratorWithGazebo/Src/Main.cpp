@@ -1,10 +1,11 @@
+#include <stdio.h>
 #include <iostream>
 #include "PlanGenerator.h"
 #include "PX4Driver.h"
 #include "WorkspaceParser.h"
 using namespace std;
 
-#define SIMULATOR_PORT 14550
+// #define SIMULATOR_PORT 14550
 
 
 WS_Coord shiftBy = WS_Coord(25, 25, 0);
@@ -21,20 +22,20 @@ WS_Coord GazeboToPlanner(WS_Coord coord) {
 int main(int argc, char const *argv[])
 {
 
-    InitializeLogger();
-    PX4API *px4 = new PX4API(SIMULATOR_PORT);
-    char filename[] = "traj.csv";
-    PX4Logger *px4logger = new PX4Logger(10, filename, true, vector<bool>{true, true, true});
-    double eps = 1;
+//     // InitializeLogger();
+//     // PX4API *px4 = new PX4API(SIMULATOR_PORT);
+//     // char filename[] = "traj.csv";
+//     // PX4Logger *px4logger = new PX4Logger(10, filename, true, vector<bool>{true, true, true});
+//     // double eps = 1;
 
 
-    usleep(2500000);
-    px4->Arm();
-    usleep(2500000);
-    px4->StartAutopilot(0,0,-3); //takeoff
-    usleep(5000000);
+//     // usleep(2500000);
+//     // px4->Arm();
+//     // usleep(2500000);
+//     // px4->StartAutopilot(0,0,-3); //takeoff
+//     // usleep(5000000);
 
-    px4logger->Start();
+//     // px4logger->Start();
 
     //test OMPL planner
     vector<WS_Coord> destinations = {
@@ -64,24 +65,31 @@ int main(int argc, char const *argv[])
         WS_Coord(-21.56, 15.12, 4),
     };
 
-    OMPLPLanner* planner = new OMPLPLanner(argv[1], PLANNER_RRTSTAR, OBJECTIVE_PATHLENGTH);
+    // WorkspaceInfo* ws_info = ParseWorkspaceConfig("Exp1.xml");
+    // printf("Successfully parsed %s\n", "Exp1.xml");
+    // cout << (ws_info->ToString());
+    // FreeWorkspaceInfo(ws_info);
+    OMPLPLanner* planner = new OMPLPLanner("Exp1.xml", PLANNER_RRTSTAR, OBJECTIVE_PATHLENGTH);
     for(int i = 0; i< destinations.size()-1; i++)
     {
+        WS_Coord gazToPlan = GazeboToPlanner(destinations.at(i));
+        WS_Coord gazToPlan2 = GazeboToPlanner(destinations.at(i+1));
 
         vector<WS_Coord> path = planner->GeneratePlan(1, GazeboToPlanner(destinations.at(i)), GazeboToPlanner(destinations.at(i+1)));
-        //convert the path into goto of length less than 10
+//         //convert the path into goto of length less than 10
         vector<WS_Coord> pathNew = path;//ConvertToSmallGotos(path);
 
         for (int count = 0; count < pathNew.size(); count++)
         {
             WS_Coord shifted = PlannerToGazebo(pathNew.at(count));
-            cout << shifted.ToString() << endl;
-            px4->GoTo(shifted.y, shifted.x, -shifted.z, 1);
+            // cout << shifted.ToString() << endl;
+//             // px4->GoTo(shifted.y, shifted.x, -shifted.z, 1);
         }
     }
 
-    px4logger->Stop();
-    px4logger->ToCSV();
+//     // px4logger->Stop();
+//     // px4logger->ToCSV();
+    printf("hello sumukh shivakumar\n");
 
 	return 0;
 }
