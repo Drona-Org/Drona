@@ -62,6 +62,7 @@ vector<WS_Box> ParseListOfBoxes(const XMLNode* node, WS_Dimension dim)
 WorkspaceInfo* ParseWorkspaceConfig(const char* configurationFile)
 {
 	WorkspaceInfo *workspace_info = (WorkspaceInfo*)malloc(sizeof(WorkspaceInfo));
+	workspace_info = new WorkspaceInfo;
 
 	XMLDocument configDoc;
     configDoc.LoadFile(configurationFile);
