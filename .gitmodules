@@ -13,3 +13,6 @@
 [submodule "Submodule/OMPL"]
 	path = Submodule/OMPL
 	url = https://github.com/ompl/ompl.git
+[submodule "P"]
+	path = P
+	url = git@github.com:p-org/P.git
