@@ -1,0 +1,2 @@
+/usr/bin/ar qc libworkspaceparser.a  CMakeFiles/workspaceparser.dir/Src/WorkspaceParser.o CMakeFiles/workspaceparser.dir/Src/tinyxml2.o
+/usr/bin/ranlib libworkspaceparser.a

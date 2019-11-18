@@ -1,0 +1,3 @@
+OUT: bug.p(18,40,18,42): error PC1001: Cast can never succeed
+OUT: Compilation failed
+EXIT: -1
