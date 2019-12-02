@@ -2,6 +2,7 @@ fun omplMotionPlanExternal(destinations: seq[(float, float, float)]): int;
 fun testArray(arr: int): int;
 
 event Success;
+event critical_battery;
 event receiveMotionPlan: int;
 event executePlan: int;
 event requestMotionPlan : seq[(float, float, float)];
@@ -69,13 +70,16 @@ machine Robot
     var my_project: machine;
 	var motion_planner: machine;
     var plan_executor: machine;
+    var my_battery: machine;
     var ompl_motion_plan: int;
     var motionplan : seq[(float, float, float)];
+    var safe_motion_plan: int;
 
     start state Init {
         entry (payload: seq[(float, float, float)]) {
             motion_planner = new MotionPlanner(this);
             plan_executor = new PlanExecutor(this);
+            my_battery = new Battery(this);
             motionplan = payload;
 			send motion_planner, requestMotionPlan, payload;
             receive {
@@ -88,6 +92,8 @@ machine Robot
 
     state WaitRequest {
         entry {}
+        on critical_battery goto safeControllerState;
+
     }
 
     state sendPlantoExecutorState {
@@ -95,6 +101,48 @@ machine Robot
             send plan_executor, executePlan, ompl_motion_plan;
         }
         on Success goto WaitRequest;
+        on critical_battery goto safeControllerState;
+    }
+
+    state safeControllerState {
+        entry {
+            var s: seq[(float, float, float)];
+            s = default(seq[(float, float, float)]);
+            s += (0, (0.5, 1.0, 0.0));
+            s += (1, (0.5, 1.0, 0.0));
+            send motion_planner, requestMotionPlan, s;
+            receive {
+				case receiveMotionPlan: (tmp: int) { safe_motion_plan = tmp; }
+			}
+            send plan_executor, executePlan, safe_motion_plan;
+        }
+    }
+}
+
+machine Battery 
+{
+    var my_robot: machine;
+    var battery_percentage: float;
+
+    start state Init {
+        entry (payload: machine) {
+            my_robot = payload;
+            battery_percentage = 1.0;
+            decrease_battery();
+            raise Success;
+		}
+        on Success goto WaitRequest;
+    }
+
+    state WaitRequest {
+        entry {}
+    }
+
+    fun decrease_battery() {
+        while (battery_percentage > 0.5) {
+            battery_percentage = battery_percentage - 0.1;
+        }
+        send my_robot, critical_battery;
     }
 }
 

@@ -150,8 +150,6 @@ public:
 
     OMPLPLanner(const char* workspacefile, optimalPlanner _plannerType, planningObjective _objectiveType)
     {
-	    printf("SHIVA!!!!\n");
-
         WSInfo = ParseWorkspaceConfig(workspacefile);
         plannerType = _plannerType;
         objectiveType = _objectiveType;
