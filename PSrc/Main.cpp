@@ -196,7 +196,7 @@ static void RunToIdle(void* process)
     {
         if (PRT_STEP_IDLE == PrtStepProcess((PRT_PROCESS*)process))
         {
-            //break;
+            break;
         }
     }
     decrement_threadsRunning();
@@ -221,84 +221,84 @@ char* GetApplicationName()
 }
 
 
-int main(int argc, char **argv)
-{
-	ros::init(argc, argv, "p_test");
-
-	PRT_PROCESS* process;
-	PRT_GUID processGuid;
-	PRT_VALUE* payload;
-	processGuid.data1 = 1;
-	processGuid.data2 = 0;
-	processGuid.data3 = 0;
-	processGuid.data4 = 0;
-	process = PrtStartProcess(processGuid, &P_GEND_IMPL_DefaultImpl, ErrorHandler, Log);
-	payload = PrtMkNullValue();
-	PRT_UINT32 machineId;
-	PRT_BOOLEAN foundMainMachine = PrtLookupMachineByName("Project", &machineId);
-	if (foundMainMachine == PRT_FALSE)
-	{
-		printf("%s\n", "FAILED TO FIND Project");
-		exit(1);
-	}
-	PrtMkMachine(process, machineId, 1, &payload);
-	PrtFreeValue(payload);
-	PrtStopProcess(process);
-}
-
-
-// int main(int argc, char *argv[])
+// int main(int argc, char **argv)
 // {
-//     ros::init(argc, argv, "drona_test");
-//     PRT_DBG_START_MEM_BALANCED_REGION
-//     {
-//         PRT_GUID processGuid;
-//         PRT_VALUE *payload;
+// 	ros::init(argc, argv, "p_test");
 
-//         // PrtInitialize(&P_GEND_PROGRAM);
-//         processGuid.data1 = 1;
-//         processGuid.data2 = 0;
-//         processGuid.data3 = 0;
-//         processGuid.data4 = 0;
-//         MAIN_P_PROCESS = PrtStartProcess(processGuid, &P_GEND_IMPL_DefaultImpl, ErrorHandler, Log);
-//         if (cooperative)
-//         {
-//             PrtSetSchedulingPolicy(MAIN_P_PROCESS, PRT_SCHEDULINGPOLICY_COOPERATIVE);
-//         }
-//         if (parg == NULL)
-//         {
-//             payload = PrtMkNullValue();
-//         }
-//         else
-//         {
-//             int i = atoi(parg);
-//             payload = PrtMkIntValue(i);
-//         }
-
-//         PrtUpdateAssertFn(MyAssert);
-//         PRT_UINT32 machineId;
-//         PRT_BOOLEAN foundMainMachine = PrtLookupMachineByName("Project", &machineId);
-//         if (foundMainMachine == PRT_FALSE)
-//         {
-//             printf("%s\n", "FAILED TO FIND Project");
-//             exit(1);
-//         }
-//         PrtMkMachine(MAIN_P_PROCESS, machineId, 1, &payload);
-
-//         if (cooperative)
-//         {
-//             typedef void *(*start_routine) (void *);
-//             pthread_t tid[threads];
-//             for (int i = 0; i < threads; i++)
-//             {
-//                 threadsRunning++;
-//                 pthread_create(&tid[i], NULL, (start_routine)RunToIdle, (void*)MAIN_P_PROCESS);
-//             }
-//             while(get_threadsRunning() != 0);
-
-//         }
-//         PrtFreeValue(payload);
-//         PrtStopProcess(MAIN_P_PROCESS);
-//     }
-//     PRT_DBG_END_MEM_BALANCED_REGION
+// 	PRT_PROCESS* process;
+// 	PRT_GUID processGuid;
+// 	PRT_VALUE* payload;
+// 	processGuid.data1 = 1;
+// 	processGuid.data2 = 0;
+// 	processGuid.data3 = 0;
+// 	processGuid.data4 = 0;
+// 	process = PrtStartProcess(processGuid, &P_GEND_IMPL_DefaultImpl, ErrorHandler, Log);
+// 	payload = PrtMkNullValue();
+// 	PRT_UINT32 machineId;
+// 	PRT_BOOLEAN foundMainMachine = PrtLookupMachineByName("Project", &machineId);
+// 	if (foundMainMachine == PRT_FALSE)
+// 	{
+// 		printf("%s\n", "FAILED TO FIND Project");
+// 		exit(1);
+// 	}
+// 	PrtMkMachine(process, machineId, 1, &payload);
+// 	PrtFreeValue(payload);
+// 	PrtStopProcess(process);
 // }
+
+
+int main(int argc, char *argv[])
+{
+    ros::init(argc, argv, "drona_test");
+    PRT_DBG_START_MEM_BALANCED_REGION
+    {
+        PRT_GUID processGuid;
+        PRT_VALUE *payload;
+
+        // PrtInitialize(&P_GEND_PROGRAM);
+        processGuid.data1 = 1;
+        processGuid.data2 = 0;
+        processGuid.data3 = 0;
+        processGuid.data4 = 0;
+        MAIN_P_PROCESS = PrtStartProcess(processGuid, &P_GEND_IMPL_DefaultImpl, ErrorHandler, Log);
+        if (cooperative)
+        {
+            PrtSetSchedulingPolicy(MAIN_P_PROCESS, PRT_SCHEDULINGPOLICY_COOPERATIVE);
+        }
+        if (parg == NULL)
+        {
+            payload = PrtMkNullValue();
+        }
+        else
+        {
+            int i = atoi(parg);
+            payload = PrtMkIntValue(i);
+        }
+
+        PrtUpdateAssertFn(MyAssert);
+        PRT_UINT32 machineId;
+        PRT_BOOLEAN foundMainMachine = PrtLookupMachineByName("Project", &machineId);
+        if (foundMainMachine == PRT_FALSE)
+        {
+            printf("%s\n", "FAILED TO FIND Project");
+            exit(1);
+        }
+        PrtMkMachine(MAIN_P_PROCESS, machineId, 1, &payload);
+
+        if (cooperative)
+        {
+            typedef void *(*start_routine) (void *);
+            pthread_t tid[threads];
+            for (int i = 0; i < threads; i++)
+            {
+                threadsRunning++;
+                pthread_create(&tid[i], NULL, (start_routine)RunToIdle, (void*)MAIN_P_PROCESS);
+            }
+            while(get_threadsRunning() != 0);
+
+        }
+        PrtFreeValue(payload);
+        PrtStopProcess(MAIN_P_PROCESS);
+    }
+    PRT_DBG_END_MEM_BALANCED_REGION
+}
