@@ -1,5 +1,7 @@
 fun omplMotionPlanExternal(destinations: seq[(float, float, float)]): int;
 fun testArray(arr: int): int;
+fun Sleep(time: float): int;
+
 
 event Success;
 event Send_Next_Point : (float, float, float); // Needs to be changed to be a (float, float, float)
@@ -70,7 +72,7 @@ machine Robot
 	start state Init {
 		entry (payload: machine) {
             my_project = payload;
-            // my_battery = new Battery(this);
+            my_battery = new Battery(this);
             my_motion_planner = new MotionPlanner(this);
             raise Success;
 		}
@@ -101,9 +103,9 @@ machine Robot
 
 			}
         }
-        on Success goto WaitRequest;
+        // on Success goto WaitRequest;
         on Completed_Point goto Completed_Point_State;
-        on Critical_Battery goto Critical_Battery_State;
+        // on Critical_Battery goto Critical_Battery_State;
     }
 
     state Completed_Point_State {
@@ -117,10 +119,20 @@ machine Robot
     state Critical_Battery_State {
         entry {
             var x: int;
+            var safe_ompl_motion_plan: int;
+            var s: seq[(float, float, float)];
             print "ROBOT IN Critical_Battery STATE\n";
             print "---------------------\n";
             print "---------------------\n";
             print "---------------------\n";
+
+            s = default(seq[(float, float, float)]);
+            s += (0, (0.5, 1.0, 0.0));
+            s += (1, (0.5, 1.0, 0.0));
+
+            // ompl_motion_plan = ompl(payload);
+            safe_ompl_motion_plan = omplMotionPlanExternal(s);
+            x = testArray(safe_ompl_motion_plan);
             // x = ompl((0.5, 1.0, 0.0));
             // x = goTo(x);
             // Sleep(2.0);
@@ -143,7 +155,27 @@ machine Robot
     }
 }
 
+machine Battery 
+{
+    var my_robot: machine;
 
+	start state Init {
+		entry (payload: machine) {
+            my_robot = payload;
+            print "IN BATTERY INIT\n";
+            // TODO: somehow send critical battery to Robot
+            // Sleep(0.1);
+            Sleep(2.0);
+            send my_robot, Critical_Battery;
+            raise Success;
+		}
+        on Success goto WaitRequest;
+	}
+
+    state WaitRequest {
+        entry {}
+    }
+}
 
 machine MotionPlanner 
 {
