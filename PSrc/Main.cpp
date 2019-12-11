@@ -9,6 +9,8 @@
 
 /* Global variables */
 PRT_PROCESS* MAIN_P_PROCESS;
+static PRT_BOOLEAN cooperative = PRT_TRUE;
+static int threads = 2;
 
 void ErrorHandler(PRT_STATUS status, PRT_MACHINEINST* ptr)
 {
@@ -71,9 +73,6 @@ get_threadsRunning()
     pthread_mutex_unlock(&threadsRunning_mutex);
     return (c);
 }
-
-static PRT_BOOLEAN cooperative = PRT_TRUE;
-static int threads = 20;
 
 // todo: make tester useful for performance testing also, not finished yet...
 static PRT_BOOLEAN perf = PRT_FALSE;
@@ -221,6 +220,7 @@ char* GetApplicationName()
 	return FirstArgument;
 }
 
+
 int main(int argc, char **argv)
 {
 	ros::init(argc, argv, "p_test");
@@ -246,23 +246,21 @@ int main(int argc, char **argv)
 	PrtStopProcess(process);
 }
 
-// PRT_PROGRAMDECL P_GEND_PROGRAM;
 
 // int main(int argc, char *argv[])
 // {
-// 	ros::init(argc, argv, "drona_test");
+//     ros::init(argc, argv, "drona_test");
 //     PRT_DBG_START_MEM_BALANCED_REGION
 //     {
 //         PRT_GUID processGuid;
 //         PRT_VALUE *payload;
 
-//         MAIN_P_PROCESS = PrtStartProcess(processGuid, &P_GEND_IMPL_DefaultImpl, ErrorHandler, Log);
-//         //Initialize the workspace
+//         // PrtInitialize(&P_GEND_PROGRAM);
 //         processGuid.data1 = 1;
 //         processGuid.data2 = 0;
 //         processGuid.data3 = 0;
 //         processGuid.data4 = 0;
-//         MAIN_P_PROCESS = PrtStartProcess(processGuid, &P_GEND_PROGRAM, ErrorHandler, Log);
+//         MAIN_P_PROCESS = PrtStartProcess(processGuid, &P_GEND_IMPL_DefaultImpl, ErrorHandler, Log);
 //         if (cooperative)
 //         {
 //             PrtSetSchedulingPolicy(MAIN_P_PROCESS, PRT_SCHEDULINGPOLICY_COOPERATIVE);
@@ -278,12 +276,18 @@ int main(int argc, char **argv)
 //         }
 
 //         PrtUpdateAssertFn(MyAssert);
-
-//         PrtMkMachine(MAIN_P_PROCESS, P_MACHINE_Project, 1, PRT_FUN_PARAM_CLONE, payload);
+//         PRT_UINT32 machineId;
+//         PRT_BOOLEAN foundMainMachine = PrtLookupMachineByName("Project", &machineId);
+//         if (foundMainMachine == PRT_FALSE)
+//         {
+//             printf("%s\n", "FAILED TO FIND Project");
+//             exit(1);
+//         }
+//         PrtMkMachine(MAIN_P_PROCESS, machineId, 1, &payload);
 
 //         if (cooperative)
 //         {
-// typedef void *(*start_routine) (void *);
+//             typedef void *(*start_routine) (void *);
 //             pthread_t tid[threads];
 //             for (int i = 0; i < threads; i++)
 //             {
@@ -291,10 +295,10 @@ int main(int argc, char **argv)
 //                 pthread_create(&tid[i], NULL, (start_routine)RunToIdle, (void*)MAIN_P_PROCESS);
 //             }
 //             while(get_threadsRunning() != 0);
+
 //         }
 //         PrtFreeValue(payload);
 //         PrtStopProcess(MAIN_P_PROCESS);
 //     }
 //     PRT_DBG_END_MEM_BALANCED_REGION
-
 // }

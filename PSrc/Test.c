@@ -1294,6 +1294,8 @@ PRT_VALUE* P_Anon_IMPL_9(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     PrtSeqInsertEx(P_VAR_s, (&P_LIT_INT32_1), PTMP_tmp8_1, PRT_FALSE);
     *(&(PTMP_tmp8_1)) = NULL;
     
+    PrtFormatPrintf("HELLO S!!!! ", 1, P_VAR_s, 1, 0, "\n");
+    
     PRT_VALUE** P_LVALUE_43 = &(PTMP_tmp9_1);
     PrtFreeValue(*P_LVALUE_43);
     *P_LVALUE_43 = PrtCloneValue(p_this->varValues[1]);
@@ -1614,6 +1616,8 @@ PRT_VALUE* P_decrease_battery_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRef
     
     while (PrtPrimGetBool(PTMP_tmp1_5))
     {
+        PrtFormatPrintf("BATTERY PERCENTAGE: ", 1, p_this->varValues[1], 1, 0, "\n");
+        
         PRT_VALUE** P_LVALUE_55 = &(PTMP_tmp2_5);
         PrtFreeValue(*P_LVALUE_55);
         *P_LVALUE_55 = PrtMkFloatValue(PrtPrimGetFloat(p_this->varValues[1]) - PrtPrimGetFloat((&P_LIT_DOUBLE_5)));

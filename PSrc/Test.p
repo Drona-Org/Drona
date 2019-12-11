@@ -80,6 +80,9 @@ machine Robot
             motion_planner = new MotionPlanner(this);
             plan_executor = new PlanExecutor(this);
             my_battery = new Battery(this);
+            // receive {
+			// 	case critical_battery: { goto safeControllerState; }
+			// }
             motionplan = payload;
 			send motion_planner, requestMotionPlan, payload;
             receive {
@@ -110,6 +113,7 @@ machine Robot
             s = default(seq[(float, float, float)]);
             s += (0, (0.5, 1.0, 0.0));
             s += (1, (0.5, 1.0, 0.0));
+            print "HELLO S!!!! {0}\n", s;
             send motion_planner, requestMotionPlan, s;
             receive {
 				case receiveMotionPlan: (tmp: int) { safe_motion_plan = tmp; }
@@ -140,6 +144,7 @@ machine Battery
 
     fun decrease_battery() {
         while (battery_percentage > 0.5) {
+            print "BATTERY PERCENTAGE: {0}\n", battery_percentage;
             battery_percentage = battery_percentage - 0.1;
         }
         send my_robot, critical_battery;
