@@ -10,7 +10,7 @@
 /* Global variables */
 PRT_PROCESS* MAIN_P_PROCESS;
 static PRT_BOOLEAN cooperative = PRT_TRUE;
-static int threads = 2;
+static int threads = 1;
 
 void ErrorHandler(PRT_STATUS status, PRT_MACHINEINST* ptr)
 {

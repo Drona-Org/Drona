@@ -106,8 +106,8 @@ void gazebo_move_goal(double goal_x, double goal_y) {
 PRT_VALUE* P_omplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
     ros::NodeHandle n;
-    gazebo_odom_subscriber = n.subscribe("robot2/odom", 1000000000, gazeboCallBack);
-    velocity_publisher = n.advertise<geometry_msgs::Twist>("robot2/cmd_vel", 1000000);
+    gazebo_odom_subscriber = n.subscribe("robot1/odom", 1000000000, gazeboCallBack);
+    velocity_publisher = n.advertise<geometry_msgs::Twist>("robot1/cmd_vel", 1000000);
 
     PRT_VALUE** P_VAR_destinations = argRefs[0];
     double arrOfPoints[PrtSeqSizeOf(*P_VAR_destinations)][3];
@@ -185,8 +185,8 @@ PRT_VALUE* P_omplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
 PRT_VALUE* P_testArray_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
     ros::NodeHandle n;
-    gazebo_odom_subscriber = n.subscribe("robot2/odom", 1000000000, gazeboCallBack);
-    velocity_publisher = n.advertise<geometry_msgs::Twist>("robot2/cmd_vel", 1000000);
+    gazebo_odom_subscriber = n.subscribe("robot1/odom", 1000000000, gazeboCallBack);
+    velocity_publisher = n.advertise<geometry_msgs::Twist>("robot1/cmd_vel", 1000000);
 	
     struct PRT_VALUE* mainPRT = *(argRefs[0]);
 	double destinationPoints[mainPRT->valueUnion.seq->size][3];

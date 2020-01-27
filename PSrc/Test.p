@@ -36,7 +36,7 @@ machine Project
             s += (1, (2.0, 0.0, 0.0));
             s += (2, (2.0, 2.0, 0.0));
             s += (3, (0.0, 2.0, 0.0));
-            s += (4, (0.0, 0.0, 0.0));
+            s += (4, (-1.0, 1.0, 0.0));
 
             counter = 0;
             while (counter < 5) {
@@ -122,9 +122,9 @@ machine Robot
             var safe_ompl_motion_plan: int;
             var s: seq[(float, float, float)];
             print "ROBOT IN Critical_Battery STATE\n";
-            print "---------------------\n";
-            print "---------------------\n";
-            print "---------------------\n";
+            // print "---------------------\n";
+            // print "---------------------\n";
+            // print "---------------------\n";
 
             s = default(seq[(float, float, float)]);
             s += (0, (0.5, 1.0, 0.0));
