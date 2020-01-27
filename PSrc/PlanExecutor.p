@@ -19,7 +19,6 @@ machine PlanExecutor
 
     state Execute_Path_State {
         entry (payload: int) {
-            // call foreign function that executes this path in ROS
             var x: int;
             x = ROSGoTo(payload, robot_id);
             send motion_planner, Path_Completed;

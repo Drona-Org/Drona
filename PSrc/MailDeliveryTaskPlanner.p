@@ -17,10 +17,12 @@ event new_Critical_Battery;
 machine Project
 {
     var my_robot: machine;
+    var my_robot2: machine;
 
     start state Init {
 		entry {
-            my_robot = new Robot(this, 2);
+            my_robot = new Robot(this, 1);
+            my_robot2 = new Robot(this, 2);
 			raise Success;
 		}
         on Success goto Send_Points_State;
@@ -38,9 +40,7 @@ machine Project
             s += (3, (0.0, 2.0, 0.0));
 
             counter = 0;
-            while (counter < 4) {
-                print "MY CURR POINT!!!: {0}\n", s[counter];
-                print "INITIAL COUNTER VALUE {0}\n", counter;
+            while (counter < 3) {
                 send my_robot, Send_Next_Point, s[counter];
                 receive {
                     case Completed_Point: {
@@ -49,8 +49,17 @@ machine Project
                         // For now we have finished
                     }
 			    }
-                print "FINAL COUNTER!!!!!!! {0}\n", counter;
             }
+            
+            send my_robot2, Send_Next_Point, s[counter];
+            receive {
+                case Completed_Point: {
+                    counter = counter +1;
+                    // TODO: Potentially have an array of Points and on recieve increase counter and send the corresponding idx in the array
+                    // For now we have finished
+                }
+            }
+
             raise Success;
         }
         on Success goto WaitRequest;
@@ -123,20 +132,13 @@ machine Robot
             var safe_ompl_motion_plan: int;
             var s: seq[(float, float, float)];
             print "ROBOT IN Critical_Battery STATE\n";
-            // print "---------------------\n";
-            // print "---------------------\n";
-            // print "---------------------\n";
 
             s = default(seq[(float, float, float)]);
             s += (0, (0.5, 1.0, 0.0));
             s += (1, (0.5, 1.0, 0.0));
 
-            // ompl_motion_plan = ompl(payload);
-            safe_ompl_motion_plan = omplMotionPlanExternal(s, id);
-            x = ROSGoTo(safe_ompl_motion_plan, id);
-            // x = ompl((0.5, 1.0, 0.0));
-            // x = goTo(x);
-            // Sleep(2.0);
+            // safe_ompl_motion_plan = omplMotionPlanExternal(s, id);
+            // x = ROSGoTo(safe_ompl_motion_plan, id);
 
             // TODO: SEND EVENT TO MOTION PLAN FOR PROPER IMPLEMENTATION
             // send my_motion_planner, Critical_Battery;

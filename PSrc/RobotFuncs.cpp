@@ -249,13 +249,8 @@ PRT_VALUE* P_ROSGoTo_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 
 PRT_VALUE* P_Sleep_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-	// printf("Starting sleep function\n");
 	PRT_VALUE** P_VAR_time = argRefs[0];
 	float secs = PrtPrimGetFloat(*P_VAR_time);
-	// printf("SLEEP!");
 	usleep(secs*1000000);
-	// printf("UNSLEEP!");
-	// printf("Ending sleep function\n");
-
     return PrtMkIntValue((PRT_UINT32)1);
 }

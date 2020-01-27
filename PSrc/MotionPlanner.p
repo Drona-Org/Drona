@@ -23,8 +23,6 @@ machine MotionPlanner
         on Send_Next_Point goto Compute_Path_And_Send_To_PE;
         on Completed_Point goto Completed_Point_State;
 
-        // TODO: Handle Critical_Battery event from Robot for Proper Implementation
-        // on Critical_Battery goto Safe_Motion_Plan;
     }
 
     state Completed_Point_State {
@@ -42,7 +40,7 @@ machine MotionPlanner
 
             // call foreign function computing path from curr location to payload point
             s = default(seq[(float, float, float)]);
-            s += (0, my_robot_last_location);
+            s += (0, payload);
             s += (1, payload);
 
             // ompl_motion_plan = ompl(payload);
