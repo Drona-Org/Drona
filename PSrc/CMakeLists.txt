@@ -7,8 +7,8 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/ExternalMotionPlanners/OMPLOptimalPlanner/Includes
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes)
 add_executable(drona_test 
-    Test.c
-    Test.h
+    MailDeliveryTaskPlanner.h
+    MailDeliveryTaskPlanner.c
     Main.cpp
     RobotFuncs.h
     RobotFuncs.cpp

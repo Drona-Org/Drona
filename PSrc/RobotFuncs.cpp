@@ -13,6 +13,7 @@
 #include <tf/LinearMath/Matrix3x3.h>
 #include "PlanGenerator.h"
 #include "WorkspaceParser.h"
+#include <cstring>
 using namespace std;
 
 
@@ -105,11 +106,31 @@ void gazebo_move_goal(double goal_x, double goal_y) {
 
 PRT_VALUE* P_omplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    ros::NodeHandle n;
-    gazebo_odom_subscriber = n.subscribe("robot1/odom", 1000000000, gazeboCallBack);
-    velocity_publisher = n.advertise<geometry_msgs::Twist>("robot1/cmd_vel", 1000000);
-
     PRT_VALUE** P_VAR_destinations = argRefs[0];
+    PRT_VALUE** P_VAR_robot_id = argRefs[1];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+
+    char robot_id_string[32];
+    sprintf(robot_id_string, "%d", robot_id);
+    
+    char sub_beginning[512] = "robot";
+    char sub_ending[128] = "/odom";
+    strcat(sub_beginning, robot_id_string);
+    strcat(sub_beginning, sub_ending);
+    printf("SUBSCRIBER STRING\n");
+    printf(sub_beginning);
+
+    char sub_beginning2[512] = "robot";
+    char sub_ending2[128] = "/cmd_vel";
+    strcat(sub_beginning2, robot_id_string);
+    strcat(sub_beginning2, sub_ending2);
+    printf("PUBLISHER STRING\n");
+    printf(sub_beginning2);
+
+    ros::NodeHandle n;
+    gazebo_odom_subscriber = n.subscribe(sub_beginning, 1000000000, gazeboCallBack);
+    velocity_publisher = n.advertise<geometry_msgs::Twist>(sub_beginning2, 1000000);
+
     double arrOfPoints[PrtSeqSizeOf(*P_VAR_destinations)][3];
 
     for (int i=0; i < (sizeof(arrOfPoints)/sizeof(*arrOfPoints)); i++) {
@@ -182,13 +203,33 @@ PRT_VALUE* P_omplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
     return mainPRT;
 }
 
-PRT_VALUE* P_testArray_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
+PRT_VALUE* P_ROSGoTo_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    ros::NodeHandle n;
-    gazebo_odom_subscriber = n.subscribe("robot1/odom", 1000000000, gazeboCallBack);
-    velocity_publisher = n.advertise<geometry_msgs::Twist>("robot1/cmd_vel", 1000000);
-	
     struct PRT_VALUE* mainPRT = *(argRefs[0]);
+    PRT_VALUE** P_VAR_robot_id = argRefs[1];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+
+    char robot_id_string[32];
+    sprintf(robot_id_string, "%d", robot_id);
+    
+    char sub_beginning[512] = "robot";
+    char sub_ending[128] = "/odom";
+    strcat(sub_beginning, robot_id_string);
+    strcat(sub_beginning, sub_ending);
+    printf("SUBSCRIBER STRING\n");
+    printf(sub_beginning);
+
+    char sub_beginning2[512] = "robot";
+    char sub_ending2[128] = "/cmd_vel";
+    strcat(sub_beginning2, robot_id_string);
+    strcat(sub_beginning2, sub_ending2);
+    printf("PUBLISHER STRING\n");
+    printf(sub_beginning2);
+
+    ros::NodeHandle n;
+    gazebo_odom_subscriber = n.subscribe(sub_beginning, 1000000000, gazeboCallBack);
+    velocity_publisher = n.advertise<geometry_msgs::Twist>(sub_beginning2, 1000000);
+
 	double destinationPoints[mainPRT->valueUnion.seq->size][3];
 	
 	for (int i = 0; i < mainPRT->valueUnion.seq->size; i++) {
