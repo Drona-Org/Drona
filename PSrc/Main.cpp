@@ -277,10 +277,10 @@ int main(int argc, char *argv[])
 
         PrtUpdateAssertFn(MyAssert);
         PRT_UINT32 machineId;
-        PRT_BOOLEAN foundMainMachine = PrtLookupMachineByName("Project", &machineId);
+        PRT_BOOLEAN foundMainMachine = PrtLookupMachineByName("TestDriver", &machineId);
         if (foundMainMachine == PRT_FALSE)
         {
-            printf("%s\n", "FAILED TO FIND Project");
+            printf("%s\n", "FAILED TO FIND TestDriver");
             exit(1);
         }
         PrtMkMachine(MAIN_P_PROCESS, machineId, 1, &payload);
