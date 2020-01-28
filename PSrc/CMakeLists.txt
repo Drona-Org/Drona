@@ -6,13 +6,13 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/../../../../../sumukh/Documents/P/Bld/Drops/Prt/include
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/ExternalMotionPlanners/OMPLOptimalPlanner/Includes
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes)
-add_executable(drona_test 
-    MailDeliveryTaskPlanner.h
-    MailDeliveryTaskPlanner.c
-    Main.cpp
-    RobotFuncs.h
-    RobotFuncs.cpp
-    Exp1.xml
+add_executable(drona_test
+    SoftwareStack/MailDeliveryTaskPlanner.h
+    SoftwareStack/MailDeliveryTaskPlanner.c
+    SoftwareStack/Main.cpp
+    RobotSDK/RobotFuncs.h
+    RobotSDK/RobotFuncs.cpp
+    SoftwareStack/Exp1.xml
     ${CMAKE_SOURCE_DIR}/Drona/PSrc/Exp1.xml
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes/Workspace.h
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes/tinyxml2.h

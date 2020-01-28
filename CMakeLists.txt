@@ -140,12 +140,12 @@ include_directories(
 # add_dependencies(updated_robot_mover_node Drona_generate_messages_cpp)
 
 add_executable(drona_test 
-    PSrc/MailDeliveryTaskPlanner.h
-    PSrc/MailDeliveryTaskPlanner.c
-    PSrc/Main.cpp
-    PSrc/RobotFuncs.h
-    PSrc/RobotFuncs.cpp
-    PSrc/Exp1.xml
+    PSrc/SoftwareStack/MailDeliveryTaskPlanner.h
+    PSrc/SoftwareStack/MailDeliveryTaskPlanner.c
+    PSrc/SoftwareStack/Main.cpp
+    PSrc/RobotSDK/RobotFuncs.h
+    PSrc/RobotSDK/RobotFuncs.cpp
+    PSrc/SoftwareStack/Exp1.xml
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes/Workspace.h
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes/tinyxml2.h
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes/WorkspaceParser.h
