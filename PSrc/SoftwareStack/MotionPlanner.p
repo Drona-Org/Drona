@@ -1,14 +1,13 @@
-machine MotionPlanner 
-{
-    var my_robot: machine;
-    var robot_id: int;
-    var my_plan_executor: machine;
+machine MotionPlanner {
+    var robot: machine;
+    var robotId: int;
+    var planExecutor: machine;
 
 	start state Init {
 		entry (payload: (machine, int)) {
-            my_robot = payload.0;
-            robot_id = payload.1;
-            my_plan_executor = new PlanExecutor(this, robot_id);
+            robot = payload.0;
+            robotId = payload.1;
+            planExecutor = new PlanExecutor(this, robotId);
             raise Success;
 		}
         on Success goto WaitRequest;
@@ -16,36 +15,36 @@ machine MotionPlanner
 
     state WaitRequest {
         entry {}
-        on Send_Next_Point goto Compute_Path_And_Send_To_PE;
-        on Completed_Point goto Completed_Point_State;
+        on SendGoalPoint goto ComputePathAndSendToPE;
+        on CompletedPoint goto CompletedPointState;
 
     }
 
-    state Completed_Point_State {
+    state CompletedPointState {
         entry {
-            send my_robot, Completed_Point;
+            send robot, CompletedPoint;
             raise Success;
         }
         on Success goto WaitRequest;
     }
 
-    state Compute_Path_And_Send_To_PE {
+    state ComputePathAndSendToPE {
         entry (payload: (float, float, float)) {
             var s: seq[(float, float, float)];
-            var ompl_motion_plan : int;
+            var omplMotionPlan : int;
 
             s = default(seq[(float, float, float)]);
             s += (0, payload);
             s += (1, payload);
 
-            ompl_motion_plan = omplMotionPlanExternal(s, robot_id);
-            send my_plan_executor, Execute_Path, ompl_motion_plan;
+            omplMotionPlan = omplMotionPlanExternal(s, robotId);
+            send planExecutor, ExecutePath, omplMotionPlan;
             receive {
-				case Path_Completed: {
-                    raise Completed_Point;
+				case PathCompleted: {
+                    raise CompletedPoint;
                 }
 			}
         }
-        on Completed_Point goto Completed_Point_State;
+        on CompletedPoint goto CompletedPointState;
     }
 }

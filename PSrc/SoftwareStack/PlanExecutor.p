@@ -1,12 +1,11 @@
-machine PlanExecutor 
-{
-    var motion_planner: machine;
-    var robot_id: int;
+machine PlanExecutor {
+    var motionPlanner: machine;
+    var robotId: int;
 
 	start state Init {
 		entry (payload: (mp: machine, rid: int)) {
-            motion_planner = payload.mp;
-			robot_id = payload.rid;
+            motionPlanner = payload.mp;
+			robotId = payload.rid;
             raise Success;
 		}
         on Success goto WaitRequest;
@@ -14,14 +13,14 @@ machine PlanExecutor
 
     state WaitRequest {
         entry {}
-        on Execute_Path goto Execute_Path_State;
+        on ExecutePath goto ExecutePathState;
     }
 
-    state Execute_Path_State {
+    state ExecutePathState {
         entry (payload: int) {
             var x: int;
-            x = ROSGoTo(payload, robot_id);
-            send motion_planner, Path_Completed;
+            x = ROSGoTo(payload, robotId);
+            send motionPlanner, PathCompleted;
             raise Success;
         }
         on Success goto WaitRequest;
