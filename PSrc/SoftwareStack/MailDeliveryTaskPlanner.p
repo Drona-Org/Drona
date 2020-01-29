@@ -1,4 +1,4 @@
-fun omplMotionPlanExternal(destinations: seq[(float, float, float)], robot_id: int): int;
+fun OmplMotionPlanExternal(destinations: seq[(float, float, float)], robot_id: int): int;
 fun ROSGoTo(arr: int, robot_id: int): int;
 fun Sleep(time: float): int;
 

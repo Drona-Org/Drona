@@ -104,7 +104,7 @@ void gazebo_move_goal(double goal_x, double goal_y) {
     velocity_publisher.publish(vel_msg);
 }
 
-PRT_VALUE* P_omplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
+PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
     PRT_VALUE** P_VAR_destinations = argRefs[0];
     PRT_VALUE** P_VAR_robot_id = argRefs[1];

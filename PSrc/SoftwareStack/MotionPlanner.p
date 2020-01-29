@@ -37,7 +37,7 @@ machine MotionPlanner {
             s += (0, payload);
             s += (1, payload);
 
-            omplMotionPlan = omplMotionPlanExternal(s, robotId);
+            omplMotionPlan = OmplMotionPlanExternal(s, robotId);
             send planExecutor, ExecutePath, omplMotionPlan;
             receive {
 				case PathCompleted: {
