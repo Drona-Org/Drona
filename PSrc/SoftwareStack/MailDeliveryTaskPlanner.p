@@ -1,3 +1,5 @@
+fun RobotROSSetup(robotId: int): int;
+fun ShutdownROSSubscribers(): int; //TODO: MAKE CLEAN BY PASSING IN numOfWorkerDrones and iterating through all values of subscriber map and shutting down.
 fun OmplMotionPlanExternal(destinations: seq[(float, float, float)], robot_id: int): int;
 fun ROSGoTo(arr: int, robot_id: int): int;
 fun Sleep(time: float): int;
@@ -60,6 +62,7 @@ machine TestDriver {
             var counter: int;
             var droneId: int;
             var mailRequests: seq[MailReq];
+            var x: int;
             mailRequests = default(seq[MailReq]);
 
             mailInfo.mail_id = 1;
@@ -87,21 +90,34 @@ machine TestDriver {
 
             counter = 0;
             droneId = 1;
+            send workerDrones[1], SendNextMailReq, mailRequests[2];
+            // receive {
+            //     case CompletedPoint: {
+            //         counter = counter + 1;
+            //     }
+            // }
+            send workerDrones[0], SendNextMailReq, mailRequests[1];
+            // receive {
+            //     case CompletedPoint: {
+            //         counter = counter + 1;
+            //     }
+            // }
+            // while (counter < mailCount) { 
+            //     if (droneId == 1) {
+            //         droneId = 0;
+            //     } else {
+            //         droneId = 1;
+            //     }
 
-            while (counter < mailCount) {
-                if (droneId == 1) {
-                    droneId = 0;
-                } else {
-                    droneId = 1;
-                }
-
-                send workerDrones[droneId], SendNextMailReq, mailRequests[counter];
-                receive {
-                    case CompletedPoint: {
-                        counter = counter + 1;
-                    }
-			    }
-            }
+            //     send workerDrones[droneId], SendNextMailReq, mailRequests[counter];
+            //     receive {
+            //         case CompletedPoint: {
+            //             counter = counter + 1;
+            //         }
+			//     }
+            // }
+            
+            // x = ShutdownROSSubscribers();
             raise Success;
         }
         on Success goto WaitRequest;
@@ -118,8 +134,10 @@ machine DroneTaskPlanner {
 
     start state Init {
         entry (payload: (int, machine)) {
+            var x: int;
             myId = payload.0;
             testDriver = payload.1;
+            x = RobotROSSetup(payload.0);
             motionPlanner = new MotionPlanner((this, myId));
         }
 
@@ -145,7 +163,7 @@ machine DroneTaskPlanner {
             send motionPlanner, SendGoalPoint, payload.dest;
             receive {
 				case CompletedPoint: {
-                    send testDriver, CompletedPoint;
+                    // send testDriver, CompletedPoint;
                     raise Success;
                 }
 			}

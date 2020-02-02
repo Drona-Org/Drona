@@ -14,15 +14,31 @@
 #include "PlanGenerator.h"
 #include "WorkspaceParser.h"
 #include <cstring>
+#include <map>
 using namespace std;
 
+/*
+1. Create map of robot_id to vel_msgs
+2. Create map of robot_id to velocity_publisher
+3. Create map of robot_id to gazebo_odom_subscriber
+4. Create a map of robot_id to (robot_x, robot_y, robot_theta)
+5. Tentatively just have two different call backs (hardcoded), one for each of the robots
+6. Create a foreign function that gets called during robot setup in task planner that populates the above maps with the new robot information
+7. Convert all existing ROS functionality to use new maps
+*/
+std::map<int, geometry_msgs::Twist> id_vel_msgs; 
+std::map<int, ros::Publisher> id_vel_pubs;
+std::map<int, ros::Subscriber> id_odom_subs;
+std::map<int, float> id_robot_x; 
+std::map<int, float> id_robot_y; 
+std::map<int, float> id_robot_theta; 
 
-geometry_msgs::Twist vel_msg;
-ros::Publisher velocity_publisher;
-ros::Subscriber gazebo_odom_subscriber;
-float robot_x;
-float robot_y;
-float robot_theta;
+// geometry_msgs::Twist vel_msg;
+// ros::Publisher velocity_publisher;
+// ros::Subscriber gazebo_odom_subscriber;
+// float robot_x;
+// float robot_y;
+// float robot_theta;
 
 
 WS_Coord shiftBy = WS_Coord(0, 0, 0);
@@ -40,9 +56,20 @@ double getDistance(double x1, double y1, double x2, double y2) {
 }
 
 void gazeboCallBack(const nav_msgs::Odometry::ConstPtr& odom_msg) {
-    robot_x = odom_msg->pose.pose.position.x;
-    robot_y = odom_msg->pose.pose.position.y;
+    // robot_x = odom_msg->pose.pose.position.x;
+    // robot_y = odom_msg->pose.pose.position.y;
+    // tf::Quaternion quat;
+    // tf::quaternionMsgToTF(odom_msg->pose.pose.orientation, quat);
+    // double roll, pitch, yaw;
+    // tf::Matrix3x3(quat).getRPY(roll, pitch, yaw);
+    // geometry_msgs::Vector3 rpy;
+    // rpy.x = roll;
+    // rpy.y = pitch;
+    // rpy.z = yaw;
+    // robot_theta = yaw;
 
+    id_robot_x[1] = odom_msg->pose.pose.position.x;
+    id_robot_y[1] = odom_msg->pose.pose.position.y;
     tf::Quaternion quat;
     tf::quaternionMsgToTF(odom_msg->pose.pose.orientation, quat);
     double roll, pitch, yaw;
@@ -51,24 +78,52 @@ void gazeboCallBack(const nav_msgs::Odometry::ConstPtr& odom_msg) {
     rpy.x = roll;
     rpy.y = pitch;
     rpy.z = yaw;
-    
-    robot_theta = yaw;
+    id_robot_theta[1] = yaw;
 }
 
-void gazebo_move_goal(double goal_x, double goal_y) {
-    geometry_msgs::Twist vel_msg;
+void gazeboCallBack2(const nav_msgs::Odometry::ConstPtr& odom_msg) {
+    // robot_x = odom_msg->pose.pose.position.x;
+    // robot_y = odom_msg->pose.pose.position.y;
+    // tf::Quaternion quat;
+    // tf::quaternionMsgToTF(odom_msg->pose.pose.orientation, quat);
+    // double roll, pitch, yaw;
+    // tf::Matrix3x3(quat).getRPY(roll, pitch, yaw);
+    // geometry_msgs::Vector3 rpy;
+    // rpy.x = roll;
+    // rpy.y = pitch;
+    // rpy.z = yaw;
+    // robot_theta = yaw;
+
+    id_robot_x[2] = odom_msg->pose.pose.position.x;
+    id_robot_y[2] = odom_msg->pose.pose.position.y;
+    tf::Quaternion quat;
+    tf::quaternionMsgToTF(odom_msg->pose.pose.orientation, quat);
+    double roll, pitch, yaw;
+    tf::Matrix3x3(quat).getRPY(roll, pitch, yaw);
+    geometry_msgs::Vector3 rpy;
+    rpy.x = roll;
+    rpy.y = pitch;
+    rpy.z = yaw; 
+    id_robot_theta[2] = yaw;
+}
+
+void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
+    ros::Publisher velocity_publisher;
+    geometry_msgs::Twist vel_msg = id_vel_msgs[robot_id];
     ros::Rate loop_rate(1000000);
 
     usleep(500000);
     ros::spinOnce();
 
-    while (getDistance(goal_x, goal_y, robot_x, robot_y) >= 0.1) {
-        double inc_x = goal_x - robot_x;
-        double inc_y = goal_y - robot_y;
+    velocity_publisher = id_vel_pubs[robot_id];
+
+    while (getDistance(goal_x, goal_y, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1) {
+        double inc_x = goal_x - id_robot_x[robot_id];
+        double inc_y = goal_y - id_robot_y[robot_id];
         double angle_to_goal = atan2(inc_y, inc_x);
         
-        double tmp_linear_x = 0.2*getDistance(robot_x, robot_y, goal_x, goal_y);
-        double tmp_angular_z = 1.0*std::abs((atan2(goal_y-robot_y, goal_x - robot_x)) - (robot_theta));
+        double tmp_linear_x = 0.2*getDistance(id_robot_x[robot_id], id_robot_y[robot_id], goal_x, goal_y);
+        double tmp_angular_z = 1.0*std::abs((atan2(goal_y-id_robot_y[robot_id], goal_x - id_robot_x[robot_id])) - (id_robot_theta[robot_id]));
         
         if (tmp_linear_x < 0) {
             tmp_linear_x = max(-0.3, tmp_linear_x);
@@ -89,28 +144,34 @@ void gazebo_move_goal(double goal_x, double goal_y) {
         vel_msg.angular.y = 0;
         vel_msg.angular.z = tmp_angular_z;
 
-        velocity_publisher.publish(vel_msg);
+        id_vel_pubs[robot_id].publish(vel_msg);
         ros::spinOnce();
         loop_rate.sleep();
     }
 
     vel_msg.angular.x = 0;
     vel_msg.angular.z = 0;
-    velocity_publisher.publish(vel_msg);
+    id_vel_pubs[robot_id].publish(vel_msg);
     ros::spinOnce();
     loop_rate.sleep();
     vel_msg.angular.z = 0;
     vel_msg.linear.x = 0;
-    velocity_publisher.publish(vel_msg);
+    id_vel_pubs[robot_id].publish(vel_msg);
 }
 
-PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
-{
-    PRT_VALUE** P_VAR_destinations = argRefs[0];
-    PRT_VALUE** P_VAR_robot_id = argRefs[1];
-    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+PRT_VALUE* P_ShutdownROSSubscribers_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    id_odom_subs[1].shutdown();
+    id_odom_subs[2].shutdown();
+    return PrtMkIntValue((PRT_UINT32)1);
+}
 
+PRT_VALUE* P_RobotROSSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
+{
+    printf("STARTED ROS SETUP\n");
+    PRT_VALUE** P_VAR_robot_id = argRefs[0];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
     char robot_id_string[32];
+
     sprintf(robot_id_string, "%d", robot_id);
     
     char sub_beginning[512] = "robot";
@@ -118,14 +179,49 @@ PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
     strcat(sub_beginning, robot_id_string);
     strcat(sub_beginning, sub_ending);
 
-    char sub_beginning2[512] = "robot";
-    char sub_ending2[128] = "/cmd_vel";
-    strcat(sub_beginning2, robot_id_string);
-    strcat(sub_beginning2, sub_ending2);
+    char pub_beginning[512] = "robot";
+    char pub_ending2[128] = "/cmd_vel";
+    strcat(pub_beginning, robot_id_string);
+    strcat(pub_beginning, pub_ending2);
 
     ros::NodeHandle n;
-    gazebo_odom_subscriber = n.subscribe(sub_beginning, 1000000000, gazeboCallBack);
-    velocity_publisher = n.advertise<geometry_msgs::Twist>(sub_beginning2, 1000000);
+    ros::Subscriber gazebo_odom_subscriber;
+    ros::Publisher velocity_publisher;
+    geometry_msgs::Twist vel_msg;
+    if (robot_id == 1) {
+        gazebo_odom_subscriber = n.subscribe(sub_beginning, 1000000000, gazeboCallBack);
+    } else {
+        gazebo_odom_subscriber = n.subscribe(sub_beginning, 1000000000, gazeboCallBack2);
+    }
+    velocity_publisher = n.advertise<geometry_msgs::Twist>(pub_beginning, 1000000);
+    id_vel_pubs[robot_id] = velocity_publisher;
+    id_odom_subs[robot_id] = gazebo_odom_subscriber;
+    id_vel_msgs[robot_id] = vel_msg;
+    // gazebo_odom_subscriber.shutdown();
+    return PrtMkIntValue((PRT_UINT32)1);
+}
+
+PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
+{
+    PRT_VALUE** P_VAR_destinations = argRefs[0];
+    PRT_VALUE** P_VAR_robot_id = argRefs[1];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+    // char robot_id_string[32];
+    // sprintf(robot_id_string, "%d", robot_id);
+    // char sub_beginning[512] = "robot";
+    // char sub_ending[128] = "/odom";
+    // strcat(sub_beginning, robot_id_string);
+    // strcat(sub_beginning, sub_ending);
+    // char sub_beginning2[512] = "robot";
+    // char sub_ending2[128] = "/cmd_vel";
+    // strcat(sub_beginning2, robot_id_string);
+    // strcat(sub_beginning2, sub_ending2);
+
+    ros::NodeHandle n;
+    ros::Subscriber gazebo_odom_subscriber;
+    ros::Publisher velocity_publisher;
+    gazebo_odom_subscriber = id_odom_subs[robot_id];
+    velocity_publisher = id_vel_pubs[robot_id];
 
     double arrOfPoints[PrtSeqSizeOf(*P_VAR_destinations)][3];
 
@@ -195,7 +291,7 @@ PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
 			(*(floatArray+j))->valueUnion.ft = arrOfPoints2[i][j];
 		}
 	}
-    gazebo_odom_subscriber.shutdown();
+    // gazebo_odom_subscriber.shutdown();
     return mainPRT;
 }
 
@@ -205,22 +301,25 @@ PRT_VALUE* P_ROSGoTo_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     PRT_VALUE** P_VAR_robot_id = argRefs[1];
     int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
 
-    char robot_id_string[32];
-    sprintf(robot_id_string, "%d", robot_id);
-    
-    char sub_beginning[512] = "robot";
-    char sub_ending[128] = "/odom";
-    strcat(sub_beginning, robot_id_string);
-    strcat(sub_beginning, sub_ending);
-
-    char sub_beginning2[512] = "robot";
-    char sub_ending2[128] = "/cmd_vel";
-    strcat(sub_beginning2, robot_id_string);
-    strcat(sub_beginning2, sub_ending2);
+    // char robot_id_string[32];
+    // sprintf(robot_id_string, "%d", robot_id);
+    // char sub_beginning[512] = "robot";
+    // char sub_ending[128] = "/odom";
+    // strcat(sub_beginning, robot_id_string);
+    // strcat(sub_beginning, sub_ending);
+    // char sub_beginning2[512] = "robot";
+    // char sub_ending2[128] = "/cmd_vel";
+    // strcat(sub_beginning2, robot_id_string);
+    // strcat(sub_beginning2, sub_ending2);
+    // ros::NodeHandle n;
+    // gazebo_odom_subscriber = n.subscribe(sub_beginning, 1000000000, gazeboCallBack);
+    // velocity_publisher = n.advertise<geometry_msgs::Twist>(sub_beginning2, 1000000);
 
     ros::NodeHandle n;
-    gazebo_odom_subscriber = n.subscribe(sub_beginning, 1000000000, gazeboCallBack);
-    velocity_publisher = n.advertise<geometry_msgs::Twist>(sub_beginning2, 1000000);
+    ros::Subscriber gazebo_odom_subscriber;
+    ros::Publisher velocity_publisher;
+    gazebo_odom_subscriber = id_odom_subs[robot_id];
+    velocity_publisher = id_vel_pubs[robot_id];
 
 	double destinationPoints[mainPRT->valueUnion.seq->size][3];
 	
@@ -233,9 +332,9 @@ PRT_VALUE* P_ROSGoTo_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
         destinationPoints[i][2] = z;
         
 		printf("%f, %f, %f\n", x,y,z);
-        gazebo_move_goal(x, y);
+        gazebo_move_goal(x, y, robot_id);
 	}
-    gazebo_odom_subscriber.shutdown();
+    // gazebo_odom_subscriber.shutdown();
     return PrtMkIntValue((PRT_UINT32)1);
 }
 
