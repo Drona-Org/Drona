@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <cstring>
 
-
 PRT_PROCESS* MAIN_P_PROCESS;
 static PRT_BOOLEAN cooperative = PRT_TRUE;
 static int threads = 2;
@@ -80,7 +79,7 @@ static void RunToIdle(void* process) {
     {
         if (PRT_STEP_IDLE == PrtStepProcess((PRT_PROCESS*)process))
         {
-            // break;
+            break;
         }
     }
     decrement_threadsRunning();

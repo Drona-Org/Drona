@@ -17,15 +17,6 @@
 #include <map>
 using namespace std;
 
-/*
-1. Create map of robot_id to vel_msgs
-2. Create map of robot_id to velocity_publisher
-3. Create map of robot_id to gazebo_odom_subscriber
-4. Create a map of robot_id to (robot_x, robot_y, robot_theta)
-5. Tentatively just have two different call backs (hardcoded), one for each of the robots
-6. Create a foreign function that gets called during robot setup in task planner that populates the above maps with the new robot information
-7. Convert all existing ROS functionality to use new maps
-*/
 std::map<int, geometry_msgs::Twist> id_vel_msgs; 
 std::map<int, ros::Publisher> id_vel_pubs;
 std::map<int, ros::Subscriber> id_odom_subs;
@@ -33,22 +24,12 @@ std::map<int, float> id_robot_x;
 std::map<int, float> id_robot_y; 
 std::map<int, float> id_robot_theta; 
 
-// geometry_msgs::Twist vel_msg;
-// ros::Publisher velocity_publisher;
-// ros::Subscriber gazebo_odom_subscriber;
-// float robot_x;
-// float robot_y;
-// float robot_theta;
-
-
-WS_Coord shiftBy = WS_Coord(0, 0, 0);
-
 WS_Coord GazeboToPlanner(WS_Coord coord) {
-    return WS_Coord(coord.x + shiftBy.x, coord.y + shiftBy.y, coord.z + shiftBy.z);
+    return WS_Coord(coord.x + WS_Coord(0, 0, 0).x, coord.y + WS_Coord(0, 0, 0).y, coord.z + WS_Coord(0, 0, 0).z);
 }
 
 WS_Coord PlannerToGazebo(WS_Coord coord) {
-    return WS_Coord(coord.x - shiftBy.x, coord.y - shiftBy.y, coord.z - shiftBy.z);
+    return WS_Coord(coord.x - WS_Coord(0, 0, 0).x, coord.y - WS_Coord(0, 0, 0).y, coord.z - WS_Coord(0, 0, 0).z);
 }
 
 double getDistance(double x1, double y1, double x2, double y2) {
@@ -160,13 +141,15 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
 }
 
 PRT_VALUE* P_ShutdownROSSubscribers_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
-    id_odom_subs[1].shutdown();
-    id_odom_subs[2].shutdown();
+    PRT_VALUE** P_VAR_num_robots = argRefs[0];
+    int num_robots = PrtPrimGetInt(*P_VAR_num_robots);
+    for (int i = 0; i < num_robots; i++) {
+        id_odom_subs[i+1].shutdown();
+    }
     return PrtMkIntValue((PRT_UINT32)1);
 }
 
-PRT_VALUE* P_RobotROSSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
-{
+PRT_VALUE* P_RobotROSSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
     printf("STARTED ROS SETUP\n");
     PRT_VALUE** P_VAR_robot_id = argRefs[0];
     int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
@@ -201,8 +184,7 @@ PRT_VALUE* P_RobotROSSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     return PrtMkIntValue((PRT_UINT32)1);
 }
 
-PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
-{
+PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
     PRT_VALUE** P_VAR_destinations = argRefs[0];
     PRT_VALUE** P_VAR_robot_id = argRefs[1];
     int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
@@ -295,8 +277,7 @@ PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
     return mainPRT;
 }
 
-PRT_VALUE* P_ROSGoTo_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
-{
+PRT_VALUE* P_ROSGoTo_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
     struct PRT_VALUE* mainPRT = *(argRefs[0]);
     PRT_VALUE** P_VAR_robot_id = argRefs[1];
     int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
@@ -338,8 +319,7 @@ PRT_VALUE* P_ROSGoTo_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     return PrtMkIntValue((PRT_UINT32)1);
 }
 
-PRT_VALUE* P_Sleep_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
-{
+PRT_VALUE* P_Sleep_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
 	PRT_VALUE** P_VAR_time = argRefs[0];
 	float secs = PrtPrimGetFloat(*P_VAR_time);
 	usleep(secs*1000000);

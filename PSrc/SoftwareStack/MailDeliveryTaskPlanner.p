@@ -1,5 +1,5 @@
 fun RobotROSSetup(robotId: int): int;
-fun ShutdownROSSubscribers(): int; //TODO: MAKE CLEAN BY PASSING IN numOfWorkerDrones and iterating through all values of subscriber map and shutting down.
+fun ShutdownROSSubscribers(numRobots: int): int;
 fun OmplMotionPlanExternal(destinations: seq[(float, float, float)], robot_id: int): int;
 fun ROSGoTo(arr: int, robot_id: int): int;
 fun Sleep(time: float): int;
@@ -33,6 +33,7 @@ machine TestDriver {
     var workerDrones: seq[machine];
     var mailCount: int;
     var numOfWorkerDrones: int;
+    var x: int;
 
     start state Init {
         entry {
@@ -62,7 +63,6 @@ machine TestDriver {
             var counter: int;
             var droneId: int;
             var mailRequests: seq[MailReq];
-            var x: int;
             mailRequests = default(seq[MailReq]);
 
             mailInfo.mail_id = 1;
@@ -90,40 +90,41 @@ machine TestDriver {
 
             counter = 0;
             droneId = 1;
-            send workerDrones[1], SendNextMailReq, mailRequests[2];
-            // receive {
-            //     case CompletedPoint: {
-            //         counter = counter + 1;
-            //     }
-            // }
-            send workerDrones[0], SendNextMailReq, mailRequests[1];
-            // receive {
-            //     case CompletedPoint: {
-            //         counter = counter + 1;
-            //     }
-            // }
-            // while (counter < mailCount) { 
-            //     if (droneId == 1) {
-            //         droneId = 0;
-            //     } else {
-            //         droneId = 1;
-            //     }
 
-            //     send workerDrones[droneId], SendNextMailReq, mailRequests[counter];
-            //     receive {
-            //         case CompletedPoint: {
-            //             counter = counter + 1;
-            //         }
-			//     }
-            // }
-            
-            // x = ShutdownROSSubscribers();
+            // Simultaneous Requests
+            /* TODO: 
+                1. Figure out automatic ordering of requets
+                2. Figure out when to call ShurdownROSSubscribers()
+            */
+            // send workerDrones[1], SendNextMailReq, mailRequests[2];
+            // send workerDrones[0], SendNextMailReq, mailRequests[1];
+            // send workerDrones[0], SendNextMailReq, mailRequests[0];
+            // send workerDrones[1], SendNextMailReq, mailRequests[3];
+
+            // Sequential Requests
+            while (counter < mailCount) { 
+                if (droneId == 1) {
+                    droneId = 0;
+                } else {
+                    droneId = 1;
+                }
+                send workerDrones[droneId], SendNextMailReq, mailRequests[counter];
+                receive {
+                    case CompletedPoint: {
+                        counter = counter + 1;
+                    }
+			    }
+            }
             raise Success;
         }
         on Success goto WaitRequest;
     }
 
-    state WaitRequest {}
+    state WaitRequest {
+        entry {
+            x = ShutdownROSSubscribers(numOfWorkerDrones);
+        }
+    }
 }
 
 machine DroneTaskPlanner {
@@ -163,7 +164,7 @@ machine DroneTaskPlanner {
             send motionPlanner, SendGoalPoint, payload.dest;
             receive {
 				case CompletedPoint: {
-                    // send testDriver, CompletedPoint;
+                    send testDriver, CompletedPoint;
                     raise Success;
                 }
 			}
