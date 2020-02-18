@@ -8,7 +8,7 @@ machine LocationMonitor {
             var i: int;
             taskPlanner = payload;
             i = 0;
-            while (i < 30) {
+            while (i < 120) {
                 x = RobotSubscribe(1);
                 i = i + 1;
             }
@@ -20,6 +20,14 @@ machine LocationMonitor {
             - Not clear why we need PrtSend wrapper, maybe we can just handle this in the PlanExecutor's 
                 goTo goal foreign function??
             */
+            raise Success;
+        }
+        on Success goto WaitRequest;
+    }
+
+    state WaitRequest {
+        entry {
+            // x = ShutdownROSSubscribers(numOfWorkerDrones);
         }
     }
 }
