@@ -34,6 +34,7 @@ machine TestDriver {
     var mailCount: int;
     var numOfWorkerDrones: int;
     var x: int;
+    var locationMonitor: machine;
 
     start state Init {
         entry {
@@ -55,7 +56,7 @@ machine TestDriver {
         }
         on Success goto StartSendingMailState;
     }
-
+    
     state StartSendingMailState {
         entry {
             var mailInfo: MailInfo;
@@ -96,25 +97,33 @@ machine TestDriver {
                 1. Figure out automatic ordering of requets
                 2. Figure out when to call ShurdownROSSubscribers()
             */
-            // send workerDrones[1], SendNextMailReq, mailRequests[2];
-            // send workerDrones[0], SendNextMailReq, mailRequests[1];
-            // send workerDrones[0], SendNextMailReq, mailRequests[0];
-            // send workerDrones[1], SendNextMailReq, mailRequests[3];
+            locationMonitor = new LocationMonitor(this);
+
+            send workerDrones[1], SendNextMailReq, mailRequests[1];
+            send workerDrones[0], SendNextMailReq, mailRequests[2];
+            send workerDrones[0], SendNextMailReq, mailRequests[0];
+            send workerDrones[1], SendNextMailReq, mailRequests[3];
 
             // Sequential Requests
-            while (counter < mailCount) { 
-                if (droneId == 1) {
-                    droneId = 0;
-                } else {
-                    droneId = 1;
-                }
-                send workerDrones[droneId], SendNextMailReq, mailRequests[counter];
-                receive {
-                    case CompletedPoint: {
-                        counter = counter + 1;
-                    }
-			    }
-            }
+            // send workerDrones[0], SendNextMailReq, mailRequests[0];
+            // send workerDrones[0], SendNextMailReq, mailRequests[1];
+            // send workerDrones[0], SendNextMailReq, mailRequests[2];
+            // send workerDrones[0], SendNextMailReq, mailRequests[3];
+
+            // while (counter < mailCount) { 
+            //     if (droneId == 1) {
+            //         droneId = 0;
+            //     } else {
+            //         droneId = 1;
+            //     }
+            //     send workerDrones[0], SendNextMailReq, mailRequests[counter];
+            //     receive {
+            //         case CompletedPoint: {
+            //             counter = counter + 1;
+            //         }
+			//     }
+            // }
+
             raise Success;
         }
         on Success goto WaitRequest;
@@ -122,7 +131,7 @@ machine TestDriver {
 
     state WaitRequest {
         entry {
-            x = ShutdownROSSubscribers(numOfWorkerDrones);
+            // x = ShutdownROSSubscribers(numOfWorkerDrones);
         }
     }
 }
@@ -164,7 +173,7 @@ machine DroneTaskPlanner {
             send motionPlanner, SendGoalPoint, payload.dest;
             receive {
 				case CompletedPoint: {
-                    send testDriver, CompletedPoint;
+                    // send testDriver, CompletedPoint;
                     raise Success;
                 }
 			}

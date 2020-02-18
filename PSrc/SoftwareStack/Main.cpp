@@ -79,7 +79,7 @@ static void RunToIdle(void* process) {
     {
         if (PRT_STEP_IDLE == PrtStepProcess((PRT_PROCESS*)process))
         {
-            break;
+            // break;
         }
     }
     decrement_threadsRunning();
