@@ -335,13 +335,11 @@ PRT_VALUE* P_RobotSubscribe_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     ros::Rate loop_rate(1000000);
     usleep(500000);
     ros::spinOnce();
+
     /*
-    - NEED TO MAKE SEPARATE SUBSCRIBERS FOR THE MONITOR, OTHERWISE COULD INTERFERE WITH THE ONES FOR GOTO GOAL??
-        Actually not sure, test this and make sure it works in the multi threaded case. 
-    - This function should just be the decision module function that decides depending on the location of the robots,
-        whether they should be using SC or AC. 
-    - Return boolean for each robot?? Maybe monitor for each robot?? Maybe we should just focus on single robot case, like in paper.
+    - Set `advancedLocation` depending on location
     */
+
     printf("Robot 1: %f %f\n", id_robot_x[1], id_robot_y[1]);
     printf("Robot 2: %f %f\n", id_robot_x[2], id_robot_y[2]);
     return PrtMkIntValue((PRT_UINT32)1);

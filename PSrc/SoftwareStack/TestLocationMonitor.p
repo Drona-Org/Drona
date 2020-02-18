@@ -13,12 +13,19 @@ machine LocationMonitor {
                 i = i + 1;
             }
             /* 
-            - Create a foreign function, currently RobotSubscribe, that handles all decision module logic. 
-                This function should just return whether the robot should be in SC or AC.
-            - Decision module function above should be wrapped in an infinite loop in P. Depending on the result
-                of the function, call the foreign functions as described in email to set the global map
-            - Not clear why we need PrtSend wrapper, maybe we can just handle this in the PlanExecutor's 
-                goTo goal foreign function??
+            - Create global bool `advancedLocation` to represent robot is in advanced controller
+            - Make RobotSubscribe flip `advancedLocation` to false when outside of safe region (arbitrary for now)
+            - Use `advancedLocation` in goTo_gazebo func, where it only goes if true, otherwise stop for now
+
+            -LATER:
+                - create global map for all RTA modules: 
+                    - SwitchMap: R -> bool where R is the set of RTA modules and bool represents whether AC is in control or SC.
+                - create two foreign functions in C:
+                    - switchACToSC(r) --> which sets the SwitchMap[r] to true
+                    - switchACToSC(r) --> which sets the SwitchMap[r] to false
+                    ** the above two functions must be invoked from the monitoring statemachine to control the switching.
+                    - This means RobotSubscribe should simply return a boolean as to whether robot is safe or not and the `LocationMonitor`
+                        should call these functions to set `advancedLocation` bool and later the same bool in the map.
             */
             raise Success;
         }
@@ -27,7 +34,6 @@ machine LocationMonitor {
 
     state WaitRequest {
         entry {
-            // x = ShutdownROSSubscribers(numOfWorkerDrones);
         }
     }
 }
