@@ -99,10 +99,10 @@ machine TestDriver {
             */
             locationMonitor = new LocationMonitor(this);
 
-            send workerDrones[1], SendNextMailReq, mailRequests[1];
-            send workerDrones[0], SendNextMailReq, mailRequests[2];
-            send workerDrones[0], SendNextMailReq, mailRequests[0];
             send workerDrones[1], SendNextMailReq, mailRequests[3];
+            send workerDrones[0], SendNextMailReq, mailRequests[0];
+            send workerDrones[0], SendNextMailReq, mailRequests[2];
+            send workerDrones[1], SendNextMailReq, mailRequests[1];
 
             // Sequential Requests
             // send workerDrones[0], SendNextMailReq, mailRequests[0];
@@ -130,9 +130,7 @@ machine TestDriver {
     }
 
     state WaitRequest {
-        entry {
-            // x = ShutdownROSSubscribers(numOfWorkerDrones);
-        }
+        entry {}
     }
 }
 

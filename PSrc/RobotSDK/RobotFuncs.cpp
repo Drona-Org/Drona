@@ -22,7 +22,8 @@ std::map<int, ros::Publisher> id_vel_pubs;
 std::map<int, ros::Subscriber> id_odom_subs;
 std::map<int, float> id_robot_x; 
 std::map<int, float> id_robot_y; 
-std::map<int, float> id_robot_theta; 
+std::map<int, float> id_robot_theta;
+std::map<int, bool> id_advancedLocation;
 
 WS_Coord GazeboToPlanner(WS_Coord coord) {
     return WS_Coord(coord.x + WS_Coord(0, 0, 0).x, coord.y + WS_Coord(0, 0, 0).y, coord.z + WS_Coord(0, 0, 0).z);
@@ -98,7 +99,7 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
 
     velocity_publisher = id_vel_pubs[robot_id];
 
-    while (getDistance(goal_x, goal_y, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1) {
+    while ((getDistance(goal_x, goal_y, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1) && id_advancedLocation[robot_id]) {
         double inc_x = goal_x - id_robot_x[robot_id];
         double inc_y = goal_y - id_robot_y[robot_id];
         double angle_to_goal = atan2(inc_y, inc_x);
@@ -129,7 +130,7 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
         ros::spinOnce();
         loop_rate.sleep();
     }
-
+    id_advancedLocation[robot_id] = true;
     vel_msg.angular.x = 0;
     vel_msg.angular.z = 0;
     id_vel_pubs[robot_id].publish(vel_msg);
@@ -180,6 +181,7 @@ PRT_VALUE* P_RobotROSSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) 
     id_vel_pubs[robot_id] = velocity_publisher;
     id_odom_subs[robot_id] = gazebo_odom_subscriber;
     id_vel_msgs[robot_id] = vel_msg;
+    id_advancedLocation[robot_id] = true;
     // gazebo_odom_subscriber.shutdown();
     return PrtMkIntValue((PRT_UINT32)1);
 }
@@ -339,8 +341,20 @@ PRT_VALUE* P_RobotSubscribe_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     /*
     - Set `advancedLocation` depending on location
     */
+    double robot1Distance = getDistance(id_robot_x[1], id_robot_y[1], 0.0, 0.0);
+    double robot2Distance = getDistance(id_robot_x[2], id_robot_y[2], 2.0, 0.0);
 
     printf("Robot 1: %f %f\n", id_robot_x[1], id_robot_y[1]);
     printf("Robot 2: %f %f\n", id_robot_x[2], id_robot_y[2]);
+    printf("Robot 1 Distance to (0,0): %f\n", robot1Distance);
+    printf("Robot 2 Distance to (2,0): %f\n", robot2Distance);
+
+    if (robot1Distance < 0.3) {
+        id_advancedLocation[1] = false;
+    }
+
+    if (robot2Distance < 0.3) {
+        id_advancedLocation[2] = false;
+    }
     return PrtMkIntValue((PRT_UINT32)1);
 }
