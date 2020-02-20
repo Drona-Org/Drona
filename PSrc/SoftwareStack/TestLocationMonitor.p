@@ -13,10 +13,6 @@ machine LocationMonitor {
                 i = i + 1;
             }
             /* 
-            - Create global bool `advancedLocation` to represent robot is in advanced controller
-            - Make RobotSubscribe flip `advancedLocation` to false when outside of safe region (arbitrary for now)
-            - Use `advancedLocation` in goTo_gazebo func, where it only goes if true, otherwise stop for now
-
             -LATER:
                 - create global map for all RTA modules: 
                     - SwitchMap: R -> bool where R is the set of RTA modules and bool represents whether AC is in control or SC.
