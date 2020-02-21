@@ -5,4 +5,4 @@ extern "C" PRT_VALUE* P_RobotROSSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE**
 extern "C" PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern "C" PRT_VALUE* P_ROSGoTo_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern "C" PRT_VALUE* P_Sleep_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
-extern "C" PRT_VALUE* P_RobotSubscribe_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
+extern "C" PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);

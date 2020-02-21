@@ -108,8 +108,12 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
         ros::spinOnce();
         loop_rate.sleep();
     }
-
-    // Back away if in SC mode
+    /*
+    SC CONTROLLER BEHAVIOR:
+    - This is where the robots exhibit SC behavior
+    - The code below is to have the robots move back if they are in the unsafe state.
+    - To have the robot simply stop, we can simply comment out the code below.
+    */
     while (!id_advancedLocation[robot_id]) {
         vel_msg.angular.x = 0;
         vel_msg.angular.z = 0;
@@ -298,20 +302,21 @@ PRT_VALUE* P_Sleep_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
     return PrtMkIntValue((PRT_UINT32)1);
 }
 
-PRT_VALUE* P_RobotSubscribe_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
 	PRT_VALUE** P_VAR_robotId = argRefs[0];
-    ros::NodeHandle n;
-    ros::Subscriber gazebo_odom_subscriber;
-    ros::Publisher velocity_publisher;
-    gazebo_odom_subscriber = id_odom_subs[1];
-    ros::Rate loop_rate(1000000);
     usleep(500000);
     ros::spinOnce();
+    printf("Robot1: (%f, %f)\n", id_robot_x[1], id_robot_y[1]);
+    printf("Robot2: (%f, %f)\n", id_robot_x[2], id_robot_y[2]);
 
+    /* 
+    DECISION MODULE LOGIC:
+    - This is where the monitor decides what is considered safe/unsafe
+    - CURRENT IMPL: robot1 unsafe if < 0.3 from origin. robot2 unsafe if < 0.3 from (2,0)
+    */
     double robot1Distance = getDistance(id_robot_x[1], id_robot_y[1], 0.0, 0.0);
     double robot2Distance = getDistance(id_robot_x[2], id_robot_y[2], 2.0, 0.0);
 
-    // Decision module logic
     if (robot1Distance < 0.3) {
         id_advancedLocation[1] = false;
     }

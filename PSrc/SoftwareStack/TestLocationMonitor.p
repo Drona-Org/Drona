@@ -1,4 +1,4 @@
-fun RobotSubscribe(robotId: int): int;
+fun MonitorLocation(robotId: int): int;
 
 machine LocationMonitor {
     var taskPlanner: machine;
@@ -9,7 +9,7 @@ machine LocationMonitor {
             taskPlanner = payload;
             i = 0;
             while (i < 120) {
-                x = RobotSubscribe(1);
+                x = MonitorLocation(1);
                 i = i + 1;
             }
             /* 
