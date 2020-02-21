@@ -35,6 +35,7 @@ machine TestDriver {
     var numOfWorkerDrones: int;
     var x: int;
     var locationMonitor: machine;
+    var battery: machine;
 
     start state Init {
         entry {
@@ -97,12 +98,13 @@ machine TestDriver {
                 1. Figure out automatic ordering of requets
                 2. Figure out when to call ShurdownROSSubscribers()
             */
-            locationMonitor = new LocationMonitor(this);
+            // locationMonitor = new LocationMonitor(this);
+            battery = new Battery(this);
 
             send workerDrones[1], SendNextMailReq, mailRequests[3];
             send workerDrones[0], SendNextMailReq, mailRequests[0];
-            send workerDrones[0], SendNextMailReq, mailRequests[2];
-            send workerDrones[1], SendNextMailReq, mailRequests[1];
+            send workerDrones[0], SendNextMailReq, mailRequests[1];
+            send workerDrones[1], SendNextMailReq, mailRequests[2];
 
             // Sequential Requests
             // send workerDrones[0], SendNextMailReq, mailRequests[0];
