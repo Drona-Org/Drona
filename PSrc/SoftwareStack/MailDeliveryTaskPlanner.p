@@ -94,16 +94,13 @@ machine TestDriver {
             counter = 0;
             droneId = 1;
 
+            // TODO: Figure out when to call ShurdownROSSubscribers()
+
+            locationMonitor = new LocationMonitor(this);
+            // battery1 = new Battery(this,1);
+            // battery2 = new Battery(this,2);
+
             // Simultaneous Requests
-            /* TODO: 
-                1. Figure out automatic ordering of requets
-                2. Figure out when to call ShurdownROSSubscribers()
-            */
-            // locationMonitor = new LocationMonitor(this);
-            battery1 = new Battery(this,1);
-            battery2 = new Battery(this,2);
-
-
             send workerDrones[1], SendNextMailReq, mailRequests[3];
             send workerDrones[0], SendNextMailReq, mailRequests[0];
             send workerDrones[0], SendNextMailReq, mailRequests[1];

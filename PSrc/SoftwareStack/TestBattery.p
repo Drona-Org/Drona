@@ -26,11 +26,11 @@ machine Battery {
                 currPercentage = getCurrentPercentage(robotID);
                 print "currPercentage Robot{0}: {1}\n", robotID, currPercentage;
                 if (currPercentage <= 94) {
-                    print "OH NO. I AM UNSAFE!!!!\n";
+                    print "Robot {0} Low Battery!\n", robotID;
                     y = switchACtoSC(1,1);
                     y = switchACtoSC(1,2);
                 } else if (currPercentage > 94) {
-                    print "YAY. I AM SAFE!!!!\n";
+                    print "Robot {0} Safe Battery!\n", robotID;
                     y = switchSCtoAC(1,1);
                     y = switchSCtoAC(1,2);
                 }

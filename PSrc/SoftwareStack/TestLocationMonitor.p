@@ -13,15 +13,11 @@ machine LocationMonitor {
                 i = i + 1;
             }
             /* 
-            -LATER:
-                - create global map for all RTA modules: 
-                    - SwitchMap: R -> bool where R is the set of RTA modules and bool represents whether AC is in control or SC.
-                - create two foreign functions in C:
-                    - switchACToSC(r) --> which sets the SwitchMap[r] to true
-                    - switchACToSC(r) --> which sets the SwitchMap[r] to false
-                    ** the above two functions must be invoked from the monitoring statemachine to control the switching.
-                    - This means RobotSubscribe should simply return a boolean as to whether robot is safe or not and the `LocationMonitor`
-                        should call these functions to set `advancedLocation` bool and later the same bool in the map.
+            TODO: 
+                1. Figure out exactly what this experiment should be what is considered unsafe. Based on that, we may need to split location
+                    monitors, into 1 for each robot. We would only keep it this way, if location monitoring is based on collisions/interaction of both robots.
+                2. Setup location monitors such that the foreign func `MonitorLocation` returns a bool (i guess for each robot??), as to whether
+                    it is safe. Then we can call the `SwitchACtoSC` and `SwitchSCtoAC` funcs directly from the P monitor.
             */
             raise Success;
         }

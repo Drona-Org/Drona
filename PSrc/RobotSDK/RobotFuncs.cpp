@@ -67,19 +67,83 @@ void gazeboCallBack2(const nav_msgs::Odometry::ConstPtr& odom_msg) {
     id_robot_theta[2] = yaw;
 }
 
+void safe_controller(int robot_id) {
+    geometry_msgs::Twist vel_msg = id_vel_msgs[robot_id];
+    ros::Rate loop_rate(1000000);
+    usleep(500000);
+    ros::spinOnce();
+
+    // LOCATION MONITOR SC
+    while (!id_advancedLocation[robot_id]) {
+        vel_msg.angular.x = 0;
+        vel_msg.angular.z = 0;
+        id_vel_pubs[robot_id].publish(vel_msg);
+        ros::spinOnce();
+        loop_rate.sleep();
+        vel_msg.angular.z = 0;
+        vel_msg.linear.x = -1.0;
+        id_vel_pubs[robot_id].publish(vel_msg);
+    }
+
+    // BATTERY MONITOR SC
+    double charging_station_x = 1.0;
+    double charging_station_y = 1.0;
+
+    while (!id_advancedBattery[robot_id]) {
+        while ((getDistance(charging_station_x, charging_station_y, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1)) {
+            double inc_x = charging_station_x - id_robot_x[robot_id];
+            double inc_y = charging_station_y - id_robot_y[robot_id];
+            double angle_to_goal = atan2(inc_y, inc_x);
+            
+            double tmp_linear_x = 0.2*getDistance(id_robot_x[robot_id], id_robot_y[robot_id], charging_station_x, charging_station_y);
+            double tmp_angular_z = 1.0*std::abs((atan2(charging_station_y-id_robot_y[robot_id], charging_station_x - id_robot_x[robot_id])) - (id_robot_theta[robot_id]));
+            
+            if (tmp_linear_x < 0) {
+                tmp_linear_x = max(-0.3, tmp_linear_x);
+            } else {
+                tmp_linear_x = min(0.3, tmp_linear_x);
+            }
+            
+            if (tmp_angular_z < 0) {
+                tmp_angular_z = max(-1.0, tmp_angular_z);
+            } else {
+                tmp_angular_z = min(1.0, tmp_angular_z);
+            }
+
+            vel_msg.linear.x = tmp_linear_x;
+            vel_msg.linear.y = 0;
+            vel_msg.linear.z = 0;
+            vel_msg.angular.x = 0;
+            vel_msg.angular.y = 0;
+            vel_msg.angular.z = tmp_angular_z;
+
+            id_vel_pubs[robot_id].publish(vel_msg);
+            ros::spinOnce();
+            loop_rate.sleep();
+        }
+        id_advancedBattery[robot_id] = true;
+        id_currBatteryPercentage[robot_id] = 100;
+    }
+}
+
 void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
     ros::Publisher velocity_publisher;
     geometry_msgs::Twist vel_msg = id_vel_msgs[robot_id];
     ros::Rate loop_rate(1000000);
-
     usleep(500000);
     ros::spinOnce();
     velocity_publisher = id_vel_pubs[robot_id];
 
     while ((getDistance(goal_x, goal_y, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1)) {
-        if (!id_advancedLocation[robot_id] || !id_advancedBattery[robot_id]) {
+        // Checking if robot is in an unsafe state
+        if (!id_advancedLocation[robot_id]) {
+            safe_controller(robot_id);
             break;
         }
+        if (!id_advancedBattery[robot_id]) {
+            safe_controller(robot_id);
+        }
+
         double inc_x = goal_x - id_robot_x[robot_id];
         double inc_y = goal_y - id_robot_y[robot_id];
         double angle_to_goal = atan2(inc_y, inc_x);
@@ -109,62 +173,7 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
         id_vel_pubs[robot_id].publish(vel_msg);
         ros::spinOnce();
         loop_rate.sleep();
-    }
-    /*
-    SC CONTROLLER BEHAVIOR:
-    - This is where the robots exhibit SC behavior
-    - The code below is to have the robots move back if they are in the unsafe state.
-    - To have the robot simply stop, we can simply comment out the code below.
-    */
-
-    // LOCATION MONITOR SC
-    // while (!id_advancedLocation[robot_id]) {
-    //     vel_msg.angular.x = 0;
-    //     vel_msg.angular.z = 0;
-    //     id_vel_pubs[robot_id].publish(vel_msg);
-    //     ros::spinOnce();
-    //     loop_rate.sleep();
-    //     vel_msg.angular.z = 0;
-    //     vel_msg.linear.x = -1.0;
-    //     id_vel_pubs[robot_id].publish(vel_msg);
-    // }
-
-    // BATTERY MONITOR SC
-    while (!id_advancedBattery[robot_id]) {
-        while ((getDistance(1.0, 1.0, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1)) {
-            double inc_x = 1.0 - id_robot_x[robot_id];
-            double inc_y = 1.0 - id_robot_y[robot_id];
-            double angle_to_goal = atan2(inc_y, inc_x);
-            
-            double tmp_linear_x = 0.2*getDistance(id_robot_x[robot_id], id_robot_y[robot_id], 1.0, 1.0);
-            double tmp_angular_z = 1.0*std::abs((atan2(1.0-id_robot_y[robot_id], 1.0 - id_robot_x[robot_id])) - (id_robot_theta[robot_id]));
-            
-            if (tmp_linear_x < 0) {
-                tmp_linear_x = max(-0.3, tmp_linear_x);
-            } else {
-                tmp_linear_x = min(0.3, tmp_linear_x);
-            }
-            
-            if (tmp_angular_z < 0) {
-                tmp_angular_z = max(-1.0, tmp_angular_z);
-            } else {
-                tmp_angular_z = min(1.0, tmp_angular_z);
-            }
-
-            vel_msg.linear.x = tmp_linear_x;
-            vel_msg.linear.y = 0;
-            vel_msg.linear.z = 0;
-            vel_msg.angular.x = 0;
-            vel_msg.angular.y = 0;
-            vel_msg.angular.z = tmp_angular_z;
-
-            id_vel_pubs[robot_id].publish(vel_msg);
-            ros::spinOnce();
-            loop_rate.sleep();
-        }
-        id_advancedBattery[robot_id] = true;
-        id_currBatteryPercentage[robot_id] = 100;
-    }
+    }    
 
     vel_msg.angular.x = 0;
     vel_msg.angular.z = 0;
@@ -388,7 +397,7 @@ PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
     - CURRENT IMPL: robot1 unsafe if < 0.3 from origin. robot2 unsafe if < 0.3 from (2,0)
     */
     double robot1Distance = getDistance(id_robot_x[1], id_robot_y[1], 0.0, 0.0);
-    double robot2Distance = getDistance(id_robot_x[2], id_robot_y[2], 2.0, 0.0);
+    double robot2Distance = getDistance(id_robot_x[2], id_robot_y[2], 2.0, 2.0);
 
     if (robot1Distance < 0.3) {
         id_advancedLocation[1] = false;
