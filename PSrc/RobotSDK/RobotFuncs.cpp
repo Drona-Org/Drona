@@ -23,7 +23,8 @@ std::map<int, ros::Subscriber> id_odom_subs;
 std::map<int, float> id_robot_x; 
 std::map<int, float> id_robot_y; 
 std::map<int, float> id_robot_theta;
-std::map<int, bool> id_advancedLocation;
+std::map<int, bool> id_advancedLocation; // rtaModuleID = 0
+std::map<int, bool> id_advancedBattery;  // rtaModuleID = 1
 
 WS_Coord GazeboToPlanner(WS_Coord coord) {
     return WS_Coord(coord.x + WS_Coord(0, 0, 0).x, coord.y + WS_Coord(0, 0, 0).y, coord.z + WS_Coord(0, 0, 0).z);
@@ -75,7 +76,7 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
     velocity_publisher = id_vel_pubs[robot_id];
 
     while ((getDistance(goal_x, goal_y, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1)) {
-        if (!id_advancedLocation[robot_id]) {
+        if (!id_advancedLocation[robot_id] || !id_advancedBattery[robot_id]) {
             break;
         }
         double inc_x = goal_x - id_robot_x[robot_id];
@@ -114,15 +115,53 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
     - The code below is to have the robots move back if they are in the unsafe state.
     - To have the robot simply stop, we can simply comment out the code below.
     */
-    while (!id_advancedLocation[robot_id]) {
-        vel_msg.angular.x = 0;
-        vel_msg.angular.z = 0;
-        id_vel_pubs[robot_id].publish(vel_msg);
-        ros::spinOnce();
-        loop_rate.sleep();
-        vel_msg.angular.z = 0;
-        vel_msg.linear.x = -1.0;
-        id_vel_pubs[robot_id].publish(vel_msg);
+
+    // LOCATION MONITOR SC
+    // while (!id_advancedLocation[robot_id]) {
+    //     vel_msg.angular.x = 0;
+    //     vel_msg.angular.z = 0;
+    //     id_vel_pubs[robot_id].publish(vel_msg);
+    //     ros::spinOnce();
+    //     loop_rate.sleep();
+    //     vel_msg.angular.z = 0;
+    //     vel_msg.linear.x = -1.0;
+    //     id_vel_pubs[robot_id].publish(vel_msg);
+    // }
+
+    // BATTERY MONITOR SC
+    while (!id_advancedBattery[robot_id]) {
+        while ((getDistance(1.0, 1.0, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1)) {
+            double inc_x = 1.0 - id_robot_x[robot_id];
+            double inc_y = 1.0 - id_robot_y[robot_id];
+            double angle_to_goal = atan2(inc_y, inc_x);
+            
+            double tmp_linear_x = 0.2*getDistance(id_robot_x[robot_id], id_robot_y[robot_id], 1.0, 1.0);
+            double tmp_angular_z = 1.0*std::abs((atan2(1.0-id_robot_y[robot_id], 1.0 - id_robot_x[robot_id])) - (id_robot_theta[robot_id]));
+            
+            if (tmp_linear_x < 0) {
+                tmp_linear_x = max(-0.3, tmp_linear_x);
+            } else {
+                tmp_linear_x = min(0.3, tmp_linear_x);
+            }
+            
+            if (tmp_angular_z < 0) {
+                tmp_angular_z = max(-1.0, tmp_angular_z);
+            } else {
+                tmp_angular_z = min(1.0, tmp_angular_z);
+            }
+
+            vel_msg.linear.x = tmp_linear_x;
+            vel_msg.linear.y = 0;
+            vel_msg.linear.z = 0;
+            vel_msg.angular.x = 0;
+            vel_msg.angular.y = 0;
+            vel_msg.angular.z = tmp_angular_z;
+
+            id_vel_pubs[robot_id].publish(vel_msg);
+            ros::spinOnce();
+            loop_rate.sleep();
+        }
+        id_advancedBattery[robot_id] = true;
     }
 
     vel_msg.angular.x = 0;
@@ -133,6 +172,35 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
     vel_msg.angular.z = 0;
     vel_msg.linear.x = 0;
     id_vel_pubs[robot_id].publish(vel_msg);
+}
+
+PRT_VALUE* P_switchACtoSC_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    PRT_VALUE** P_VAR_rtaModuleID = argRefs[0];
+    PRT_VALUE** P_VAR_robotID = argRefs[1];
+    int rtaModuleID = PrtPrimGetInt(*P_VAR_rtaModuleID);
+    int robotID = PrtPrimGetInt(*P_VAR_robotID);
+
+    if (rtaModuleID == 0) {
+        id_advancedLocation[robotID] = false;
+    } else if (rtaModuleID == 1) {
+        id_advancedBattery[robotID] = false;
+    }
+
+    return PrtMkIntValue((PRT_UINT32)1);
+}
+
+PRT_VALUE* P_switchSCtoAC_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    PRT_VALUE** P_VAR_rtaModuleID = argRefs[0];
+    PRT_VALUE** P_VAR_robotID = argRefs[1];
+    int rtaModuleID = PrtPrimGetInt(*P_VAR_rtaModuleID);
+    int robotID = PrtPrimGetInt(*P_VAR_robotID);
+    
+    if (rtaModuleID == 0) {
+        id_advancedLocation[robotID] = true;
+    } else if (rtaModuleID == 1) {
+        id_advancedBattery[robotID] = true;
+    }
+    return PrtMkIntValue((PRT_UINT32)1);
 }
 
 PRT_VALUE* P_ShutdownROSSubscribers_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
@@ -176,6 +244,7 @@ PRT_VALUE* P_RobotROSSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) 
     id_odom_subs[robot_id] = gazebo_odom_subscriber;
     id_vel_msgs[robot_id] = vel_msg;
     id_advancedLocation[robot_id] = true;
+    id_advancedBattery[robot_id] = true;
     return PrtMkIntValue((PRT_UINT32)1);
 }
 
