@@ -8,7 +8,7 @@
 
 PRT_PROCESS* MAIN_P_PROCESS;
 static PRT_BOOLEAN cooperative = PRT_TRUE;
-static int threads = 3;
+static int threads = 4;
 long threadsRunning = 0;
 pthread_mutex_t threadsRunning_mutex;
 static PRT_BOOLEAN perf = PRT_FALSE;

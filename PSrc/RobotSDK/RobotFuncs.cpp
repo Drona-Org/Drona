@@ -25,6 +25,7 @@ std::map<int, float> id_robot_y;
 std::map<int, float> id_robot_theta;
 std::map<int, bool> id_advancedLocation; // rtaModuleID = 0
 std::map<int, bool> id_advancedBattery;  // rtaModuleID = 1
+std::map<int, int> id_currBatteryPercentage;
 
 WS_Coord GazeboToPlanner(WS_Coord coord) {
     return WS_Coord(coord.x + WS_Coord(0, 0, 0).x, coord.y + WS_Coord(0, 0, 0).y, coord.z + WS_Coord(0, 0, 0).z);
@@ -162,6 +163,7 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
             loop_rate.sleep();
         }
         id_advancedBattery[robot_id] = true;
+        id_currBatteryPercentage[robot_id] = 100;
     }
 
     vel_msg.angular.x = 0;
@@ -245,6 +247,8 @@ PRT_VALUE* P_RobotROSSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) 
     id_vel_msgs[robot_id] = vel_msg;
     id_advancedLocation[robot_id] = true;
     id_advancedBattery[robot_id] = true;
+    id_currBatteryPercentage[1] = 100;
+    id_currBatteryPercentage[2] = 100;
     return PrtMkIntValue((PRT_UINT32)1);
 }
 
@@ -403,4 +407,11 @@ PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
     }
 
     return PrtMkIntValue((PRT_UINT32)1);
+}
+
+PRT_VALUE* P_getCurrentPercentage_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    PRT_VALUE** P_VAR_robot_id = argRefs[0];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+    id_currBatteryPercentage[robot_id] = id_currBatteryPercentage[robot_id] - 1;
+    return PrtMkIntValue((PRT_UINT32)id_currBatteryPercentage[robot_id]);
 }
