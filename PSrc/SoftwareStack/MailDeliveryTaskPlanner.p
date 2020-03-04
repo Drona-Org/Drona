@@ -3,6 +3,7 @@ fun ShutdownROSSubscribers(numRobots: int): int;
 fun OmplMotionPlanExternal(destinations: seq[(float, float, float)], robot_id: int): int;
 fun ROSGoTo(arr: int, robot_id: int): int;
 fun Sleep(time: float): int;
+fun randomFloat(): float;
 
 type MailInfo = (mail_id: int, priority: int);
 type MailReq  = (mInfo: MailInfo, dest: (float, float, float), sender: machine);
@@ -66,28 +67,30 @@ machine TestDriver {
             var counter: int;
             var droneId: int;
             var mailRequests: seq[MailReq];
+            var randomFloat: float;
+            var randomFloat2: float;
             mailRequests = default(seq[MailReq]);
 
             mailInfo.mail_id = 1;
             mailInfo.priority = 1;
 
             tempMailRequest.mInfo = mailInfo;
-            tempMailRequest.dest = (0.0, 0.0, 0.0);
+            tempMailRequest.dest = (randomFloat(), randomFloat(), 0.0);
             tempMailRequest.sender = this;
             mailRequests += (0, tempMailRequest);
 
             tempMailRequest.mInfo = mailInfo;
-            tempMailRequest.dest = (2.0, 0.0, 0.0);
+            tempMailRequest.dest = (randomFloat(), randomFloat(), 0.0);
             tempMailRequest.sender = this;
             mailRequests += (1, tempMailRequest);
 
             tempMailRequest.mInfo = mailInfo;
-            tempMailRequest.dest = (2.0, 2.0, 0.0);
+            tempMailRequest.dest = (randomFloat(), randomFloat(), 0.0);
             tempMailRequest.sender = this;
             mailRequests += (2, tempMailRequest);
 
             tempMailRequest.mInfo = mailInfo;
-            tempMailRequest.dest = (0.0, 2.0, 0.0);
+            tempMailRequest.dest = (randomFloat(), randomFloat(), 0.0);
             tempMailRequest.sender = this;
             mailRequests += (3, tempMailRequest);
 
