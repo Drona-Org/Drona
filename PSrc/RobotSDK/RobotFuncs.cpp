@@ -31,6 +31,7 @@ std::map<int, float> id_robot_theta;
 std::map<int, bool> id_advancedLocation; // rtaModuleID = 0
 std::map<int, bool> id_advancedBattery;  // rtaModuleID = 1
 std::map<int, int> id_currBatteryPercentage;
+bool collisionFree;
 
 WS_Coord GazeboToPlanner(WS_Coord coord) {
     return WS_Coord(coord.x + WS_Coord(0, 0, 0).x, coord.y + WS_Coord(0, 0, 0).y, coord.z + WS_Coord(0, 0, 0).z);
@@ -78,18 +79,18 @@ void safe_controller(int robot_id) {
     usleep(500000);
     ros::spinOnce();
 
-    // LOCATION MONITOR SC
-    // while (!id_advancedLocation[robot_id]) {
-    //     vel_msg.angular.x = 0;
-    //     vel_msg.angular.z = 0;
-    //     id_vel_pubs[robot_id].publish(vel_msg);
-    //     ros::spinOnce();
-    //     loop_rate.sleep();
-    //     vel_msg.angular.z = 0;
-    //     vel_msg.linear.x = -0.1;
-    //     id_vel_pubs[robot_id].publish(vel_msg);
-    // }
+    while (!collisionFree) {
+        vel_msg.angular.x = 0;
+        vel_msg.angular.z = 0;
+        id_vel_pubs[robot_id].publish(vel_msg);
+        ros::spinOnce();
+        loop_rate.sleep();
+        vel_msg.angular.z = 0;
+        vel_msg.linear.x = -0.2;
+        id_vel_pubs[robot_id].publish(vel_msg);
+    }
 
+    // LOCATION MONITOR SC
     double safe_point_x = 1.5;
     double safe_point_y = 1.5;
 
@@ -191,6 +192,9 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
             break;
         }
         if (!id_advancedBattery[robot_id]) {
+            safe_controller(robot_id);
+        }
+        if (!collisionFree) {
             safe_controller(robot_id);
         }
 
@@ -310,6 +314,7 @@ PRT_VALUE* P_RobotROSSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) 
     id_advancedBattery[robot_id] = true;
     id_currBatteryPercentage[1] = 100;
     id_currBatteryPercentage[2] = 100;
+    collisionFree = true;
     return PrtMkIntValue((PRT_UINT32)1);
 }
 
@@ -448,8 +453,7 @@ PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
     - This is where the monitor decides what is considered safe/unsafe
     - CURRENT IMPL: robot1 unsafe if < 0.3 from origin. robot2 unsafe if < 0.3 from (2,0)
     */
-    double robot1Distance = getDistance(id_robot_x[1], id_robot_y[1], 0.0, 0.0);
-    double robot2Distance = getDistance(id_robot_x[2], id_robot_y[2], 2.0, 2.0);
+    double robotDistance = getDistance(id_robot_x[1], id_robot_y[1], id_robot_x[2], id_robot_y[2]);
 
     if (id_robot_x[1] <= 0.5 || id_robot_x[1] >= 2.5 || id_robot_y[1] <= 0.5|| id_robot_y[1] >= 2.5) {
         id_advancedLocation[1] = false;
@@ -463,17 +467,13 @@ PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
         id_advancedLocation[2] = true;
     }
 
-    // if (robot2Distance < 0.3) {
-    //     id_advancedLocation[2] = false;
-    // }
+    if (robotDistance <= 0.25) {
+        collisionFree = false;
+    }
 
-    // if (robot1Distance > 0.3) {
-    //     id_advancedLocation[1] = true;
-    // }
-
-    // if (robot2Distance > 0.3) {
-    //     id_advancedLocation[2] = true;
-    // }
+    if (robotDistance > 0.25) {
+        collisionFree = true;
+    }
 
     return PrtMkIntValue((PRT_UINT32)1);
 }
