@@ -30,8 +30,8 @@ std::map<int, float> id_robot_y;
 std::map<int, float> id_robot_theta;
 std::map<int, bool> id_advancedLocation; // rtaModuleID = 0
 std::map<int, bool> id_advancedBattery;  // rtaModuleID = 1
+bool collisionFree;                      // rtaModuleID = 2
 std::map<int, int> id_currBatteryPercentage;
-bool collisionFree;
 
 WS_Coord GazeboToPlanner(WS_Coord coord) {
     return WS_Coord(coord.x + WS_Coord(0, 0, 0).x, coord.y + WS_Coord(0, 0, 0).y, coord.z + WS_Coord(0, 0, 0).z);
@@ -79,6 +79,7 @@ void safe_controller(int robot_id) {
     usleep(500000);
     ros::spinOnce();
 
+    // Location Monitor: Collision Avoidance SC
     while (!collisionFree) {
         vel_msg.angular.x = 0;
         vel_msg.angular.z = 0;
@@ -90,7 +91,7 @@ void safe_controller(int robot_id) {
         id_vel_pubs[robot_id].publish(vel_msg);
     }
 
-    // LOCATION MONITOR SC
+    // Location Monitor: Geo Fence SC
     double safe_point_x = 1.5;
     double safe_point_y = 1.5;
 
@@ -136,7 +137,7 @@ void safe_controller(int robot_id) {
         id_currBatteryPercentage[robot_id] = 100;
     }
 
-    // BATTERY MONITOR SC
+    // Battery Monitor SC
     double charging_station_x = 1.0;
     double charging_station_y = 1.0;
 
@@ -186,6 +187,7 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
     velocity_publisher = id_vel_pubs[robot_id];
 
     while ((getDistance(goal_x, goal_y, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1)) {
+        
         // Checking if robot is in an unsafe state
         if (!id_advancedLocation[robot_id]) {
             safe_controller(robot_id);
@@ -450,11 +452,21 @@ PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
 
     /* 
     DECISION MODULE LOGIC:
-    - This is where the monitor decides what is considered safe/unsafe
-    - CURRENT IMPL: robot1 unsafe if < 0.3 from origin. robot2 unsafe if < 0.3 from (2,0)
+    - This is where the location monitor decides what is considered safe/unsafe
     */
+
+    // Collision Avoidance Decision Module
     double robotDistance = getDistance(id_robot_x[1], id_robot_y[1], id_robot_x[2], id_robot_y[2]);
 
+    if (robotDistance <= 0.25) {
+        collisionFree = false;
+    }
+
+    if (robotDistance > 0.25) {
+        collisionFree = true;
+    }
+
+    // Geo Fencing Decision Module
     if (id_robot_x[1] <= 0.5 || id_robot_x[1] >= 2.5 || id_robot_y[1] <= 0.5|| id_robot_y[1] >= 2.5) {
         id_advancedLocation[1] = false;
     } else {
@@ -465,14 +477,6 @@ PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
         id_advancedLocation[2] = false;
     } else {
         id_advancedLocation[2] = true;
-    }
-
-    if (robotDistance <= 0.25) {
-        collisionFree = false;
-    }
-
-    if (robotDistance > 0.25) {
-        collisionFree = true;
     }
 
     return PrtMkIntValue((PRT_UINT32)1);
@@ -488,6 +492,5 @@ PRT_VALUE* P_getCurrentPercentage_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** ar
 PRT_VALUE* P_randomFloat_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
     PRT_VALUE** P_VAR_robot_id = argRefs[0];
     int randomNumber = (rand() % 4);
-    printf("random number %d\n", randomNumber);
     return PrtMkFloatValue(randomNumber);
 }
