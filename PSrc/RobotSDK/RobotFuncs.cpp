@@ -445,6 +445,7 @@ PRT_VALUE* P_Sleep_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
 
 PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
 	PRT_VALUE** P_VAR_robotId = argRefs[0];
+    int robot_id = PrtPrimGetInt(*P_VAR_robotId);
     usleep(500000);
     ros::spinOnce();
     printf("Robot1: (%f, %f)\n", id_robot_x[1], id_robot_y[1]);
@@ -456,30 +457,35 @@ PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
     */
 
     // Collision Avoidance Decision Module
-    double robotDistance = getDistance(id_robot_x[1], id_robot_y[1], id_robot_x[2], id_robot_y[2]);
+    // double robotDistance = getDistance(id_robot_x[1], id_robot_y[1], id_robot_x[2], id_robot_y[2]);
 
-    if (robotDistance <= 0.25) {
-        collisionFree = false;
-    }
+    // if (robotDistance <= 0.25) {
+    //     collisionFree = false;
+    // }
 
-    if (robotDistance > 0.25) {
-        collisionFree = true;
-    }
+    // if (robotDistance > 0.25) {
+    //     collisionFree = true;
+    // }
 
     // Geo Fencing Decision Module
-    if (id_robot_x[1] <= 0.5 || id_robot_x[1] >= 2.5 || id_robot_y[1] <= 0.5|| id_robot_y[1] >= 2.5) {
-        id_advancedLocation[1] = false;
-    } else {
-        id_advancedLocation[1] = true;
-    }
+    // if (id_robot_x[1] <= 0.5 || id_robot_x[1] >= 2.5 || id_robot_y[1] <= 0.5|| id_robot_y[1] >= 2.5) {
+    //     id_advancedLocation[1] = false;
+    // } else {
+    //     id_advancedLocation[1] = true;
+    // }
 
-    if (id_robot_x[2] <= 0.5 || id_robot_x[2] >= 2.5 || id_robot_y[2] <= 0.5|| id_robot_y[2] >= 2.5) {
-        id_advancedLocation[2] = false;
-    } else {
-        id_advancedLocation[2] = true;
-    }
+    // if (id_robot_x[2] <= 0.5 || id_robot_x[2] >= 2.5 || id_robot_y[2] <= 0.5|| id_robot_y[2] >= 2.5) {
+    //     id_advancedLocation[2] = false;
+    // } else {
+    //     id_advancedLocation[2] = true;
+    // }
 
-    return PrtMkIntValue((PRT_UINT32)1);
+    if (id_robot_x[robot_id] <= 0.5 || id_robot_x[robot_id] >= 2.5 || id_robot_y[robot_id] <= 0.5|| id_robot_y[robot_id] >= 2.5) {
+        return PrtMkIntValue((PRT_UINT32)0);
+    } else {
+        return PrtMkIntValue((PRT_UINT32)1);
+    }
+    // return PrtMkIntValue((PRT_UINT32)1);
 }
 
 PRT_VALUE* P_getCurrentPercentage_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {

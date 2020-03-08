@@ -4,12 +4,31 @@ machine LocationMonitor {
     var taskPlanner: machine;
     start state Init {
         entry (payload: machine) {
-            var x: int;
+            var robot1Safe: int;
+            var robot2Safe: int;
             var i: int;
+            var y : int;
             taskPlanner = payload;
             i = 0;
             while (i < 120) {
-                x = MonitorLocation(1);
+                robot1Safe = MonitorLocation(1);
+                robot2Safe = MonitorLocation(2);
+                if (robot1Safe == 0) {
+                    y = switchACtoSC(0,1);
+                }
+
+                if (robot1Safe == 1) {
+                    y = switchSCtoAC(0,1);
+                }
+
+                if (robot2Safe == 0) {
+                    y = switchACtoSC(0,2);
+                }
+
+                if (robot2Safe == 1) {
+                    y = switchSCtoAC(0,2);
+                }
+
                 i = i + 1;
             }
             /* 
@@ -19,6 +38,8 @@ machine LocationMonitor {
                 2. Setup location monitors such that the foreign func `MonitorLocation` returns a bool (i guess for each robot??), as to whether
                     it is safe. Then we can call the `SwitchACtoSC` and `SwitchSCtoAC` funcs directly from the P monitor.
             */
+
+            
             raise Success;
         }
         on Success goto WaitRequest;
