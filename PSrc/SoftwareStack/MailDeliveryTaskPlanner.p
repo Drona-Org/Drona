@@ -94,20 +94,29 @@ machine TestDriver {
             tempMailRequest.sender = this;
             mailRequests += (3, tempMailRequest);
 
+            tempMailRequest.mInfo = mailInfo;
+            tempMailRequest.dest = (1.5, 1.5, 0.0);
+            tempMailRequest.sender = this;
+            mailRequests += (4, tempMailRequest);
+
             counter = 0;
             droneId = 1;
 
             // TODO: Figure out when to call ShurdownROSSubscribers()
 
-            locationMonitor = new LocationMonitor(this);
-            // battery1 = new Battery(this,1);
-            // battery2 = new Battery(this,2);
+            // locationMonitor = new LocationMonitor(this);
+            battery1 = new Battery(this,1);
+            battery2 = new Battery(this,2);
 
             // Simultaneous Requests
             send workerDrones[1], SendNextMailReq, mailRequests[3];
             send workerDrones[0], SendNextMailReq, mailRequests[0];
             send workerDrones[0], SendNextMailReq, mailRequests[1];
             send workerDrones[1], SendNextMailReq, mailRequests[2];
+
+            // Collision test requests
+            send workerDrones[0], SendNextMailReq, mailRequests[4];
+            send workerDrones[1], SendNextMailReq, mailRequests[4];
 
             // Sequential Requests
             // send workerDrones[0], SendNextMailReq, mailRequests[0];

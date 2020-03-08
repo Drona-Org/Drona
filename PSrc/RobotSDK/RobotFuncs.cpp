@@ -32,6 +32,9 @@ std::map<int, bool> id_advancedLocation; // rtaModuleID = 0
 std::map<int, bool> id_advancedBattery;  // rtaModuleID = 1
 bool collisionFree;                      // rtaModuleID = 2
 std::map<int, int> id_currBatteryPercentage;
+std::map<int, float> id_global_goal_x;
+std::map<int, float> id_global_goal_y;
+
 
 WS_Coord GazeboToPlanner(WS_Coord coord) {
     return WS_Coord(coord.x + WS_Coord(0, 0, 0).x, coord.y + WS_Coord(0, 0, 0).y, coord.z + WS_Coord(0, 0, 0).z);
@@ -117,9 +120,9 @@ void safe_controller(int robot_id) {
             }
             
             if (tmp_angular_z < 0) {
-                tmp_angular_z = max(-1.2, tmp_angular_z);
+                tmp_angular_z = max(-1.0, tmp_angular_z);
             } else {
-                tmp_angular_z = min(1.2, tmp_angular_z);
+                tmp_angular_z = min(1.0, tmp_angular_z);
             }
 
             vel_msg.linear.x = tmp_linear_x;
@@ -138,17 +141,21 @@ void safe_controller(int robot_id) {
     }
 
     // Battery Monitor SC
-    double charging_station_x = 1.0;
-    double charging_station_y = 1.0;
+    std::map<int, float> id_charging_station_x; 
+    std::map<int, float> id_charging_station_y;
+    id_charging_station_x[1] = 1.0;
+    id_charging_station_y[1] = 1.0;
+    id_charging_station_x[2] = 2.0;
+    id_charging_station_y[2] = 2.0;
 
     while (!id_advancedBattery[robot_id]) {
-        while ((getDistance(charging_station_x, charging_station_y, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1)) {
-            double inc_x = charging_station_x - id_robot_x[robot_id];
-            double inc_y = charging_station_y - id_robot_y[robot_id];
+        while ((getDistance(id_charging_station_x[robot_id], id_charging_station_y[robot_id], id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1)) {
+            double inc_x = id_charging_station_x[robot_id] - id_robot_x[robot_id];
+            double inc_y = id_charging_station_y[robot_id] - id_robot_y[robot_id];
             double angle_to_goal = atan2(inc_y, inc_x);
             
-            double tmp_linear_x = 0.2*getDistance(id_robot_x[robot_id], id_robot_y[robot_id], charging_station_x, charging_station_y);
-            double tmp_angular_z = 1.0*std::abs((atan2(charging_station_y-id_robot_y[robot_id], charging_station_x - id_robot_x[robot_id])) - (id_robot_theta[robot_id]));
+            double tmp_linear_x = 0.2*getDistance(id_robot_x[robot_id], id_robot_y[robot_id], id_charging_station_x[robot_id], id_charging_station_y[robot_id]);
+            double tmp_angular_z = 1.0*std::abs((atan2(id_charging_station_y[robot_id]-id_robot_y[robot_id], id_charging_station_x[robot_id] - id_robot_x[robot_id])) - (id_robot_theta[robot_id]));
             
             if (tmp_linear_x < 0) {
                 tmp_linear_x = max(-0.3, tmp_linear_x);
@@ -157,9 +164,9 @@ void safe_controller(int robot_id) {
             }
             
             if (tmp_angular_z < 0) {
-                tmp_angular_z = max(-1.7, tmp_angular_z);
+                tmp_angular_z = max(-1.0, tmp_angular_z);
             } else {
-                tmp_angular_z = min(1.7, tmp_angular_z);
+                tmp_angular_z = min(1.0, tmp_angular_z);
             }
 
             vel_msg.linear.x = tmp_linear_x;
@@ -214,9 +221,9 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
         }
         
         if (tmp_angular_z < 0) {
-            tmp_angular_z = max(-1.2, tmp_angular_z);
+            tmp_angular_z = max(-1.0, tmp_angular_z);
         } else {
-            tmp_angular_z = min(1.2, tmp_angular_z);
+            tmp_angular_z = min(1.0, tmp_angular_z);
         }
 
         vel_msg.linear.x = tmp_linear_x;
@@ -251,6 +258,8 @@ PRT_VALUE* P_switchACtoSC_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
         id_advancedLocation[robotID] = false;
     } else if (rtaModuleID == 1) {
         id_advancedBattery[robotID] = false;
+    } else if (rtaModuleID == 2) {
+        collisionFree = false;
     }
 
     return PrtMkIntValue((PRT_UINT32)1);
@@ -266,6 +275,8 @@ PRT_VALUE* P_switchSCtoAC_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
         id_advancedLocation[robotID] = true;
     } else if (rtaModuleID == 1) {
         id_advancedBattery[robotID] = true;
+    } else if (rtaModuleID == 2) {
+        collisionFree = true;
     }
     return PrtMkIntValue((PRT_UINT32)1);
 }
@@ -426,6 +437,8 @@ PRT_VALUE* P_ROSGoTo_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
         destinationPoints[i][2] = z;
         if ((x != prev_x) && (y != prev_y) && (z != prev_z)) {
             printf("%f, %f, %f\n", x,y,z);
+            id_global_goal_x[robot_id] = x;
+            id_global_goal_y[robot_id] = y;
             gazebo_move_goal(x, y, robot_id);
         }
 
@@ -448,44 +461,32 @@ PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
     int robot_id = PrtPrimGetInt(*P_VAR_robotId);
     usleep(500000);
     ros::spinOnce();
-    printf("Robot1: (%f, %f)\n", id_robot_x[1], id_robot_y[1]);
-    printf("Robot2: (%f, %f)\n", id_robot_x[2], id_robot_y[2]);
+    
+    printf("Robot1 GOAL: (%f, %f)\n", id_global_goal_x[1], id_global_goal_y[1]);
+    printf("Robot2 GOAL: (%f, %f)\n", id_global_goal_x[2], id_global_goal_y[2]);
 
-    /* 
-    DECISION MODULE LOGIC:
-    - This is where the location monitor decides what is considered safe/unsafe
-    */
-
-    // Collision Avoidance Decision Module
-    // double robotDistance = getDistance(id_robot_x[1], id_robot_y[1], id_robot_x[2], id_robot_y[2]);
-
-    // if (robotDistance <= 0.25) {
-    //     collisionFree = false;
-    // }
-
-    // if (robotDistance > 0.25) {
-    //     collisionFree = true;
-    // }
-
-    // Geo Fencing Decision Module
-    // if (id_robot_x[1] <= 0.5 || id_robot_x[1] >= 2.5 || id_robot_y[1] <= 0.5|| id_robot_y[1] >= 2.5) {
-    //     id_advancedLocation[1] = false;
-    // } else {
-    //     id_advancedLocation[1] = true;
-    // }
-
-    // if (id_robot_x[2] <= 0.5 || id_robot_x[2] >= 2.5 || id_robot_y[2] <= 0.5|| id_robot_y[2] >= 2.5) {
-    //     id_advancedLocation[2] = false;
-    // } else {
-    //     id_advancedLocation[2] = true;
-    // }
-
+    // GEOFENCE DECISION MODULE
     if (id_robot_x[robot_id] <= 0.5 || id_robot_x[robot_id] >= 2.5 || id_robot_y[robot_id] <= 0.5|| id_robot_y[robot_id] >= 2.5) {
         return PrtMkIntValue((PRT_UINT32)0);
     } else {
         return PrtMkIntValue((PRT_UINT32)1);
     }
-    // return PrtMkIntValue((PRT_UINT32)1);
+}
+
+PRT_VALUE* P_collisionSafe_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    usleep(500000);
+    ros::spinOnce();
+
+    // COLLISION AVOIDANCE DECISION MODULE
+    double robotDistance = getDistance(id_robot_x[1], id_robot_y[1], id_robot_x[2], id_robot_y[2]);
+
+    if (robotDistance <= 0.25) {
+        return PrtMkIntValue((PRT_UINT32)0);
+    }
+
+    if (robotDistance > 0.25) {
+        return PrtMkIntValue((PRT_UINT32)1);
+    }
 }
 
 PRT_VALUE* P_getCurrentPercentage_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
