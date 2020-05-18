@@ -1,4 +1,4 @@
-#include "../SoftwareStack/MailDeliveryTaskPlanner.h"
+#include "../SoftwareStack/MainRobotSurveillanceTaskPlanner.h"
 #include "RobotFuncs.h"
 #include <math.h>
 #include <unistd.h>
@@ -84,60 +84,97 @@ void safe_controller(int robot_id) {
 
     // Location Monitor: Collision Avoidance SC
     while (!collisionFree) {
-        vel_msg.angular.x = 0;
-        vel_msg.angular.z = 0;
-        id_vel_pubs[robot_id].publish(vel_msg);
-        ros::spinOnce();
-        loop_rate.sleep();
-        vel_msg.angular.z = 0;
-        vel_msg.linear.x = -0.2;
-        id_vel_pubs[robot_id].publish(vel_msg);
+        while (getDistance(id_robot_x[1], id_robot_y[1], id_robot_x[2], id_robot_y[2]) <= 0.5) {
+            vel_msg.angular.x = 0;
+            vel_msg.angular.z = 0;
+            id_vel_pubs[robot_id].publish(vel_msg);
+            ros::spinOnce();
+            loop_rate.sleep();
+            vel_msg.angular.z = 0;
+            vel_msg.linear.x = -0.3;
+            id_vel_pubs[robot_id].publish(vel_msg);
+        }
+        
     }
+    // Collision avoidance pausing 
+    // if (robot_id == 1) {
+    //         printf("SLEEPING\n");
+    //         vel_msg.angular.x = 0;
+    //         vel_msg.angular.z = 0;
+    //         id_vel_pubs[robot_id].publish(vel_msg);
+    //         ros::spinOnce();
+    //         loop_rate.sleep();
+    //         vel_msg.angular.z = 0;
+    //         vel_msg.linear.x = -0.3;
+    //         id_vel_pubs[robot_id].publish(vel_msg);
+            
+    //         vel_msg.angular.x = 0;
+    //         vel_msg.angular.z = 0;
+    //         id_vel_pubs[robot_id].publish(vel_msg);
+    //         ros::spinOnce();
+    //         loop_rate.sleep();
+    //         vel_msg.angular.z = 0;
+    //         vel_msg.linear.x = 0;
+    //         id_vel_pubs[robot_id].publish(vel_msg);
+    //         usleep(7500000);
+    //         printf("DONE SLEEPING\n");
+    //     }
 
     // Location Monitor: Geo Fence SC
     double safe_point_x = 1.5;
     double safe_point_y = 1.5;
 
     while (!id_advancedLocation[robot_id]) {
-        printf("UNSAFE!!!!\n");
-        while ((getDistance(safe_point_x, safe_point_y, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1)) {
-            if (id_advancedLocation[robot_id]) {
-                printf("IM SAFE AGAIN!!!!\n");
-                break;
-            }
-
-            double inc_x = safe_point_x - id_robot_x[robot_id];
-            double inc_y = safe_point_y - id_robot_y[robot_id];
-            double angle_to_goal = atan2(inc_y, inc_x);
-            
-            double tmp_linear_x = 0.2*getDistance(id_robot_x[robot_id], id_robot_y[robot_id], safe_point_x, safe_point_y);
-            double tmp_angular_z = 1.0*std::abs((atan2(safe_point_y-id_robot_y[robot_id], safe_point_x - id_robot_x[robot_id])) - (id_robot_theta[robot_id]));
-            
-            if (tmp_linear_x < 0) {
-                tmp_linear_x = max(-0.3, tmp_linear_x);
-            } else {
-                tmp_linear_x = min(0.3, tmp_linear_x);
-            }
-            
-            if (tmp_angular_z < 0) {
-                tmp_angular_z = max(-1.0, tmp_angular_z);
-            } else {
-                tmp_angular_z = min(1.0, tmp_angular_z);
-            }
-
-            vel_msg.linear.x = tmp_linear_x;
-            vel_msg.linear.y = 0;
-            vel_msg.linear.z = 0;
-            vel_msg.angular.x = 0;
-            vel_msg.angular.y = 0;
-            vel_msg.angular.z = tmp_angular_z;
-
+        while (!(((id_robot_x[robot_id] >= 0.7 && id_robot_x[robot_id] <= 4.3)) && (id_robot_y[robot_id] >= 0.7 && id_robot_y[robot_id] <= 4.3))) {
+            vel_msg.angular.x = 0; //&& !(id_robot_x[robot_id] >= 1.0 || id_robot_x[robot_id] <= 3.00) && !(id_robot_y[robot_id] >= 1.0 || id_robot_y[robot_id] <= 3.00)
+            vel_msg.angular.z = 0;
             id_vel_pubs[robot_id].publish(vel_msg);
             ros::spinOnce();
             loop_rate.sleep();
-        }
-        id_advancedBattery[robot_id] = true;
-        id_currBatteryPercentage[robot_id] = 100;
+            vel_msg.angular.z = 0;
+            vel_msg.linear.x = -0.2;
+            id_vel_pubs[robot_id].publish(vel_msg);
+        } 
+        
+
+        // while ((getDistance(safe_point_x, safe_point_y, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1)) {
+        //     if (id_advancedLocation[robot_id]) {
+        //         printf("IM SAFE AGAIN!!!!\n");
+        //         break;
+        //     }
+
+        //     double inc_x = safe_point_x - id_robot_x[robot_id];
+        //     double inc_y = safe_point_y - id_robot_y[robot_id];
+        //     double angle_to_goal = atan2(inc_y, inc_x);
+            
+        //     double tmp_linear_x = 0.2*getDistance(id_robot_x[robot_id], id_robot_y[robot_id], safe_point_x, safe_point_y);
+        //     double tmp_angular_z = 1.0*std::abs((atan2(safe_point_y-id_robot_y[robot_id], safe_point_x - id_robot_x[robot_id])) - (id_robot_theta[robot_id]));
+            
+        //     if (tmp_linear_x < 0) {
+        //         tmp_linear_x = max(-0.3, tmp_linear_x);
+        //     } else {
+        //         tmp_linear_x = min(0.3, tmp_linear_x);
+        //     }
+            
+        //     if (tmp_angular_z < 0) {
+        //         tmp_angular_z = max(-1.0, tmp_angular_z);
+        //     } else {
+        //         tmp_angular_z = min(1.0, tmp_angular_z);
+        //     }
+
+        //     vel_msg.linear.x = tmp_linear_x;
+        //     vel_msg.linear.y = 0;
+        //     vel_msg.linear.z = 0;
+        //     vel_msg.angular.x = 0;
+        //     vel_msg.angular.y = 0;
+        //     vel_msg.angular.z = tmp_angular_z;
+
+        //     id_vel_pubs[robot_id].publish(vel_msg);
+        //     ros::spinOnce();
+        //     loop_rate.sleep();
+        // }
+        // id_advancedBattery[robot_id] = true;
+        // id_currBatteryPercentage[robot_id] = 100;
     }
 
     // Battery Monitor SC
@@ -462,29 +499,34 @@ PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
     usleep(500000);
     ros::spinOnce();
     
-    printf("Robot1 GOAL: (%f, %f)\n", id_global_goal_x[1], id_global_goal_y[1]);
-    printf("Robot2 GOAL: (%f, %f)\n", id_global_goal_x[2], id_global_goal_y[2]);
+    // printf("Robot1 GOAL: (%f, %f)\n", id_global_goal_x[1], id_global_goal_y[1]);
+    // printf("Robot1 GOAL: (%f, %f)\n", id_global_goal_x[1], id_global_goal_y[1]);
+    printf("Robot %d Location: (%f, %f)\n", robot_id, id_robot_x[robot_id], id_robot_y[robot_id]);
 
     // GEOFENCE DECISION MODULE
-    if (id_robot_x[robot_id] <= 0.5 || id_robot_x[robot_id] >= 2.5 || id_robot_y[robot_id] <= 0.5|| id_robot_y[robot_id] >= 2.5) {
+    if (id_robot_x[robot_id] <= 0.15 || id_robot_x[robot_id] >= 4.85 || id_robot_y[robot_id] <= 0.15|| id_robot_y[robot_id] >= 4.85) {
+        printf("Robot %d UNSAFE\n", robot_id);
         return PrtMkIntValue((PRT_UINT32)0);
     } else {
+        printf("Robot %d SAFE\n", robot_id);
         return PrtMkIntValue((PRT_UINT32)1);
     }
 }
 
 PRT_VALUE* P_collisionSafe_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
-    usleep(500000);
+    usleep(750000);
     ros::spinOnce();
 
     // COLLISION AVOIDANCE DECISION MODULE
     double robotDistance = getDistance(id_robot_x[1], id_robot_y[1], id_robot_x[2], id_robot_y[2]);
 
     if (robotDistance <= 0.25) {
+        printf("Robot UNSAFE\n");
         return PrtMkIntValue((PRT_UINT32)0);
     }
 
     if (robotDistance > 0.25) {
+        printf("Robot SAFE\n");
         return PrtMkIntValue((PRT_UINT32)1);
     }
 }
@@ -498,6 +540,6 @@ PRT_VALUE* P_getCurrentPercentage_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** ar
 
 PRT_VALUE* P_randomFloat_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
     PRT_VALUE** P_VAR_robot_id = argRefs[0];
-    int randomNumber = (rand() % 4);
+    int randomNumber = (rand() % 6);
     return PrtMkFloatValue(randomNumber);
 }

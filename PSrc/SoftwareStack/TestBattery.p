@@ -1,14 +1,27 @@
 fun switchACtoSC(rtaModuleID: int, robotID: int): int;
 fun switchSCtoAC(rtaModuleID: int, robotID: int): int;
 fun getCurrentPercentage(robotID: int): int;
-// TODO: Create foreign function getCurrPercentage() that keeps track of battery percentage in Cpp. This is so we can reset the percentage after the SC controller. 
+
+fun MonitorBattery(batteryLevel: int, robotID: int) {
+    var batteryThreshold: int; // computed offline
+    var y: int;
+    batteryThreshold = 5;
+    print "batteryLevel Robot{0}: {1}\n", robotID, batteryLevel;
+    if (batteryLevel <= batteryThreshold) {
+        print "Robot {0} Low Battery!\n", robotID;
+        y = switchACtoSC(1,robotID);
+    } else if (batteryLevel > batteryThreshold) {
+        print "Robot {0} Safe Battery!\n", robotID;
+        y = switchSCtoAC(1,robotID);
+    }
+}
 
 machine Battery {
     var taskPlanner: machine;
     var robotID: int;
     var currPercentage: int;
     var x: int;
-    var y: int;
+
     start state Init {
         entry (payload: (machine, int)) {
             taskPlanner = payload.0;
@@ -23,15 +36,7 @@ machine Battery {
         entry {
             while (currPercentage > 50) {
                 x = Sleep(10.0);
-                currPercentage = getCurrentPercentage(robotID);
-                print "currPercentage Robot{0}: {1}\n", robotID, currPercentage;
-                if (currPercentage <= 94) {
-                    print "Robot {0} Low Battery!\n", robotID;
-                    y = switchACtoSC(1,robotID);
-                } else if (currPercentage > 94) {
-                    print "Robot {0} Safe Battery!\n", robotID;
-                    y = switchSCtoAC(1,robotID);
-                }
+                MonitorBattery(getCurrentPercentage(robotID), robotID);                
             }
             raise Success;
         }

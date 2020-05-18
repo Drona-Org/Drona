@@ -140,8 +140,8 @@ include_directories(
 # add_dependencies(updated_robot_mover_node Drona_generate_messages_cpp)
 
 add_executable(drona_test 
-    PSrc/SoftwareStack/MailDeliveryTaskPlanner.h
-    PSrc/SoftwareStack/MailDeliveryTaskPlanner.c
+    PSrc/SoftwareStack/MainRobotSurveillanceTaskPlanner.h
+    PSrc/SoftwareStack/MainRobotSurveillanceTaskPlanner.c
     PSrc/SoftwareStack/Main.cpp
     PSrc/RobotSDK/RobotFuncs.h
     PSrc/RobotSDK/RobotFuncs.cpp

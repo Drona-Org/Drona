@@ -33,14 +33,14 @@ machine LocationMonitor {
                 }
 
                 // Collision Avoidance Example
-                collisionFree = collisionSafe();
-                if (collisionFree == 0) {
-                    y = switchACtoSC(2,-1);
-                }
+                // collisionFree = collisionSafe();
+                // if (collisionFree == 0) {
+                //     y = switchACtoSC(2,-1);
+                // }
 
-                if (collisionFree == 1) {
-                    y = switchSCtoAC(2,-1);
-                }
+                // if (collisionFree == 1) {
+                //     y = switchSCtoAC(2,-1);
+                // }
 
                 i = i + 1;
             }
