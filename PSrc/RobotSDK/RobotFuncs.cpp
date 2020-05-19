@@ -506,9 +506,10 @@ PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
     // printf("Robot1 GOAL: (%f, %f)\n", id_global_goal_x[1], id_global_goal_y[1]);
     // printf("Robot1 GOAL: (%f, %f)\n", id_global_goal_x[1], id_global_goal_y[1]);
     printf("Robot %d Location: (%f, %f)\n", robot_id, id_robot_x[robot_id], id_robot_y[robot_id]);
+    printf("Robot %d Velocity: (%f, %f)\n", robot_id, id_robot_velocity_linear[robot_id], id_robot_velocity_theta[robot_id]);
 
     // GEOFENCE DECISION MODULE
-    if (id_robot_x[robot_id] <= 0.15 || id_robot_x[robot_id] >= 4.85 || id_robot_y[robot_id] <= 0.15|| id_robot_y[robot_id] >= 4.85) {
+    if (id_robot_x[robot_id]-(0.3*0.5) <= 0 || id_robot_x[robot_id]+(0.3*0.5) >= 5.0 || id_robot_y[robot_id]-(0.3*0.5) <= 0|| id_robot_y[robot_id]+(0.3*0.5) >= 5.0) {
         printf("Robot %d UNSAFE\n", robot_id);
         return PrtMkIntValue((PRT_UINT32)0);
     } else {
