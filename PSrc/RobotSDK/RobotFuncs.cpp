@@ -99,28 +99,28 @@ void safe_controller(int robot_id) {
         
     }
     // Collision avoidance pausing 
-    // if (robot_id == 1) {
-    //         printf("SLEEPING\n");
-    //         vel_msg.angular.x = 0;
-    //         vel_msg.angular.z = 0;
-    //         id_vel_pubs[robot_id].publish(vel_msg);
-    //         ros::spinOnce();
-    //         loop_rate.sleep();
-    //         vel_msg.angular.z = 0;
-    //         vel_msg.linear.x = -0.3;
-    //         id_vel_pubs[robot_id].publish(vel_msg);
+    if (robot_id == 1) {
+            printf("SLEEPING\n");
+            vel_msg.angular.x = 0;
+            vel_msg.angular.z = 0;
+            id_vel_pubs[robot_id].publish(vel_msg);
+            ros::spinOnce();
+            loop_rate.sleep();
+            vel_msg.angular.z = 0;
+            vel_msg.linear.x = -0.3;
+            id_vel_pubs[robot_id].publish(vel_msg);
             
-    //         vel_msg.angular.x = 0;
-    //         vel_msg.angular.z = 0;
-    //         id_vel_pubs[robot_id].publish(vel_msg);
-    //         ros::spinOnce();
-    //         loop_rate.sleep();
-    //         vel_msg.angular.z = 0;
-    //         vel_msg.linear.x = 0;
-    //         id_vel_pubs[robot_id].publish(vel_msg);
-    //         usleep(7500000);
-    //         printf("DONE SLEEPING\n");
-    //     }
+            vel_msg.angular.x = 0;
+            vel_msg.angular.z = 0;
+            id_vel_pubs[robot_id].publish(vel_msg);
+            ros::spinOnce();
+            loop_rate.sleep();
+            vel_msg.angular.z = 0;
+            vel_msg.linear.x = 0;
+            id_vel_pubs[robot_id].publish(vel_msg);
+            usleep(7500000);
+            printf("DONE SLEEPING\n");
+        }
 
     // Location Monitor: Geo Fence SC
     double safe_point_x = 1.5;
@@ -503,10 +503,8 @@ PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
     usleep(500000);
     ros::spinOnce();
     
-    // printf("Robot1 GOAL: (%f, %f)\n", id_global_goal_x[1], id_global_goal_y[1]);
-    // printf("Robot1 GOAL: (%f, %f)\n", id_global_goal_x[1], id_global_goal_y[1]);
     printf("Robot %d Location: (%f, %f)\n", robot_id, id_robot_x[robot_id], id_robot_y[robot_id]);
-    printf("Robot %d Velocity: (%f, %f)\n", robot_id, id_robot_velocity_linear[robot_id], id_robot_velocity_theta[robot_id]);
+    // printf("Robot %d Velocity: (%f, %f)\n", robot_id, id_robot_velocity_linear[robot_id], id_robot_velocity_theta[robot_id]);
 
     // GEOFENCE DECISION MODULE
     if (id_robot_x[robot_id]-(0.3*0.5) <= 0 || id_robot_x[robot_id]+(0.3*0.5) >= 5.0 || id_robot_y[robot_id]-(0.3*0.5) <= 0|| id_robot_y[robot_id]+(0.3*0.5) >= 5.0) {
@@ -519,12 +517,12 @@ PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
 }
 
 PRT_VALUE* P_collisionSafe_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
-    usleep(750000);
+    usleep(500000);
     ros::spinOnce();
 
     // COLLISION AVOIDANCE DECISION MODULE
-    double robotDistance = getDistance(id_robot_x[1], id_robot_y[1], id_robot_x[2], id_robot_y[2]);
-
+    // double robotDistance = getDistance(id_robot_x[1], id_robot_y[1], id_robot_x[2], id_robot_y[2]);
+    double robotDistance = getDistance(id_robot_x[1]+(id_robot_velocity_linear[1]*0.5), id_robot_y[1]+(id_robot_velocity_linear[1]*0.5), id_robot_x[2]+(id_robot_velocity_linear[1]*0.5), id_robot_y[2]+(id_robot_velocity_linear[1]*0.5));
     if (robotDistance <= 0.25) {
         printf("Robot UNSAFE\n");
         return PrtMkIntValue((PRT_UINT32)0);

@@ -39,6 +39,7 @@ machine TestDriver {
     var geofence2: machine;
     var battery1: machine;
     var battery2: machine;
+    var collision: machine;
 
     start state Init {
         entry {
@@ -107,7 +108,7 @@ machine TestDriver {
             DstRequests += (5, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (2.0, 0.0, 0.0);
+            tempDstRequest.dest = (3.0, 1.0, 0.0);
             tempDstRequest.sender = this;
             DstRequests += (6, tempDstRequest);
 
@@ -127,16 +128,17 @@ machine TestDriver {
             DstRequests += (9, tempDstRequest);
 
 
-            geofence1 = new LocationMonitorGeoFence(this, 1);
-            geofence2 = new LocationMonitorGeoFence(this, 2);
+            // geofence1 = new LocationMonitorGeoFence(this, 1);
+            // geofence2 = new LocationMonitorGeoFence(this, 2);
             // battery1 = new Battery(this,1);
             // battery2 = new Battery(this,2);
+            collision = new LocationMonitorCollision(this);
 
             // Simultaneous Requests
             send workerRobots[1], SendNextDstReq, DstRequests[8];
             send workerRobots[0], SendNextDstReq, DstRequests[9];
-            send workerRobots[0], SendNextDstReq, DstRequests[1];
-            send workerRobots[1], SendNextDstReq, DstRequests[2];
+            send workerRobots[0], SendNextDstReq, DstRequests[6];
+            send workerRobots[1], SendNextDstReq, DstRequests[6];
 
             // Sequential Requests
             // counter = 0;

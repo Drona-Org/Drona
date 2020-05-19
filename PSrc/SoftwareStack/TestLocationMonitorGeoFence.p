@@ -1,5 +1,4 @@
 fun MonitorLocation(robotId: int): int;
-fun collisionSafe(): int;
 
 machine LocationMonitorGeoFence {
     var taskPlanner: machine;
