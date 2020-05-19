@@ -35,7 +35,8 @@ machine TestDriver {
     var reqCount: int;
     var numOfWorkerRobots: int;
     var x: int;
-    var locationMonitor: machine;
+    var geofence1: machine;
+    var geofence2: machine;
     var battery1: machine;
     var battery2: machine;
 
@@ -74,7 +75,7 @@ machine TestDriver {
             requestInfo.request_id = 1;
             requestInfo.priority = 1;
 
-            // RANDOM LOCATIONS
+            // Adding a series of random destinations for robots to visit.
             tempDstRequest.mInfo = requestInfo;
             tempDstRequest.dest = (randomFloat(), randomFloat(), 0.0);
             tempDstRequest.sender = this;
@@ -116,7 +117,7 @@ machine TestDriver {
             DstRequests += (7, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (2.0, 1.0, 0.0);
+            tempDstRequest.dest = (5.0, 0.0, 0.0);
             tempDstRequest.sender = this;
             DstRequests += (8, tempDstRequest);
 
@@ -125,24 +126,17 @@ machine TestDriver {
             tempDstRequest.sender = this;
             DstRequests += (9, tempDstRequest);
 
-            // TODO: Call ShutdownROSSubscribers()
 
-            // locationMonitor = new LocationMonitor(this);
-            battery1 = new Battery(this,1);
-            battery2 = new Battery(this,2);
+            geofence1 = new LocationMonitorGeoFence(this, 1);
+            geofence2 = new LocationMonitorGeoFence(this, 2);
+            // battery1 = new Battery(this,1);
+            // battery2 = new Battery(this,2);
 
             // Simultaneous Requests
             send workerRobots[1], SendNextDstReq, DstRequests[8];
             send workerRobots[0], SendNextDstReq, DstRequests[9];
-            send workerRobots[1], SendNextDstReq, DstRequests[2];
             send workerRobots[0], SendNextDstReq, DstRequests[1];
-
-            // Collision test requests
-            // send workerRobots[0], SendNextDstReq, DstRequests[6];
-            // send workerRobots[1], SendNextDstReq, DstRequests[7];
-            // send workerRobots[0], SendNextDstReq, DstRequests[8];
-            // send workerRobots[1], SendNextDstReq, DstRequests[8];
-            // send workerRobots[1], SendNextDstReq, DstRequests[2];
+            send workerRobots[1], SendNextDstReq, DstRequests[2];
 
             // Sequential Requests
             // counter = 0;
@@ -171,7 +165,9 @@ machine TestDriver {
     }
 
     state WaitRequest {
-        entry {}
+        entry {
+            // Call ShutdownROSSubscribers()
+        }
     }
 }
 

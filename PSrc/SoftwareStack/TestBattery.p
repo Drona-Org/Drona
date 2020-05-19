@@ -5,7 +5,7 @@ fun getCurrentPercentage(robotID: int): int;
 fun MonitorBattery(batteryLevel: int, robotID: int) {
     var batteryThreshold: int; // computed offline
     var y: int;
-    batteryThreshold = 5;
+    batteryThreshold = 10;
     print "batteryLevel Robot{0}: {1}\n", robotID, batteryLevel;
     if (batteryLevel <= batteryThreshold) {
         print "Robot {0} Low Battery!\n", robotID;
@@ -34,9 +34,10 @@ machine Battery {
 
     state StartBattery {
         entry {
-            while (currPercentage > 50) {
+            while (currPercentage > 0) {
                 x = Sleep(10.0);
-                MonitorBattery(getCurrentPercentage(robotID), robotID);                
+                currPercentage = getCurrentPercentage(robotID);
+                MonitorBattery(currPercentage, robotID);                
             }
             raise Success;
         }

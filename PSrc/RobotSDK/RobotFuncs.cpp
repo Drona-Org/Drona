@@ -28,6 +28,8 @@ std::map<int, ros::Subscriber> id_odom_subs;
 std::map<int, float> id_robot_x; 
 std::map<int, float> id_robot_y; 
 std::map<int, float> id_robot_theta;
+std::map<int, float> id_robot_velocity_linear;
+std::map<int, float> id_robot_velocity_theta;
 std::map<int, bool> id_advancedLocation; // rtaModuleID = 0
 std::map<int, bool> id_advancedBattery;  // rtaModuleID = 1
 bool collisionFree;                      // rtaModuleID = 2
@@ -264,6 +266,8 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
         }
 
         vel_msg.linear.x = tmp_linear_x;
+        id_robot_velocity_linear[robot_id] = tmp_linear_x;
+        id_robot_velocity_theta[robot_id] = tmp_angular_z;
         vel_msg.linear.y = 0;
         vel_msg.linear.z = 0;
         vel_msg.angular.x = 0;
