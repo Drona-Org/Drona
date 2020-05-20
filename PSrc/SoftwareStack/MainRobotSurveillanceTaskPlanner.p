@@ -1,3 +1,11 @@
+/*
+This file contains the task planner for Multi-Robot Surveillance,
+where two robots visit a series of random location in an empty gazebo world.
+This file also contains the Robot machine implementation. The Task Planner sends each
+Robot machine destination points, which the robot must visit. 
+*/
+
+// Foreign function declarations. Implementations are in `RobotFuncs.cpp`
 fun RobotROSSetup(robotId: int): int;
 fun ShutdownROSSubscribers(numRobots: int): int;
 fun OmplMotionPlanExternal(destinations: seq[(float, float, float)], robot_id: int): int;
@@ -30,6 +38,7 @@ fun BROADCAST(allTarget: seq[machine], ev: event, payload: any, source: machine)
 	}
 }
 
+// Task Planner that drives robot surveillance
 machine TestDriver {
     var workerRobots: seq[machine];
     var reqCount: int;
@@ -50,6 +59,7 @@ machine TestDriver {
 			numOfWorkerRobots = 2;
 
 			index = 1;
+            // Creates all robots
 			while(index < numOfWorkerRobots+1) {
 				temp = new Robot(index, this);
 				workerRobots += (index-1, temp);
@@ -127,14 +137,15 @@ machine TestDriver {
             tempDstRequest.sender = this;
             DstRequests += (9, tempDstRequest);
 
-
-            // geofence1 = new LocationMonitorGeoFence(this, 1);
-            // geofence2 = new LocationMonitorGeoFence(this, 2);
-            // battery1 = new Battery(this,1);
-            // battery2 = new Battery(this,2);
+            // Monitors for corresponing RTA modules
+            geofence1 = new LocationMonitorGeoFence(this, 1);
+            geofence2 = new LocationMonitorGeoFence(this, 2);
+            battery1 = new Battery(this,1);
+            battery2 = new Battery(this,2);
             collision = new LocationMonitorCollision(this);
 
             // Simultaneous Requests
+            // Sending both robots a series of random locations
             send workerRobots[1], SendNextDstReq, DstRequests[8];
             send workerRobots[0], SendNextDstReq, DstRequests[9];
             send workerRobots[0], SendNextDstReq, DstRequests[6];
@@ -184,7 +195,7 @@ machine Robot {
             var x: int;
             myId = payload.0;
             testDriver = payload.1;
-            x = RobotROSSetup(payload.0);
+            x = RobotROSSetup(payload.0); // Sets up P machine, with the ROS topics
             motionPlanner = new MotionPlanner((this, myId));
         }
 
@@ -205,6 +216,7 @@ machine Robot {
         on SendNextDstReq goto ProcessDstReq;
     }
 
+    // Robot receives locations from Task Planner, and sends it to correponding motion planner
     state ProcessDstReq {
         entry (payload: DstReq) {
             send motionPlanner, SendGoalPoint, payload.dest;

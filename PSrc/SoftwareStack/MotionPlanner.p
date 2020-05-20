@@ -1,3 +1,9 @@
+/*
+This file contains the Motion Planner implementation. There is a single motion planner
+machine per Robot machine, and it is responsible for creating a path to the destination point,
+which is then sent to the Plan Executor. 
+*/
+
 machine MotionPlanner {
     var robot: machine;
     var robotId: int;
@@ -7,7 +13,7 @@ machine MotionPlanner {
 		entry (payload: (machine, int)) {
             robot = payload.0;
             robotId = payload.1;
-            planExecutor = new PlanExecutor(this, robotId);
+            planExecutor = new PlanExecutor(this, robotId); // Creates corresponding Plan Executor
             raise Success;
 		}
         on Success goto WaitRequest;
@@ -20,6 +26,8 @@ machine MotionPlanner {
 
     }
 
+    // Signals to the Robot machine that the Plan Executor
+    // and the Motion Planner have finished executing this destination
     state CompletedPointState {
         entry {
             send robot, CompletedPoint;
@@ -37,7 +45,7 @@ machine MotionPlanner {
             s += (0, payload);
             s += (1, payload);
 
-            omplMotionPlan = OmplMotionPlanExternal(s, robotId);
+            omplMotionPlan = OmplMotionPlanExternal(s, robotId); // Foreign function call to OMPL motion planner
             send planExecutor, ExecutePath, omplMotionPlan;
             receive {
 				case PathCompleted: {

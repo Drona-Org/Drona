@@ -22,6 +22,12 @@
 #include <ctime>
 using namespace std;
 
+/*
+This file contains the Cpp modules used for connect the P program with ROS.
+This includes all the foreign function implementations, state information about the robots,
+and controller implementations.
+*/
+
 std::map<int, geometry_msgs::Twist> id_vel_msgs; 
 std::map<int, ros::Publisher> id_vel_pubs;
 std::map<int, ros::Subscriber> id_odom_subs;

@@ -8,7 +8,7 @@
 
 PRT_PROCESS* MAIN_P_PROCESS;
 static PRT_BOOLEAN cooperative = PRT_TRUE;
-static int threads = 3; // NOTE: Change this depending on which monitor is running in TaskPlanner
+static int threads = 7; // NOTE: Change this depending on which monitors are running in TaskPlanner
 long threadsRunning = 0;
 pthread_mutex_t threadsRunning_mutex;
 static PRT_BOOLEAN perf = PRT_FALSE;
@@ -97,6 +97,7 @@ char* GetApplicationName() {
 	return FirstArgument;
 }
 
+// Initializes our ROS program as well the P program used to execute the case study.
 int main(int argc, char *argv[]) {
     ros::init(argc, argv, "drona_test");
     PRT_DBG_START_MEM_BALANCED_REGION
@@ -123,7 +124,7 @@ int main(int argc, char *argv[]) {
 
         PrtUpdateAssertFn(MyAssert);
         PRT_UINT32 machineId;
-        PRT_BOOLEAN foundMainMachine = PrtLookupMachineByName("TestDriver", &machineId);
+        PRT_BOOLEAN foundMainMachine = PrtLookupMachineByName("TestDriver", &machineId); // Sets up the P program, but starting at the Task Planner.
         
         if (foundMainMachine == PRT_FALSE) {
             printf("%s\n", "FAILED TO FIND TestDriver");
