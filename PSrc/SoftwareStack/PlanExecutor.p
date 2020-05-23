@@ -22,7 +22,7 @@ machine PlanExecutor {
     }
 
     state ExecutePathState {
-        entry (payload: int) {
+        entry (payload: seq[(float, float, float)]) {
             var x: int;
             x = ROSGoTo(payload, robotId); // Executes the path from the Motion Planner
             send motionPlanner, PathCompleted; // Signals the MP that it has finished executing this path

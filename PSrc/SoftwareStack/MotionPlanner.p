@@ -39,13 +39,14 @@ machine MotionPlanner {
     state ComputePathAndSendToPE {
         entry (payload: (float, float, float)) {
             var s: seq[(float, float, float)];
-            var omplMotionPlan : int;
+            var omplMotionPlan : seq[(float, float, float)];
 
             s = default(seq[(float, float, float)]);
             s += (0, payload);
             s += (1, payload);
 
             omplMotionPlan = OmplMotionPlanExternal(s, robotId); // Foreign function call to OMPL motion planner
+            print "ompl Motion Plan returned from function {0}\n", omplMotionPlan;
             send planExecutor, ExecutePath, omplMotionPlan;
             receive {
 				case PathCompleted: {

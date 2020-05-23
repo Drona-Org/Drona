@@ -429,34 +429,57 @@ PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
             j++;
         }
     }
-    
-    PRT_VALUE* mainPRT = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
-	mainPRT->discriminator = (PRT_VALUE_KIND)2;
-    PRT_SEQVALUE* motionplan = (PRT_SEQVALUE*)PrtMalloc(sizeof(PRT_SEQVALUE));
-	mainPRT->valueUnion.seq = motionplan;
 
-	motionplan->size = j;
-	motionplan->capacity = (PRT_UINT32)100;
-	PRT_VALUE** tupArray = (PRT_VALUE**)PrtMalloc(sizeof(PRT_VALUE*) * motionplan->size);
-	motionplan->values = tupArray;
 
-	for (int i = 0; i < motionplan->size; i++) {
-		*(tupArray+i) = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
-		(*(tupArray+i))->discriminator = PRT_VALUE_KIND_TUPLE;
-		PRT_TUPVALUE* tuple = (PRT_TUPVALUE*)PrtMalloc(sizeof(PRT_TUPVALUE));
-		(*(tupArray+i))->valueUnion.tuple = tuple;
 
-		tuple->size = 3;
-		PRT_VALUE** floatArray = (PRT_VALUE**)PrtMalloc(sizeof(PRT_VALUE*) * 3);
-		tuple->values = floatArray;
+    PRT_VALUE* value = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
+    PRT_TYPE* seqType = PrtMkSeqType(PrtMkPrimitiveType(PRT_KIND_FLOAT));
+    value = PrtMkDefaultValue(seqType);
 
-		for (int j = 0; j < 3; j++) {
-			*(floatArray+j) = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
-			(*(floatArray+j))->discriminator = PRT_VALUE_KIND_FLOAT;
-			(*(floatArray+j))->valueUnion.ft = arrOfPoints2[i][j];
-		}
-	}
-    return mainPRT;
+    for (int i = 0; i < j; i++) {
+        PRT_TUPVALUE* tupPtr = (PRT_TUPVALUE*) PrtMalloc(sizeof(PRT_TUPVALUE));
+        PRT_VALUE* value2 = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
+        value2->discriminator = PRT_VALUE_KIND_TUPLE;
+        value2->valueUnion.tuple = tupPtr;            
+        tupPtr->size = 3;
+        tupPtr->values = (PRT_VALUE**)PrtCalloc(3, sizeof(PRT_VALUE));
+
+        for (int a = 0; a < 3; a++) {
+            tupPtr->values[a] = PrtMkFloatValue(arrOfPoints2[i][a]);
+        }
+
+        PrtSeqInsert(value, PrtMkIntValue(i), value2);
+    }
+        
+    // PRT_VALUE* mainPRT = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
+	// mainPRT->discriminator = (PRT_VALUE_KIND)2;
+    // PRT_SEQVALUE* motionplan = (PRT_SEQVALUE*)PrtMalloc(sizeof(PRT_SEQVALUE));
+	// mainPRT->valueUnion.seq = motionplan;
+
+	// motionplan->size = j;
+	// motionplan->capacity = (PRT_UINT32)100;
+	// PRT_VALUE** tupArray = (PRT_VALUE**)PrtMalloc(sizeof(PRT_VALUE*) * motionplan->size);
+	// motionplan->values = tupArray;
+
+	// for (int i = 0; i < motionplan->size; i++) {
+	// 	*(tupArray+i) = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
+	// 	(*(tupArray+i))->discriminator = PRT_VALUE_KIND_TUPLE;
+	// 	PRT_TUPVALUE* tuple = (PRT_TUPVALUE*)PrtMalloc(sizeof(PRT_TUPVALUE));
+	// 	(*(tupArray+i))->valueUnion.tuple = tuple;
+
+	// 	tuple->size = 3;
+	// 	PRT_VALUE** floatArray = (PRT_VALUE**)PrtMalloc(sizeof(PRT_VALUE*) * 3);
+	// 	tuple->values = floatArray;
+
+	// 	for (int j = 0; j < 3; j++) {
+	// 		*(floatArray+j) = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
+	// 		(*(floatArray+j))->discriminator = PRT_VALUE_KIND_FLOAT;
+	// 		(*(floatArray+j))->valueUnion.ft = arrOfPoints2[i][j];
+	// 	}
+	// }
+    // return mainPRT;
+
+    return value;
 }
 
 PRT_VALUE* P_ROSGoTo_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
@@ -551,4 +574,55 @@ PRT_VALUE* P_randomFloat_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
     PRT_VALUE** P_VAR_robot_id = argRefs[0];
     int randomNumber = (rand() % 6);
     return PrtMkFloatValue(randomNumber);
+}
+
+PRT_VALUE* P_seqTest_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    PRT_VALUE** P_VAR_seq = argRefs[0];
+
+    // while (strncmp(nextTupleElementToProcess, "END_TUP", 7) != 0) {
+    //     ocall_print("Processing Element String:");
+    //     ocall_print(nextTupleElementToProcess);
+    //     int i = tupPtr->size;
+    //     tupPtr->size++;
+    //     int numProcessedInHelper;
+    //     tupPtr->values[i] = *deserializeStringToPrtValue(1, nextTupleElementToProcess, payloadSize - (nextTupleElementToProcess - strCopy), &numProcessedInHelper);// deserializeStringToPrtValue(1, );
+    //     ocall_print("Element Processed.");
+    //     ocall_print("Number of characters in helper is ");
+    //     ocall_print_int(numProcessedInHelper);
+    //     nextTupleElementToProcess = nextTupleElementToProcess + numProcessedInHelper + 1;
+    // }
+
+    // PRT_VALUE* value = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
+    // PRT_TYPE* seqType = PrtMkSeqType(PrtMkPrimitiveType(PRT_KIND_FLOAT));
+    // value = PrtMkDefaultValue(seqType);
+    // PrtSeqInsert(value, PrtMkIntValue(0), PrtMkFloatValue(1.0));
+    // PrtSeqInsert(value, PrtMkIntValue(1), PrtMkFloatValue(5.0));
+    // PrtSeqInsert(value, PrtMkIntValue(2), PrtMkFloatValue(10.0));
+    // return value;
+}
+
+PRT_VALUE* P_seqTest2_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    PRT_VALUE** P_VAR_seq = argRefs[0];
+    
+    PRT_VALUE* value = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
+    PRT_TYPE* seqType = PrtMkSeqType(PrtMkPrimitiveType(PRT_KIND_FLOAT));
+    value = PrtMkDefaultValue(seqType);
+
+    PRT_TUPVALUE* tupPtr = (PRT_TUPVALUE*) PrtMalloc(sizeof(PRT_TUPVALUE));
+    PRT_VALUE* value2 = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
+    value2->discriminator = PRT_VALUE_KIND_TUPLE;
+    value2->valueUnion.tuple = tupPtr;            
+    tupPtr->size = 3;
+    tupPtr->values = (PRT_VALUE**)PrtCalloc(3, sizeof(PRT_VALUE));
+
+    int numProcessedInHelper;
+    tupPtr->values[0] = PrtMkFloatValue(1.0);
+    tupPtr->values[1] = PrtMkFloatValue(5.0);
+    tupPtr->values[2] = PrtMkFloatValue(10.0);
+        
+
+    PrtSeqInsert(value, PrtMkIntValue(0), value2);
+    PrtSeqInsert(value, PrtMkIntValue(1), value2);
+    PrtSeqInsert(value, PrtMkIntValue(2), value2);
+    return value;
 }

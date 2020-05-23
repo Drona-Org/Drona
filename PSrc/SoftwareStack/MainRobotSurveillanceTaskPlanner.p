@@ -8,10 +8,12 @@ Robot machine destination points, which the robot must visit.
 // Foreign function declarations. Implementations are in `RobotFuncs.cpp`
 fun RobotROSSetup(robotId: int): int;
 fun ShutdownROSSubscribers(numRobots: int): int;
-fun OmplMotionPlanExternal(destinations: seq[(float, float, float)], robot_id: int): int;
-fun ROSGoTo(arr: int, robot_id: int): int;
+fun OmplMotionPlanExternal(destinations: seq[(float, float, float)], robot_id: int): seq[(float, float, float)];
+fun ROSGoTo(arr: seq[(float, float, float)], robot_id: int): int;
 fun Sleep(time: float): int;
 fun randomFloat(): float;
+fun seqTest(arr: seq[float]): seq[float];
+fun seqTest2(arr: seq[(float, float, float)]): seq[(float, float, float)];
 
 type RequestInfo = (request_id: int, priority: int);
 type DstReq  = (mInfo: RequestInfo, dest: (float, float, float), sender: machine);
@@ -19,7 +21,7 @@ type DstReq  = (mInfo: RequestInfo, dest: (float, float, float), sender: machine
 event Success;
 event SendNextDstReq: DstReq;
 event SendGoalPoint: (float, float, float);
-event ExecutePath: int;
+event ExecutePath: seq[(float, float, float)];
 event PathCompleted;
 event CompletedPoint;
 event eConfigDrone: seq[machine];
@@ -138,18 +140,18 @@ machine TestDriver {
             DstRequests += (9, tempDstRequest);
 
             // Monitors for corresponing RTA modules
-            geofence1 = new LocationMonitorGeoFence(this, 1);
-            geofence2 = new LocationMonitorGeoFence(this, 2);
-            battery1 = new Battery(this,1);
-            battery2 = new Battery(this,2);
-            collision = new LocationMonitorCollision(this);
+            // geofence1 = new LocationMonitorGeoFence(this, 1);
+            // geofence2 = new LocationMonitorGeoFence(this, 2);
+            // battery1 = new Battery(this,1);
+            // battery2 = new Battery(this,2);
+            // collision = new LocationMonitorCollision(this);
 
             // Simultaneous Requests
             // Sending both robots a series of random locations
             send workerRobots[1], SendNextDstReq, DstRequests[8];
             send workerRobots[0], SendNextDstReq, DstRequests[9];
-            send workerRobots[0], SendNextDstReq, DstRequests[6];
             send workerRobots[1], SendNextDstReq, DstRequests[6];
+            send workerRobots[0], SendNextDstReq, DstRequests[6];
 
             // Sequential Requests
             // counter = 0;
