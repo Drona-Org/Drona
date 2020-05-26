@@ -375,6 +375,17 @@ PRT_VALUE* P_RobotROSSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) 
     id_currBatteryPercentage[1] = 100;
     id_currBatteryPercentage[2] = 100;
     collisionFree = true;
+
+    if (robot_id == 1) {
+        id_robot_x[robot_id] = 1.0;
+        id_robot_y[robot_id] = 1.0;
+    }
+
+    if (robot_id == 2) {
+        id_robot_x[robot_id] = 2.0;
+        id_robot_y[robot_id] = 2.0;
+    }
+
     return PrtMkIntValue((PRT_UINT32)1);
 }
 
@@ -398,6 +409,8 @@ PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
         arrOfPoints[i][0] = x;
         arrOfPoints[i][1] = y;
         arrOfPoints[i][2] = z;
+        printf("HELLO\n");
+        printf("%f %f %f\n",x,y,z);
     }
 
     vector<WS_Coord> destinations;
@@ -412,6 +425,9 @@ PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
     for (int i = 0; i < destinations.size() - 1; i++) {
         WS_Coord gazToPlan = GazeboToPlanner(destinations.at(i));
         WS_Coord gazToPlan2 = GazeboToPlanner(destinations.at(i+1));
+        printf(" X HELLLLOOOOOOOOOOO\n");
+        printf("X: %f, Y: %f, Z: %f\n", gazToPlan.x, gazToPlan.y, gazToPlan.z);
+        printf("X: %f, Y: %f, Z: %f\n", gazToPlan2.x, gazToPlan2.y, gazToPlan2.z);
         vector<WS_Coord> path = planner->GeneratePlan(1, GazeboToPlanner(destinations.at(i)), GazeboToPlanner(destinations.at(i+1)));
         vector<WS_Coord> pathNew = path;
 
@@ -505,12 +521,12 @@ PRT_VALUE* P_ROSGoTo_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
 		destinationPoints[i][0] = x;
         destinationPoints[i][1] = y;
         destinationPoints[i][2] = z;
-        if ((x != prev_x) && (y != prev_y) && (z != prev_z)) {
-            printf("%f, %f, %f\n", x,y,z);
-            id_global_goal_x[robot_id] = x;
-            id_global_goal_y[robot_id] = y;
-            gazebo_move_goal(x, y, robot_id);
-        }
+        // if ((x != prev_x) && (y != prev_y) && (z != prev_z)) {
+        printf("%f, %f, %f\n", x,y,z);
+        id_global_goal_x[robot_id] = x;
+        id_global_goal_y[robot_id] = y;
+        gazebo_move_goal(x, y, robot_id);
+        // }
 
         prev_x = x;
         prev_y = y;
@@ -625,4 +641,20 @@ PRT_VALUE* P_seqTest2_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
     PrtSeqInsert(value, PrtMkIntValue(1), value2);
     PrtSeqInsert(value, PrtMkIntValue(2), value2);
     return value;
+}
+
+PRT_VALUE* P_getRobotLocationX_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    PRT_VALUE** P_VAR_robot_id = argRefs[0];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+
+    double robot_x_location = id_robot_x[robot_id];
+    return PrtMkFloatValue(robot_x_location);
+}
+
+PRT_VALUE* P_getRobotLocationY_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    PRT_VALUE** P_VAR_robot_id = argRefs[0];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+
+    double robot_y_location = id_robot_y[robot_id];
+    return PrtMkFloatValue(robot_y_location);
 }

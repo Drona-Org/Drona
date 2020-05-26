@@ -10,10 +10,10 @@
 		</robot>
 	</robots>
 	<obstacles>
-		<!-- <box>
-			<low  x="0.5" y="-1" z="0" />
-			<high x="1.5" y="1" z="0" />
-	  	</box> -->
+		<box>
+			<low  x="2" y="0" z="0" />
+			<high x="3" y="1" z="1" />
+	  	</box>
 	</obstacles>
 	<charging_stations>
 		<box>

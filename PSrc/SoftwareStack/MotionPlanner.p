@@ -40,9 +40,16 @@ machine MotionPlanner {
         entry (payload: (float, float, float)) {
             var s: seq[(float, float, float)];
             var omplMotionPlan : seq[(float, float, float)];
+            var robot_x: float;
+            var robot_y: float;
 
             s = default(seq[(float, float, float)]);
-            s += (0, payload);
+            robot_x = getRobotLocationX(robotId);
+            robot_y = getRobotLocationY(robotId);
+            print "ROBOT X: {0}\n", robot_x;
+            print "ROBOT Y: {0}\n", robot_y;
+            s += (0, (robot_x, robot_y, 0.0));
+            // s += (0, payload);
             s += (1, payload);
 
             omplMotionPlan = OmplMotionPlanExternal(s, robotId); // Foreign function call to OMPL motion planner

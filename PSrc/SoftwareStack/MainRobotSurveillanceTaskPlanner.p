@@ -14,6 +14,8 @@ fun Sleep(time: float): int;
 fun randomFloat(): float;
 fun seqTest(arr: seq[float]): seq[float];
 fun seqTest2(arr: seq[(float, float, float)]): seq[(float, float, float)];
+fun getRobotLocationX(robotId: int): float;
+fun getRobotLocationY(robotId: int): float;
 
 type RequestInfo = (request_id: int, priority: int);
 type DstReq  = (mInfo: RequestInfo, dest: (float, float, float), sender: machine);
@@ -120,7 +122,7 @@ machine TestDriver {
             DstRequests += (5, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (3.0, 1.0, 0.0);
+            tempDstRequest.dest = (4.0, 1.0, 0.0);
             tempDstRequest.sender = this;
             DstRequests += (6, tempDstRequest);
 
