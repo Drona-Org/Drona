@@ -142,18 +142,18 @@ machine TestDriver {
             DstRequests += (9, tempDstRequest);
 
             // Monitors for corresponing RTA modules
-            // geofence1 = new LocationMonitorGeoFence(this, 1);
-            // geofence2 = new LocationMonitorGeoFence(this, 2);
-            // battery1 = new Battery(this,1);
-            // battery2 = new Battery(this,2);
-            // collision = new LocationMonitorCollision(this);
+            geofence1 = new LocationMonitorGeoFence(this, 1);
+            geofence2 = new LocationMonitorGeoFence(this, 2);
+            battery1 = new Battery(this,1);
+            battery2 = new Battery(this,2);
+            collision = new LocationMonitorCollision(this);
 
             // Simultaneous Requests
             // Sending both robots a series of random locations
             send workerRobots[1], SendNextDstReq, DstRequests[8];
             send workerRobots[0], SendNextDstReq, DstRequests[9];
-            send workerRobots[1], SendNextDstReq, DstRequests[6];
             send workerRobots[0], SendNextDstReq, DstRequests[6];
+            send workerRobots[1], SendNextDstReq, DstRequests[6];
 
             // Sequential Requests
             // counter = 0;

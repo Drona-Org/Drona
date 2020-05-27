@@ -11,8 +11,8 @@
 	</robots>
 	<obstacles>
 		<box>
-			<low  x="2" y="0" z="0" />
-			<high x="3" y="1" z="1" />
+			<low  x="3.25" y="1.25" z="0" />
+			<high x="3.75" y="1.75" z="1" />
 	  	</box>
 	</obstacles>
 	<charging_stations>
