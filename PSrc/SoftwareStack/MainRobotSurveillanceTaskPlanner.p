@@ -122,7 +122,7 @@ machine TestDriver {
             DstRequests += (5, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (4.0, 1.0, 0.0);
+            tempDstRequest.dest = (4.0, 3.0, 0.0);
             tempDstRequest.sender = this;
             DstRequests += (6, tempDstRequest);
 
