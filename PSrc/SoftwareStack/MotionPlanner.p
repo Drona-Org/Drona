@@ -49,11 +49,9 @@ machine MotionPlanner {
             print "ROBOT X: {0}\n", robot_x;
             print "ROBOT Y: {0}\n", robot_y;
             s += (0, (robot_x, robot_y, 0.0));
-            // s += (0, payload);
             s += (1, payload);
 
             omplMotionPlan = OmplMotionPlanExternal(s, robotId); // Foreign function call to OMPL motion planner
-            print "ompl Motion Plan returned from function {0}\n", omplMotionPlan;
             send planExecutor, ExecutePath, omplMotionPlan;
             receive {
 				case PathCompleted: {

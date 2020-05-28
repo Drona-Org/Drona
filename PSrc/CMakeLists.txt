@@ -7,13 +7,12 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/ExternalMotionPlanners/OMPLOptimalPlanner/Includes
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes)
 add_executable(drona_test
-    SoftwareStack/MainRobotSurveillanceTaskPlanner.h
-    SoftwareStack/MainRobotSurveillanceTaskPlanner.c
-    SoftwareStack/Main.cpp
+    Applications/MainRobotSurveillanceTaskPlanner.h
+    Applications/MainRobotSurveillanceTaskPlanner.c
+    Applications/Main.cpp
     RobotSDK/RobotFuncs.h
     RobotSDK/RobotFuncs.cpp
     SoftwareStack/Exp1.xml
-    ${CMAKE_SOURCE_DIR}/Drona/PSrc/Exp1.xml
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes/Workspace.h
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes/tinyxml2.h
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes/WorkspaceParser.h

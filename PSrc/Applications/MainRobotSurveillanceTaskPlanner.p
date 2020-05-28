@@ -12,8 +12,6 @@ fun OmplMotionPlanExternal(destinations: seq[(float, float, float)], robot_id: i
 fun ROSGoTo(arr: seq[(float, float, float)], robot_id: int): int;
 fun Sleep(time: float): int;
 fun randomFloat(): float;
-fun seqTest(arr: seq[float]): seq[float];
-fun seqTest2(arr: seq[(float, float, float)]): seq[(float, float, float)];
 fun getRobotLocationX(robotId: int): float;
 fun getRobotLocationY(robotId: int): float;
 
@@ -122,7 +120,7 @@ machine TestDriver {
             DstRequests += (5, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (4.0, 3.0, 0.0);
+            tempDstRequest.dest = (4.0, 3.5, 0.0);
             tempDstRequest.sender = this;
             DstRequests += (6, tempDstRequest);
 
@@ -185,52 +183,5 @@ machine TestDriver {
         entry {
             // Call ShutdownROSSubscribers()
         }
-    }
-}
-
-machine Robot {
-    var myId: int;
-    var otherDrones: seq[machine];
-    var testDriver: machine;
-    var motionPlanner: machine;
-
-    start state Init {
-        entry (payload: (int, machine)) {
-            var x: int;
-            myId = payload.0;
-            testDriver = payload.1;
-            x = RobotROSSetup(payload.0); // Sets up P machine, with the ROS topics
-            motionPlanner = new MotionPlanner((this, myId));
-        }
-
-        on eConfigDrone goto WaitForDstRequest with (payload: seq[machine]) {
-            var index : int;
-            index = 0;
-            while(index < sizeof(payload)) {
-                if(payload[index] != this) {
-                    otherDrones +=(0, payload[index]);
-                }
-                index = index + 1;
-            }
-        }
-    }
-
-    state WaitForDstRequest {
-        entry {}
-        on SendNextDstReq goto ProcessDstReq;
-    }
-
-    // Robot receives locations from Task Planner, and sends it to correponding motion planner
-    state ProcessDstReq {
-        entry (payload: DstReq) {
-            send motionPlanner, SendGoalPoint, payload.dest;
-            receive {
-				case CompletedPoint: {
-                    // send testDriver, CompletedPoint;
-                    raise Success;
-                }
-			}
-        }
-        on Success goto WaitForDstRequest;
     }
 }

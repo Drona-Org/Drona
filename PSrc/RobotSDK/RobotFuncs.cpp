@@ -1,4 +1,10 @@
-#include "../SoftwareStack/MainRobotSurveillanceTaskPlanner.h"
+/*
+This file contains the Cpp modules used for connect the P program with ROS.
+This includes all the foreign function implementations, state information about the robots,
+and controller implementations.
+*/
+
+#include "../Applications/MainRobotSurveillanceTaskPlanner.h"
 #include "RobotFuncs.h"
 #include <math.h>
 #include <unistd.h>
@@ -21,12 +27,6 @@
 #include <iostream>
 #include <ctime>
 using namespace std;
-
-/*
-This file contains the Cpp modules used for connect the P program with ROS.
-This includes all the foreign function implementations, state information about the robots,
-and controller implementations.
-*/
 
 std::map<int, geometry_msgs::Twist> id_vel_msgs; 
 std::map<int, ros::Publisher> id_vel_pubs;
@@ -101,11 +101,11 @@ void safe_controller(int robot_id) {
             vel_msg.angular.z = 0;
             vel_msg.linear.x = -0.3;
             id_vel_pubs[robot_id].publish(vel_msg);
+            usleep(1000000);
         }
-        
-    }
-    // Collision avoidance pausing 
-    if (robot_id == 1) {
+
+        // Collision avoidance pausing 
+        if (robot_id == 1) {
             printf("SLEEPING\n");
             vel_msg.angular.x = 0;
             vel_msg.angular.z = 0;
@@ -124,65 +124,26 @@ void safe_controller(int robot_id) {
             vel_msg.angular.z = 0;
             vel_msg.linear.x = 0;
             id_vel_pubs[robot_id].publish(vel_msg);
-            usleep(7500000);
+            usleep(9000000);
             printf("DONE SLEEPING\n");
         }
-
+    }
+    
     // Location Monitor: Geo Fence SC
-    double safe_point_x = 1.5;
-    double safe_point_y = 1.5;
-
     while (!id_advancedLocation[robot_id]) {
-        while (!(((id_robot_x[robot_id] >= 0.7 && id_robot_x[robot_id] <= 4.3)) && (id_robot_y[robot_id] >= 0.7 && id_robot_y[robot_id] <= 4.3))) {
-            vel_msg.angular.x = 0; //&& !(id_robot_x[robot_id] >= 1.0 || id_robot_x[robot_id] <= 3.00) && !(id_robot_y[robot_id] >= 1.0 || id_robot_y[robot_id] <= 3.00)
+        while (!(((id_robot_x[robot_id] >= 0.5 && id_robot_x[robot_id] <= 4.5)) && (id_robot_y[robot_id] >= 0.5 && id_robot_y[robot_id] <= 4.5))) {
+            vel_msg.angular.x = 0; 
             vel_msg.angular.z = 0;
             id_vel_pubs[robot_id].publish(vel_msg);
             ros::spinOnce();
             loop_rate.sleep();
+            usleep(1500000);
             vel_msg.angular.z = 0;
-            vel_msg.linear.x = -0.2;
+            vel_msg.linear.x = -0.1;
             id_vel_pubs[robot_id].publish(vel_msg);
+            ros::spinOnce();
+            loop_rate.sleep();
         } 
-        
-
-        // while ((getDistance(safe_point_x, safe_point_y, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1)) {
-        //     if (id_advancedLocation[robot_id]) {
-        //         printf("IM SAFE AGAIN!!!!\n");
-        //         break;
-        //     }
-
-        //     double inc_x = safe_point_x - id_robot_x[robot_id];
-        //     double inc_y = safe_point_y - id_robot_y[robot_id];
-        //     double angle_to_goal = atan2(inc_y, inc_x);
-            
-        //     double tmp_linear_x = 0.2*getDistance(id_robot_x[robot_id], id_robot_y[robot_id], safe_point_x, safe_point_y);
-        //     double tmp_angular_z = 1.0*std::abs((atan2(safe_point_y-id_robot_y[robot_id], safe_point_x - id_robot_x[robot_id])) - (id_robot_theta[robot_id]));
-            
-        //     if (tmp_linear_x < 0) {
-        //         tmp_linear_x = max(-0.3, tmp_linear_x);
-        //     } else {
-        //         tmp_linear_x = min(0.3, tmp_linear_x);
-        //     }
-            
-        //     if (tmp_angular_z < 0) {
-        //         tmp_angular_z = max(-1.0, tmp_angular_z);
-        //     } else {
-        //         tmp_angular_z = min(1.0, tmp_angular_z);
-        //     }
-
-        //     vel_msg.linear.x = tmp_linear_x;
-        //     vel_msg.linear.y = 0;
-        //     vel_msg.linear.z = 0;
-        //     vel_msg.angular.x = 0;
-        //     vel_msg.angular.y = 0;
-        //     vel_msg.angular.z = tmp_angular_z;
-
-        //     id_vel_pubs[robot_id].publish(vel_msg);
-        //     ros::spinOnce();
-        //     loop_rate.sleep();
-        // }
-        // id_advancedBattery[robot_id] = true;
-        // id_currBatteryPercentage[robot_id] = 100;
     }
 
     // Battery Monitor SC
@@ -266,9 +227,9 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
         }
         
         if (tmp_angular_z < 0) {
-            tmp_angular_z = max(-2.0, tmp_angular_z);
+            tmp_angular_z = max(-3.0, tmp_angular_z);
         } else {
-            tmp_angular_z = min(2.0, tmp_angular_z);
+            tmp_angular_z = min(3.0, tmp_angular_z);
         }
 
         vel_msg.linear.x = tmp_linear_x;
@@ -425,9 +386,6 @@ PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
     for (int i = 0; i < destinations.size() - 1; i++) {
         WS_Coord gazToPlan = GazeboToPlanner(destinations.at(i));
         WS_Coord gazToPlan2 = GazeboToPlanner(destinations.at(i+1));
-        printf(" X HELLLLOOOOOOOOOOO\n");
-        printf("X: %f, Y: %f, Z: %f\n", gazToPlan.x, gazToPlan.y, gazToPlan.z);
-        printf("X: %f, Y: %f, Z: %f\n", gazToPlan2.x, gazToPlan2.y, gazToPlan2.z);
         vector<WS_Coord> path = planner->GeneratePlan(1, GazeboToPlanner(destinations.at(i)), GazeboToPlanner(destinations.at(i+1)));
         vector<WS_Coord> pathNew = path;
 
@@ -445,8 +403,6 @@ PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
             j++;
         }
     }
-
-
 
     PRT_VALUE* value = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
     PRT_TYPE* seqType = PrtMkSeqType(PrtMkPrimitiveType(PRT_KIND_FLOAT));
@@ -466,34 +422,6 @@ PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
 
         PrtSeqInsert(value, PrtMkIntValue(i), value2);
     }
-        
-    // PRT_VALUE* mainPRT = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
-	// mainPRT->discriminator = (PRT_VALUE_KIND)2;
-    // PRT_SEQVALUE* motionplan = (PRT_SEQVALUE*)PrtMalloc(sizeof(PRT_SEQVALUE));
-	// mainPRT->valueUnion.seq = motionplan;
-
-	// motionplan->size = j;
-	// motionplan->capacity = (PRT_UINT32)100;
-	// PRT_VALUE** tupArray = (PRT_VALUE**)PrtMalloc(sizeof(PRT_VALUE*) * motionplan->size);
-	// motionplan->values = tupArray;
-
-	// for (int i = 0; i < motionplan->size; i++) {
-	// 	*(tupArray+i) = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
-	// 	(*(tupArray+i))->discriminator = PRT_VALUE_KIND_TUPLE;
-	// 	PRT_TUPVALUE* tuple = (PRT_TUPVALUE*)PrtMalloc(sizeof(PRT_TUPVALUE));
-	// 	(*(tupArray+i))->valueUnion.tuple = tuple;
-
-	// 	tuple->size = 3;
-	// 	PRT_VALUE** floatArray = (PRT_VALUE**)PrtMalloc(sizeof(PRT_VALUE*) * 3);
-	// 	tuple->values = floatArray;
-
-	// 	for (int j = 0; j < 3; j++) {
-	// 		*(floatArray+j) = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
-	// 		(*(floatArray+j))->discriminator = PRT_VALUE_KIND_FLOAT;
-	// 		(*(floatArray+j))->valueUnion.ft = arrOfPoints2[i][j];
-	// 	}
-	// }
-    // return mainPRT;
 
     return value;
 }
@@ -521,12 +449,10 @@ PRT_VALUE* P_ROSGoTo_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
 		destinationPoints[i][0] = x;
         destinationPoints[i][1] = y;
         destinationPoints[i][2] = z;
-        // if ((x != prev_x) && (y != prev_y) && (z != prev_z)) {
         printf("%f, %f, %f\n", x,y,z);
         id_global_goal_x[robot_id] = x;
         id_global_goal_y[robot_id] = y;
         gazebo_move_goal(x, y, robot_id);
-        // }
 
         prev_x = x;
         prev_y = y;
@@ -549,7 +475,6 @@ PRT_VALUE* P_MonitorLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
     ros::spinOnce();
     
     printf("Robot %d Location: (%f, %f)\n", robot_id, id_robot_x[robot_id], id_robot_y[robot_id]);
-    // printf("Robot %d Velocity: (%f, %f)\n", robot_id, id_robot_velocity_linear[robot_id], id_robot_velocity_theta[robot_id]);
 
     // GEOFENCE DECISION MODULE
     if (id_robot_x[robot_id]-(0.3*0.5) <= 0 || id_robot_x[robot_id]+(0.3*0.5) >= 5.0 || id_robot_y[robot_id]-(0.3*0.5) <= 0|| id_robot_y[robot_id]+(0.3*0.5) >= 5.0) {
@@ -566,7 +491,6 @@ PRT_VALUE* P_collisionSafe_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) 
     ros::spinOnce();
 
     // COLLISION AVOIDANCE DECISION MODULE
-    // double robotDistance = getDistance(id_robot_x[1], id_robot_y[1], id_robot_x[2], id_robot_y[2]);
     double robotDistance = getDistance(id_robot_x[1]+(id_robot_velocity_linear[1]*0.5), id_robot_y[1]+(id_robot_velocity_linear[1]*0.5), id_robot_x[2]+(id_robot_velocity_linear[1]*0.5), id_robot_y[2]+(id_robot_velocity_linear[1]*0.5));
     if (robotDistance <= 0.25) {
         printf("Robot UNSAFE\n");
@@ -590,57 +514,6 @@ PRT_VALUE* P_randomFloat_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
     PRT_VALUE** P_VAR_robot_id = argRefs[0];
     int randomNumber = (rand() % 6);
     return PrtMkFloatValue(randomNumber);
-}
-
-PRT_VALUE* P_seqTest_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
-    PRT_VALUE** P_VAR_seq = argRefs[0];
-
-    // while (strncmp(nextTupleElementToProcess, "END_TUP", 7) != 0) {
-    //     ocall_print("Processing Element String:");
-    //     ocall_print(nextTupleElementToProcess);
-    //     int i = tupPtr->size;
-    //     tupPtr->size++;
-    //     int numProcessedInHelper;
-    //     tupPtr->values[i] = *deserializeStringToPrtValue(1, nextTupleElementToProcess, payloadSize - (nextTupleElementToProcess - strCopy), &numProcessedInHelper);// deserializeStringToPrtValue(1, );
-    //     ocall_print("Element Processed.");
-    //     ocall_print("Number of characters in helper is ");
-    //     ocall_print_int(numProcessedInHelper);
-    //     nextTupleElementToProcess = nextTupleElementToProcess + numProcessedInHelper + 1;
-    // }
-
-    // PRT_VALUE* value = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
-    // PRT_TYPE* seqType = PrtMkSeqType(PrtMkPrimitiveType(PRT_KIND_FLOAT));
-    // value = PrtMkDefaultValue(seqType);
-    // PrtSeqInsert(value, PrtMkIntValue(0), PrtMkFloatValue(1.0));
-    // PrtSeqInsert(value, PrtMkIntValue(1), PrtMkFloatValue(5.0));
-    // PrtSeqInsert(value, PrtMkIntValue(2), PrtMkFloatValue(10.0));
-    // return value;
-}
-
-PRT_VALUE* P_seqTest2_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
-    PRT_VALUE** P_VAR_seq = argRefs[0];
-    
-    PRT_VALUE* value = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
-    PRT_TYPE* seqType = PrtMkSeqType(PrtMkPrimitiveType(PRT_KIND_FLOAT));
-    value = PrtMkDefaultValue(seqType);
-
-    PRT_TUPVALUE* tupPtr = (PRT_TUPVALUE*) PrtMalloc(sizeof(PRT_TUPVALUE));
-    PRT_VALUE* value2 = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
-    value2->discriminator = PRT_VALUE_KIND_TUPLE;
-    value2->valueUnion.tuple = tupPtr;            
-    tupPtr->size = 3;
-    tupPtr->values = (PRT_VALUE**)PrtCalloc(3, sizeof(PRT_VALUE));
-
-    int numProcessedInHelper;
-    tupPtr->values[0] = PrtMkFloatValue(1.0);
-    tupPtr->values[1] = PrtMkFloatValue(5.0);
-    tupPtr->values[2] = PrtMkFloatValue(10.0);
-        
-
-    PrtSeqInsert(value, PrtMkIntValue(0), value2);
-    PrtSeqInsert(value, PrtMkIntValue(1), value2);
-    PrtSeqInsert(value, PrtMkIntValue(2), value2);
-    return value;
 }
 
 PRT_VALUE* P_getRobotLocationX_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
