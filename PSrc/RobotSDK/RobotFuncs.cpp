@@ -42,7 +42,11 @@ bool collisionFree;                      // rtaModuleID = 2
 std::map<int, int> id_currBatteryPercentage;
 std::map<int, float> id_global_goal_x;
 std::map<int, float> id_global_goal_y;
+std::map<int, float> id_charging_station_x; 
+std::map<int, float> id_charging_station_y;
 
+WorkspaceInfo *WSInfo;
+OMPLPLanner* planner;
 
 WS_Coord GazeboToPlanner(WS_Coord coord) {
     return WS_Coord(coord.x + WS_Coord(0, 0, 0).x, coord.y + WS_Coord(0, 0, 0).y, coord.z + WS_Coord(0, 0, 0).z);
@@ -82,6 +86,45 @@ void gazeboCallBack2(const nav_msgs::Odometry::ConstPtr& odom_msg) {
     rpy.y = pitch;
     rpy.z = yaw; 
     id_robot_theta[2] = yaw;
+}
+
+void safe_battery_move_to_goal(int robot_id, double goal_x, double goal_y) {
+    geometry_msgs::Twist vel_msg = id_vel_msgs[robot_id];
+    ros::Rate loop_rate(1000000);
+    usleep(500000);
+    ros::spinOnce();
+
+    while ((getDistance(goal_x, goal_y, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1)) {
+        double inc_x = goal_x - id_robot_x[robot_id];
+        double inc_y = goal_y - id_robot_y[robot_id];
+        double angle_to_goal = atan2(inc_y, inc_x);
+        
+        double tmp_linear_x = 0.2*getDistance(id_robot_x[robot_id], id_robot_y[robot_id], goal_x, goal_y);
+        double tmp_angular_z = 1.0*std::abs((atan2(goal_y-id_robot_y[robot_id], goal_x - id_robot_x[robot_id])) - (id_robot_theta[robot_id]));
+        
+        if (tmp_linear_x < 0) {
+            tmp_linear_x = max(-0.3, tmp_linear_x);
+        } else {
+            tmp_linear_x = min(0.3, tmp_linear_x);
+        }
+        
+        if (tmp_angular_z < 0) {
+            tmp_angular_z = max(-1.0, tmp_angular_z);
+        } else {
+            tmp_angular_z = min(1.0, tmp_angular_z);
+        }
+
+        vel_msg.linear.x = tmp_linear_x;
+        vel_msg.linear.y = 0;
+        vel_msg.linear.z = 0;
+        vel_msg.angular.x = 0;
+        vel_msg.angular.y = 0;
+        vel_msg.angular.z = tmp_angular_z;
+
+        id_vel_pubs[robot_id].publish(vel_msg);
+        ros::spinOnce();
+        loop_rate.sleep();
+    }
 }
 
 void safe_controller(int robot_id) {
@@ -147,21 +190,28 @@ void safe_controller(int robot_id) {
     }
 
     // Battery Monitor SC
-    std::map<int, float> id_charging_station_x; 
-    std::map<int, float> id_charging_station_y;
-    id_charging_station_x[1] = 1.0;
-    id_charging_station_y[1] = 1.0;
-    id_charging_station_x[2] = 2.0;
-    id_charging_station_y[2] = 2.0;
-
     while (!id_advancedBattery[robot_id]) {
-        while ((getDistance(id_charging_station_x[robot_id], id_charging_station_y[robot_id], id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1)) {
+        // WS_Coord current_location = WS_Coord(id_robot_x[robot_id], id_robot_y[robot_id], 0.0);
+        // WS_Coord charging_station = WS_Coord(id_charging_station_x[robot_id], id_charging_station_y[robot_id], 0.0);
+        // vector<WS_Coord> path = planner->GeneratePlan(1, GazeboToPlanner(current_location), GazeboToPlanner(charging_station));
+        // vector<WS_Coord> pathNew = path;
+
+        // for (int count = 0; count < pathNew.size(); count++) {
+        //     WS_Coord shifted = PlannerToGazebo(pathNew.at(count));
+        //     double x = shifted.x;
+        //     double y = shifted.y;
+        //     double z = shifted.z;
+        //     printf("%f %f %f\n",x,y,z);
+        //     safe_battery_move_to_goal(robot_id, x, y);
+        // }
+        while (getDistance(id_charging_station_x[robot_id], id_charging_station_y[robot_id], id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1) {
+
             double inc_x = id_charging_station_x[robot_id] - id_robot_x[robot_id];
             double inc_y = id_charging_station_y[robot_id] - id_robot_y[robot_id];
             double angle_to_goal = atan2(inc_y, inc_x);
             
             double tmp_linear_x = 0.2*getDistance(id_robot_x[robot_id], id_robot_y[robot_id], id_charging_station_x[robot_id], id_charging_station_y[robot_id]);
-            double tmp_angular_z = 1.0*std::abs((atan2(id_charging_station_y[robot_id]-id_robot_y[robot_id], id_charging_station_x[robot_id] - id_robot_x[robot_id])) - (id_robot_theta[robot_id]));
+            double tmp_angular_z = 1.0*std::abs((atan2(id_charging_station_y[robot_id]-id_robot_y[robot_id], (id_charging_station_x[robot_id] - id_robot_x[robot_id])) - (id_robot_theta[robot_id])));
             
             if (tmp_linear_x < 0) {
                 tmp_linear_x = max(-0.3, tmp_linear_x);
@@ -170,12 +220,14 @@ void safe_controller(int robot_id) {
             }
             
             if (tmp_angular_z < 0) {
-                tmp_angular_z = max(-1.0, tmp_angular_z);
+                tmp_angular_z = max(-1.5, tmp_angular_z);
             } else {
-                tmp_angular_z = min(1.0, tmp_angular_z);
+                tmp_angular_z = min(1.5, tmp_angular_z);
             }
 
             vel_msg.linear.x = tmp_linear_x;
+            id_robot_velocity_linear[robot_id] = tmp_linear_x;
+            id_robot_velocity_theta[robot_id] = tmp_angular_z;
             vel_msg.linear.y = 0;
             vel_msg.linear.z = 0;
             vel_msg.angular.x = 0;
@@ -185,7 +237,17 @@ void safe_controller(int robot_id) {
             id_vel_pubs[robot_id].publish(vel_msg);
             ros::spinOnce();
             loop_rate.sleep();
-        }
+        }    
+
+        vel_msg.angular.x = 0;
+        vel_msg.angular.z = 0;
+        id_vel_pubs[robot_id].publish(vel_msg);
+        ros::spinOnce();
+        loop_rate.sleep();
+        vel_msg.angular.z = 0;
+        vel_msg.linear.x = 0;
+        id_vel_pubs[robot_id].publish(vel_msg);
+
         id_advancedBattery[robot_id] = true;
         id_currBatteryPercentage[robot_id] = 100;
     }
@@ -370,7 +432,6 @@ PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
         arrOfPoints[i][0] = x;
         arrOfPoints[i][1] = y;
         arrOfPoints[i][2] = z;
-        printf("HELLO\n");
         printf("%f %f %f\n",x,y,z);
     }
 
@@ -379,7 +440,6 @@ PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
         destinations.push_back(WS_Coord(arrOfPoints[i][0], arrOfPoints[i][1], arrOfPoints[i][2]));
     }
     
-    OMPLPLanner* planner = new OMPLPLanner("/home/sumukh/catkin_ws/src/Drona/PSrc/SoftwareStack/Exp1.xml", PLANNER_RRTSTAR, OBJECTIVE_PATHLENGTH);
     double arrOfPoints2[destinations.size()*2-2][3];
     int j = 0;
 
@@ -438,9 +498,6 @@ PRT_VALUE* P_ROSGoTo_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
     velocity_publisher = id_vel_pubs[robot_id];
 
 	double destinationPoints[mainPRT->valueUnion.seq->size][3];
-	double prev_x = -10.0;
-    double prev_y = -10.0;
-    double prev_z = -10.0;
 
 	for (int i = 0; i < mainPRT->valueUnion.seq->size; i++) {
 		double x = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[0]->valueUnion.ft;
@@ -454,11 +511,56 @@ PRT_VALUE* P_ROSGoTo_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
         id_global_goal_y[robot_id] = y;
         gazebo_move_goal(x, y, robot_id);
 
-        prev_x = x;
-        prev_y = y;
-        prev_z = z;
 	}
     return PrtMkIntValue((PRT_UINT32)1);
+}
+bool pointInObstacle(double my_x, double my_y, double obs_low_x, double obs_low_y, double obs_high_x, double obs_high_y) {
+    if ((my_x >= obs_low_x) && (my_x <= obs_high_x) && (my_y >= obs_low_y) && (my_y <= obs_high_y)) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+PRT_VALUE* P_randomLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    srand(time(NULL));
+    float random_x = (float) (rand() % 6);
+    float random_y = (float) (rand() % 6);
+    bool found = false;
+    int obs_free_count = 0;
+
+    while(!found) {
+        for (int i=0; i < WSInfo->obstacles.size(); i++) {
+            WS_Box my_obs = WSInfo->obstacles.at(i);
+            if (pointInObstacle(random_x, random_y, my_obs.low.x, my_obs.low.y, my_obs.high.x, my_obs.high.y)) {
+                found = false;
+                random_x = (float) (rand() % 6);
+                random_y = (float) (rand() % 6);
+                obs_free_count = 0;
+                break;
+            } else {
+                obs_free_count += 1;
+            }
+        }
+
+        if (obs_free_count == WSInfo->obstacles.size()) {
+            found = true;
+        }
+    }
+    
+    PRT_TUPVALUE* tupPtr = (PRT_TUPVALUE*) PrtMalloc(sizeof(PRT_TUPVALUE));
+    PRT_VALUE* value2 = (PRT_VALUE*)PrtMalloc(sizeof(PRT_VALUE));
+    value2->discriminator = PRT_VALUE_KIND_TUPLE;
+    value2->valueUnion.tuple = tupPtr;            
+    tupPtr->size = 3;
+    tupPtr->values = (PRT_VALUE**)PrtCalloc(3, sizeof(PRT_VALUE));
+
+    tupPtr->values[0] = PrtMkFloatValue(random_x);
+    tupPtr->values[1] = PrtMkFloatValue(random_y);
+    tupPtr->values[2] = PrtMkFloatValue(0.0);
+
+    return value2;
+
 }
 
 PRT_VALUE* P_Sleep_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
@@ -530,4 +632,16 @@ PRT_VALUE* P_getRobotLocationY_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRe
 
     double robot_y_location = id_robot_y[robot_id];
     return PrtMkFloatValue(robot_y_location);
+}
+
+PRT_VALUE* P_workspaceSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    WSInfo = ParseWorkspaceConfig("/home/sumukh/catkin_ws/src/Drona/PSrc/SoftwareStack/Exp1.xml");
+    planner = new OMPLPLanner("/home/sumukh/catkin_ws/src/Drona/PSrc/SoftwareStack/Exp1.xml", PLANNER_RRTSTAR, OBJECTIVE_PATHLENGTH);
+
+    id_charging_station_x[1] = (double) WSInfo->charging_stations.at(0).low.x;
+    id_charging_station_y[1] = (double) WSInfo->charging_stations.at(0).low.y;
+    id_charging_station_x[2] = (double) WSInfo->charging_stations.at(1).low.x;
+    id_charging_station_y[2] = (double) WSInfo->charging_stations.at(1).low.y;
+
+    return PrtMkIntValue((PRT_UINT32)WSInfo->robots.size());
 }

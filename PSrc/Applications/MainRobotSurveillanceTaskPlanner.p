@@ -14,6 +14,8 @@ fun Sleep(time: float): int;
 fun randomFloat(): float;
 fun getRobotLocationX(robotId: int): float;
 fun getRobotLocationY(robotId: int): float;
+fun workspaceSetup(): int;
+fun randomLocation(): (float, float, float);
 
 type RequestInfo = (request_id: int, priority: int);
 type DstReq  = (mInfo: RequestInfo, dest: (float, float, float), sender: machine);
@@ -51,6 +53,7 @@ machine TestDriver {
     var battery1: machine;
     var battery2: machine;
     var collision: machine;
+    var y: int;
 
     start state Init {
         entry {
@@ -58,7 +61,7 @@ machine TestDriver {
 			var temp: machine;
 
 			reqCount = 4;
-			numOfWorkerRobots = 2;
+            numOfWorkerRobots = workspaceSetup();
 
 			index = 1;
             // Creates all robots
@@ -83,41 +86,21 @@ machine TestDriver {
             var DstRequests: seq[DstReq];
             var randomFloat: float;
             var randomFloat2: float;
+            var i: int;
             DstRequests = default(seq[DstReq]);
             
             requestInfo.request_id = 1;
             requestInfo.priority = 1;
 
             // Adding a series of random destinations for robots to visit.
-            tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (randomFloat(), randomFloat(), 0.0);
-            tempDstRequest.sender = this;
-            DstRequests += (0, tempDstRequest);
-
-            tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (randomFloat(), randomFloat(), 0.0);
-            tempDstRequest.sender = this;
-            DstRequests += (1, tempDstRequest);
-
-            tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (randomFloat(), randomFloat(), 0.0);
-            tempDstRequest.sender = this;
-            DstRequests += (2, tempDstRequest);
-
-            tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (randomFloat(), randomFloat(), 0.0);
-            tempDstRequest.sender = this;
-            DstRequests += (3, tempDstRequest);
-
-            tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (randomFloat(), randomFloat(), 0.0);
-            tempDstRequest.sender = this;
-            DstRequests += (4, tempDstRequest);
-
-            tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (randomFloat(), randomFloat(), 0.0);
-            tempDstRequest.sender = this;
-            DstRequests += (5, tempDstRequest);
+            i = 0;
+            while (i < 6) {
+                tempDstRequest.mInfo = requestInfo;
+                tempDstRequest.dest = randomLocation();
+                tempDstRequest.sender = this;
+                DstRequests += (i, tempDstRequest);
+                i = i + 1;
+            }
 
             tempDstRequest.mInfo = requestInfo;
             tempDstRequest.dest = (4.0, 3.5, 0.0);
@@ -125,33 +108,47 @@ machine TestDriver {
             DstRequests += (6, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (2.0, 2.0, 0.0);
+            tempDstRequest.dest = (4.0, 4.0, 0.0);
             tempDstRequest.sender = this;
             DstRequests += (7, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (5.0, 0.0, 0.0);
+            tempDstRequest.dest = (4.5, 3.0, 0.0);
             tempDstRequest.sender = this;
             DstRequests += (8, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (0.0, 0.0, 0.0);
+            tempDstRequest.dest = (0.0, 0.5, 0.0);
             tempDstRequest.sender = this;
             DstRequests += (9, tempDstRequest);
 
+            tempDstRequest.mInfo = requestInfo;
+            tempDstRequest.dest = (1.5, 1.5, 0.0);
+            tempDstRequest.sender = this;
+            DstRequests += (10, tempDstRequest);
+
             // Monitors for corresponing RTA modules
-            geofence1 = new LocationMonitorGeoFence(this, 1);
-            geofence2 = new LocationMonitorGeoFence(this, 2);
+            // geofence1 = new LocationMonitorGeoFence(this, 1);
+            // geofence2 = new LocationMonitorGeoFence(this, 2);
             battery1 = new Battery(this,1);
             battery2 = new Battery(this,2);
-            collision = new LocationMonitorCollision(this);
+            // collision = new LocationMonitorCollision(this);
 
             // Simultaneous Requests
             // Sending both robots a series of random locations
-            send workerRobots[1], SendNextDstReq, DstRequests[8];
+            send workerRobots[1], SendNextDstReq, DstRequests[7];
+            send workerRobots[0], SendNextDstReq, DstRequests[8];
+            send workerRobots[1], SendNextDstReq, DstRequests[10];
             send workerRobots[0], SendNextDstReq, DstRequests[9];
-            send workerRobots[0], SendNextDstReq, DstRequests[6];
-            send workerRobots[1], SendNextDstReq, DstRequests[6];
+
+            send workerRobots[1], SendNextDstReq, DstRequests[1];
+            send workerRobots[0], SendNextDstReq, DstRequests[0];
+            send workerRobots[0], SendNextDstReq, DstRequests[2];
+            send workerRobots[1], SendNextDstReq, DstRequests[3];
+
+            // send workerRobots[1], SendNextDstReq, DstRequests[10];
+            // send workerRobots[0], SendNextDstReq, DstRequests[10];
+
 
             // Sequential Requests
             // counter = 0;

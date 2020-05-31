@@ -11,7 +11,7 @@ fun getCurrentPercentage(robotID: int): int;
 fun MonitorBattery(batteryLevel: int, robotID: int) {
     var batteryThreshold: int; // computed offline
     var y: int;
-    batteryThreshold = 10;
+    batteryThreshold = 90;
     print "batteryLevel Robot{0}: {1}\n", robotID, batteryLevel;
     if (batteryLevel <= batteryThreshold) { 
         print "Robot {0} Low Battery!\n", robotID;

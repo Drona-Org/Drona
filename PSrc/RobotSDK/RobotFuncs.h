@@ -13,3 +13,5 @@ extern "C" PRT_VALUE* P_getCurrentPercentage_IMPL(PRT_MACHINEINST* context, PRT_
 extern "C" PRT_VALUE* P_randomFloat_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern "C" PRT_VALUE* P_getRobotLocationX_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern "C" PRT_VALUE* P_getRobotLocationY_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
+extern "C" PRT_VALUE* P_workspaceSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
+extern "C" PRT_VALUE* P_randomLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
