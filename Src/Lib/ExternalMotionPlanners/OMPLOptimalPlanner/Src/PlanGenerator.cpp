@@ -182,7 +182,6 @@ ob::OptimizationObjectivePtr getThresholdPathLengthObj(const ob::SpaceInformatio
     summation of the costs of each of the states along the path, where
     each state cost is a function of that state's clearance from
     obstacles.
-
     The class StateCostIntegralObjective represents objectives as
     summations of state costs, just like we require. All we need to do
     then is inherit from that base class and define our specific state
@@ -220,7 +219,6 @@ ob::OptimizationObjectivePtr getClearanceObjective(const ob::SpaceInformationPtr
     object. This results in an optimization objective where path cost
     is equivalent to adding up each of the individual objectives' path
     costs.
-
     When adding objectives, we can also optionally specify each
     objective's weighting factor to signify how important it is in
     optimal planning. If no weight is specified, the weight defaults to

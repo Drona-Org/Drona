@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<configuration>
+	<dimension x="5" y="5" z="0"/>
+	<robots>
+		<robot id="1">
+			<start x="1" y="1" z="0"/>
+		</robot>
+		<robot id="2">
+			<start x="2" y="2" z="0"/>
+		</robot>
+	</robots>
+	<obstacles>
+		<box>
+			<low  x="2" y="0" z="0" />
+			<high x="3" y="1" z="1" />
+	  	</box>
+		<box>
+			<low  x="2" y="3" z="0" />
+			<high x="3" y="4" z="1" />
+	  	</box>
+		<box>
+			<low  x="1" y="2" z="0" />
+			<high x="1.9" y="3" z="1" />
+	  	</box>
+	</obstacles>
+	<charging_stations>
+		<box>
+			<low  x="1" y="1" z="0" />
+			<high x="1" y="1" z="0" />
+		</box>
+		<box>
+			<low  x="2" y="2" z="0" />
+			<high x="2" y="2" z="0" />
+		</box>
+	</charging_stations>
+</configuration>
