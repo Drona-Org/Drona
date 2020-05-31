@@ -289,9 +289,9 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
         }
         
         if (tmp_angular_z < 0) {
-            tmp_angular_z = max(-3.0, tmp_angular_z);
+            tmp_angular_z = max(-2.5, tmp_angular_z);
         } else {
-            tmp_angular_z = min(3.0, tmp_angular_z);
+            tmp_angular_z = min(2.5, tmp_angular_z);
         }
 
         vel_msg.linear.x = tmp_linear_x;
