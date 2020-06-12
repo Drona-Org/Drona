@@ -24,7 +24,26 @@ machine PlanExecutor {
     state ExecutePathState {
         entry (payload: seq[(float, float, float)]) {
             var x: int;
-            x = ROSGoTo(payload, robotId); // Executes the path from the Motion Planner
+            var i: int;
+            var s: int;
+            var o: int;
+
+            i = 0;
+            while (i < sizeof(payload)) {
+                // call a dm function, returns safe or not safe (not safe if at least one is not safe)
+                s = decisionModule(payload[i], robotId);
+                print "S VALUE: {0}\n", s;
+                // call safe controller if dm not safe
+                if (s == 0) {
+                    o = safeController(payload[i], robotId);
+                }
+                // else call advanced controller function with this way point
+                if (s == 1) {
+                    o = advancedController(payload[i], robotId);
+                }
+                i = i+1;
+            }
+            // x = ROSGoTo(payload, robotId); // Executes the path from the Motion Planner
             send motionPlanner, PathCompleted; // Signals the MP that it has finished executing this path
             raise Success;
         }

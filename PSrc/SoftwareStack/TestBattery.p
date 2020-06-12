@@ -44,7 +44,8 @@ machine Battery {
             while (currPercentage > 0) {
                 x = Sleep(10.0);
                 currPercentage = getCurrentPercentage(robotID); // Decreasing function that mimics battery depletion
-                MonitorBattery(currPercentage, robotID); // Battery monitoring function       
+                print "batteryLevel Robot{0}: {1}\n", robotID, currPercentage;
+                // MonitorBattery(currPercentage, robotID); // Battery monitoring function       
             }
             raise Success;
         }

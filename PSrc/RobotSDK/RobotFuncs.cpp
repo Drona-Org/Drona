@@ -127,7 +127,72 @@ void safe_battery_move_to_goal(int robot_id, double goal_x, double goal_y) {
     }
 }
 
-void safe_controller(int robot_id) {
+void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
+    ros::Publisher velocity_publisher;
+    geometry_msgs::Twist vel_msg = id_vel_msgs[robot_id];
+    ros::Rate loop_rate(1000000);
+    usleep(500000);
+    ros::spinOnce();
+    velocity_publisher = id_vel_pubs[robot_id];
+
+    while ((getDistance(goal_x, goal_y, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1)) {
+        
+        // Checking if robot is in an unsafe state
+        // if (!id_advancedLocation[robot_id]) {
+        //     safe_controller(robot_id);
+        //     break;
+        // }
+        // if (!id_advancedBattery[robot_id]) {
+        //     safe_controller(robot_id);
+        // }
+        // if (!collisionFree) {
+        //     safe_controller(robot_id);
+        // }
+
+        double inc_x = goal_x - id_robot_x[robot_id];
+        double inc_y = goal_y - id_robot_y[robot_id];
+        double angle_to_goal = atan2(inc_y, inc_x);
+        
+        double tmp_linear_x = 0.2*getDistance(id_robot_x[robot_id], id_robot_y[robot_id], goal_x, goal_y);
+        double tmp_angular_z = 1.0*std::abs((atan2(goal_y-id_robot_y[robot_id], goal_x - id_robot_x[robot_id])) - (id_robot_theta[robot_id]));
+        
+        if (tmp_linear_x < 0) {
+            tmp_linear_x = max(-0.3, tmp_linear_x);
+        } else {
+            tmp_linear_x = min(0.3, tmp_linear_x);
+        }
+        
+        if (tmp_angular_z < 0) {
+            tmp_angular_z = max(-2.0, tmp_angular_z);
+        } else {
+            tmp_angular_z = min(2.0, tmp_angular_z);
+        }
+
+        vel_msg.linear.x = tmp_linear_x;
+        id_robot_velocity_linear[robot_id] = tmp_linear_x;
+        id_robot_velocity_theta[robot_id] = tmp_angular_z;
+        vel_msg.linear.y = 0;
+        vel_msg.linear.z = 0;
+        vel_msg.angular.x = 0;
+        vel_msg.angular.y = 0;
+        vel_msg.angular.z = tmp_angular_z;
+
+        id_vel_pubs[robot_id].publish(vel_msg);
+        ros::spinOnce();
+        loop_rate.sleep();
+    }    
+
+    vel_msg.angular.x = 0;
+    vel_msg.angular.z = 0;
+    id_vel_pubs[robot_id].publish(vel_msg);
+    ros::spinOnce();
+    loop_rate.sleep();
+    vel_msg.angular.z = 0;
+    vel_msg.linear.x = 0;
+    id_vel_pubs[robot_id].publish(vel_msg);
+}
+
+void safe_controller(float x, float y, int robot_id) {
     geometry_msgs::Twist vel_msg = id_vel_msgs[robot_id];
     ros::Rate loop_rate(1000000);
     usleep(500000);
@@ -135,17 +200,17 @@ void safe_controller(int robot_id) {
 
     // Location Monitor: Collision Avoidance SC
     while (!collisionFree) {
-        while (getDistance(id_robot_x[1], id_robot_y[1], id_robot_x[2], id_robot_y[2]) <= 0.5) {
-            vel_msg.angular.x = 0;
-            vel_msg.angular.z = 0;
-            id_vel_pubs[robot_id].publish(vel_msg);
-            ros::spinOnce();
-            loop_rate.sleep();
-            vel_msg.angular.z = 0;
-            vel_msg.linear.x = -0.3;
-            id_vel_pubs[robot_id].publish(vel_msg);
-            usleep(1000000);
-        }
+        // while (getDistance(id_robot_x[1], id_robot_y[1], id_robot_x[2], id_robot_y[2]) <= 0.5) {
+        //     vel_msg.angular.x = 0;
+        //     vel_msg.angular.z = 0;
+        //     id_vel_pubs[robot_id].publish(vel_msg);
+        //     ros::spinOnce();
+        //     loop_rate.sleep();
+        //     vel_msg.angular.z = 0;
+        //     vel_msg.linear.x = -0.3;
+        //     id_vel_pubs[robot_id].publish(vel_msg);
+        //     usleep(1000000);
+        // }
 
         // Collision avoidance pausing 
         if (robot_id == 1) {
@@ -167,34 +232,61 @@ void safe_controller(int robot_id) {
             vel_msg.angular.z = 0;
             vel_msg.linear.x = 0;
             id_vel_pubs[robot_id].publish(vel_msg);
-            usleep(9000000);
+            usleep(14000000);
             printf("DONE SLEEPING\n");
         }
+
+        if (robot_id == 2) {
+            printf("SLEEPINGONLY A LITTLE\n");
+            vel_msg.angular.x = 0;
+            vel_msg.angular.z = 0;
+            id_vel_pubs[robot_id].publish(vel_msg);
+            ros::spinOnce();
+            loop_rate.sleep();
+            vel_msg.angular.z = 0;
+            vel_msg.linear.x = -0.3;
+            id_vel_pubs[robot_id].publish(vel_msg);
+            
+            vel_msg.angular.x = 0;
+            vel_msg.angular.z = 0;
+            id_vel_pubs[robot_id].publish(vel_msg);
+            ros::spinOnce();
+            loop_rate.sleep();
+            vel_msg.angular.z = 0;
+            vel_msg.linear.x = 0;
+            id_vel_pubs[robot_id].publish(vel_msg);
+            usleep(7000000);
+            printf("DONE SLEEPING\n");
+        }
+        gazebo_move_goal(x, y, robot_id);
+        collisionFree = true;
     }
     
     // Location Monitor: Geo Fence SC
     while (!id_advancedLocation[robot_id]) {
-        while (!(((id_robot_x[robot_id] >= 0.5 && id_robot_x[robot_id] <= 4.5)) && (id_robot_y[robot_id] >= 0.5 && id_robot_y[robot_id] <= 4.5))) {
-            vel_msg.angular.x = 0; 
-            vel_msg.angular.z = 0;
-            id_vel_pubs[robot_id].publish(vel_msg);
-            ros::spinOnce();
-            loop_rate.sleep();
-            usleep(1500000);
-            vel_msg.angular.z = 0;
-            vel_msg.linear.x = -0.1;
-            id_vel_pubs[robot_id].publish(vel_msg);
-            ros::spinOnce();
-            loop_rate.sleep();
-        } 
+        // while (!(((id_robot_x[robot_id] >= 0.5 && id_robot_x[robot_id] <= 4.5)) && (id_robot_y[robot_id] >= 0.5 && id_robot_y[robot_id] <= 4.5))) {
+        //     vel_msg.angular.x = 0; 
+        //     vel_msg.angular.z = 0;
+        //     id_vel_pubs[robot_id].publish(vel_msg);
+        //     ros::spinOnce();
+        //     loop_rate.sleep();
+        //     usleep(1500000);
+        //     vel_msg.angular.z = 0;
+        //     vel_msg.linear.x = -0.1;
+        //     id_vel_pubs[robot_id].publish(vel_msg);
+        //     ros::spinOnce();
+        //     loop_rate.sleep();
+        // }
+        printf("OK IM SAFE");
+        id_advancedLocation[robot_id] = true;
     }
 
     // Battery Monitor SC
     while (!id_advancedBattery[robot_id]) {
-        // WS_Coord current_location = WS_Coord(id_robot_x[robot_id], id_robot_y[robot_id], 0.0);
-        // WS_Coord charging_station = WS_Coord(id_charging_station_x[robot_id], id_charging_station_y[robot_id], 0.0);
-        // vector<WS_Coord> path = planner->GeneratePlan(1, GazeboToPlanner(current_location), GazeboToPlanner(charging_station));
-        // vector<WS_Coord> pathNew = path;
+        WS_Coord current_location = WS_Coord(id_robot_x[robot_id], id_robot_y[robot_id], 0.0);
+        WS_Coord charging_station = WS_Coord(id_charging_station_x[robot_id], id_charging_station_y[robot_id], 0.0);
+        vector<WS_Coord> path = planner->GeneratePlan(1, GazeboToPlanner(current_location), GazeboToPlanner(charging_station));
+        vector<WS_Coord> pathNew = path;
 
         // for (int count = 0; count < pathNew.size(); count++) {
         //     WS_Coord shifted = PlannerToGazebo(pathNew.at(count));
@@ -204,8 +296,8 @@ void safe_controller(int robot_id) {
         //     printf("%f %f %f\n",x,y,z);
         //     safe_battery_move_to_goal(robot_id, x, y);
         // }
-        while (getDistance(id_charging_station_x[robot_id], id_charging_station_y[robot_id], id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1) {
 
+        while (getDistance(id_charging_station_x[robot_id], id_charging_station_y[robot_id], id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1) {
             double inc_x = id_charging_station_x[robot_id] - id_robot_x[robot_id];
             double inc_y = id_charging_station_y[robot_id] - id_robot_y[robot_id];
             double angle_to_goal = atan2(inc_y, inc_x);
@@ -220,9 +312,9 @@ void safe_controller(int robot_id) {
             }
             
             if (tmp_angular_z < 0) {
-                tmp_angular_z = max(-1.5, tmp_angular_z);
+                tmp_angular_z = max(-1.0, tmp_angular_z);
             } else {
-                tmp_angular_z = min(1.5, tmp_angular_z);
+                tmp_angular_z = min(1.0, tmp_angular_z);
             }
 
             vel_msg.linear.x = tmp_linear_x;
@@ -251,71 +343,6 @@ void safe_controller(int robot_id) {
         id_advancedBattery[robot_id] = true;
         id_currBatteryPercentage[robot_id] = 100;
     }
-}
-
-void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
-    ros::Publisher velocity_publisher;
-    geometry_msgs::Twist vel_msg = id_vel_msgs[robot_id];
-    ros::Rate loop_rate(1000000);
-    usleep(500000);
-    ros::spinOnce();
-    velocity_publisher = id_vel_pubs[robot_id];
-
-    while ((getDistance(goal_x, goal_y, id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1)) {
-        
-        // Checking if robot is in an unsafe state
-        if (!id_advancedLocation[robot_id]) {
-            safe_controller(robot_id);
-            break;
-        }
-        if (!id_advancedBattery[robot_id]) {
-            safe_controller(robot_id);
-        }
-        if (!collisionFree) {
-            safe_controller(robot_id);
-        }
-
-        double inc_x = goal_x - id_robot_x[robot_id];
-        double inc_y = goal_y - id_robot_y[robot_id];
-        double angle_to_goal = atan2(inc_y, inc_x);
-        
-        double tmp_linear_x = 0.2*getDistance(id_robot_x[robot_id], id_robot_y[robot_id], goal_x, goal_y);
-        double tmp_angular_z = 1.0*std::abs((atan2(goal_y-id_robot_y[robot_id], goal_x - id_robot_x[robot_id])) - (id_robot_theta[robot_id]));
-        
-        if (tmp_linear_x < 0) {
-            tmp_linear_x = max(-0.3, tmp_linear_x);
-        } else {
-            tmp_linear_x = min(0.3, tmp_linear_x);
-        }
-        
-        if (tmp_angular_z < 0) {
-            tmp_angular_z = max(-2.5, tmp_angular_z);
-        } else {
-            tmp_angular_z = min(2.5, tmp_angular_z);
-        }
-
-        vel_msg.linear.x = tmp_linear_x;
-        id_robot_velocity_linear[robot_id] = tmp_linear_x;
-        id_robot_velocity_theta[robot_id] = tmp_angular_z;
-        vel_msg.linear.y = 0;
-        vel_msg.linear.z = 0;
-        vel_msg.angular.x = 0;
-        vel_msg.angular.y = 0;
-        vel_msg.angular.z = tmp_angular_z;
-
-        id_vel_pubs[robot_id].publish(vel_msg);
-        ros::spinOnce();
-        loop_rate.sleep();
-    }    
-
-    vel_msg.angular.x = 0;
-    vel_msg.angular.z = 0;
-    id_vel_pubs[robot_id].publish(vel_msg);
-    ros::spinOnce();
-    loop_rate.sleep();
-    vel_msg.angular.z = 0;
-    vel_msg.linear.x = 0;
-    id_vel_pubs[robot_id].publish(vel_msg);
 }
 
 PRT_VALUE* P_switchACtoSC_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
@@ -514,6 +541,7 @@ PRT_VALUE* P_ROSGoTo_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
 	}
     return PrtMkIntValue((PRT_UINT32)1);
 }
+
 bool pointInObstacle(double my_x, double my_y, double obs_low_x, double obs_low_y, double obs_high_x, double obs_high_y) {
     if ((my_x >= obs_low_x) && (my_x <= obs_high_x) && (my_y >= obs_low_y) && (my_y <= obs_high_y)) {
         return true;
@@ -644,4 +672,147 @@ PRT_VALUE* P_workspaceSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     id_charging_station_y[2] = (double) WSInfo->charging_stations.at(1).low.y;
 
     return PrtMkIntValue((PRT_UINT32)WSInfo->robots.size());
+}
+
+// PRT_VALUE* P_contoller_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+//     struct PRT_VALUE* mainPRT = *(argRefs[0]);
+//     PRT_VALUE** P_VAR_robot_id = argRefs[1];
+//     int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+
+//     ros::NodeHandle n;
+//     ros::Subscriber gazebo_odom_subscriber;
+//     ros::Publisher velocity_publisher;
+//     gazebo_odom_subscriber = id_odom_subs[robot_id];
+//     velocity_publisher = id_vel_pubs[robot_id];
+
+// 	double destinationPoints[mainPRT->valueUnion.seq->size][3];
+//     int size = 0;
+
+// 	for (int i = 0; i < mainPRT->valueUnion.seq->size; i++) {
+// 		double x = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[0]->valueUnion.ft;
+//         double y = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[1]->valueUnion.ft;
+//         double z = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[2]->valueUnion.ft;
+// 		destinationPoints[i][0] = x;
+//         destinationPoints[i][1] = y;
+//         destinationPoints[i][2] = z;
+//         size++;
+// 	}
+
+//     for (int i = 0; i < size; i++) {
+//         double x = destinationPoints[i][0];
+//         double y = destinationPoints[i][1];
+//         double z = destinationPoints[i][2];
+
+//         printf("%f, %f, %f\n", x,y,z);
+//         id_global_goal_x[robot_id] = x;
+//         id_global_goal_y[robot_id] = y;
+
+//         // check if it is safe in all monitors
+
+//         // Checking if robot is in an unsafe state
+//         if (id_currBatteryPercentage[robot_id] < 20) {
+//             id_advancedBattery[robot_id] = false;
+//             printf("Robot %d: Low Battery - %f\n", robot_id, id_currBatteryPercentage[robot_id]);
+//             safe_controller(robot_id);
+//         }
+//         if (x <= 0 || x >= 5.0 || y <= 0|| y >= 5.0) {
+//             id_advancedLocation[robot_id] = false;
+//             safe_controller(robot_id);
+//             printf("Robot %d is exiting geofence: (%f, %f)\n", robot_id, x, y);
+//             break;
+//         }
+//         if ((id_global_goal_x[1] == id_global_goal_x[2]) && (id_global_goal_y[1] == id_global_goal_y[2])) {
+//             collisionFree = false;
+//             safe_controller(robot_id);
+//         }
+
+//         // battery: if less than 20
+//         // geo fence: if the next point, or next next way point is outside safe region
+//         // collision: if next point in plan and next point for the other robot is same, or if next next point and next next of other robot is same, pause robot1
+
+//         gazebo_move_goal(x, y, robot_id);
+//     }
+//     return PrtMkIntValue((PRT_UINT32)1);
+// }
+
+PRT_VALUE* P_decisionModule_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    struct PRT_VALUE* mainPRT = *(argRefs[0]);
+    PRT_VALUE** P_VAR_robot_id = argRefs[1];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+
+    bool safe = true;
+
+    double x = mainPRT->valueUnion.tuple->values[0]->valueUnion.ft;
+    double y = mainPRT->valueUnion.tuple->values[1]->valueUnion.ft;
+    double z = mainPRT->valueUnion.tuple->values[2]->valueUnion.ft;
+
+    printf("ROBOT ID: %d\n", robot_id);
+    printf("MY X Y Z: %f %f %f\n", x, y, z);
+    printf("Robot %d: Battery - %d\n", robot_id, id_currBatteryPercentage[robot_id]);
+
+    
+    id_global_goal_x[robot_id] = x;
+    id_global_goal_y[robot_id] = y;
+
+
+    if (id_currBatteryPercentage[robot_id] < 20) {
+        id_advancedBattery[robot_id] = false;
+        printf("Robot %d: Low Battery - %f\n", robot_id, id_currBatteryPercentage[robot_id]);
+        safe = false;
+    }
+    if (x <= 0 || x >= 5.0 || y <= 0|| y >= 5.0) {
+        id_advancedLocation[robot_id] = false;
+        printf("Robot %d is exiting geofence: (%f, %f)\n", robot_id, x, y);
+        safe = false;
+    }
+    if ((id_global_goal_x[1] == id_global_goal_x[2]) && (id_global_goal_y[1] == id_global_goal_y[2])) {
+        collisionFree = false;
+        safe = false;
+    }
+
+    if (!safe) {
+        return PrtMkIntValue((PRT_UINT32)0);
+    } else {
+        return PrtMkIntValue((PRT_UINT32)1);
+    }
+}
+
+PRT_VALUE* P_advancedController_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    struct PRT_VALUE* mainPRT = *(argRefs[0]);
+    PRT_VALUE** P_VAR_robot_id = argRefs[1];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+
+    ros::NodeHandle n;
+    ros::Subscriber gazebo_odom_subscriber;
+    ros::Publisher velocity_publisher;
+    gazebo_odom_subscriber = id_odom_subs[robot_id];
+    velocity_publisher = id_vel_pubs[robot_id];
+
+
+    double x = mainPRT->valueUnion.tuple->values[0]->valueUnion.ft;
+    double y = mainPRT->valueUnion.tuple->values[1]->valueUnion.ft;
+    double z = mainPRT->valueUnion.tuple->values[2]->valueUnion.ft;
+    printf("%f, %f, %f\n", x,y,z);
+    gazebo_move_goal(x, y, robot_id);
+
+    return PrtMkIntValue((PRT_UINT32)1);
+}
+
+PRT_VALUE* P_safeController_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    struct PRT_VALUE* mainPRT = *(argRefs[0]);
+    PRT_VALUE** P_VAR_robot_id = argRefs[1];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+
+    ros::NodeHandle n;
+    ros::Subscriber gazebo_odom_subscriber;
+    ros::Publisher velocity_publisher;
+    gazebo_odom_subscriber = id_odom_subs[robot_id];
+    velocity_publisher = id_vel_pubs[robot_id];
+    double x = mainPRT->valueUnion.tuple->values[0]->valueUnion.ft;
+    double y = mainPRT->valueUnion.tuple->values[1]->valueUnion.ft;
+    double z = mainPRT->valueUnion.tuple->values[2]->valueUnion.ft;
+
+    safe_controller(x, y, robot_id);
+
+    return PrtMkIntValue((PRT_UINT32)1);
 }
