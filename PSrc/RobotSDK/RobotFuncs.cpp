@@ -288,6 +288,7 @@ void safe_controller(float x, float y, int robot_id) {
         vector<WS_Coord> path = planner->GeneratePlan(1, GazeboToPlanner(current_location), GazeboToPlanner(charging_station));
         vector<WS_Coord> pathNew = path;
 
+        // Using way points to get to the charging station
         // for (int count = 0; count < pathNew.size(); count++) {
         //     WS_Coord shifted = PlannerToGazebo(pathNew.at(count));
         //     double x = shifted.x;
@@ -297,6 +298,7 @@ void safe_controller(float x, float y, int robot_id) {
         //     safe_battery_move_to_goal(robot_id, x, y);
         // }
 
+        // Going directly to the charging station
         while (getDistance(id_charging_station_x[robot_id], id_charging_station_y[robot_id], id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1) {
             double inc_x = id_charging_station_x[robot_id] - id_robot_x[robot_id];
             double inc_y = id_charging_station_y[robot_id] - id_robot_y[robot_id];
@@ -673,67 +675,6 @@ PRT_VALUE* P_workspaceSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 
     return PrtMkIntValue((PRT_UINT32)WSInfo->robots.size());
 }
-
-// PRT_VALUE* P_contoller_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
-//     struct PRT_VALUE* mainPRT = *(argRefs[0]);
-//     PRT_VALUE** P_VAR_robot_id = argRefs[1];
-//     int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
-
-//     ros::NodeHandle n;
-//     ros::Subscriber gazebo_odom_subscriber;
-//     ros::Publisher velocity_publisher;
-//     gazebo_odom_subscriber = id_odom_subs[robot_id];
-//     velocity_publisher = id_vel_pubs[robot_id];
-
-// 	double destinationPoints[mainPRT->valueUnion.seq->size][3];
-//     int size = 0;
-
-// 	for (int i = 0; i < mainPRT->valueUnion.seq->size; i++) {
-// 		double x = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[0]->valueUnion.ft;
-//         double y = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[1]->valueUnion.ft;
-//         double z = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[2]->valueUnion.ft;
-// 		destinationPoints[i][0] = x;
-//         destinationPoints[i][1] = y;
-//         destinationPoints[i][2] = z;
-//         size++;
-// 	}
-
-//     for (int i = 0; i < size; i++) {
-//         double x = destinationPoints[i][0];
-//         double y = destinationPoints[i][1];
-//         double z = destinationPoints[i][2];
-
-//         printf("%f, %f, %f\n", x,y,z);
-//         id_global_goal_x[robot_id] = x;
-//         id_global_goal_y[robot_id] = y;
-
-//         // check if it is safe in all monitors
-
-//         // Checking if robot is in an unsafe state
-//         if (id_currBatteryPercentage[robot_id] < 20) {
-//             id_advancedBattery[robot_id] = false;
-//             printf("Robot %d: Low Battery - %f\n", robot_id, id_currBatteryPercentage[robot_id]);
-//             safe_controller(robot_id);
-//         }
-//         if (x <= 0 || x >= 5.0 || y <= 0|| y >= 5.0) {
-//             id_advancedLocation[robot_id] = false;
-//             safe_controller(robot_id);
-//             printf("Robot %d is exiting geofence: (%f, %f)\n", robot_id, x, y);
-//             break;
-//         }
-//         if ((id_global_goal_x[1] == id_global_goal_x[2]) && (id_global_goal_y[1] == id_global_goal_y[2])) {
-//             collisionFree = false;
-//             safe_controller(robot_id);
-//         }
-
-//         // battery: if less than 20
-//         // geo fence: if the next point, or next next way point is outside safe region
-//         // collision: if next point in plan and next point for the other robot is same, or if next next point and next next of other robot is same, pause robot1
-
-//         gazebo_move_goal(x, y, robot_id);
-//     }
-//     return PrtMkIntValue((PRT_UINT32)1);
-// }
 
 PRT_VALUE* P_decisionModule_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
     struct PRT_VALUE* mainPRT = *(argRefs[0]);

@@ -30,9 +30,8 @@ machine PlanExecutor {
 
             i = 0;
             while (i < sizeof(payload)) {
-                // call a dm function, returns safe or not safe (not safe if at least one is not safe)
+                // call a dm function, returns safe or not safe (not safe if at least one rta module is not safe)
                 s = decisionModule(payload[i], robotId);
-                print "S VALUE: {0}\n", s;
                 // call safe controller if dm not safe
                 if (s == 0) {
                     o = safeController(payload[i], robotId);
@@ -43,7 +42,6 @@ machine PlanExecutor {
                 }
                 i = i+1;
             }
-            // x = ROSGoTo(payload, robotId); // Executes the path from the Motion Planner
             send motionPlanner, PathCompleted; // Signals the MP that it has finished executing this path
             raise Success;
         }
