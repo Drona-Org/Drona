@@ -891,14 +891,14 @@ PRT_VALUE* P_decisionModuleDrone_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** arg
     printf("ROBOT ID: %d\n", robot_id);
     printf("MY X Y Z: %f %f %f\n", x, y, z);
 
-    
+    //TODO: CHANGE TO BE INSIDE THE CONTROLLERS
     id_global_goal_x[robot_id] = x;
     id_global_goal_y[robot_id] = y;
     id_global_goal_z[robot_id] = z;
 
     
-
-    if (x <= -3.5 || x >= 3.5 || y <= -3.5|| y >= 3.5) {
+    if ((x <= 0.2 && y >= 0.5 && y <= 4.5) || (x >= 4.8 && y >= 0.5 && y <= 4.5) || (y <= 0.2 && x >= 0.5 && x <= 4.5)|| (y >= 4.8 && x >= 0.5 && x <= 4.5)) {
+    // if (x <= -0.1 || x >= 10.1 || y <= -0.1|| y >= 10.1) {
         id_advancedLocation[robot_id] = false;
         printf("Robot %d is exiting geofence: (%f, %f)\n", robot_id, x, y);
         safe = false;
@@ -915,22 +915,27 @@ PRT_VALUE* P_safeControllerDrone_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** arg
     struct PRT_VALUE* mainPRT = *(argRefs[0]);
     PRT_VALUE** P_VAR_robot_id = argRefs[1];
     int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
-
     geometry_msgs::Twist vel_msg = id_vel_msgs[robot_id];
+    
+    ros::Rate loop_rate(1000000);
+    usleep(500000);
+    ros::spinOnce();
 
-    printf("INSIDE SAFE CONTROLLER!!!!!!");
+    while (((my_round(id_robot_x[robot_id])) != my_round(2.5)) || ((my_round(id_robot_y[robot_id])) != my_round(2.5))) {
+        printf("INSIDE SAFE CONTROLLER!!!!!!");
+        vel_msg.linear.x = 2.5;
+        vel_msg.linear.y = 2.5;
+        vel_msg.linear.z = 1.0;
+        vel_msg.angular.x = 0;
+        vel_msg.angular.y = 0;
+        vel_msg.angular.z = 0;
+        id_vel_pubs[robot_id].publish(vel_msg);
 
-    vel_msg.linear.x = 3.75;
-    vel_msg.linear.y = 3.75;
-    vel_msg.linear.z = 1.0;
-    vel_msg.angular.x = 0;
-    vel_msg.angular.y = 0;
-    vel_msg.angular.z = 0;
-
-    id_vel_pubs[robot_id].publish(vel_msg);
-
+        ros::spinOnce();
+        loop_rate.sleep();
+        printf("curr x y z: %f, %f, %f\n", my_round(id_robot_x[robot_id]), my_round(id_robot_y[robot_id]), my_round(id_robot_z[robot_id]));
+    }
     return PrtMkIntValue((PRT_UINT32)1);
-
 }
 
 PRT_VALUE* P_advancedControllerDrone_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
@@ -950,7 +955,6 @@ PRT_VALUE* P_advancedControllerDrone_IMPL(PRT_MACHINEINST* context, PRT_VALUE***
     ros::spinOnce();
 
     while (((my_round(id_robot_x[robot_id])) != my_round(x)) || ((my_round(id_robot_y[robot_id])) != my_round(y))) {
-        printf("GOAL %f, %f, %f\n", my_round(id_global_goal_x[robot_id]), my_round(id_global_goal_y[robot_id]), my_round(id_global_goal_z[robot_id]));
         vel_msg.linear.x = x;
         vel_msg.linear.y = y;
         vel_msg.linear.z = z;
@@ -962,7 +966,10 @@ PRT_VALUE* P_advancedControllerDrone_IMPL(PRT_MACHINEINST* context, PRT_VALUE***
         ros::spinOnce();
         loop_rate.sleep();
 
-        printf("curr x y z: %f, %f, %f\n", my_round(id_robot_x[robot_id]), my_round(id_robot_y[robot_id]), my_round(id_robot_z[robot_id]));
+        printf("Goal:  %f, %f, %f\n", x, y, z);
+        printf("Curr:  %f, %f, %f\n", id_robot_x[robot_id], id_robot_y[robot_id], id_robot_z[robot_id]);
+        printf("Rounded Goal:  %f, %f, %f\n", my_round(x), my_round(y), my_round(z));
+        printf("Rounded Curr:  %f, %f, %f\n", my_round(id_robot_x[robot_id]), my_round(id_robot_y[robot_id]), my_round(id_robot_z[robot_id]));
     }
 
     // vel_msg.linear.x = x;

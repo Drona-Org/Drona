@@ -102,22 +102,22 @@ machine TestDriver {
             // }
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (2.0, 1.0, 1.0);
+            tempDstRequest.dest = (1.0, 1.0, 1.0);
             tempDstRequest.sender = this;
             DstRequests += (0, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (0.1, 1.0, 0.5);
+            tempDstRequest.dest = (4.0, 1.0, 2.0);
             tempDstRequest.sender = this;
             DstRequests += (1, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (0.2, 3.0, 3.0);
+            tempDstRequest.dest = (4.0, 4.0, 3.0);
             tempDstRequest.sender = this;
             DstRequests += (2, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (3.5, 3.5, 2.0);
+            tempDstRequest.dest = (1.0, 4.0, 1.0);
             tempDstRequest.sender = this;
             DstRequests += (3, tempDstRequest);
 
