@@ -6,7 +6,7 @@ Robot machine destination points, which the robot must visit.
 */
 
 // Foreign function declarations. Implementations are in `RobotFuncs.cpp`
-fun RobotROSSetup(robotId: int): int;
+fun RobotROSSetup(robotId: int, experimentId: int): int;
 fun ShutdownROSSubscribers(numRobots: int): int;
 fun OmplMotionPlanExternal(destinations: seq[(float, float, float)], robot_id: int): seq[(float, float, float)];
 fun ROSGoTo(arr: seq[(float, float, float)], robot_id: int): int;
@@ -14,7 +14,7 @@ fun Sleep(time: float): int;
 fun randomFloat(): float;
 fun getRobotLocationX(robotId: int): float;
 fun getRobotLocationY(robotId: int): float;
-fun workspaceSetup(): int;
+fun workspaceSetup(id: int): int; //TODO: PASS XML FILE FROM P -> Cpp
 fun randomLocation(): (float, float, float);
 fun decisionModule(wayPoint: (float, float, float), robotId: int): int;
 fun advancedController(wayPoint: (float, float, float), robotId: int): int;
@@ -51,11 +51,6 @@ machine TestDriver {
     var reqCount: int;
     var numOfWorkerRobots: int;
     var x: int;
-    var geofence1: machine;
-    var geofence2: machine;
-    var battery1: machine;
-    var battery2: machine;
-    var collision: machine;
     var y: int;
 
     start state Init {
@@ -64,7 +59,7 @@ machine TestDriver {
 			var temp: machine;
 
 			reqCount = 4;
-            numOfWorkerRobots = workspaceSetup();
+            numOfWorkerRobots = workspaceSetup(1);
 
 			index = 1;
             // Creates all robots

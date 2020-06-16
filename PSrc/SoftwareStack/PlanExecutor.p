@@ -31,14 +31,15 @@ machine PlanExecutor {
             i = 0;
             while (i < sizeof(payload)) {
                 // call a dm function, returns safe or not safe (not safe if at least one rta module is not safe)
-                s = decisionModule(payload[i], robotId);
+                s = decisionModuleDrone(payload[i], robotId);
+                print "MY S VALUE IS {0}\n", s;
                 // call safe controller if dm not safe
                 if (s == 0) {
-                    o = safeController(payload[i], robotId);
+                    o = safeControllerDrone(payload[i], robotId);
                 }
                 // else call advanced controller function with this way point
                 if (s == 1) {
-                    o = advancedController(payload[i], robotId);
+                    o = advancedControllerDrone(payload[i], robotId);
                 }
                 i = i+1;
             }
