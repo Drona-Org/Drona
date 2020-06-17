@@ -785,12 +785,7 @@ PRT_VALUE* P_workspaceSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     return PrtMkIntValue((PRT_UINT32)WSInfo->robots.size());
 }
 
-float my_round(float var) 
-{ 
-    // 37.66666 * 100 =3766.66 
-    // 3766.66 + .5 =3767.16    for rounding off value 
-    // then type cast to int so value is 3767 
-    // then divided by 100 so the value converted into 37.67 
+float my_round(float var) {
     float value = (int)(var * 100 + .5); 
     return (float)value / 100; 
 } 
@@ -881,28 +876,45 @@ PRT_VALUE* P_decisionModuleDrone_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** arg
     struct PRT_VALUE* mainPRT = *(argRefs[0]);
     PRT_VALUE** P_VAR_robot_id = argRefs[1];
     int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
-
+    PRT_VALUE** P_VAR_delta = argRefs[2];
+    int delta = PrtPrimGetInt(*P_VAR_delta);
+    PRT_VALUE** P_VAR_curr_index = argRefs[3];
+    int i = PrtPrimGetInt(*P_VAR_curr_index);
+    int plan_size = mainPRT->valueUnion.seq->size;
     bool safe = true;
+    int idx = 0;
 
-    double x = mainPRT->valueUnion.tuple->values[0]->valueUnion.ft;
-    double y = mainPRT->valueUnion.tuple->values[1]->valueUnion.ft;
-    double z = mainPRT->valueUnion.tuple->values[2]->valueUnion.ft;
+    while (idx < delta) {
+        if (i + idx < plan_size) {
+            double x = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[0]->valueUnion.ft;
+            double y = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[1]->valueUnion.ft;
+            double z = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[2]->valueUnion.ft;
 
-    printf("ROBOT ID: %d\n", robot_id);
-    printf("MY X Y Z: %f %f %f\n", x, y, z);
+            if ((x <= 0.2 && y >= 0.5 && y <= 4.5) || (x >= 4.8 && y >= 0.5 && y <= 4.5) || (y <= 0.2 && x >= 0.5 && x <= 4.5)|| (y >= 4.8 && x >= 0.5 && x <= 4.5)) {
+                id_advancedLocation[robot_id] = false;
+                printf("Robot %d is exiting geofence: (%f, %f)\n", robot_id, x, y);
+                safe = false;
+            }
+        }
+
+        idx = idx + 1;
+    }
+
+    // double x = mainPRT->valueUnion.tuple->values[0]->valueUnion.ft;
+    // double y = mainPRT->valueUnion.tuple->values[1]->valueUnion.ft;
+    // double z = mainPRT->valueUnion.tuple->values[2]->valueUnion.ft;
 
     //TODO: CHANGE TO BE INSIDE THE CONTROLLERS
-    id_global_goal_x[robot_id] = x;
-    id_global_goal_y[robot_id] = y;
-    id_global_goal_z[robot_id] = z;
-
+    // id_global_goal_x[robot_id] = x;
+    // id_global_goal_y[robot_id] = y;
+    // id_global_goal_z[robot_id] = z;
     
-    if ((x <= 0.2 && y >= 0.5 && y <= 4.5) || (x >= 4.8 && y >= 0.5 && y <= 4.5) || (y <= 0.2 && x >= 0.5 && x <= 4.5)|| (y >= 4.8 && x >= 0.5 && x <= 4.5)) {
-    // if (x <= -0.1 || x >= 10.1 || y <= -0.1|| y >= 10.1) {
-        id_advancedLocation[robot_id] = false;
-        printf("Robot %d is exiting geofence: (%f, %f)\n", robot_id, x, y);
-        safe = false;
-    }
+    // if ((x <= 0.3 && y >= 0.5 && y <= 4.5) || (x >= 4.7 && y >= 0.5 && y <= 4.5) || (y <= 0.3 && x >= 0.5 && x <= 4.5)|| (y >= 4.7 && x >= 0.5 && x <= 4.5)) {
+    // // if (x <= -0.1 || x >= 10.1 || y <= -0.1|| y >= 10.1) {
+    //     id_advancedLocation[robot_id] = false;
+    //     printf("Robot %d is exiting geofence: (%f, %f)\n", robot_id, x, y);
+    //     safe = false;
+    // }
 
     if (!safe) {
         return PrtMkIntValue((PRT_UINT32)0);

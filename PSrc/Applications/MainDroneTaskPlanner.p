@@ -10,7 +10,7 @@ fun getRobotLocationY(robotId: int): float;
 fun getRobotLocationZ(robotId: int): float;
 fun workspaceSetup(id: int): int; //TODO: PASS XML FILE FROM P -> Cpp
 fun randomLocation(): (float, float, float);
-fun decisionModuleDrone(wayPoint: (float, float, float), robotId: int): int;
+fun decisionModuleDrone(wayPoint: seq[(float, float, float)], robotId: int, delta: int, curr_point: int): int;
 fun advancedControllerDrone(wayPoint: (float, float, float), robotId: int): int;
 fun safeControllerDrone(wayPoint: (float, float, float), robotId: int): int;
 
@@ -59,7 +59,6 @@ machine TestDriver {
 
 			reqCount = 4;
             numOfWorkerRobots = workspaceSetup(2);
-            print "HELLOOOOOOOO {0}\n", numOfWorkerRobots;
 
 			index = 1;
             // Creates all robots
@@ -91,39 +90,39 @@ machine TestDriver {
             requestInfo.request_id = 1;
             requestInfo.priority = 1;
 
-            // Adding a series of random destinations for robots to visit.
-            // i = 0;
-            // while (i < 6) {
-            //     tempDstRequest.mInfo = requestInfo;
-            //     tempDstRequest.dest = randomLocation();
-            //     tempDstRequest.sender = this;
-            //     DstRequests += (i, tempDstRequest);
-            //     i = i + 1;
-            // }
-
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (1.0, 1.0, 1.0);
+            tempDstRequest.dest = (2.5, 2.5, 1.0);
             tempDstRequest.sender = this;
             DstRequests += (0, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (4.0, 1.0, 2.0);
+            tempDstRequest.dest = (2.5, -0.5, 2.0);
             tempDstRequest.sender = this;
             DstRequests += (1, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (4.0, 4.0, 3.0);
+            tempDstRequest.dest = (5.0, 3.0, 2.0);
             tempDstRequest.sender = this;
             DstRequests += (2, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (1.0, 4.0, 1.0);
+            tempDstRequest.dest = (2.5, 5.5, 3.0);
             tempDstRequest.sender = this;
             DstRequests += (3, tempDstRequest);
 
+            tempDstRequest.mInfo = requestInfo;
+            tempDstRequest.dest = (0.0, 2.0, 1.0);
+            tempDstRequest.sender = this;
+            DstRequests += (4, tempDstRequest);
+
+            tempDstRequest.mInfo = requestInfo;
+            tempDstRequest.dest = (2.5, -0.5, 1.0);
+            tempDstRequest.sender = this;
+            DstRequests += (5, tempDstRequest);
+
             // Sequential Requests
             counter = 0;
-            while (counter < 4) {
+            while (counter < 6) {
                 send workerRobots[0], SendNextDstReq, DstRequests[counter];
                 receive {
                     case CompletedPoint: {

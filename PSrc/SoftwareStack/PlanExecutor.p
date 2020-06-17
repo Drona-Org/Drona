@@ -6,11 +6,13 @@ and physically executes this plan.
 machine PlanExecutor {
     var motionPlanner: machine;
     var robotId: int;
+    var RTACollision: machine;
 
 	start state Init {
 		entry (payload: (mp: machine, rid: int)) {
             motionPlanner = payload.mp;
 			robotId = payload.rid;
+            RTACollision = new RTACollision(this, robotId, 2);
             raise Success;
 		}
         on Success goto WaitRequest;
@@ -21,31 +23,24 @@ machine PlanExecutor {
         on ExecutePath goto ExecutePathState;
     }
 
-    state ExecutePathState {
-        entry (payload: seq[(float, float, float)]) {
-            var x: int;
-            var i: int;
-            var s: int;
-            var o: int;
-
-            i = 0;
-            while (i < sizeof(payload)) {
-                // call a dm function, returns safe or not safe (not safe if at least one rta module is not safe)
-                s = decisionModuleDrone(payload[i], robotId);
-                print "MY S VALUE IS {0}\n", s;
-                // call safe controller if dm not safe
-                if (s == 0) {
-                    o = safeControllerDrone(payload[i], robotId);
-                }
-                // else call advanced controller function with this way point
-                if (s == 1) {
-                    o = advancedControllerDrone(payload[i], robotId);
-                }
-                i = i+1;
-            }
-            send motionPlanner, PathCompleted; // Signals the MP that it has finished executing this path
+    state CompletedPointState {
+        entry {
+            send motionPlanner, PathCompleted;
             raise Success;
         }
         on Success goto WaitRequest;
+    }
+
+    state ExecutePathState {
+        entry (payload: seq[(float, float, float)]) {
+
+            send RTACollision, ExecutePath, payload;
+            receive {
+				case PathCompleted: {
+                    raise CompletedPoint;
+                }
+			}
+        }
+        on CompletedPoint goto CompletedPointState;
     }
 }
