@@ -14,9 +14,10 @@ fun Sleep(time: float): int;
 fun randomFloat(): float;
 fun getRobotLocationX(robotId: int): float;
 fun getRobotLocationY(robotId: int): float;
+fun getRobotLocationZ(robotId: int): float;
 fun workspaceSetup(id: int): int; //TODO: PASS XML FILE FROM P -> Cpp
 fun randomLocation(): (float, float, float);
-fun decisionModule(wayPoint: (float, float, float), robotId: int): int;
+fun decisionModule(wayPoint: seq[(float, float, float)], robotId: int, delta: int, curr_point: int): int;
 fun advancedController(wayPoint: (float, float, float), robotId: int): int;
 fun safeController(wayPoint: (float, float, float), robotId: int): int;
 
@@ -48,6 +49,8 @@ fun BROADCAST(allTarget: seq[machine], ev: event, payload: any, source: machine)
 // Task Planner that drives robot surveillance
 machine TestDriver {
     var workerRobots: seq[machine];
+    var battery1: machine;
+    var battery2: machine;
     var reqCount: int;
     var numOfWorkerRobots: int;
     var x: int;

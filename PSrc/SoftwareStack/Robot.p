@@ -9,7 +9,7 @@ machine Robot {
             var x: int;
             myId = payload.0;
             testDriver = payload.1;
-            x = RobotROSSetup(payload.0, 2); // Sets up P machine, with the ROS topics
+            x = RobotROSSetup(payload.0, 1); // Sets up P machine, with the ROS topics
             motionPlanner = new MotionPlanner((this, myId));
         }
 
@@ -36,7 +36,7 @@ machine Robot {
             send motionPlanner, SendGoalPoint, payload.dest;
             receive {
 				case CompletedPoint: {
-                    send testDriver, CompletedPoint;
+                    // send testDriver, CompletedPoint;
                     raise Success;
                 }
 			}

@@ -6,31 +6,9 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/../../../../../sumukh/Documents/P/Bld/Drops/Prt/include
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/ExternalMotionPlanners/OMPLOptimalPlanner/Includes
     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes)
-# add_executable(drona_test
-#     Applications/MainRobotSurveillanceTaskPlanner.h
-#     Applications/MainRobotSurveillanceTaskPlanner.c
-#     Applications/Main.cpp
-#     RobotSDK/RobotFuncs.h
-#     RobotSDK/RobotFuncs.cpp
-#     SoftwareStack/Exp1.xml
-#     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes/Workspace.h
-#     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes/tinyxml2.h
-#     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes/WorkspaceParser.h
-#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/ext_compat.h
-#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/libhandler.h
-#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/libhandler-internal.h
-#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/Prt.h
-#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/PrtConfig.h
-#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/PrtExecution.h
-#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/PrtLinuxUserConfig.h
-#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/PrtProgram.h
-#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/PrtTypes.h
-#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/PrtValues.h
-#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/sal.h)
-
 add_executable(drona_test
-    Applications/MainDroneTaskPlanner.h
-    Applications/MainDroneTaskPlanner.c
+    Applications/MainRobotSurveillanceTaskPlanner.h
+    Applications/MainRobotSurveillanceTaskPlanner.c
     Applications/Main.cpp
     RobotSDK/RobotFuncs.h
     RobotSDK/RobotFuncs.cpp
@@ -49,6 +27,28 @@ add_executable(drona_test
     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/PrtTypes.h
     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/PrtValues.h
     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/sal.h)
+
+# add_executable(drona_test
+#     Applications/MainDroneTaskPlanner.h
+#     Applications/MainDroneTaskPlanner.c
+#     Applications/Main.cpp
+#     RobotSDK/RobotFuncs.h
+#     RobotSDK/RobotFuncs.cpp
+#     SoftwareStack/Exp1.xml
+#     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes/Workspace.h
+#     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes/tinyxml2.h
+#     ${CMAKE_SOURCE_DIR}/Drona/Src/Lib/WorkspaceRelated/WorkspaceParser/Includes/WorkspaceParser.h
+#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/ext_compat.h
+#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/libhandler.h
+#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/libhandler-internal.h
+#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/Prt.h
+#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/PrtConfig.h
+#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/PrtExecution.h
+#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/PrtLinuxUserConfig.h
+#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/PrtProgram.h
+#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/PrtTypes.h
+#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/PrtValues.h
+#     ${CMAKE_SOURCE_DIR}/Drona/P/Bld/Drops/Prt/include/sal.h)
 
 # set(sources Applications/Main.cpp )
 

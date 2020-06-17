@@ -437,8 +437,6 @@ PRT_VALUE* P_RobotROSSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) 
     PRT_VALUE** P_VAR_experiment_id = argRefs[1];
     int experiment_id = PrtPrimGetInt(*P_VAR_experiment_id);
 
-    printf("EXPERIMENT ID!!!!!!!!: %d\n", experiment_id);
-
     if (experiment_id == 1) {
         char robot_id_string[32];
         sprintf(robot_id_string, "%d", robot_id);
@@ -682,7 +680,6 @@ PRT_VALUE* P_randomLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     tupPtr->values[2] = PrtMkFloatValue(0.0);
 
     return value2;
-
 }
 
 PRT_VALUE* P_Sleep_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
@@ -791,38 +788,56 @@ float my_round(float var) {
 } 
 
 PRT_VALUE* P_decisionModule_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    // struct PRT_VALUE* mainPRT = *(argRefs[0]);
+    // PRT_VALUE** P_VAR_robot_id = argRefs[1];
+    // int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+
+    // bool safe = true;
+
+    // double x = mainPRT->valueUnion.tuple->values[0]->valueUnion.ft;
+    // double y = mainPRT->valueUnion.tuple->values[1]->valueUnion.ft;
+    // double z = mainPRT->valueUnion.tuple->values[2]->valueUnion.ft;
+
+    // printf("ROBOT ID: %d\n", robot_id);
+    // printf("MY X Y Z: %f %f %f\n", x, y, z);
+    // printf("Robot %d: Battery - %d\n", robot_id, id_currBatteryPercentage[robot_id]);
     struct PRT_VALUE* mainPRT = *(argRefs[0]);
     PRT_VALUE** P_VAR_robot_id = argRefs[1];
     int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
-
+    PRT_VALUE** P_VAR_delta = argRefs[2];
+    int delta = PrtPrimGetInt(*P_VAR_delta);
+    PRT_VALUE** P_VAR_curr_index = argRefs[3];
+    int i = PrtPrimGetInt(*P_VAR_curr_index);
+    int plan_size = mainPRT->valueUnion.seq->size;
     bool safe = true;
+    int idx = 0;
 
-    double x = mainPRT->valueUnion.tuple->values[0]->valueUnion.ft;
-    double y = mainPRT->valueUnion.tuple->values[1]->valueUnion.ft;
-    double z = mainPRT->valueUnion.tuple->values[2]->valueUnion.ft;
+    id_global_goal_x[robot_id] = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[0]->valueUnion.ft;
+    id_global_goal_y[robot_id] = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[1]->valueUnion.ft;
+    id_global_goal_z[robot_id] = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[2]->valueUnion.ft;
 
-    printf("ROBOT ID: %d\n", robot_id);
-    printf("MY X Y Z: %f %f %f\n", x, y, z);
-    printf("Robot %d: Battery - %d\n", robot_id, id_currBatteryPercentage[robot_id]);
+    while (idx < delta) {
+        if (i + idx < plan_size) {
+            double x = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[0]->valueUnion.ft;
+            double y = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[1]->valueUnion.ft;
+            double z = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[2]->valueUnion.ft;
 
-    
-    id_global_goal_x[robot_id] = x;
-    id_global_goal_y[robot_id] = y;
-
-
-    if (id_currBatteryPercentage[robot_id] < 20) {
-        id_advancedBattery[robot_id] = false;
-        printf("Robot %d: Low Battery - %f\n", robot_id, id_currBatteryPercentage[robot_id]);
-        safe = false;
-    }
-    if (x <= 0 || x >= 5.0 || y <= 0|| y >= 5.0) {
-        id_advancedLocation[robot_id] = false;
-        printf("Robot %d is exiting geofence: (%f, %f)\n", robot_id, x, y);
-        safe = false;
-    }
-    if ((id_global_goal_x[1] == id_global_goal_x[2]) && (id_global_goal_y[1] == id_global_goal_y[2])) {
-        collisionFree = false;
-        safe = false;
+            if (id_currBatteryPercentage[robot_id] < 95) {
+                id_advancedBattery[robot_id] = false;
+                printf("Robot %d: Low Battery - %f\n", robot_id, id_currBatteryPercentage[robot_id]);
+                safe = false;
+            }
+            if (x <= 0 || x >= 5.0 || y <= 0|| y >= 5.0) {
+                id_advancedLocation[robot_id] = false;
+                printf("Robot %d is exiting geofence: (%f, %f)\n", robot_id, x, y);
+                safe = false;
+            }
+            if ((id_global_goal_x[1] == id_global_goal_x[2]) && (id_global_goal_y[1] == id_global_goal_y[2])) {
+                collisionFree = false;
+                safe = false;
+            }
+        }
+        idx = idx + 1;
     }
 
     if (!safe) {

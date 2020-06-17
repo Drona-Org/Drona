@@ -10,10 +10,10 @@
 		</robot>
 	</robots>
 	<obstacles>
-		<box>
+		<!-- <box>
 			<low  x="2" y="0" z="0" />
 			<high x="3" y="1" z="1" />
-	  	</box>
+	  	</box> -->
 		<box>
 			<low  x="2" y="3" z="0" />
 			<high x="3" y="4" z="1" />
