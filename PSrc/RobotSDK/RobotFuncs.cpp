@@ -43,6 +43,7 @@ std::map<int, float> id_robot_velocity_theta;
 std::map<int, bool> id_advancedLocation; // rtaModuleID = 0
 std::map<int, bool> id_advancedBattery;  // rtaModuleID = 1
 bool collisionFree;                      // rtaModuleID = 2
+std::map<int, bool> id_collisionFree;
 std::map<int, int> id_currBatteryPercentage;
 std::map<int, float> id_global_goal_x;
 std::map<int, float> id_global_goal_y;
@@ -55,6 +56,13 @@ ros::Publisher pubPosCtrl;
 
 WorkspaceInfo *WSInfo;
 OMPLPLanner* planner;
+
+vector<vector<double> > currRobot1Plan;
+vector<vector<double> > currRobot2Plan;
+
+int currRobot1_i;
+int currRobot2_i;
+
 
 WS_Coord GazeboToPlanner(WS_Coord coord) {
     return WS_Coord(coord.x + WS_Coord(0, 0, 0).x, coord.y + WS_Coord(0, 0, 0).y, coord.z + WS_Coord(0, 0, 0).z);
@@ -234,6 +242,26 @@ void safe_controller(float x, float y, int robot_id) {
         //     id_vel_pubs[robot_id].publish(vel_msg);
         //     usleep(1000000);
         // }
+        // printf("SLEEPING\n");
+        // vel_msg.angular.x = 0;
+        // vel_msg.angular.z = 0;
+        // id_vel_pubs[robot_id].publish(vel_msg);
+        // ros::spinOnce();
+        // loop_rate.sleep();
+        // vel_msg.angular.z = 0;
+        // vel_msg.linear.x = -0.3;
+        // id_vel_pubs[robot_id].publish(vel_msg);
+        
+        // vel_msg.angular.x = 0;
+        // vel_msg.angular.z = 0;
+        // id_vel_pubs[robot_id].publish(vel_msg);
+        // ros::spinOnce();
+        // loop_rate.sleep();
+        // vel_msg.angular.z = 0;
+        // vel_msg.linear.x = 0;
+        // id_vel_pubs[robot_id].publish(vel_msg);
+        // usleep(14000000);
+        // printf("DONE SLEEPING\n");
 
         // Collision avoidance pausing 
         if (robot_id == 1) {
@@ -259,29 +287,30 @@ void safe_controller(float x, float y, int robot_id) {
             printf("DONE SLEEPING\n");
         }
 
-        if (robot_id == 2) {
-            printf("SLEEPINGONLY A LITTLE\n");
-            vel_msg.angular.x = 0;
-            vel_msg.angular.z = 0;
-            id_vel_pubs[robot_id].publish(vel_msg);
-            ros::spinOnce();
-            loop_rate.sleep();
-            vel_msg.angular.z = 0;
-            vel_msg.linear.x = -0.3;
-            id_vel_pubs[robot_id].publish(vel_msg);
+        // if (robot_id == 2) {
+        //     printf("SLEEPINGONLY A LITTLE\n");
+        //     vel_msg.angular.x = 0;
+        //     vel_msg.angular.z = 0;
+        //     id_vel_pubs[robot_id].publish(vel_msg);
+        //     ros::spinOnce();
+        //     loop_rate.sleep();
+        //     vel_msg.angular.z = 0;
+        //     vel_msg.linear.x = -0.3;
+        //     id_vel_pubs[robot_id].publish(vel_msg);
             
-            vel_msg.angular.x = 0;
-            vel_msg.angular.z = 0;
-            id_vel_pubs[robot_id].publish(vel_msg);
-            ros::spinOnce();
-            loop_rate.sleep();
-            vel_msg.angular.z = 0;
-            vel_msg.linear.x = 0;
-            id_vel_pubs[robot_id].publish(vel_msg);
-            usleep(7000000);
-            printf("DONE SLEEPING\n");
-        }
+        //     vel_msg.angular.x = 0;
+        //     vel_msg.angular.z = 0;
+        //     id_vel_pubs[robot_id].publish(vel_msg);
+        //     ros::spinOnce();
+        //     loop_rate.sleep();
+        //     vel_msg.angular.z = 0;
+        //     vel_msg.linear.x = 0;
+        //     id_vel_pubs[robot_id].publish(vel_msg);
+        //     usleep(2000000);
+        //     printf("DONE SLEEPING\n");
+        // }
         gazebo_move_goal(x, y, robot_id);
+        // id_collisionFree[robot_id] = true;
         collisionFree = true;
     }
     
@@ -469,6 +498,7 @@ PRT_VALUE* P_RobotROSSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) 
         id_advancedBattery[robot_id] = true;
         id_currBatteryPercentage[1] = 100;
         id_currBatteryPercentage[2] = 100;
+        id_collisionFree[robot_id] = true;
         collisionFree = true;
 
         if (robot_id == 1) {
@@ -536,6 +566,15 @@ PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
     PRT_VALUE** P_VAR_robot_id = argRefs[1];
     int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
 
+
+    if (robot_id == 1) {
+        currRobot1Plan.clear();
+    }
+
+    if (robot_id == 2) {
+        currRobot2Plan.clear();
+    }
+
     ros::NodeHandle n;
     ros::Subscriber gazebo_odom_subscriber;
     ros::Publisher velocity_publisher;
@@ -548,9 +587,23 @@ PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
         double x = (*P_VAR_destinations)->valueUnion.seq->values[i]->valueUnion.tuple->values[0]->valueUnion.ft;
         double y = (*P_VAR_destinations)->valueUnion.seq->values[i]->valueUnion.tuple->values[1]->valueUnion.ft;
         double z = (*P_VAR_destinations)->valueUnion.seq->values[i]->valueUnion.tuple->values[2]->valueUnion.ft;
+
         arrOfPoints[i][0] = x;
         arrOfPoints[i][1] = y;
         arrOfPoints[i][2] = z;
+
+        vector<double> v1;
+        v1.push_back(x);
+        v1.push_back(y);
+        v1.push_back(z);
+
+        if (robot_id == 1) {
+            currRobot1Plan.push_back(v1);
+        }
+
+        if (robot_id == 2) {
+            currRobot2Plan.push_back(v1);
+        }
         printf("%f %f %f\n",x,y,z);
     }
 
@@ -801,6 +854,7 @@ PRT_VALUE* P_decisionModule_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     // printf("ROBOT ID: %d\n", robot_id);
     // printf("MY X Y Z: %f %f %f\n", x, y, z);
     // printf("Robot %d: Battery - %d\n", robot_id, id_currBatteryPercentage[robot_id]);
+    printf("made it to decision module!!!!!!!!!!!\n");
     struct PRT_VALUE* mainPRT = *(argRefs[0]);
     PRT_VALUE** P_VAR_robot_id = argRefs[1];
     int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
@@ -812,6 +866,14 @@ PRT_VALUE* P_decisionModule_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     bool safe = true;
     int idx = 0;
 
+    if (robot_id == 1) {
+        currRobot1_i = i;
+    }
+
+    if (robot_id == 2) {
+        currRobot2_i = i;
+    }
+
     id_global_goal_x[robot_id] = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[0]->valueUnion.ft;
     id_global_goal_y[robot_id] = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[1]->valueUnion.ft;
     id_global_goal_z[robot_id] = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[2]->valueUnion.ft;
@@ -822,20 +884,33 @@ PRT_VALUE* P_decisionModule_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
             double y = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[1]->valueUnion.ft;
             double z = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[2]->valueUnion.ft;
 
-            if (id_currBatteryPercentage[robot_id] < 95) {
+            if (id_currBatteryPercentage[robot_id] < 10*(idx+1)) {
                 id_advancedBattery[robot_id] = false;
                 printf("Robot %d: Low Battery - %f\n", robot_id, id_currBatteryPercentage[robot_id]);
                 safe = false;
             }
+            printf("MY X Y FOR GEO FENCE (%f, %f)", x, y);
             if (x <= 0 || x >= 5.0 || y <= 0|| y >= 5.0) {
                 id_advancedLocation[robot_id] = false;
                 printf("Robot %d is exiting geofence: (%f, %f)\n", robot_id, x, y);
                 safe = false;
             }
-            if ((id_global_goal_x[1] == id_global_goal_x[2]) && (id_global_goal_y[1] == id_global_goal_y[2])) {
-                collisionFree = false;
-                safe = false;
+            printf("VARIABLES I %d, IDX %d, Plan Size %d\n", i, idx, plan_size);
+            
+            if ((currRobot1_i+idx < currRobot1Plan.size()) && (currRobot2_i+idx < currRobot2Plan.size())) {
+                double robot1_x = currRobot1Plan[currRobot1_i+idx][0];
+                double robot1_y = currRobot1Plan[currRobot1_i+idx][1];
+                double robot2_x = currRobot2Plan[currRobot2_i+idx][0];
+                double robot2_y = currRobot2Plan[currRobot2_i+idx][1];
+
+                printf("PLAN!!!! - (%f, %f) - (%f, %f)\n", robot1_x, robot1_y, robot2_x, robot2_y);
+                if ((currRobot1Plan[currRobot1_i+idx][0] == currRobot2Plan[currRobot2_i+idx][0]) && (currRobot1Plan[currRobot1_i+idx][1] == currRobot2Plan[currRobot2_i+idx][1])) {
+                    collisionFree = false; //TODO: make collision free a map so safe controller knows which robot to use
+                    // id_collisionFree[robot_id] = false;
+                    safe = false;
+                }
             }
+            
         }
         idx = idx + 1;
     }
@@ -863,7 +938,12 @@ PRT_VALUE* P_advancedController_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argR
     double y = mainPRT->valueUnion.tuple->values[1]->valueUnion.ft;
     double z = mainPRT->valueUnion.tuple->values[2]->valueUnion.ft;
     printf("%f, %f, %f\n", x,y,z);
-    gazebo_move_goal(x, y, robot_id);
+
+    bool done = false;
+    while (!done) {
+        gazebo_move_goal(x, y, robot_id);
+        done = true;
+    }
 
     return PrtMkIntValue((PRT_UINT32)1);
 }
@@ -882,7 +962,11 @@ PRT_VALUE* P_safeController_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     double y = mainPRT->valueUnion.tuple->values[1]->valueUnion.ft;
     double z = mainPRT->valueUnion.tuple->values[2]->valueUnion.ft;
 
-    safe_controller(x, y, robot_id);
+    bool done = false;
+    while (!done) {
+        safe_controller(x, y, robot_id);
+        done = true;
+    }
 
     return PrtMkIntValue((PRT_UINT32)1);
 }

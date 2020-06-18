@@ -104,27 +104,27 @@ machine TestDriver {
             }
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (4.0, 2.0, 0.0);
+            tempDstRequest.dest = (1.5, 1.5, 0.0);
             tempDstRequest.sender = this;
             DstRequests += (6, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (1.5, 1.5, 0.0);
+            tempDstRequest.dest = (1.0, 2.0, 0.0);
             tempDstRequest.sender = this;
             DstRequests += (7, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (4.5, 2.0, 0.0);
+            tempDstRequest.dest = (2.0, 3.0, 0.0);
             tempDstRequest.sender = this;
             DstRequests += (8, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (5.1, 0.5, 0.0);
+            tempDstRequest.dest = (1.0, 4.0, 0.0);
             tempDstRequest.sender = this;
             DstRequests += (9, tempDstRequest);
 
             tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (2.6, 2.6, 0.0);
+            tempDstRequest.dest = (2.0, 4.5, 0.0);
             tempDstRequest.sender = this;
             DstRequests += (10, tempDstRequest);
 
@@ -137,17 +137,15 @@ machine TestDriver {
 
             // Simultaneous Requests
             // Sending both robots a series of random locations
-            
-            send workerRobots[1], SendNextDstReq, DstRequests[7];
-            send workerRobots[0], SendNextDstReq, DstRequests[7];
+            send workerRobots[0], SendNextDstReq, DstRequests[6];
+            send workerRobots[1], SendNextDstReq, DstRequests[6];
+            send workerRobots[0], SendNextDstReq, DstRequests[9];
 
             send workerRobots[1], SendNextDstReq, DstRequests[10];
-            send workerRobots[0], SendNextDstReq, DstRequests[9];
-            send workerRobots[1], SendNextDstReq, DstRequests[8];
 
-            send workerRobots[0], SendNextDstReq, DstRequests[2];
-            send workerRobots[1], SendNextDstReq, DstRequests[3];
-            send workerRobots[0], SendNextDstReq, DstRequests[10];
+            // send workerRobots[0], SendNextDstReq, DstRequests[2];
+            // send workerRobots[1], SendNextDstReq, DstRequests[3];
+            // send workerRobots[0], SendNextDstReq, DstRequests[10];
 
 
             // send workerRobots[1], SendNextDstReq, DstRequests[10];
