@@ -4,8 +4,7 @@ This includes all the foreign function implementations, state information about 
 and controller implementations.
 */
 
-#include "../Applications/MainRobotSurveillanceTaskPlanner.h"
-#include "../Applications/MainDroneTaskPlanner.h"
+#include "../Applications/RobotSurveillance/MainRobotSurveillanceTaskPlanner.h"
 #include "RobotFuncs.h"
 #include <math.h>
 #include <unistd.h>
@@ -50,9 +49,6 @@ std::map<int, float> id_global_goal_y;
 std::map<int, float> id_global_goal_z;
 std::map<int, float> id_charging_station_x; 
 std::map<int, float> id_charging_station_y;
-ros::Publisher pubTakeOff;
-ros::Publisher pubLand;
-ros::Publisher pubPosCtrl;
 
 WorkspaceInfo *WSInfo;
 OMPLPLanner* planner;
@@ -102,21 +98,6 @@ void gazeboCallBack2(const nav_msgs::Odometry::ConstPtr& odom_msg) {
     rpy.y = pitch;
     rpy.z = yaw; 
     id_robot_theta[2] = yaw;
-}
-
-void droneCallBack(const geometry_msgs::Pose::ConstPtr& odom_msg) {
-    id_robot_x[1] = odom_msg->position.x;
-    id_robot_y[1] = odom_msg->position.y;
-    id_robot_z[1] = odom_msg->position.z;
-    tf::Quaternion quat;
-    tf::quaternionMsgToTF(odom_msg->orientation, quat);
-    double roll, pitch, yaw;
-    tf::Matrix3x3(quat).getRPY(roll, pitch, yaw);
-    geometry_msgs::Vector3 rpy;
-    rpy.x = roll;
-    rpy.y = pitch;
-    rpy.z = yaw;
-    id_robot_theta[1] = yaw;
 }
 
 void safe_battery_move_to_goal(int robot_id, double goal_x, double goal_y) {
@@ -435,25 +416,11 @@ PRT_VALUE* P_switchSCtoAC_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
 PRT_VALUE* P_ShutdownROSSubscribers_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
     PRT_VALUE** P_VAR_num_robots = argRefs[0];
     int num_robots = PrtPrimGetInt(*P_VAR_num_robots);
-    PRT_VALUE** P_VAR_experiment_id = argRefs[1];
-    int experiment_id = PrtPrimGetInt(*P_VAR_experiment_id);
-
-    if (experiment_id == 1) {
-        for (int i = 0; i < num_robots; i++) {
-            id_odom_subs[i+1].shutdown();
-        }
+    
+    for (int i = 0; i < num_robots; i++) {
+        id_odom_subs[i+1].shutdown();
     }
-
-    if (experiment_id == 2) {
-        ros::Rate loop_rate(10);
-        int count = 0;
-        while (count < 10) {
-            pubLand.publish(std_msgs::Empty());
-            ros::spinOnce();
-            loop_rate.sleep();
-            ++count;
-        }
-    }
+    
     return PrtMkIntValue((PRT_UINT32)1);
 }
 
@@ -463,101 +430,49 @@ PRT_VALUE* P_RobotROSSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) 
     PRT_VALUE** P_VAR_robot_id = argRefs[0];
     int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
 
-    PRT_VALUE** P_VAR_experiment_id = argRefs[1];
-    int experiment_id = PrtPrimGetInt(*P_VAR_experiment_id);
-
-    if (experiment_id == 1) {
-        char robot_id_string[32];
-        sprintf(robot_id_string, "%d", robot_id);
-        
-        char sub_beginning[512] = "robot";
-        char sub_ending[128] = "/odom";
-        strcat(sub_beginning, robot_id_string);
-        strcat(sub_beginning, sub_ending);
-
-        char pub_beginning[512] = "robot";
-        char pub_ending2[128] = "/cmd_vel";
-        strcat(pub_beginning, robot_id_string);
-        strcat(pub_beginning, pub_ending2);
-
-        ros::NodeHandle n;
-        ros::Subscriber gazebo_odom_subscriber;
-        ros::Publisher velocity_publisher;
-        geometry_msgs::Twist vel_msg;
-        if (robot_id == 1) {
-            gazebo_odom_subscriber = n.subscribe(sub_beginning, 1000000000, gazeboCallBack);
-        } else {
-            gazebo_odom_subscriber = n.subscribe(sub_beginning, 1000000000, gazeboCallBack2);
-        }
-
-        velocity_publisher = n.advertise<geometry_msgs::Twist>(pub_beginning, 1000000);
-        id_vel_pubs[robot_id] = velocity_publisher;
-        id_odom_subs[robot_id] = gazebo_odom_subscriber;
-        id_vel_msgs[robot_id] = vel_msg;
-        id_advancedLocation[robot_id] = true;
-        id_advancedBattery[robot_id] = true;
-        id_currBatteryPercentage[1] = 100;
-        id_currBatteryPercentage[2] = 100;
-        id_collisionFree[robot_id] = true;
-        collisionFree = true;
-
-        if (robot_id == 1) {
-            id_robot_x[robot_id] = 1.0;
-            id_robot_y[robot_id] = 1.0;
-        }
-
-        if (robot_id == 2) {
-            id_robot_x[robot_id] = 2.0;
-            id_robot_y[robot_id] = 2.0;
-        }
-    }
-
-    if (experiment_id == 2) {
-        ros::NodeHandle n;
-        ros::Subscriber gazebo_odom_subscriber;
-        ros::Publisher velocity_publisher;
-        geometry_msgs::Twist vel_msg;
-
-        pubTakeOff = n.advertise<std_msgs::Empty>("/drone/takeoff", 1024);
-
-        ros::Rate loop_rate(10);
-        int count = 0;
-        while (count < 10) {
-            pubTakeOff.publish(std_msgs::Empty());
-            ros::spinOnce();
-            loop_rate.sleep();
-            ++count;
-        }
-        pubLand = n.advertise<std_msgs::Empty>("/drone/land",1024);
-        ros::Publisher pubReset = n.advertise<std_msgs::Empty>("/drone/reset",1024);
-        pubPosCtrl = n.advertise<std_msgs::Bool>("/drone/posctrl", 1024);
-        ros::Publisher pubVelMode = n.advertise<std_msgs::Bool>("/drone/vel_mode",1024);
-
-        velocity_publisher = n.advertise<geometry_msgs::Twist>("/cmd_vel",1024);
-        gazebo_odom_subscriber = n.subscribe("drone/gt_pose", 1000000000, droneCallBack);
-
-
-        id_vel_pubs[robot_id] = velocity_publisher;
-        id_odom_subs[robot_id] = gazebo_odom_subscriber;
-        id_vel_msgs[robot_id] = vel_msg;
-        id_advancedLocation[robot_id] = true;
-
-        std_msgs::Bool bool_msg;
-        bool_msg.data = 1;
-
-        count = 0;
-        while (count < 10) {
-            pubPosCtrl.publish(bool_msg);
-            ros::spinOnce();
-            loop_rate.sleep();
-            ++count;
-        }
-
-        id_robot_x[robot_id] = 0.0;
-        id_robot_y[robot_id] = 0.0;
-        id_robot_z[robot_id] = 0.0;
-    }
+    char robot_id_string[32];
+    sprintf(robot_id_string, "%d", robot_id);
     
+    char sub_beginning[512] = "robot";
+    char sub_ending[128] = "/odom";
+    strcat(sub_beginning, robot_id_string);
+    strcat(sub_beginning, sub_ending);
+
+    char pub_beginning[512] = "robot";
+    char pub_ending2[128] = "/cmd_vel";
+    strcat(pub_beginning, robot_id_string);
+    strcat(pub_beginning, pub_ending2);
+
+    ros::NodeHandle n;
+    ros::Subscriber gazebo_odom_subscriber;
+    ros::Publisher velocity_publisher;
+    geometry_msgs::Twist vel_msg;
+    if (robot_id == 1) {
+        gazebo_odom_subscriber = n.subscribe(sub_beginning, 1000000000, gazeboCallBack);
+    } else {
+        gazebo_odom_subscriber = n.subscribe(sub_beginning, 1000000000, gazeboCallBack2);
+    }
+
+    velocity_publisher = n.advertise<geometry_msgs::Twist>(pub_beginning, 1000000);
+    id_vel_pubs[robot_id] = velocity_publisher;
+    id_odom_subs[robot_id] = gazebo_odom_subscriber;
+    id_vel_msgs[robot_id] = vel_msg;
+    id_advancedLocation[robot_id] = true;
+    id_advancedBattery[robot_id] = true;
+    id_currBatteryPercentage[1] = 100;
+    id_currBatteryPercentage[2] = 100;
+    id_collisionFree[robot_id] = true;
+    collisionFree = true;
+
+    if (robot_id == 1) {
+        id_robot_x[robot_id] = 1.0;
+        id_robot_y[robot_id] = 1.0;
+    }
+
+    if (robot_id == 2) {
+        id_robot_x[robot_id] = 2.0;
+        id_robot_y[robot_id] = 2.0;
+    }
     return PrtMkIntValue((PRT_UINT32)1);
 }
 
@@ -815,30 +730,16 @@ PRT_VALUE* P_getRobotLocationZ_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRe
 }
 
 PRT_VALUE* P_workspaceSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
-    PRT_VALUE** P_VAR_experiment_id = argRefs[0];
-    int experiment_id = PrtPrimGetInt(*P_VAR_experiment_id);
+    WSInfo = ParseWorkspaceConfig("/home/sumukh/catkin_ws/src/Drona/PSrc/Applications/RobotSurveillance/Exp1.xml");
+    planner = new OMPLPLanner("/home/sumukh/catkin_ws/src/Drona/PSrc/Applications/RobotSurveillance/Exp1.xml", PLANNER_RRTSTAR, OBJECTIVE_PATHLENGTH);
 
-    if (experiment_id == 1) {
-        WSInfo = ParseWorkspaceConfig("/home/sumukh/catkin_ws/src/Drona/PSrc/SoftwareStack/Exp1.xml");
-        planner = new OMPLPLanner("/home/sumukh/catkin_ws/src/Drona/PSrc/SoftwareStack/Exp1.xml", PLANNER_RRTSTAR, OBJECTIVE_PATHLENGTH);
+    id_charging_station_x[1] = (double) WSInfo->charging_stations.at(0).low.x;
+    id_charging_station_y[1] = (double) WSInfo->charging_stations.at(0).low.y;
+    id_charging_station_x[2] = (double) WSInfo->charging_stations.at(1).low.x;
+    id_charging_station_y[2] = (double) WSInfo->charging_stations.at(1).low.y;
 
-        id_charging_station_x[1] = (double) WSInfo->charging_stations.at(0).low.x;
-        id_charging_station_y[1] = (double) WSInfo->charging_stations.at(0).low.y;
-        id_charging_station_x[2] = (double) WSInfo->charging_stations.at(1).low.x;
-        id_charging_station_y[2] = (double) WSInfo->charging_stations.at(1).low.y;
-    }
-
-    if (experiment_id == 2) {
-        WSInfo = ParseWorkspaceConfig("/home/sumukh/catkin_ws/src/Drona/PSrc/SoftwareStack/Exp2.xml");
-        planner = new OMPLPLanner("/home/sumukh/catkin_ws/src/Drona/PSrc/SoftwareStack/Exp2.xml", PLANNER_RRTSTAR, OBJECTIVE_PATHLENGTH);
-    }
     return PrtMkIntValue((PRT_UINT32)WSInfo->robots.size());
 }
-
-float my_round(float var) {
-    float value = (int)(var * 100 + .5); 
-    return (float)value / 100; 
-} 
 
 PRT_VALUE* P_decisionModule_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
     // struct PRT_VALUE* mainPRT = *(argRefs[0]);
@@ -969,130 +870,4 @@ PRT_VALUE* P_safeController_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     }
 
     return PrtMkIntValue((PRT_UINT32)1);
-}
-
-PRT_VALUE* P_decisionModuleDrone_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
-    struct PRT_VALUE* mainPRT = *(argRefs[0]);
-    PRT_VALUE** P_VAR_robot_id = argRefs[1];
-    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
-    PRT_VALUE** P_VAR_delta = argRefs[2];
-    int delta = PrtPrimGetInt(*P_VAR_delta);
-    PRT_VALUE** P_VAR_curr_index = argRefs[3];
-    int i = PrtPrimGetInt(*P_VAR_curr_index);
-    int plan_size = mainPRT->valueUnion.seq->size;
-    bool safe = true;
-    int idx = 0;
-
-    while (idx < delta) {
-        if (i + idx < plan_size) {
-            double x = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[0]->valueUnion.ft;
-            double y = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[1]->valueUnion.ft;
-            double z = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[2]->valueUnion.ft;
-
-            if ((x <= 0.2 && y >= 0.5 && y <= 4.5) || (x >= 4.8 && y >= 0.5 && y <= 4.5) || (y <= 0.2 && x >= 0.5 && x <= 4.5)|| (y >= 4.8 && x >= 0.5 && x <= 4.5)) {
-                id_advancedLocation[robot_id] = false;
-                printf("Robot %d is exiting geofence: (%f, %f)\n", robot_id, x, y);
-                safe = false;
-            }
-        }
-
-        idx = idx + 1;
-    }
-
-    // double x = mainPRT->valueUnion.tuple->values[0]->valueUnion.ft;
-    // double y = mainPRT->valueUnion.tuple->values[1]->valueUnion.ft;
-    // double z = mainPRT->valueUnion.tuple->values[2]->valueUnion.ft;
-
-    //TODO: CHANGE TO BE INSIDE THE CONTROLLERS
-    // id_global_goal_x[robot_id] = x;
-    // id_global_goal_y[robot_id] = y;
-    // id_global_goal_z[robot_id] = z;
-    
-    // if ((x <= 0.3 && y >= 0.5 && y <= 4.5) || (x >= 4.7 && y >= 0.5 && y <= 4.5) || (y <= 0.3 && x >= 0.5 && x <= 4.5)|| (y >= 4.7 && x >= 0.5 && x <= 4.5)) {
-    // // if (x <= -0.1 || x >= 10.1 || y <= -0.1|| y >= 10.1) {
-    //     id_advancedLocation[robot_id] = false;
-    //     printf("Robot %d is exiting geofence: (%f, %f)\n", robot_id, x, y);
-    //     safe = false;
-    // }
-
-    if (!safe) {
-        return PrtMkIntValue((PRT_UINT32)0);
-    } else {
-        return PrtMkIntValue((PRT_UINT32)1);
-    }
-}
-
-PRT_VALUE* P_safeControllerDrone_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
-    struct PRT_VALUE* mainPRT = *(argRefs[0]);
-    PRT_VALUE** P_VAR_robot_id = argRefs[1];
-    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
-    geometry_msgs::Twist vel_msg = id_vel_msgs[robot_id];
-    
-    ros::Rate loop_rate(1000000);
-    usleep(500000);
-    ros::spinOnce();
-
-    while (((my_round(id_robot_x[robot_id])) != my_round(2.5)) || ((my_round(id_robot_y[robot_id])) != my_round(2.5))) {
-        printf("INSIDE SAFE CONTROLLER!!!!!!");
-        vel_msg.linear.x = 2.5;
-        vel_msg.linear.y = 2.5;
-        vel_msg.linear.z = 1.0;
-        vel_msg.angular.x = 0;
-        vel_msg.angular.y = 0;
-        vel_msg.angular.z = 0;
-        id_vel_pubs[robot_id].publish(vel_msg);
-
-        ros::spinOnce();
-        loop_rate.sleep();
-        printf("curr x y z: %f, %f, %f\n", my_round(id_robot_x[robot_id]), my_round(id_robot_y[robot_id]), my_round(id_robot_z[robot_id]));
-    }
-    return PrtMkIntValue((PRT_UINT32)1);
-}
-
-PRT_VALUE* P_advancedControllerDrone_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
-    struct PRT_VALUE* mainPRT = *(argRefs[0]);
-    PRT_VALUE** P_VAR_robot_id = argRefs[1];
-    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
-
-    geometry_msgs::Twist vel_msg = id_vel_msgs[robot_id];
-
-    double x = mainPRT->valueUnion.tuple->values[0]->valueUnion.ft;
-    double y = mainPRT->valueUnion.tuple->values[1]->valueUnion.ft;
-    double z = mainPRT->valueUnion.tuple->values[2]->valueUnion.ft;
-
-    printf("INSIDE ADVANCED CONTROLLER!!!!!!");
-    ros::Rate loop_rate(1000000);
-    usleep(500000);
-    ros::spinOnce();
-
-    while (((my_round(id_robot_x[robot_id])) != my_round(x)) || ((my_round(id_robot_y[robot_id])) != my_round(y))) {
-        vel_msg.linear.x = x;
-        vel_msg.linear.y = y;
-        vel_msg.linear.z = z;
-        vel_msg.angular.x = 0;
-        vel_msg.angular.y = 0;
-        vel_msg.angular.z = 0;
-
-        id_vel_pubs[robot_id].publish(vel_msg);
-        ros::spinOnce();
-        loop_rate.sleep();
-
-        printf("Goal:  %f, %f, %f\n", x, y, z);
-        printf("Curr:  %f, %f, %f\n", id_robot_x[robot_id], id_robot_y[robot_id], id_robot_z[robot_id]);
-        printf("Rounded Goal:  %f, %f, %f\n", my_round(x), my_round(y), my_round(z));
-        printf("Rounded Curr:  %f, %f, %f\n", my_round(id_robot_x[robot_id]), my_round(id_robot_y[robot_id]), my_round(id_robot_z[robot_id]));
-    }
-
-    // vel_msg.linear.x = x;
-    // vel_msg.linear.y = y;
-    // vel_msg.linear.z = z;
-    // vel_msg.angular.x = 0;
-    // vel_msg.angular.y = 0;
-    // vel_msg.angular.z = 0;
-
-    // id_vel_pubs[robot_id].publish(vel_msg);
-    // usleep(500000);
-
-    return PrtMkIntValue((PRT_UINT32)1);
-
 }

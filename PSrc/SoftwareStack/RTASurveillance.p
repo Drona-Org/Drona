@@ -34,7 +34,9 @@ machine RTASurveillance {
                 if (s == 0) {
                     o = safeController(payload[i], robotId);
                     i = i+1;
-                } else {
+                }
+
+                if (s == 1) {
                     o = advancedController(payload[i], robotId);
                     i = i+1;
                 }
