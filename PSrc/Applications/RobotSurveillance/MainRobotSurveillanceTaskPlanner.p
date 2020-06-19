@@ -43,7 +43,7 @@ event SafeGeoFence;
 event SafeCollision;
 event AdvancedController;
 
-
+// Function used to setup Robot Machine to Robot Machine Communication in P
 fun BROADCAST(allTarget: seq[machine], ev: event, payload: any, source: machine) {
 	var index: int;
 	index = 0;
@@ -74,8 +74,8 @@ machine TestDriver {
 
 			reqCount = 4;
             numOfWorkerRobots = workspaceSetup();
-
 			index = 1;
+
             // Creates all robots
 			while(index < numOfWorkerRobots+1) {
 				temp = new Robot(index, this);
@@ -96,8 +96,6 @@ machine TestDriver {
             var counter: int;
             var droneId: int;
             var DstRequests: seq[DstReq];
-            var randomFloat: float;
-            var randomFloat2: float;
             var i: int;
             DstRequests = default(seq[DstReq]);
             
@@ -106,84 +104,19 @@ machine TestDriver {
 
             // Adding a series of random destinations for robots to visit.
             i = 0;
-            while (i < 6) {
+            counter = 0;
+            while (i < 20) {
                 tempDstRequest.mInfo = requestInfo;
                 tempDstRequest.dest = randomLocation();
                 tempDstRequest.sender = this;
-                DstRequests += (i, tempDstRequest);
+                send workerRobots[0], SendNextDstReq, tempDstRequest;
+
+                tempDstRequest.mInfo = requestInfo;
+                tempDstRequest.dest = randomLocation();
+                tempDstRequest.sender = this;
+                send workerRobots[1], SendNextDstReq, tempDstRequest;
                 i = i + 1;
             }
-
-            tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (1.5, 1.5, 0.0);
-            tempDstRequest.sender = this;
-            DstRequests += (6, tempDstRequest);
-
-            tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (1.0, 2.0, 0.0);
-            tempDstRequest.sender = this;
-            DstRequests += (7, tempDstRequest);
-
-            tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (2.0, 3.0, 0.0);
-            tempDstRequest.sender = this;
-            DstRequests += (8, tempDstRequest);
-
-            tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (1.0, 4.0, 0.0);
-            tempDstRequest.sender = this;
-            DstRequests += (9, tempDstRequest);
-
-            tempDstRequest.mInfo = requestInfo;
-            tempDstRequest.dest = (2.0, 4.5, 0.0);
-            tempDstRequest.sender = this;
-            DstRequests += (10, tempDstRequest);
-
-            // Monitors for corresponing RTA modules
-            // geofence1 = new LocationMonitorGeoFence(this, 1);
-            // geofence2 = new LocationMonitorGeoFence(this, 2);
-            battery1 = new Battery(this,1);
-            battery2 = new Battery(this,2);
-            // collision = new LocationMonitorCollision(this);
-
-            // Simultaneous Requests
-            // Sending both robots a series of random locations
-            send workerRobots[0], SendNextDstReq, DstRequests[6];
-            send workerRobots[1], SendNextDstReq, DstRequests[6];
-            send workerRobots[0], SendNextDstReq, DstRequests[9];
-
-            send workerRobots[1], SendNextDstReq, DstRequests[10];
-
-            // send workerRobots[0], SendNextDstReq, DstRequests[2];
-            // send workerRobots[1], SendNextDstReq, DstRequests[3];
-            // send workerRobots[0], SendNextDstReq, DstRequests[10];
-
-
-            // send workerRobots[1], SendNextDstReq, DstRequests[10];
-            // send workerRobots[0], SendNextDstReq, DstRequests[10];
-
-
-            // Sequential Requests
-            // counter = 0;
-            // droneId = 1;
-            // send workerRobots[0], SendNextDstReq, DstRequests[0];
-            // send workerRobots[0], SendNextDstReq, DstRequests[1];
-            // send workerRobots[0], SendNextDstReq, DstRequests[2];
-            // send workerRobots[0], SendNextDstReq, DstRequests[3];
-            // while (counter < reqCount) { 
-            //     if (droneId == 1) {
-            //         droneId = 0;
-            //     } else {
-            //         droneId = 1;
-            //     }
-            //     send workerRobots[0], SendNextDstReq, DstRequests[counter];
-            //     receive {
-            //         case CompletedPoint: {
-            //             counter = counter + 1;
-            //         }
-			//     }
-            // }
-
             raise Success;
         }
         on Success goto WaitRequest;
@@ -191,7 +124,7 @@ machine TestDriver {
 
     state WaitRequest {
         entry {
-            // Call ShutdownROSSubscribers()
+            //ShutdownROSSubscribers();
         }
     }
 }

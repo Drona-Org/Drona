@@ -1,16 +1,18 @@
 machine Robot {
     var myId: int;
-    var otherDrones: seq[machine];
+    var otherRobots: seq[machine];
     var testDriver: machine;
     var motionPlanner: machine;
+    var battery: machine;
 
     start state Init {
         entry (payload: (int, machine)) {
             var x: int;
             myId = payload.0;
             testDriver = payload.1;
-            // x = RobotROSSetup(payload.0); // Sets up P machine, with the ROS topics
-            x = RobotROSSetupDrone(payload.0);
+            x = RobotROSSetup(payload.0); // Sets up P machine, with the ROS topics
+            // x = RobotROSSetupDrone(payload.0);
+            battery = new Battery(this,myId);
             motionPlanner = new MotionPlanner((this, myId));
         }
 
@@ -19,7 +21,7 @@ machine Robot {
             index = 0;
             while(index < sizeof(payload)) {
                 if(payload[index] != this) {
-                    otherDrones +=(0, payload[index]);
+                    otherRobots +=(0, payload[index]);
                 }
                 index = index + 1;
             }
@@ -37,7 +39,7 @@ machine Robot {
             send motionPlanner, SendGoalPoint, payload.dest;
             receive {
 				case CompletedPoint: {
-                    send testDriver, CompletedPoint;
+                    // send testDriver, CompletedPoint;
                     raise Success;
                 }
 			}

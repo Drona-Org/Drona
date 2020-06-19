@@ -328,7 +328,7 @@ PRT_VALUE* P_safeControllerDrone_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** arg
     ros::spinOnce();
 
     while (((my_round(id_robot_x[robot_id])) != my_round(2.5)) || ((my_round(id_robot_y[robot_id])) != my_round(2.5))) {
-        printf("INSIDE SAFE CONTROLLER!!!!!!");
+        printf("INSIDE SAFE CONTROLLER\n");
         vel_msg.linear.x = 2.5;
         vel_msg.linear.y = 2.5;
         vel_msg.linear.z = 1.0;

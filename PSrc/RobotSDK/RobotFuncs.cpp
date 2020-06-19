@@ -298,7 +298,7 @@ void safe_controller_collision(float x, float y, int robot_id) {
     while (!collisionFree) {
         // Collision avoidance pausing 
         if (robot_id == 1) {
-            printf("SLEEPING\n");
+            printf("AVOIDING COLLISION\n");
             vel_msg.angular.x = 0;
             vel_msg.angular.z = 0;
             id_vel_pubs[robot_id].publish(vel_msg);
@@ -317,7 +317,7 @@ void safe_controller_collision(float x, float y, int robot_id) {
             vel_msg.linear.x = 0;
             id_vel_pubs[robot_id].publish(vel_msg);
             usleep(14000000);
-            printf("DONE SLEEPING\n");
+            printf("FINISHED WAITING - MOVING TO DESTINATION\n");
         }
         gazebo_move_goal(x, y, robot_id);
         collisionFree = true;
