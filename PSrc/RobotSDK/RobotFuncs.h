@@ -19,3 +19,9 @@ extern "C" PRT_VALUE* P_randomLocation_IMPL(PRT_MACHINEINST* context, PRT_VALUE*
 extern "C" PRT_VALUE* P_decisionModule_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern "C" PRT_VALUE* P_advancedController_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern "C" PRT_VALUE* P_safeController_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
+extern "C" PRT_VALUE* P_decisionModuleBattery_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
+extern "C" PRT_VALUE* P_decisionModuleGeoFence_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
+extern "C" PRT_VALUE* P_decisionModuleCollision_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
+extern "C" PRT_VALUE* P_safeControllerBattery_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
+extern "C" PRT_VALUE* P_safeControllerGeoFence_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
+extern "C" PRT_VALUE* P_safeControllerCollision_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);

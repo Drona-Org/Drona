@@ -15,11 +15,17 @@ fun randomFloat(): float;
 fun getRobotLocationX(robotId: int): float;
 fun getRobotLocationY(robotId: int): float;
 fun getRobotLocationZ(robotId: int): float;
-fun workspaceSetup(): int; //TODO: PASS XML FILE FROM P -> Cpp
+fun workspaceSetup(): int;
 fun randomLocation(): (float, float, float);
 fun decisionModule(wayPoint: seq[(float, float, float)], robotId: int, delta: int, curr_point: int): int;
+fun decisionModuleCollision(wayPoint: seq[(float, float, float)], robotId: int, delta: int, curr_point: int): int;
+fun decisionModuleGeoFence(wayPoint: seq[(float, float, float)], robotId: int, delta: int, curr_point: int): int;
+fun decisionModuleBattery(wayPoint: seq[(float, float, float)], robotId: int, delta: int, curr_point: int): int;
 fun advancedController(wayPoint: (float, float, float), robotId: int): int;
 fun safeController(wayPoint: (float, float, float), robotId: int): int;
+fun safeControllerCollision(wayPoint: (float, float, float), robotId: int): int;
+fun safeControllerGeoFence(wayPoint: (float, float, float), robotId: int): int;
+fun safeControllerBattery(wayPoint: (float, float, float), robotId: int): int;
 
 type RequestInfo = (request_id: int, priority: int);
 type DstReq  = (mInfo: RequestInfo, dest: (float, float, float), sender: machine);
@@ -31,6 +37,11 @@ event ExecutePath: seq[(float, float, float)];
 event PathCompleted;
 event CompletedPoint;
 event eConfigDrone: seq[machine];
+event DecisionEvent: (seq[(float, float, float)], int);
+event SafeBattery;
+event SafeGeoFence;
+event SafeCollision;
+event AdvancedController;
 
 
 fun BROADCAST(allTarget: seq[machine], ev: event, payload: any, source: machine) {

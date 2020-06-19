@@ -204,6 +204,126 @@ void gazebo_move_goal(double goal_x, double goal_y, int robot_id) {
     id_vel_pubs[robot_id].publish(vel_msg);
 }
 
+void safe_controller_battery(float x, float y, int robot_id) {
+    geometry_msgs::Twist vel_msg = id_vel_msgs[robot_id];
+    ros::Rate loop_rate(1000000);
+    usleep(500000);
+    ros::spinOnce();
+  
+    // Battery Monitor SC
+    while (!id_advancedBattery[robot_id]) {
+        WS_Coord current_location = WS_Coord(id_robot_x[robot_id], id_robot_y[robot_id], 0.0);
+        WS_Coord charging_station = WS_Coord(id_charging_station_x[robot_id], id_charging_station_y[robot_id], 0.0);
+        vector<WS_Coord> path = planner->GeneratePlan(1, GazeboToPlanner(current_location), GazeboToPlanner(charging_station));
+        vector<WS_Coord> pathNew = path;
+
+        // Using way points to get to the charging station
+        // for (int count = 0; count < pathNew.size(); count++) {
+        //     WS_Coord shifted = PlannerToGazebo(pathNew.at(count));
+        //     double x = shifted.x;
+        //     double y = shifted.y;
+        //     double z = shifted.z;
+        //     printf("%f %f %f\n",x,y,z);
+        //     safe_battery_move_to_goal(robot_id, x, y);
+        // }
+
+        // Going directly to the charging station
+        while (getDistance(id_charging_station_x[robot_id], id_charging_station_y[robot_id], id_robot_x[robot_id], id_robot_y[robot_id]) >= 0.1) {
+            double inc_x = id_charging_station_x[robot_id] - id_robot_x[robot_id];
+            double inc_y = id_charging_station_y[robot_id] - id_robot_y[robot_id];
+            double angle_to_goal = atan2(inc_y, inc_x);
+            
+            double tmp_linear_x = 0.2*getDistance(id_robot_x[robot_id], id_robot_y[robot_id], id_charging_station_x[robot_id], id_charging_station_y[robot_id]);
+            double tmp_angular_z = 1.0*std::abs((atan2(id_charging_station_y[robot_id]-id_robot_y[robot_id], (id_charging_station_x[robot_id] - id_robot_x[robot_id])) - (id_robot_theta[robot_id])));
+            
+            if (tmp_linear_x < 0) {
+                tmp_linear_x = max(-0.3, tmp_linear_x);
+            } else {
+                tmp_linear_x = min(0.3, tmp_linear_x);
+            }
+            
+            if (tmp_angular_z < 0) {
+                tmp_angular_z = max(-1.0, tmp_angular_z);
+            } else {
+                tmp_angular_z = min(1.0, tmp_angular_z);
+            }
+
+            vel_msg.linear.x = tmp_linear_x;
+            id_robot_velocity_linear[robot_id] = tmp_linear_x;
+            id_robot_velocity_theta[robot_id] = tmp_angular_z;
+            vel_msg.linear.y = 0;
+            vel_msg.linear.z = 0;
+            vel_msg.angular.x = 0;
+            vel_msg.angular.y = 0;
+            vel_msg.angular.z = tmp_angular_z;
+
+            id_vel_pubs[robot_id].publish(vel_msg);
+            ros::spinOnce();
+            loop_rate.sleep();
+        }    
+
+        vel_msg.angular.x = 0;
+        vel_msg.angular.z = 0;
+        id_vel_pubs[robot_id].publish(vel_msg);
+        ros::spinOnce();
+        loop_rate.sleep();
+        vel_msg.angular.z = 0;
+        vel_msg.linear.x = 0;
+        id_vel_pubs[robot_id].publish(vel_msg);
+
+        id_advancedBattery[robot_id] = true;
+        id_currBatteryPercentage[robot_id] = 100;
+    }
+}
+
+void safe_controller_geofence(float x, float y, int robot_id) {
+    geometry_msgs::Twist vel_msg = id_vel_msgs[robot_id];
+    ros::Rate loop_rate(1000000);
+    usleep(500000);
+    ros::spinOnce();
+
+    while (!id_advancedLocation[robot_id]) {
+        printf("OK IM SAFE");
+        id_advancedLocation[robot_id] = true;
+    }
+}
+
+void safe_controller_collision(float x, float y, int robot_id) {
+    geometry_msgs::Twist vel_msg = id_vel_msgs[robot_id];
+    ros::Rate loop_rate(1000000);
+    usleep(500000);
+    ros::spinOnce();
+
+    // Location Monitor: Collision Avoidance SC
+    while (!collisionFree) {
+        // Collision avoidance pausing 
+        if (robot_id == 1) {
+            printf("SLEEPING\n");
+            vel_msg.angular.x = 0;
+            vel_msg.angular.z = 0;
+            id_vel_pubs[robot_id].publish(vel_msg);
+            ros::spinOnce();
+            loop_rate.sleep();
+            vel_msg.angular.z = 0;
+            vel_msg.linear.x = -0.3;
+            id_vel_pubs[robot_id].publish(vel_msg);
+            
+            vel_msg.angular.x = 0;
+            vel_msg.angular.z = 0;
+            id_vel_pubs[robot_id].publish(vel_msg);
+            ros::spinOnce();
+            loop_rate.sleep();
+            vel_msg.angular.z = 0;
+            vel_msg.linear.x = 0;
+            id_vel_pubs[robot_id].publish(vel_msg);
+            usleep(14000000);
+            printf("DONE SLEEPING\n");
+        }
+        gazebo_move_goal(x, y, robot_id);
+        collisionFree = true;
+    }
+}
+
 void safe_controller(float x, float y, int robot_id) {
     geometry_msgs::Twist vel_msg = id_vel_msgs[robot_id];
     ros::Rate loop_rate(1000000);
@@ -741,6 +861,149 @@ PRT_VALUE* P_workspaceSetup_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     return PrtMkIntValue((PRT_UINT32)WSInfo->robots.size());
 }
 
+PRT_VALUE* P_decisionModuleBattery_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    struct PRT_VALUE* mainPRT = *(argRefs[0]);
+    PRT_VALUE** P_VAR_robot_id = argRefs[1];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+    PRT_VALUE** P_VAR_delta = argRefs[2];
+    int delta = PrtPrimGetInt(*P_VAR_delta);
+    PRT_VALUE** P_VAR_curr_index = argRefs[3];
+    int i = PrtPrimGetInt(*P_VAR_curr_index);
+    int plan_size = mainPRT->valueUnion.seq->size;
+    bool safe = true;
+    int idx = 0;
+
+    if (robot_id == 1) {
+        currRobot1_i = i;
+    }
+
+    if (robot_id == 2) {
+        currRobot2_i = i;
+    }
+
+    id_global_goal_x[robot_id] = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[0]->valueUnion.ft;
+    id_global_goal_y[robot_id] = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[1]->valueUnion.ft;
+    id_global_goal_z[robot_id] = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[2]->valueUnion.ft;
+
+    while (idx < delta) {
+        if (i + idx < plan_size) {
+            if (id_currBatteryPercentage[robot_id] < 10*(idx+1)) {
+                id_advancedBattery[robot_id] = false;
+                printf("Robot %d: Low Battery - %f\n", robot_id, id_currBatteryPercentage[robot_id]);
+                safe = false;
+            } 
+        }
+        idx = idx + 1;
+    }
+
+    if (!safe) {
+        return PrtMkIntValue((PRT_UINT32)0);
+    } else {
+        return PrtMkIntValue((PRT_UINT32)1);
+    }
+}
+
+PRT_VALUE* P_decisionModuleGeoFence_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    struct PRT_VALUE* mainPRT = *(argRefs[0]);
+    PRT_VALUE** P_VAR_robot_id = argRefs[1];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+    PRT_VALUE** P_VAR_delta = argRefs[2];
+    int delta = PrtPrimGetInt(*P_VAR_delta);
+    PRT_VALUE** P_VAR_curr_index = argRefs[3];
+    int i = PrtPrimGetInt(*P_VAR_curr_index);
+    int plan_size = mainPRT->valueUnion.seq->size;
+    bool safe = true;
+    int idx = 0;
+
+    if (robot_id == 1) {
+        currRobot1_i = i;
+    }
+
+    if (robot_id == 2) {
+        currRobot2_i = i;
+    }
+
+    id_global_goal_x[robot_id] = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[0]->valueUnion.ft;
+    id_global_goal_y[robot_id] = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[1]->valueUnion.ft;
+    id_global_goal_z[robot_id] = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[2]->valueUnion.ft;
+
+    while (idx < delta) {
+        if (i + idx < plan_size) {
+            double x = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[0]->valueUnion.ft;
+            double y = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[1]->valueUnion.ft;
+            double z = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[2]->valueUnion.ft;
+
+            if (x <= 0 || x >= 5.0 || y <= 0|| y >= 5.0) {
+                id_advancedLocation[robot_id] = false;
+                printf("Robot %d is exiting geofence: (%f, %f)\n", robot_id, x, y);
+                safe = false;
+            }
+        }
+        idx = idx + 1;
+    }
+
+    if (!safe) {
+        return PrtMkIntValue((PRT_UINT32)0);
+    } else {
+        return PrtMkIntValue((PRT_UINT32)1);
+    }
+}
+
+PRT_VALUE* P_decisionModuleCollision_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    struct PRT_VALUE* mainPRT = *(argRefs[0]);
+    PRT_VALUE** P_VAR_robot_id = argRefs[1];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+    PRT_VALUE** P_VAR_delta = argRefs[2];
+    int delta = PrtPrimGetInt(*P_VAR_delta);
+    PRT_VALUE** P_VAR_curr_index = argRefs[3];
+    int i = PrtPrimGetInt(*P_VAR_curr_index);
+    int plan_size = mainPRT->valueUnion.seq->size;
+    bool safe = true;
+    int idx = 0;
+
+    if (robot_id == 1) {
+        currRobot1_i = i;
+    }
+
+    if (robot_id == 2) {
+        currRobot2_i = i;
+    }
+
+    id_global_goal_x[robot_id] = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[0]->valueUnion.ft;
+    id_global_goal_y[robot_id] = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[1]->valueUnion.ft;
+    id_global_goal_z[robot_id] = mainPRT->valueUnion.seq->values[i]->valueUnion.tuple->values[2]->valueUnion.ft;
+
+    while (idx < delta) {
+        if (i + idx < plan_size) {
+            double x = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[0]->valueUnion.ft;
+            double y = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[1]->valueUnion.ft;
+            double z = mainPRT->valueUnion.seq->values[i+idx]->valueUnion.tuple->values[2]->valueUnion.ft;
+
+            if ((currRobot1_i+idx < currRobot1Plan.size()) && (currRobot2_i+idx < currRobot2Plan.size())) {
+                double robot1_x = currRobot1Plan[currRobot1_i+idx][0];
+                double robot1_y = currRobot1Plan[currRobot1_i+idx][1];
+                double robot2_x = currRobot2Plan[currRobot2_i+idx][0];
+                double robot2_y = currRobot2Plan[currRobot2_i+idx][1];
+
+                printf("PLAN!!!! - (%f, %f) - (%f, %f)\n", robot1_x, robot1_y, robot2_x, robot2_y);
+                if ((currRobot1Plan[currRobot1_i+idx][0] == currRobot2Plan[currRobot2_i+idx][0]) && (currRobot1Plan[currRobot1_i+idx][1] == currRobot2Plan[currRobot2_i+idx][1])) {
+                    collisionFree = false; //TODO: make collision free a map so safe controller knows which robot to use
+                    // id_collisionFree[robot_id] = false;
+                    safe = false;
+                }
+            }
+        }
+        idx = idx + 1;
+    }
+
+    if (!safe) {
+        return PrtMkIntValue((PRT_UINT32)0);
+    } else {
+        return PrtMkIntValue((PRT_UINT32)1);
+    }
+}
+
+
 PRT_VALUE* P_decisionModule_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
     // struct PRT_VALUE* mainPRT = *(argRefs[0]);
     // PRT_VALUE** P_VAR_robot_id = argRefs[1];
@@ -755,7 +1018,6 @@ PRT_VALUE* P_decisionModule_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     // printf("ROBOT ID: %d\n", robot_id);
     // printf("MY X Y Z: %f %f %f\n", x, y, z);
     // printf("Robot %d: Battery - %d\n", robot_id, id_currBatteryPercentage[robot_id]);
-    printf("made it to decision module!!!!!!!!!!!\n");
     struct PRT_VALUE* mainPRT = *(argRefs[0]);
     PRT_VALUE** P_VAR_robot_id = argRefs[1];
     int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
@@ -811,7 +1073,6 @@ PRT_VALUE* P_decisionModule_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
                     safe = false;
                 }
             }
-            
         }
         idx = idx + 1;
     }
@@ -866,6 +1127,75 @@ PRT_VALUE* P_safeController_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     bool done = false;
     while (!done) {
         safe_controller(x, y, robot_id);
+        done = true;
+    }
+
+    return PrtMkIntValue((PRT_UINT32)1);
+}
+
+PRT_VALUE* P_safeControllerBattery_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    struct PRT_VALUE* mainPRT = *(argRefs[0]);
+    PRT_VALUE** P_VAR_robot_id = argRefs[1];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+
+    ros::NodeHandle n;
+    ros::Subscriber gazebo_odom_subscriber;
+    ros::Publisher velocity_publisher;
+    gazebo_odom_subscriber = id_odom_subs[robot_id];
+    velocity_publisher = id_vel_pubs[robot_id];
+    double x = mainPRT->valueUnion.tuple->values[0]->valueUnion.ft;
+    double y = mainPRT->valueUnion.tuple->values[1]->valueUnion.ft;
+    double z = mainPRT->valueUnion.tuple->values[2]->valueUnion.ft;
+
+    bool done = false;
+    while (!done) {
+        safe_controller_battery(x, y, robot_id);
+        done = true;
+    }
+
+    return PrtMkIntValue((PRT_UINT32)1);
+}
+
+PRT_VALUE* P_safeControllerGeoFence_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    struct PRT_VALUE* mainPRT = *(argRefs[0]);
+    PRT_VALUE** P_VAR_robot_id = argRefs[1];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+
+    ros::NodeHandle n;
+    ros::Subscriber gazebo_odom_subscriber;
+    ros::Publisher velocity_publisher;
+    gazebo_odom_subscriber = id_odom_subs[robot_id];
+    velocity_publisher = id_vel_pubs[robot_id];
+    double x = mainPRT->valueUnion.tuple->values[0]->valueUnion.ft;
+    double y = mainPRT->valueUnion.tuple->values[1]->valueUnion.ft;
+    double z = mainPRT->valueUnion.tuple->values[2]->valueUnion.ft;
+
+    bool done = false;
+    while (!done) {
+        safe_controller_geofence(x, y, robot_id);
+        done = true;
+    }
+
+    return PrtMkIntValue((PRT_UINT32)1);
+}
+
+PRT_VALUE* P_safeControllerCollision_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs) {
+    struct PRT_VALUE* mainPRT = *(argRefs[0]);
+    PRT_VALUE** P_VAR_robot_id = argRefs[1];
+    int robot_id = PrtPrimGetInt(*P_VAR_robot_id);
+
+    ros::NodeHandle n;
+    ros::Subscriber gazebo_odom_subscriber;
+    ros::Publisher velocity_publisher;
+    gazebo_odom_subscriber = id_odom_subs[robot_id];
+    velocity_publisher = id_vel_pubs[robot_id];
+    double x = mainPRT->valueUnion.tuple->values[0]->valueUnion.ft;
+    double y = mainPRT->valueUnion.tuple->values[1]->valueUnion.ft;
+    double z = mainPRT->valueUnion.tuple->values[2]->valueUnion.ft;
+
+    bool done = false;
+    while (!done) {
+        safe_controller_collision(x, y, robot_id);
         done = true;
     }
 
