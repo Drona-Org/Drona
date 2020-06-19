@@ -21,6 +21,9 @@ event ExecutePath: seq[(float, float, float)];
 event PathCompleted;
 event CompletedPoint;
 event eConfigDrone: seq[machine];
+event DecisionEvent: (seq[(float, float, float)], int);
+event SafeCollision;
+event AdvancedController;
 
 
 fun BROADCAST(allTarget: seq[machine], ev: event, payload: any, source: machine) {

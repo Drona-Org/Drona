@@ -6,15 +6,15 @@ and physically executes this plan.
 machine PlanExecutor {
     var motionPlanner: machine;
     var robotId: int;
-    var RTADecisionModule: machine;
-    // var RTACollision: machine;
+    // var RTADecisionModule: machine;
+    var RTADecisionModuleDrone: machine;
 
 	start state Init {
 		entry (payload: (mp: machine, rid: int)) {
             motionPlanner = payload.mp;
 			robotId = payload.rid;
-            RTADecisionModule = new RTADecisionModule(this, robotId, 1);
-            // RTACollision = new RTACollision(this, robotId, 1);
+            // RTADecisionModule = new RTADecisionModule(this, robotId, 1);
+            RTADecisionModuleDrone = new RTADecisionModuleDrone(this, robotId, 2);
             raise Success;
 		}
         on Success goto WaitRequest;
@@ -42,22 +42,33 @@ machine PlanExecutor {
             i = 0;
             while (i < sizeof(payload)) {
                 // call a dm function, returns safe or not safe (not safe if at least one rta module is not safe)
-                send RTADecisionModule, DecisionEvent, (payload, i);
+                // send RTADecisionModule, DecisionEvent, (payload, i);
+                send RTADecisionModuleDrone, DecisionEvent, (payload, i);
+                // receive {
+                //     case SafeCollision: {
+                //         o = safeControllerCollision(payload[i], robotId);
+                //     }
+
+                //     case SafeGeoFence: {
+                //         o = safeControllerGeoFence(payload[i], robotId);
+                //     }
+
+                //     case SafeBattery: {
+                //         o = safeControllerBattery(payload[i], robotId);
+                //     }
+
+                //     case AdvancedController: {
+                //         o = advancedController(payload[i], robotId);
+                //     }
+                // }
+
                 receive {
                     case SafeCollision: {
-                        o = safeControllerCollision(payload[i], robotId);
-                    }
-
-                    case SafeGeoFence: {
-                        o = safeControllerGeoFence(payload[i], robotId);
-                    }
-
-                    case SafeBattery: {
-                        o = safeControllerBattery(payload[i], robotId);
+                        o = safeControllerDrone(payload[i], robotId);
                     }
 
                     case AdvancedController: {
-                        o = advancedController(payload[i], robotId);
+                        o = advancedControllerDrone(payload[i], robotId);
                     }
                 }
 
