@@ -97,8 +97,8 @@ machine TestDriver {
             var droneId: int;
             var DstRequests: seq[DstReq];
             var i: int;
+
             DstRequests = default(seq[DstReq]);
-            
             requestInfo.request_id = 1;
             requestInfo.priority = 1;
 

@@ -283,7 +283,9 @@ void safe_controller_geofence(float x, float y, int robot_id) {
     ros::spinOnce();
 
     while (!id_advancedLocation[robot_id]) {
-        printf("OK IM SAFE");
+        printf("SC - AVOIDING LEAVING THE GEOFENCE\n");
+        usleep(5000000);
+        printf("FINISHED WAITING - MOVING TO NEXT DESTINATION\n");
         id_advancedLocation[robot_id] = true;
     }
 }
@@ -298,7 +300,7 @@ void safe_controller_collision(float x, float y, int robot_id) {
     while (!collisionFree) {
         // Collision avoidance pausing 
         if (robot_id == 1) {
-            printf("AVOIDING COLLISION\n");
+            printf("SC - AVOIDING COLLISION\n");
             vel_msg.angular.x = 0;
             vel_msg.angular.z = 0;
             id_vel_pubs[robot_id].publish(vel_msg);
@@ -627,18 +629,6 @@ PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
         arrOfPoints[i][1] = y;
         arrOfPoints[i][2] = z;
 
-        vector<double> v1;
-        v1.push_back(x);
-        v1.push_back(y);
-        v1.push_back(z);
-
-        if (robot_id == 1) {
-            currRobot1Plan.push_back(v1);
-        }
-
-        if (robot_id == 2) {
-            currRobot2Plan.push_back(v1);
-        }
         printf("%f %f %f\n",x,y,z);
     }
 
@@ -667,6 +657,19 @@ PRT_VALUE* P_OmplMotionPlanExternal_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** 
             arrOfPoints2[j][0] = x;
             arrOfPoints2[j][1] = y;
             arrOfPoints2[j][2] = z;
+
+            vector<double> v1;
+            v1.push_back(x);
+            v1.push_back(y);
+            v1.push_back(z);
+
+            if (robot_id == 1) {
+                currRobot1Plan.push_back(v1);
+            }
+
+            if (robot_id == 2) {
+                currRobot2Plan.push_back(v1);
+            }
             j++;
         }
     }

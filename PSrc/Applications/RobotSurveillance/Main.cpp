@@ -8,7 +8,7 @@
 
 PRT_PROCESS* MAIN_P_PROCESS;
 static PRT_BOOLEAN cooperative = PRT_TRUE;
-static int threads = 4; // NOTE: Change this depending on which monitors are running in TaskPlanner
+static int threads = 2; // NOTE: Change this depending on which monitors are running in TaskPlanner
 long threadsRunning = 0;
 pthread_mutex_t threadsRunning_mutex;
 static PRT_BOOLEAN perf = PRT_FALSE;
