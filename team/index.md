@@ -40,6 +40,14 @@ tr:nth-child(even) {
     <td>Prof. Sanjit Seshia</td>
     <td>University Of California, Berkeley</td>
   </tr>
+  <tr>
+    <td>Hazem Torfah</td>
+    <td>University Of California, Berkeley</td>
+  </tr>
+  <tr>
+    <td>Beyazit Yalcinkaya</td>
+    <td>University Of California, Berkeley</td>
+  </tr>
 </table>
 <h3>Past Members</h3>
 <table>
