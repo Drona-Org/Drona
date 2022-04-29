@@ -33,10 +33,6 @@ tr:nth-child(even) {
     <td>University Of California, Berkeley</td>
   </tr>
   <tr>
-    <td>Shaz Qadeer</td>
-    <td>Microsoft Research, Redmond</td>
-  </tr>
-  <tr>
     <td>Prof. Sanjit Seshia</td>
     <td>University Of California, Berkeley</td>
   </tr>
@@ -51,6 +47,10 @@ tr:nth-child(even) {
 </table>
 <h3>Past Members</h3>
 <table>
+  <tr>
+    <td>Shaz Qadeer</td>
+    <td>Microsoft Research, Redmond</td>
+  </tr>
   <tr>
     <td>Indranil Saha</td>
     <td>Indian Institute Of Technology, Kanpur</td>
